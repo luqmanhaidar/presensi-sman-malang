@@ -30,9 +30,13 @@ class Userinfo extends CI_Model
         return $data;
     }
     
-    function getAllRecords(){
-        $this->db->select('*');
-        $Q = $this->db->get('NGAC_USERINFO',10);
+    function getAllRecords($offset='',$paging=''){
+        if (!empty($offset))
+            $this->db->offset($offset);
+        if (!empty($paging))    
+        $this->db->limit($paging);
+        $this->db->order_by('ID','ASC');
+        $Q = $this->db->get('NGAC_USERINFO');
         return $Q->result_array();
     }
 
