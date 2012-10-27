@@ -8,19 +8,19 @@ class Userinfo extends CI_Model
     }
     
     /** Check User **/
-    function checkUser($username,$password)
+    function checkUser($id,$password)
     {
-        $this->db->where("Name",$username);
+        $this->db->where("ID",$id);
 		$this->db->where("PasswordWeb",$password);
         $this->db->where('Privilege',1);
         $query    = $this->db->get('NGAC_USERINFO');
         return $query->num_rows();
     }
     
-    function getUserData($username)
+    function getUserData($id)
     {
         $this->db->select('NGAC_USERINFO.ID as ID,NGAC_USERINFO.Name as Name,NGAC_GROUP.Name as GroupName');   
-		$this->db->where("NGAC_USERINFO.Name",$username);
+		$this->db->where("NGAC_USERINFO.ID",$id);
         $this->db->join('NGAC_GROUP','NGAC_GROUP.ID=NGAC_USERINFO.GroupID','LEFT');
         $query    = $this->db->get('NGAC_USERINFO');
         if ($query->num_rows() > 0):
