@@ -18,8 +18,8 @@ class User extends CI_Controller {
         else
             $paging = config_item('paging');
         
-        $data['users']  = $this->userinfo->getAllRecords($offset,$paging);
-        $numrows = COUNT($this->userinfo->getAllRecords()); 
+        $data['users']  = $this->userinfo->getAllRecords($offset,$paging,$this->session->userdata('user_search'));
+        $numrows = COUNT($this->userinfo->getAllRecords('','',$this->session->userdata('user_search'))); 
         if ($numrows > $paging):
             $config['base_url']   = site_url('employee/user/index/');
             $config['total_rows'] = $numrows;
@@ -34,6 +34,11 @@ class User extends CI_Controller {
     
     function paging($per_page){
         $this->session->set_userdata('user_paging',$per_page);
+        redirect('employee/user/index');
+    }
+    
+    function search(){
+        $this->session->set_userdata('user_search',$this->input->post('table_search'));
         redirect('employee/user/index');
     }
     

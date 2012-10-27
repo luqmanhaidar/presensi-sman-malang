@@ -4,10 +4,11 @@
 
 		<div class="with-padding">
 
-			<p class="wrapped left-icon icon-info-round">
+			<!--<p class="wrapped left-icon icon-info-round">
 				
 				<a href="add-edit-user.html" class="button big">Add New</a>  Add untuk menambah User 
 			</p>
+            -->
 
 			
 			<h4>Menu untuk mengatur User</h4>
@@ -18,7 +19,7 @@
 
 			<div class="table-header button-height">
 				<div class="float-right">
-                    <form method="post" action="">
+                    <form method="post" action="<?=site_url('employee/user/search')?>">
 					Search&nbsp;<input type="text" name="table_search" id="table_search" value="" class="input mid-margin-left">
 				    </form>
                 </div>
