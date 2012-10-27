@@ -119,8 +119,8 @@
 
 			<div id="profile">
 				<img src="<?=base_url()?>themes/default/img/user.png" width="64" height="64" alt="User name" class="user-icon" />
-				Hello
-				<span class="name"><?=is_userinfo()?></span>
+				<?=is_userinfo()?>
+				<span class="name"><?=is_userID()?></span>
                 <a href="<?=site_url('auth/user/do_logout')?>">Log Out</a>
 			</div>
 
