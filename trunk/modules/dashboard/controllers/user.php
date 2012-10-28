@@ -7,9 +7,9 @@ class User extends CI_Controller {
     public function __construct()
     {
 		parent::__construct();
-        if(!is_userInfo()):
-            is_message_loginErr();
-            redirect('auth/user/index');
+        if(!$this->session->userdata('user')):
+            //is_message_loginErr();
+            //redirect('auth/user/index',301);
         endif;    
 	}
     
