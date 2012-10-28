@@ -17,6 +17,18 @@ class Userinfo extends CI_Model
         return $query->num_rows();
     }
     
+    function getDataFromUser(){
+		$data = array();
+		$query    = $this->db->get('NGAC_USERINFO');
+		if ($query->num_rows() > 0):
+           foreach ($query->result_array() as $row):
+             $data[$row['ID']] = $row['ID'].'-'.$row['Name'];
+           endforeach;  
+		endif;		
+		return $data;
+	}
+    
+    
     function getUserData($id)
     {
         $this->db->select('NGAC_USERINFO.ID as ID,NGAC_USERINFO.Name as Name,NGAC_USERINFO.GroupDurationID,NGAC_GROUP_DURATION.GroupDurationName as GroupDurationName');   

@@ -19,7 +19,7 @@ class Authlog extends CI_Model
 		return $data;
 	}
     
-    function getCountGroup($id)
+    function getCountLog($id)
     {
         $this->db->join('NGAC_USERINFO U','U.GroupDurationID=G.ID','INNER'); 
         $this->db->where('G.ID',$id);   
@@ -27,15 +27,15 @@ class Authlog extends CI_Model
         return $query->num_rows();
     }
     
-    function getGroupData($id)
+    function getAuthlogData($id)
     {
-        $this->db->select('*');   
-        $this->db->where("NGAC_GROUP_DURATION.ID",$id);
-        $query    = $this->db->get('NGAC_GROUP_DURATION');
+        $this->db->select('IndexKey,CONVERT(VARCHAR(10),TransactionTime, 105) AS MyDate,CONVERT(VARCHAR(8),TransactionTime, 108) AS MyTime,FunctionKey,UserID');   
+        $this->db->where("NGAC_AUTHLOG.IndexKey",$id);
+        $query    = $this->db->get('NGAC_AUTHLOG',1);
         return $query->row_array();
     }
     
-    function getAllRecords($offset='',$paging='',$name=''){
+    function getAllRecords($offset='',$paging='',$name='',$key='',$date_start='',$date_finish=''){
         if (!empty($offset))
             $this->db->offset($offset);
         
@@ -44,6 +44,16 @@ class Authlog extends CI_Model
         
         if (!empty($name))   
             $this->db->like('UserID',$name);
+            
+        if (!empty($key))   
+            $this->db->where('FunctionKey',$key);   
+        
+        if (!empty($date_start))   
+            //$this->db->where('CONVERT(VARCHAR(10),TransactionTime, 105)>=',$date_start);
+            $this->db->where("(CONVERT(VARCHAR(10),TransactionTime, 105) BETWEEN '".$date_start."' AND '".$date_finish."')");  
+        
+        if (!empty($date_finish))   
+            //$this->db->where('CONVERT(VARCHAR(10),TransactionTime, 105)<=',$date_finish);          
         //$this->db->select('G.ID,G.GroupDurationName,G.Start,G.Finish'); 
         //$this->db->order_by('UserID','ASC');
         //$this->db->order_by('FunctionKey','ASC');
@@ -59,21 +69,25 @@ class Authlog extends CI_Model
     function save()
     {
 		$value = array(
-                    'GroupDurationName'  =>  $this->input->post('name'),
-                    'Start'              =>  $this->input->post('hour').':'. $this->input->post('minute'),
-                    'Finish'             =>  $this->input->post('hour2').':'. $this->input->post('minute2'));
-        $this->db->insert('NGAC_GROUP_DURATION',$value);
+                    'UserID'         =>  $this->input->post('user'),
+                    'FunctionKey'    =>  $this->input->post('key'),
+                    'TerminalID'     =>  1,
+                    'AuthResult'     =>  0,   
+                    'TransactionTime'=>  $this->input->post('year').'-'. $this->input->post('month').'-'. $this->input->post('day').' '.$this->input->post('hour').':'. $this->input->post('minute').':'.$this->input->post('second'));
+        $this->db->insert('NGAC_AUTHLOG',$value);
     }
     
     function update()
     {
 		$id = $this->input->post('ID');
         $value = array(
-                    'GroupDurationName'  =>  $this->input->post('name'),
-                    'Start'              =>  $this->input->post('hour').':'. $this->input->post('minute'),
-                    'Finish'             =>  $this->input->post('hour2').':'. $this->input->post('minute2'));
-        $this->db->where('ID',$id);
-        $this->db->update('NGAC_GROUP_DURATION',$value);
+                    'UserID'         =>  $this->input->post('user'),
+                    'FunctionKey'    =>  $this->input->post('key'),
+                    'TerminalID'     =>  1,
+                    'AuthResult'     =>  0,   
+                    'TransactionTime'=>  $this->input->post('year').'-'. $this->input->post('month').'-'. $this->input->post('day').' '.$this->input->post('hour').':'. $this->input->post('minute').':'.$this->input->post('second'));
+        $this->db->where('IndexKey',$id);
+        $this->db->update('NGAC_AUTHLOG',$value);
     }
     
     function remove($id)

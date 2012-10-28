@@ -13,18 +13,18 @@
 			<p>Simple sorting and manual controls if you prefer to handle the table output server-side:</p>
 
 			<p><?=$this->session->flashdata('message')?></p>
-
+            
 			<div class="table-header button-height">
 				<div class="float-right">
                     <form method="post" action="<?=site_url('presensi/checkin/search')?>">
 					ID User&nbsp;<input type="text" placeholder="All User" name="table_search" style="width:10%;" id="table_search" value="<?=$this->session->userdata('log_search')?>" class="input mid-margin-left">
-                    <?=form_dropdown('day',config_item('day'),'','class="select"')?>
-                    <?=form_dropdown('month',config_item('month'),'','class="select"')?>
-                    <?=form_dropdown('year',config_item('year'),'','class="select"')?>
+                    <?=form_dropdown('day',config_item('day'),substr($this->session->userdata('date_start'),0,2),'class="select"')?>
+                    <?=form_dropdown('month',config_item('month'),substr($this->session->userdata('date_start'),3,2),'class="select"')?>
+                    <?=form_dropdown('year',config_item('year'),substr($this->session->userdata('date_start'),6,4),'class="select"')?>
                     s/d
-                    <?=form_dropdown('day2',config_item('day'),'','class="select"')?>
-                    <?=form_dropdown('month2',config_item('month'),'','class="select"')?>
-                    <?=form_dropdown('year2',config_item('year'),'','class="select"')?>
+                    <?=form_dropdown('day2',config_item('day'),substr($this->session->userdata('date_finish'),0,2),'class="select"')?>
+                    <?=form_dropdown('month2',config_item('month'),substr($this->session->userdata('date_finish'),3,2),'class="select"')?>
+                    <?=form_dropdown('year2',config_item('year'),substr($this->session->userdata('date_finish'),6,4),'class="select"')?>
                     
                     <?=form_dropdown('key',config_item('key'),'','class="select"')?>
                     <input type="submit" class="button blue-gradient glossy" value="Go" />
