@@ -19,11 +19,12 @@ class Authlog extends CI_Model
 		return $data;
 	}
     
-    function getCountLog($id)
+    function getCountLog($id,$key,$date)
     {
-        $this->db->join('NGAC_USERINFO U','U.GroupDurationID=G.ID','INNER'); 
-        $this->db->where('G.ID',$id);   
-        $query  = $this->db->get('NGAC_GROUP_DURATION G');
+        $this->db->where('UserID',$id); 
+        $this->db->where('FunctionKey',$key);   
+        $this->db->where("CONVERT(VARCHAR(10),TransactionTime, 105)='".$date."'");
+        $query  = $this->db->get('NGAC_AUTHLOG');
         return $query->num_rows();
     }
     
@@ -68,8 +69,14 @@ class Authlog extends CI_Model
     
     function save()
     {
+        $this->db->select('IndexKey');   
+        $this->db->where("NGAC_USERINFO.ID",$this->input->post('user'));
+        $query = $this->db->get('NGAC_USERINFO',1);
+        $row = $query->row_array();
+            
 		$value = array(
                     'UserID'         =>  $this->input->post('user'),
+                    'UserIDIndex'    =>  $row['IndexKey'], 
                     'FunctionKey'    =>  $this->input->post('key'),
                     'TerminalID'     =>  1,
                     'AuthResult'     =>  0,   
@@ -79,9 +86,15 @@ class Authlog extends CI_Model
     
     function update()
     {
+        $this->db->select('IndexKey');   
+        $this->db->where("NGAC_USERINFO.ID",$this->input->post('user'));
+        $query = $this->db->get('NGAC_USERINFO',1);
+        $row = $query->row_array();
+            
 		$id = $this->input->post('ID');
         $value = array(
                     'UserID'         =>  $this->input->post('user'),
+                    'UserIDIndex'    =>  $row['IndexKey'], 
                     'FunctionKey'    =>  $this->input->post('key'),
                     'TerminalID'     =>  1,
                     'AuthResult'     =>  0,   

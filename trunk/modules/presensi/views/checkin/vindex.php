@@ -26,7 +26,7 @@
                     <?=form_dropdown('month2',config_item('month'),substr($this->session->userdata('date_finish'),3,2),'class="select"')?>
                     <?=form_dropdown('year2',config_item('year'),substr($this->session->userdata('date_finish'),6,4),'class="select"')?>
                     
-                    <?=form_dropdown('key',config_item('key'),'','class="select"')?>
+                    <?=form_dropdown('key',config_item('key'),$this->session->userdata('log_key'),'class="select"')?>
                     <input type="submit" class="button blue-gradient glossy" value="Go" />
                     </form>
                 </div>
@@ -58,7 +58,7 @@
 				<tbody>
 					<?php 
                         $i=1;
-                        foreach($logs as $row):?>
+                        foreach($checks as $row):?>
 					<tr>
 						<td><?=$i;?></td>
 						<td><?=$row['UserID'];?></td>

@@ -198,46 +198,23 @@
 				<li class="title-menu">Last User Login</li>
 				<li>
 					<ul class="message-menu">
+                    <?php foreach($logs as $log):?>
 						<li>
 							<span class="message-status">
 								<a href="javascript:void(0);" class="starred" title="Starred">Starred</a>
 								<a href="javascript:void(0);" class="new-message" title="Mark as read">New</a>
 							</span>
 							<span class="message-info">
-								<span class="blue">17:12</span>
+								<span class="blue"><?=$log['MyDate'].' '.$log['MyTime']?></span>
 								
 							</span>
 							<a href="javascript:void(0);" title="Read message">
-								<strong class="blue">Rio</strong><br>
+								<strong class="blue"><?=$log['LogName']?></strong><br/>
 								<strong>Administrator</strong>
 							</a>
 						</li>
-						<li>
-							<a href="javascript:void(0);" title="Read message">
-								<span class="message-status">
-									<span class="unstarred">Not starred</span>
-									<span class="new-message">New</span>
-								</span>
-								<span class="message-info">
-									<span class="blue">15:47</span>
-								</span>
-								<strong class="blue">Astri</strong><br>
-								<strong>Supervisor</strong>
-							</a>
-						</li>
-						<li>
-							<a href="javascript:void(0);" title="Read message">
-								<span class="message-status">
-									<span class="unstarred">Not starred</span>
-									<span class="new-message">New</span>
-								</span>
-								<span class="message-info">
-									<span class="blue">15:47</span>
-								</span>
-								<strong class="blue">Nanami</strong><br>
-								<strong>Supervisor</strong>
-							</a>
-						</li>
+                       <?php endforeach;?> 
+						
 					</ul>
 				</li>
 			</ul>
