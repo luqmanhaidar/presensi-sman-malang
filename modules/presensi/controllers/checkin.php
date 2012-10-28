@@ -8,7 +8,7 @@ class Checkin extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('authlog'); //load model authlog form presensi   
-        //$this->load->model('usergroup'); //load model usergroup form user 
+        $this->load->module_model('employee','userinfo'); //load model usergroup form user 
     }
     
     function index($offset=0)
@@ -19,8 +19,8 @@ class Checkin extends CI_Controller {
         else
             $paging = config_item('paging');
         $this->session->set_userdata('log_offset',$offset);
-        $data['logs']  = $this->authlog->getAllRecords($offset,$paging,$this->session->userdata('log_search'));
-        $numrows = COUNT($this->authlog->getAllRecords('','',$this->session->userdata('log_search'))); 
+        $data['logs']  = $this->authlog->getAllRecords($offset,$paging,$this->session->userdata('log_search'),$this->session->userdata('log_key'),$this->session->userdata('date_start'),$this->session->userdata('date_finish'));
+        $numrows = COUNT($this->authlog->getAllRecords('','',$this->session->userdata('log_search'),$this->session->userdata('log_key'),$this->session->userdata('date_start'),$this->session->userdata('date_finish'))); 
         if ($numrows > $paging):
             $config['base_url']   = site_url('presensi/checkin/index/');
             $config['total_rows'] = $numrows;
@@ -41,41 +41,44 @@ class Checkin extends CI_Controller {
     
     function search()
     {
-        $search = array ('log_search' =>  $this->input->post('table_search'));    
+        $search = array ('log_search' => $this->input->post('table_search'),
+                         'log_key'    => $this->input->post('key'),
+                         'date_start' => $this->input->post('day').'-'.$this->input->post('month').'-'.$this->input->post('year'), 
+                         'date_finish'=> $this->input->post('day2').'-'.$this->input->post('month2').'-'.$this->input->post('year2'));    
         $this->session->set_userdata($search);
         redirect('presensi/checkin/index',301);
     }
     
     function add(){
-        $data['title']  = 'Add Durasi Group';
-        $data['action'] = 'employee/group/save';
+        $data['title']  = 'Add Manual Checkin';
+        $data['action'] = 'presensi/checkin/save';
         $data['value']  = '';
-        $data['groups']	= $this->usergroup->getDataFromGroup();
-        $data['page']	= 'group/vform';
+        $data['users']	= $this->userinfo->getDataFromUser();
+        $data['page']	= 'checkin/vform';
 		$this->load->theme('default',$data);
     }
     
     public function save()
     {
-        $this->usergroup->save();
+        $this->authlog->save();
         $this->session->set_flashdata('save_success',config_item('save_success'));
-        redirect('employee/group/index/'.$this->session->userdata('group_offset'),301);
+        redirect('presensi/checkin/index/'.$this->session->userdata('log_offset'),301);
     }
     
     function edit($id){
-        $data['title']  = 'Update Durasi Group';
-        $data['action'] = 'employee/group/update';
-        $data['value']  = $this->usergroup->getGroupData($id);
-        $data['groups']	= $this->usergroup->getDataFromGroup();
-        $data['page']	= 'group/vform';
+        $data['title']  = 'Update Manual Checkin';
+        $data['action'] = 'presensi/checkin/update';
+        $data['value']  = $this->authlog->getAuthlogData($id);
+        $data['users']	= $this->userinfo->getDataFromUser();
+        $data['page']	= 'checkin/vform';
 		$this->load->theme('default',$data);
     }
     
     public function update()
     {
-        $this->usergroup->update();
+        $this->authlog->update();
         $this->session->set_flashdata('message',config_item('update_success'));
-        redirect('employee/group/index/'.$this->session->userdata('group_offset'),301);
+        redirect('presensi/checkin/index/'.$this->session->userdata('log_offset'),301);
     }
     
     public function remove($id)
