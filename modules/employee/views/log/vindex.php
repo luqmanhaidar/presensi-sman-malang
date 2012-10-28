@@ -51,8 +51,8 @@
 				<tbody>
 					<?php foreach($users as $row):?>
 					<tr>
-						<td><?=$row['MyDate'];?></td>
-						<td><?=$row['MyTime'];?></td>
+						<td><?=$row['LogDate'];?></td>
+						<td><?=$row['LogTime'];?></td>
 						<td><?=$row['LogName'];?></td>
 						<td><?=$row['LogDescription'];?></td>
 					</tr>
