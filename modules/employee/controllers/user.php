@@ -7,6 +7,7 @@ class User extends CI_Controller {
     function __construct()
     {
         parent::__construct();
+        $this->load->module_model('employee','log'); //load model usergroup form user 
         $this->load->model('userinfo'); //load model userinfo form user   
         $this->load->model('usergroup'); //load model usergroup form user 
     }
@@ -14,7 +15,8 @@ class User extends CI_Controller {
     
 	function index($offset=0)
 	{
-        $data['title']  = 'User Group';
+        $data['title']  = 'User';
+        $data['logs']   =   $this->log->userLog();
         if($this->session->userdata('user_paging'))
             $paging = $this->session->userdata('user_paging');
         else
@@ -50,7 +52,8 @@ class User extends CI_Controller {
     }
     
     function edit($id){
-        $data['title']  = 'Update User Group';
+        $data['title']  = 'User';
+        $data['logs']   = $this->log->userLog();
         $data['value']  = $this->userinfo->getUserData($id);
         $data['groups']	= $this->usergroup->getDataFromGroup();
         $data['page']	= 'user/vform';

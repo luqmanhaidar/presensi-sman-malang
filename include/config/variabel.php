@@ -1,6 +1,8 @@
 <?php
     $config['paging']   =   15;
     $config['key']      =   array(''=>'All','1'=>'1','2'=>'2','3'=>'3','4'=>'4');
+    $config['type']     =   array('Sakit'=>'Sakit','Ijin'=>'Ijin','Tugas'=>'Tugas');
+    $config['ftype']    =   array(''=>'All','Sakit'=>'Sakit','Ijin'=>'Ijin','Tugas'=>'Tugas');
     $config['fkey']     =   array('1'=>'1 (Jam Masuk)','2'=>'2 (Jam Pulang)','3'=>'3 (Masuk Lembur)','4'=>'4 (Selesai Lembur)');       
     $config['per_page'] =   array('15'=>'15','30'=>'30','45'=>'45');
     $config['hour']     =   array('01'=>'01','02'=>'02','03'=>'03','04'=>'04','05'=>'05','06'=>'06',

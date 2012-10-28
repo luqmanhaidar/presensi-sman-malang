@@ -7,6 +7,7 @@ class Checkin extends CI_Controller {
     function __construct()
     {
         parent::__construct();
+        $this->load->module_model('employee','log'); //load model usergroup form user
         $this->load->model('authlog'); //load model authlog form presensi   
         $this->load->module_model('employee','userinfo'); //load model usergroup form user 
     }
@@ -14,12 +15,13 @@ class Checkin extends CI_Controller {
     function index($offset=0)
 	{
         $data['title']  = 'Manual Checkin';
+        $data['logs']   =   $this->log->userLog();
         if($this->session->userdata('log_paging'))
             $paging = $this->session->userdata('log_paging');
         else
             $paging = config_item('paging');
         $this->session->set_userdata('log_offset',$offset);
-        $data['logs']  = $this->authlog->getAllRecords($offset,$paging,$this->session->userdata('log_search'),$this->session->userdata('log_key'),$this->session->userdata('date_start'),$this->session->userdata('date_finish'));
+        $data['checks']  = $this->authlog->getAllRecords($offset,$paging,$this->session->userdata('log_search'),$this->session->userdata('log_key'),$this->session->userdata('date_start'),$this->session->userdata('date_finish'));
         $numrows = COUNT($this->authlog->getAllRecords('','',$this->session->userdata('log_search'),$this->session->userdata('log_key'),$this->session->userdata('date_start'),$this->session->userdata('date_finish'))); 
         if ($numrows > $paging):
             $config['base_url']   = site_url('presensi/checkin/index/');
@@ -53,6 +55,7 @@ class Checkin extends CI_Controller {
         $data['title']  = 'Manual Checkin';
         $data['action'] = 'presensi/checkin/save';
         $data['value']  = '';
+        $data['logs']   =   $this->log->userLog();
         $data['users']	= $this->userinfo->getDataFromUser();
         $data['page']	= 'checkin/vform';
 		$this->load->theme('default',$data);
@@ -60,14 +63,23 @@ class Checkin extends CI_Controller {
     
     public function save()
     {
+        $user = $this->input->post('user');
+        $key  = $this->input->post('key');
+        $date = $this->input->post('day').'-'.$this->input->post('month').'-'.$this->input->post('year');
+        if($this->authlog->getCountLog($user,$key,$date) > 0 ):
+            $this->session->set_flashdata('message',config_item('save_error'));
+            redirect('presensi/checkin/index/'.$this->session->userdata('group_offset'),301);
+		endif;
+            
         $this->authlog->save();
-        $this->session->set_flashdata('save_success',config_item('save_success'));
+        $this->session->set_flashdata('message',config_item('save_success'));
         redirect('presensi/checkin/index/'.$this->session->userdata('log_offset'),301);
     }
     
     function edit($id){
         $data['title']  = 'Manual Checkin';
         $data['action'] = 'presensi/checkin/update';
+        $data['logs']   =   $this->log->userLog();
         $data['value']  = $this->authlog->getAuthlogData($id);
         $data['users']	= $this->userinfo->getDataFromUser();
         $data['page']	= 'checkin/vform';

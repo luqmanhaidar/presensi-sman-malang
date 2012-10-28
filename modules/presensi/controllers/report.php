@@ -2,7 +2,7 @@
 
 /** Dashboard Menu Press System **/
 
-class User extends CI_Controller {
+class Report extends CI_Controller {
     
     public function __construct()
     {
@@ -15,9 +15,9 @@ class User extends CI_Controller {
 	}
     
     public function index(){
-		$data['title']		=	'Dashboard';
+		$data['title']		=	'Laporan';
         $data['logs']       =   $this->log->userLog();
-        $data['page']	    =	'dashboard';
+        $data['page']	    =	'report/vreport';
         $this->load->vars($data);
         $this->load->theme('default',$data);
 	}

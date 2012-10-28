@@ -7,6 +7,7 @@ class Group extends CI_Controller {
     function __construct()
     {
         parent::__construct();
+        $this->load->module_model('employee','log'); //load model usergroup form user 
         $this->load->model('userinfo'); //load model userinfo form user   
         $this->load->model('usergroup'); //load model usergroup form user 
     }
@@ -14,6 +15,7 @@ class Group extends CI_Controller {
     function index($offset=0)
 	{
         $data['title']  = 'Duration Group';
+        $data['logs']   =   $this->log->userLog();
         if($this->session->userdata('group_paging'))
             $paging = $this->session->userdata('group_paging');
         else
@@ -50,6 +52,7 @@ class Group extends CI_Controller {
         $data['title']  = 'Duration Group';
         $data['action'] = 'employee/group/save';
         $data['value']  = '';
+        $data['logs']   =   $this->log->userLog();
         $data['groups']	= $this->usergroup->getDataFromGroup();
         $data['page']	= 'group/vform';
 		$this->load->theme('default',$data);
@@ -65,6 +68,7 @@ class Group extends CI_Controller {
     function edit($id){
         $data['title']  = 'Duration Group';
         $data['action'] = 'employee/group/update';
+        $data['logs']   =   $this->log->userLog();
         $data['value']  = $this->usergroup->getGroupData($id);
         $data['groups']	= $this->usergroup->getDataFromGroup();
         $data['page']	= 'group/vform';
