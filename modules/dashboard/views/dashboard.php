@@ -31,8 +31,8 @@
 					<h3 class="thin">Setting</h3>
 					<ul class="files-icons">
 						<li><a href="<?=site_url('setting/presensi')?>" class="file-link"><span class="icon file-xsl"></span>Variabel Presensi</a></li>
-						<li><a href="<?=site_url('setting/user/password')?>" class="file-link"><span class="icon file-desktop"></span>User Login</a></li>
-						<li><a href="<?=site_url('setting/log')?>" class="file-link"><span class="icon file-dat"></span>Log History</a></li>
+						<li><a href="<?=site_url('employee/admin/index')?>" class="file-link"><span class="icon file-desktop"></span>User Login</a></li>
+						<li><a href="<?=site_url('employee/history/index')?>" class="file-link"><span class="icon file-dat"></span>Log History</a></li>
 					</ul>
 
 				</div>
