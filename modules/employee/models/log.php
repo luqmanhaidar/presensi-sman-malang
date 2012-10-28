@@ -34,7 +34,7 @@ class Log extends CI_Model
         if (!empty($name))   
             $this->db->like('U.LogName',$name);
                 
-        $this->db->select('LogID,LogName,G.GroupDurationName,CONVERT(VARCHAR(10),LogTransactionDate, 105) AS LogDate,CONVERT(VARCHAR(8),LogTransactionDate, 108) AS LogTime,LogDescription');
+        $this->db->select('LogID,LogName,CONVERT(VARCHAR(10),LogTransactionDate, 105) AS LogDate,CONVERT(VARCHAR(8),LogTransactionDate, 108) AS LogTime,LogDescription');
         $this->db->order_by('LogID','DESC');
         $Q = $this->db->get('NGAC_LOG');
         return $Q->result_array();
