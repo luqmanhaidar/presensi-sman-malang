@@ -32,7 +32,7 @@ class Log extends CI_Model
             $this->db->limit($paging);
         
         if (!empty($name))   
-            $this->db->like('U.LogName',$name);
+            $this->db->like('LogName',$name);
                 
         $this->db->select('LogID,LogName,CONVERT(VARCHAR(10),LogTransactionDate, 105) AS LogDate,CONVERT(VARCHAR(8),LogTransactionDate, 108) AS LogTime,LogDescription');
         $this->db->order_by('LogID','DESC');
