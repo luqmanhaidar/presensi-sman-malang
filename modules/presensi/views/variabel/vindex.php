@@ -32,7 +32,7 @@
 						<th scope="col" width="7%">ID</th>
 						<th scope="col" width="10%" class="align-left hide-on-mobile">Variabel</th>
                         <th scope="col">Keterangan</th>
-                        <th scope="col" width="15%">Jenis</th>
+                        <th scope="col">Jenis</th>
                         <th scope="col" width="10%">Nilai</th>
                         <th scope="col" class="align-center hide-on-mobile" width="20%" class="align-right">Actions</th>
 					</tr>
