@@ -45,9 +45,9 @@ class History extends CI_Controller {
     
     function search()
     {
-        $search = array (   'logHistory_search' =>  $this->input->post('table_search'));    
+        $search = array ('logHistory_search' =>  $this->input->post('table_search'));    
         $this->session->set_userdata($search);
-        redirect('employee/admin/index');
+        redirect('employee/history/index');
     }
     
     
