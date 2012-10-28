@@ -38,6 +38,18 @@ function indonesian_longDate($date)
      return	$day." " .indonesian_monthName($month)." " .$year;        
 }
 
+function indonesian_shortDate($tgl,$format='')
+{  
+     $tanggal = substr($tgl,8,2);  
+     $bulan = substr($tgl,5,2);	 
+     $tahun = substr($tgl,0,4);
+	 if($format)
+		$data	= $tanggal.$format.$bulan.$format.$tahun;  
+	 else 
+		$data	= $tanggal.'-'.$bulan.'-'.$tahun;  
+     return	$data;        
+}
+
 function indonesian_monthName($month)
 {  
     switch ($month){  
@@ -77,5 +89,24 @@ function indonesian_monthName($month)
         case '12':  
             return "Desember";  
             break;  
-        }  
-  }
+    }  
+}
+
+
+function functionKey($key)
+{  
+    switch ($key){  
+        case 1:   
+            return "Jam Masuk";  
+            break;  
+        case 2:  
+            return "Jam Pulang";  
+            break;  
+        case 3:  
+            return "Mulai Lembur";  
+            break;  
+        case 4:  
+            return "Selesai Lembur";  
+            break;    
+    }  
+}
