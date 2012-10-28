@@ -97,13 +97,13 @@
 
 	<!-- Side tabs shortcuts -->
 	<ul id="shortcuts" role="complementary" class="children-tooltip tooltip-right">
-		<li class="current"><a href="<?=site_url('dashboard/user/index')?>" class="shortcut-dashboard" title="Dashboard">Dashboard</a></li>
-		<li><a href="<?=site_url('employee/group/index')?>" class="shortcut-messages" title="Manage Group Kerja">Group</a></li>
-		<li><a href="<?=site_url('employee/user/index')?>" class="shortcut-agenda" title="Manage User">User</a></li>
-		<li><a href="<?=site_url('presensi/checkin/index')?>" class="shortcut-contacts" title="Manual-Checkin">Manual Checkin</a></li>
-		<li><a href="<?=site_url('presensi/overtime/index')?>" class="shortcut-medias" title="Manage Lembur">Manage Lembur</a></li>
-		<li><a href="<?=site_url('presensi/other/index')?>" class="shortcut-stats" title="Manage Ijin Kerja">Manage Ijin Kerja</a></li>
-		<li><a href="<?=site_url('presensi/report/index')?>" class="shortcut-settings" title="Laporan Presensi">Laporan Presensi</a></li>
+		<li <?php if($title=='Dashboard') echo 'class="current"';?>><a href="<?=site_url('dashboard/user/index')?>" class="shortcut-dashboard" title="Dashboard">Dashboard</a></li>
+		<li <?php if($title=='Duration Group') echo 'class="current"';?>><a href="<?=site_url('employee/group/index')?>" class="shortcut-messages" title="Manage Group Kerja">Group</a></li>
+		<li <?php if($title=='User') echo 'class="current"';?>><a href="<?=site_url('employee/user/index')?>" class="shortcut-agenda" title="Manage User">User</a></li>
+		<li <?php if($title=='Manual Checkin') echo 'class="current"';?>><a href="<?=site_url('presensi/checkin/index')?>" class="shortcut-contacts" title="Manual-Checkin">Manual Checkin</a></li>
+		<li <?php if($title=='Daftar Lembur') echo 'class="current"';?>><a href="<?=site_url('presensi/overtime/index')?>" class="shortcut-medias" title="Manage Lembur">Manage Lembur</a></li>
+		<li <?php if($title=='Ijin Kerja') echo 'class="current"';?>><a href="<?=site_url('presensi/other/index')?>" class="shortcut-stats" title="Manage Ijin Kerja">Manage Ijin Kerja</a></li>
+		<li <?php if($title=='Laporan') echo 'class="current"';?>><a href="<?=site_url('presensi/report/index')?>" class="shortcut-settings" title="Laporan Presensi">Laporan Presensi</a></li>
 		<!--<li><span class="shortcut-notes" title="Notes">Notes</span></li>-->
 	</ul>
 
