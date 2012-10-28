@@ -50,7 +50,7 @@ class Checkin extends CI_Controller {
     }
     
     function add(){
-        $data['title']  = 'Add Manual Checkin';
+        $data['title']  = 'Manual Checkin';
         $data['action'] = 'presensi/checkin/save';
         $data['value']  = '';
         $data['users']	= $this->userinfo->getDataFromUser();
@@ -66,7 +66,7 @@ class Checkin extends CI_Controller {
     }
     
     function edit($id){
-        $data['title']  = 'Update Manual Checkin';
+        $data['title']  = 'Manual Checkin';
         $data['action'] = 'presensi/checkin/update';
         $data['value']  = $this->authlog->getAuthlogData($id);
         $data['users']	= $this->userinfo->getDataFromUser();

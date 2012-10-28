@@ -47,7 +47,7 @@ class Group extends CI_Controller {
     }
     
     function add(){
-        $data['title']  = 'Add Durasi Group';
+        $data['title']  = 'Duration Group';
         $data['action'] = 'employee/group/save';
         $data['value']  = '';
         $data['groups']	= $this->usergroup->getDataFromGroup();
@@ -63,7 +63,7 @@ class Group extends CI_Controller {
     }
     
     function edit($id){
-        $data['title']  = 'Update Durasi Group';
+        $data['title']  = 'Duration Group';
         $data['action'] = 'employee/group/update';
         $data['value']  = $this->usergroup->getGroupData($id);
         $data['groups']	= $this->usergroup->getDataFromGroup();
