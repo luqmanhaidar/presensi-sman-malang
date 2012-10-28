@@ -24,12 +24,12 @@ class User extends CI_Controller {
 		
         if($this->userinfo->checkUser($username,$password)>0): //check jumlah user terdaftar
             $user = $this->userinfo->getUserData($username); // get userinfo name and group
-            if($user['GroupName']=='')
-                $user['GroupName']='Administrator';
+            if($user['GroupDurationName']=='')
+                $user['GroupDurationName']='Administrator';
                 
             $auth = array('user'    =>  $user['Name'],
                           'userID'  =>  $user['ID'],
-                          'group'   =>  $user['GroupName']  
+                          'group'   =>  $user['GroupDurationName']  
                     );
             $this->log->save($username,'Login');        
             $this->session->set_userdata($auth);
