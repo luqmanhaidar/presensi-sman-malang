@@ -60,7 +60,7 @@ class User extends CI_Controller {
     public function update()
     {
         $this->userinfo->update();
-        $this->session->flashdata('update_success',config_item('update_success'));
+        $this->session->set_flashdata('update_success',config_item('update_success'));
         redirect('employee/user/index/'.$this->session->userdata('user_offset'),301);
     }
     

@@ -20,12 +20,12 @@
 					
 					<p class="inline-large-label button-height">
 						<label for="large-label-1" class="label">Group Durasi<small>(255 chars max.)</small></label>
-						<?=form_dropdown('Group',$groups,$value['GroupDurationName'],'class="select"')?>
+						<?=form_dropdown('Group',$groups,$value['GroupDurationID'],'class="select"')?>
 					</p>
 					
 					<p class="button-height">
 						<input type="submit" class="button big" value="Simpan" />
-						<a href="user.html" class="button big">Back</a>
+						<a href="<?=site_url('employee/user/index/'.$this->session->userdata('user_offset'))?>" class="button big">Back</a>
 					</p>
 
 				</div>
