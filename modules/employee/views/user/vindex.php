@@ -1,5 +1,5 @@
 <hgroup id="main-title" class="thin">
-			<h1>Manage User Grup</h1>
+			<h1><?=$title?></h1>
 		</hgroup>
 
 		<div class="with-padding">
@@ -9,9 +9,7 @@
 				<a href="add-edit-user.html" class="button big">Add New</a>  Add untuk menambah User 
 			</p>
             -->
-
-			
-			<h4>Menu untuk mengatur User</h4>
+				<h4>Menu untuk mengatur <?=$title?></h4>
 
 			<p>Simple sorting and manual controls if you prefer to handle the table output server-side:</p>
 

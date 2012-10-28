@@ -19,7 +19,7 @@ class Userinfo extends CI_Model
     
     function getUserData($id)
     {
-        $this->db->select('NGAC_USERINFO.ID as ID,NGAC_USERINFO.Name as Name,NGAC_GROUP_DURATION.GroupDurationName as GroupDurationName');   
+        $this->db->select('NGAC_USERINFO.ID as ID,NGAC_USERINFO.Name as Name,NGAC_USERINFO.GroupDurationID,NGAC_GROUP_DURATION.GroupDurationName as GroupDurationName');   
         $this->db->join('NGAC_GROUP','NGAC_GROUP.ID=NGAC_USERINFO.GroupID','LEFT');
         $this->db->join('NGAC_GROUP_DURATION','NGAC_GROUP_DURATION.ID=NGAC_USERINFO.GroupDurationID','LEFT');
         $this->db->where("NGAC_USERINFO.ID",$id);
@@ -52,6 +52,6 @@ class Userinfo extends CI_Model
         $data['GroupDurationID'] = $this->input->post('Group');
         $this->db->where('ID',$id);
         $this->db->update('NGAC_USERINFO',$data);
-   }
+    }
     
 }
