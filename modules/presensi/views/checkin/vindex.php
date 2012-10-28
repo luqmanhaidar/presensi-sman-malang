@@ -40,6 +40,7 @@
 					<tr>
 						<th scope="col" width="5%">No</th>
 						<th scope="col" width="10%" class="align-left hide-on-mobile">ID User</th>
+                        <th scope="col" class="align-left hide-on-mobile">Nama</th>
                         <th scope="col" width="20%">Func Key</th>
                         <th scope="col">Tanggal</th>
                         <th scope="col">Jam</th>
@@ -49,7 +50,7 @@
 
 				<tfoot>
 					<tr>
-						<td colspan="6">
+						<td colspan="7">
 							<?=COUNT($logs).' Data ditemukan.'?>
 						</td>
 					</tr>
@@ -62,6 +63,7 @@
 					<tr>
 						<td><?=$i;?></td>
 						<td><?=$row['UserID'];?></td>
+                        <td><?=$row['Name'];?></td>
                         <td><?=$row['FunctionKey']?> (<?=functionKey($row['FunctionKey']);?>)</td>
                         <td><?=indonesian_shortDate($row['TransactionTime']);?></td>
                         <td><?=substr($row['TransactionTime'],11,8);?></td>
