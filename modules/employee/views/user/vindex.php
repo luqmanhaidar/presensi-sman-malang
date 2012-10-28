@@ -15,13 +15,15 @@
 
 			<p>Simple sorting and manual controls if you prefer to handle the table output server-side:</p>
 
-			<p><b>Tip:</b> try clicking on a row to show an extra line style!</p>
+			<p><?=$this->session->flashdata('update_success')?></p>
 
 			<div class="table-header button-height">
 				<div class="float-right">
                     <form method="post" action="<?=site_url('employee/user/search')?>">
-					Search&nbsp;<input type="text" name="table_search" id="table_search" value="" class="input mid-margin-left">
-				    </form>
+					Search&nbsp;<input type="text" name="table_search" id="table_search" value="<?=$this->session->userdata('user_search')?>" class="input mid-margin-left">
+				    <?=form_dropdown('table_group',$groups,$this->session->userdata('user_group'),'id="group" class="select white-gradient glossy" ');?>
+                    <input type="submit" class="button blue-gradient glossy" value="Go" />
+                    </form>
                 </div>
                 
 				Show&nbsp;
@@ -34,7 +36,7 @@
 						<th scope="col" width="7%">ID</th>
 						<th scope="col" class="align-left hide-on-mobile">Nama User</th>
 						<th scope="col" class="align-left hide-on-mobile">Nama Kelompok</th>
-						<th scope="col" width="100" class="align-right">Actions</th>
+						<th scope="col" class="align-center hide-on-mobile" width="100" class="align-right">Actions</th>
 					</tr>
 				</thead>
 
@@ -53,13 +55,9 @@
 					<tr>
 						<td><?=$row['ID'];?></td>
 						<td><?=$row['Name'];?></td>
-						<td><?='-'?></td>
-						<td class="low-padding">
-						  <select onchange="document.location='<?=site_url('employee/user/edit/'.$row['ID'])?>/' + this.options[this.selectedIndex].value " name="validation-select" class="select">
-						      <option selected="selected" value="">Action</option>
-						      <option value="1">Edit Group</option>
-						      <option value="0">Remove Group</option>
-						  </select>
+						<td><?=$row['GroupDurationName'];?></td>
+						<td class="low-padding align-center">
+                            <a href="<?=site_url('employee/user/edit/'.$row['ID'])?>" class="button white-gradient glossy">Update</a>
 						</td>
 					</tr>
                     <?php endforeach;?>

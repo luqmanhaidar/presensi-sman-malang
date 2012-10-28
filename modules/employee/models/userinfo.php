@@ -19,18 +19,15 @@ class Userinfo extends CI_Model
     
     function getUserData($id)
     {
-        $this->db->select('NGAC_USERINFO.ID as ID,NGAC_USERINFO.Name as Name,NGAC_GROUP.Name as GroupName');   
-		$this->db->where("NGAC_USERINFO.ID",$id);
+        $this->db->select('NGAC_USERINFO.ID as ID,NGAC_USERINFO.Name as Name,NGAC_GROUP_DURATION.GroupDurationName as GroupDurationName');   
         $this->db->join('NGAC_GROUP','NGAC_GROUP.ID=NGAC_USERINFO.GroupID','LEFT');
+        $this->db->join('NGAC_GROUP_DURATION','NGAC_GROUP_DURATION.ID=NGAC_USERINFO.GroupDurationID','LEFT');
+        $this->db->where("NGAC_USERINFO.ID",$id);
         $query    = $this->db->get('NGAC_USERINFO');
-        if ($query->num_rows() > 0):
-            $data = $query->row_array();
-        endif;
-        $query->free_result();
-        return $data;
+        return $query->row_array();
     }
     
-    function getAllRecords($offset='',$paging='',$name=''){
+    function getAllRecords($offset='',$paging='',$name='',$group=''){
         if (!empty($offset))
             $this->db->offset($offset);
         
@@ -38,11 +35,23 @@ class Userinfo extends CI_Model
             $this->db->limit($paging);
         
         if (!empty($name))   
-            $this->db->like('Name',$name);
+            $this->db->like('U.Name',$name);
+        if ($group <> 0)   
+            $this->db->where('U.GroupDurationID',$group);
+                
+        $this->db->select('U.ID,U.Name,G.GroupDurationName');
+        $this->db->join('NGAC_GROUP_DURATION G','G.ID=U.GroupDurationID','LEFT');    
         $this->db->order_by('ID','ASC');
-        $Q = $this->db->get('NGAC_USERINFO');
+        $Q = $this->db->get('NGAC_USERINFO U');
         return $Q->result_array();
     }
-
+    
+    function update()
+    {
+		$id = $this->input->post('ID');
+        $data['GroupDurationID'] = $this->input->post('Group');
+        $this->db->where('ID',$id);
+        $this->db->update('NGAC_USERINFO',$data);
+   }
     
 }

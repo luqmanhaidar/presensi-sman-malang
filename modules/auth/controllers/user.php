@@ -4,21 +4,21 @@
 
 class User extends CI_Controller {
     
-    public function __contruct()
+    function __construct()
     {
         parent::__construct();
+        $this->load->module_model('employee','userinfo'); //load model userinfo form user  
+        $this->load->module_model('employee','log'); //load model log form user  
     }
-    
-	public function index()
+   
+	function index()
 	{
-		$data['content'] = "Testing";
+		$data['title'] = "Login";
 		$this->load->theme('login',$data);
 	}
     
     function do_login() 
-    {	
-        $this->load->module_model('employee','userinfo'); //load model userinfo form user   
-        $this->load->module_model('employee','log'); //load model log form user  
+    {    
 		$password   = $this->input->post("password");
         $username   = $this->input->post("username");  
 		

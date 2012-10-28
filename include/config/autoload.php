@@ -80,7 +80,7 @@ $autoload['helper'] = array('url','common','form');
 |
 */
 
-$autoload['config'] = array('variabel');
+$autoload['config'] = array('variabel','messages');
 
 
 /*
@@ -109,7 +109,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('userinfo');
+$autoload['model'] = array();
 
 
 /* End of file autoload.php */
