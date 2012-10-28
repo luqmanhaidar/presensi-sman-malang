@@ -19,7 +19,7 @@ class User extends CI_Controller {
     
     function do_login() 
     {    
-		$password   = $this->input->post("password");
+		$password   = sha1($this->input->post("password"));
         $username   = $this->input->post("username");  
 		
         if($this->userinfo->checkUser($username,$password)>0): //check jumlah user terdaftar
