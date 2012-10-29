@@ -28,6 +28,17 @@ class Userinfo extends CI_Model
 		return $data;
 	}
     
+    function getSingleDataFromUser(){
+		$data = array();
+		$query    = $this->db->get('NGAC_USERINFO');
+		if ($query->num_rows() > 0):
+           foreach ($query->result_array() as $row):
+             $data[$row['ID']] = $row['ID'];
+           endforeach;  
+		endif;		
+		return $data;
+	}
+    
     
     function getUserData($id)
     {

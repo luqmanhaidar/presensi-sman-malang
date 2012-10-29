@@ -47,7 +47,8 @@ class Others extends CI_Model
         
         if (!empty($type))   
             $this->db->where('OtherType',$type);    
-        //if (!empty($date_start))   
+        if (!empty($date_start))   
+            $this->db->where("OtherDateStart >='".$date_start."' AND OtherDateStart <='".$date_finish."' ");
             //$this->db->where('CONVERT(VARCHAR(10),TransactionTime, 105)>=',$date_start);
             //$this->db->where("(CONVERT(VARCHAR(10),OvertimeDate, 105) BETWEEN '".$date_start."' AND '".$date_finish."')");  
         
