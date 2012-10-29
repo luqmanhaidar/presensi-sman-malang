@@ -27,7 +27,7 @@ class Report extends CI_Controller {
     function personal($offset=0){
         $data['title']  = 'Laporan Individual';
         $data['logs']   =   $this->log->userLog();
-        $data['users']	= $this->userinfo->getSingleDataFromUser();
+        $data['users']	= $this->userinfo->getDataFromUser();
         if($this->session->userdata('personal_paging'))
             $paging = $this->session->userdata('personal_paging');
         else

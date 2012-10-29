@@ -33,14 +33,15 @@
                     
                     <p class="inline-large-label button-height">
 						<label for="large-label-1" class="label">Type<small> ( Var Type )</small></label>
-						<?=form_dropdown('type',config_item('var'),$type,'class="select"')?>
+						<?=form_dropdown('type',config_item('var'),$type,'class="select" id="vartype" onChange="disable_enable();"')?>
                     </p>
-                    
                     
                     
                     <p class="inline-large-label button-height">
 						<label for="large-label-1" class="label">Nilai<small> ( max 100)</small></label>
-						<input type="text" name="value" style="width:90%;" id="large-label-1" class="input medium-margin-right" value="<?php if($value<>'') echo $value['VariabelValue'];  ?>" />
+						<input id="numeric" type="text" name="value" style="width:90%;" id="large-label-1" class="input medium-margin-right" value="<?php if($value<>'') echo $value['VariabelValue'];  ?>" />
+                        <?=form_dropdown('hour',config_item('hour'),'',' id="hour" class="select" style="display:none"')?>
+                        <?=form_dropdown('minute',config_item('minute'),'','id="min" class="select" style="display:none"')?>
                     </p>
 					
 					<p class="button-height">
@@ -53,3 +54,18 @@
             </form>
 
 		</div>
+        
+<script type="text/javascript">
+    function disable_enable(){ 
+         if (document.getElementById('vartype').value=="Waktu (hh:mm)"){
+                document.getElementById('numeric').style.display = 'none';
+                document.getElementById('hour').style.display = '';
+                document.getElementById('min').style.display = '';
+                
+         } else {
+                document.getElementById('numeric').style.display = '';
+                document.getElementById('hour').style.display = 'none';
+                document.getElementById('min').style.display = 'none';
+         }
+    }    
+</script>    
