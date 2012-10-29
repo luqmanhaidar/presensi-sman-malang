@@ -23,6 +23,19 @@
 						<input type="text" name="description" style="width:200%;" id="large-label-1" class="input large-margin-right" value="<?php if($value<>'') echo $value['VariabelDescription'];  ?>" />
                     </p>
                     
+                    <?php
+                        if($value<>''):
+                            $type = $value['VariabelType'];
+                        else:
+                            $type = '';
+                        endif; 
+                    ?>
+                    
+                    <p class="inline-large-label button-height">
+						<label for="large-label-1" class="label">Type<small> ( Var Type )</small></label>
+						<?=form_dropdown('type',config_item('var'),$type,'class="select"')?>
+                    </p>
+                    
                     <p class="inline-large-label button-height">
 						<label for="large-label-1" class="label">Type<small> ( max 100)</small></label>
 						<input type="text" name="type" style="width:90%;" id="large-label-1" class="input medium-margin-right" value="<?php if($value<>'') echo $value['VariabelType'];  ?>" />
