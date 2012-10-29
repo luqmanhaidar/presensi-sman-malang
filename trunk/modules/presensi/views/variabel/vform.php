@@ -36,10 +36,7 @@
 						<?=form_dropdown('type',config_item('var'),$type,'class="select"')?>
                     </p>
                     
-                    <p class="inline-large-label button-height">
-						<label for="large-label-1" class="label">Type<small> ( max 100)</small></label>
-						<input type="text" name="type" style="width:90%;" id="large-label-1" class="input medium-margin-right" value="<?php if($value<>'') echo $value['VariabelType'];  ?>" />
-                    </p>
+                    
                     
                     <p class="inline-large-label button-height">
 						<label for="large-label-1" class="label">Nilai<small> ( max 100)</small></label>
