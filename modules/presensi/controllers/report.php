@@ -35,7 +35,7 @@ class Report extends CI_Controller {
         if($this->session->userdata('personal_search'))
             $search = $this->session->userdata('personal_search');
         else
-            $search = '55555';          
+            $search = 'xxxx';          
         $this->session->set_userdata('log_offset',$offset);
         $data['checks']  = $this->authlog->getAllRecords($offset,$paging,$search,$this->session->userdata('personal_key'),$this->session->userdata('personal_start'),$this->session->userdata('personal_finish'));
         $numrows = COUNT($this->authlog->getAllRecords('','',$search,$this->session->userdata('personal_key'),$this->session->userdata('personal_start'),$this->session->userdata('personal_finish'))); 
@@ -66,5 +66,37 @@ class Report extends CI_Controller {
         $this->session->set_userdata($search);
         redirect('presensi/report/personal',301);
     }
+	
+	function personal_preview(){
+		$export = $this->input->post('export');
+		switch($export):
+			case 0 : $this->personal_print();
+					 break;
+			case 1 : $this->personal_pdf();
+			         break;
+			case 2 : $this->personal_excel();
+			         break;
+		endswitch;
+	}
+	
+	function personal_print(){
+		$data['title']		=	'Laporan Individu';
+        $data['checks']		=	$this->authlog->getAllRecords('','',$this->session->userdata('personal_search'),$this->session->userdata('personal_key'),$this->session->userdata('personal_start'),$this->session->userdata('personal_finish'));
+        $data['page']	    =	'report/vreport';
+		$data['user']		=	$this->session->userdata('personal_search');
+        $this->load->vars($data);
+        $this->load->theme('report/personal',$data);
+	}
+	
+	function personal_pdf(){
+		$this->load->library('pdf');
+		$data['title']		=	'laporan Individu';
+		$data['checks']		=	$this->authlog->getAllRecords('','',$this->session->userdata('personal_search'),$this->session->userdata('personal_key'),$this->session->userdata('personal_start'),$this->session->userdata('personal_finish'));
+		$data['page']	    =	'report/vreport';
+		$data['user']		=	$this->session->userdata('personal_search');
+        $this->load->vars($data);
+        $file = $this->load->theme('report/personal',$data,TRUE);
+		$this->pdf->pdf_create($file,'Laporan Individu');
+	}
     
 }
