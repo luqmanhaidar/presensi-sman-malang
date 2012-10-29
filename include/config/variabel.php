@@ -28,3 +28,5 @@
                                   '07'=>'07','08'=>'08','09'=>'09','10'=>'10','11'=>'11','12'=>'12');
     $config['year']    =   array('2012'=>'2012','2011'=>'2011','2010'=>'2010');
     $config['print']   =   array('0'=>'Print Preview','1'=>'Export Pdf','2'=>'Export Excel'); 
+    $config['var']     =   array('Bilangan Bulat (Menit)'=>'Bilangan Bulat (Menit)','Waktu (hh:mm)'=>'Waktu (hh:mm)','Bilangan Bulat (Jam)'=>'Bilangan Bulat (Jam)',
+                                 'Bilangan Bulat (Rupiah)'=>'Bilangan Bulat (Rupiah)');
