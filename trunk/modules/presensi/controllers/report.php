@@ -12,6 +12,7 @@ class Report extends CI_Controller {
         $this->load->module_model('employee','userinfo'); //load model usergroup form user 
         $this->load->model('excelModel'); //load model authlog form presensi   
         $this->load->library('excel');
+        $this->load->helper('download');
         if(!$this->session->userdata('user')):
             //is_message_loginErr();
             //redirect('auth/user/index',301);
@@ -113,7 +114,11 @@ class Report extends CI_Controller {
     
     function personal_excel()
     {
-		$this->excelModel->personal_excel();
+        $user = $this->session->userdata('personal_search'); 
+        $name = $this->session->userdata('personal_name');    
+		$excel = $this->excelModel->personal_excel($user,$name);
+        $data = file_get_contents("assets/Personal.xlsx"); // Read the file's contents
+        force_download("Laporan-Individu",$data); 
 	}
     
 }
