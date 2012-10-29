@@ -13,7 +13,7 @@
 			<div class="table-header button-height">
 				<div class="float-right">
                     <form method="post" action="<?=site_url('presensi/report/search')?>">
-					<?=form_dropdown('user',$users,'','class="select" style="width:200px"')?>
+					<?=form_dropdown('user',$users,$this->session->userdata('personal_search'),'class="select" style="width:200px"')?>
                     <?=form_dropdown('day',config_item('day'),substr($this->session->userdata('personal_start'),3,2),'class="select"')?>
                     <?=form_dropdown('month',config_item('month'),substr($this->session->userdata('personal_start'),0,2),'class="select"')?>
                     <?=form_dropdown('year',config_item('year'),substr($this->session->userdata('personal_start'),6,4),'class="select"')?>

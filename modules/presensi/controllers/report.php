@@ -10,6 +10,8 @@ class Report extends CI_Controller {
         $this->load->module_model('employee','log'); //load model usergroup form user
         $this->load->model('authlog'); //load model authlog form presensi   
         $this->load->module_model('employee','userinfo'); //load model usergroup form user 
+        $this->load->model('excelModel'); //load model authlog form presensi   
+        $this->load->library('excel');
         if(!$this->session->userdata('user')):
             //is_message_loginErr();
             //redirect('auth/user/index',301);
@@ -69,6 +71,12 @@ class Report extends CI_Controller {
 	
 	function personal_preview(){
 		$export = $this->input->post('export');
+        $row = $this->userinfo->getUserData($this->session->userdata('personal_search'));
+        if(COUNT($row)>0)
+            $this->session->set_userdata('personal_name',$row['Name']);
+        else
+            $this->session->set_userdata('personal_name','-');
+            
 		switch($export):
 			case 0 : $this->personal_print();
 					 break;
@@ -79,8 +87,10 @@ class Report extends CI_Controller {
 		endswitch;
 	}
 	
-	function personal_print(){
+	function personal_print()
+    {
 		$data['title']		=	'Laporan Individu';
+        $data['name']       =   $this->session->userdata('personal_name');
         $data['checks']		=	$this->authlog->getAllRecords('','',$this->session->userdata('personal_search'),$this->session->userdata('personal_key'),$this->session->userdata('personal_start'),$this->session->userdata('personal_finish'));
         $data['page']	    =	'report/vreport';
 		$data['user']		=	$this->session->userdata('personal_search');
@@ -88,15 +98,22 @@ class Report extends CI_Controller {
         $this->load->theme('report/personal',$data);
 	}
 	
-	function personal_pdf(){
+	function personal_pdf()
+    {
 		$this->load->library('pdf');
 		$data['title']		=	'laporan Individu';
+        $data['name']       =   $this->session->userdata('personal_name');
 		$data['checks']		=	$this->authlog->getAllRecords('','',$this->session->userdata('personal_search'),$this->session->userdata('personal_key'),$this->session->userdata('personal_start'),$this->session->userdata('personal_finish'));
 		$data['page']	    =	'report/vreport';
 		$data['user']		=	$this->session->userdata('personal_search');
         $this->load->vars($data);
         $file = $this->load->theme('report/personal',$data,TRUE);
 		$this->pdf->pdf_create($file,'Laporan Individu');
+	}
+    
+    function personal_excel()
+    {
+		$this->excelModel->personal_excel();
 	}
     
 }
