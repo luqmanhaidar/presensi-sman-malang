@@ -22,6 +22,16 @@
 						<label for="large-label-1" class="label">Group Durasi<small>(255 chars max.)</small></label>
 						<?=form_dropdown('Group',$groups,$value['GroupDurationID'],'class="select"')?>
 					</p>
+                    
+                    <p class="inline-large-label button-height">
+						<label for="large-label-1" class="label">Group Durasi<small>(255 chars max.)</small></label>
+						<?=form_dropdown('Work',$works,$value['GroupWork'],'class="select"')?>
+					</p>
+                    
+                    <p class="inline-large-label button-height">
+						<label for="large-label-1" class="label">Group Durasi<small>(255 chars max.)</small></label>
+						<?=form_dropdown('Friday',$friday,$value['GroupFriday'],'class="select"')?>
+					</p>
 					
 					<p class="button-height">
 						<input type="submit" class="button big" value="Simpan" />

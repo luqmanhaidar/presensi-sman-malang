@@ -19,6 +19,28 @@ class Usergroup extends CI_Model
 		return $data;
 	}
     
+    function getDataFromWorkGroup(){
+		$data = array();
+		$query    = $this->db->get('NGAC_GROUP_WORK');
+		if ($query->num_rows() > 0):
+           foreach ($query->result_array() as $row):
+             $data[$row['GroupWorkID']] = $row['GroupWorkName'].' ('.$row['GroupWorkStart'].' s/d '.$row['GroupWorkEnd'].')';
+           endforeach;  
+		endif;		
+		return $data;
+	}
+    
+    function getDataFromFridayGroup(){
+		$data = array();
+		$query    = $this->db->get('NGAC_GROUP_FRIDAY');
+		if ($query->num_rows() > 0):
+           foreach ($query->result_array() as $row):
+             $data[$row['GroupFridayID']] = $row['GroupFridayName'].' ('.$row['GroupFridayStart'].' s/d '.$row['GroupFridayEnd'].')';
+           endforeach;  
+		endif;		
+		return $data;
+	}
+    
     function getCountGroup($id)
     {
         $this->db->join('NGAC_USERINFO U','U.GroupDurationID=G.ID','INNER'); 

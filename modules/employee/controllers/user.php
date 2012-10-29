@@ -56,6 +56,8 @@ class User extends CI_Controller {
         $data['logs']   = $this->log->userLog();
         $data['value']  = $this->userinfo->getUserData($id);
         $data['groups']	= $this->usergroup->getDataFromGroup();
+        $data['works']	= $this->usergroup->getDataFromWorkGroup();
+        $data['friday']	= $this->usergroup->getDataFromFridayGroup();
         $data['page']	= 'user/vform';
 		$this->load->theme('default',$data);
     }

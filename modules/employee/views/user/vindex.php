@@ -34,13 +34,15 @@
 						<th scope="col" width="7%">ID</th>
 						<th scope="col" class="align-left hide-on-mobile">Nama User</th>
 						<th scope="col" class="align-left hide-on-mobile">Nama Kelompok</th>
+                        <th scope="col" class="align-left hide-on-mobile">Work</th>
+                        <th scope="col" class="align-left hide-on-mobile">Friday</th>
 						<th scope="col" class="align-center hide-on-mobile" width="100" class="align-right">Actions</th>
 					</tr>
 				</thead>
 
 				<tfoot>
 					<tr>
-						<td colspan="4">
+						<td colspan="6">
 							<?=COUNT($users).' Data ditemukan.'?>
                             
                             
@@ -54,6 +56,8 @@
 						<td><?=$row['ID'];?></td>
 						<td><?=$row['Name'];?></td>
 						<td><?=$row['GroupDurationName'];?></td>
+                        <td><?=$row['GroupWorkName'];?></td>
+                        <td><?=$row['GroupFridayName'];?></td>
 						<td class="low-padding align-center">
                             <a href="<?=site_url('employee/user/edit/'.$row['ID'])?>" class="button white-gradient glossy">Update</a>
 						</td>
