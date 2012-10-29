@@ -45,8 +45,8 @@ class Other extends CI_Controller {
     {
         $search = array ('other_search'=> $this->input->post('table_search'),
                          'other_type'=> $this->input->post('table_type'),
-                         'other_start' => $this->input->post('day').'-'.$this->input->post('month').'-'.$this->input->post('year'), 
-                         'other_finish'=> $this->input->post('day2').'-'.$this->input->post('month2').'-'.$this->input->post('year2'));    
+                         'other_start' => $this->input->post('month').'/'.$this->input->post('day').'/'.$this->input->post('year'), 
+                         'other_finish'=> $this->input->post('month2').'/'.$this->input->post('day2').'/'.$this->input->post('year2'));    
         $this->session->set_userdata($search);
         redirect('presensi/other/index',301);
     }

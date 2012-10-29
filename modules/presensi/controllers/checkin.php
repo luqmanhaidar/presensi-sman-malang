@@ -45,8 +45,8 @@ class Checkin extends CI_Controller {
     {
         $search = array ('log_search' => $this->input->post('table_search'),
                          'log_key'    => $this->input->post('key'),
-                         'date_start' => $this->input->post('day').'-'.$this->input->post('month').'-'.$this->input->post('year'), 
-                         'date_finish'=> $this->input->post('day2').'-'.$this->input->post('month2').'-'.$this->input->post('year2'));    
+                         'date_start' => $this->input->post('month').'/'.$this->input->post('day').'/'.$this->input->post('year'), 
+                         'date_finish'=> $this->input->post('month2').'/'.$this->input->post('day2').'/'.$this->input->post('year2'));    
         $this->session->set_userdata($search);
         redirect('presensi/checkin/index',301);
     }

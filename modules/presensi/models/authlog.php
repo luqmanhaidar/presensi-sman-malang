@@ -44,26 +44,27 @@ class Authlog extends CI_Model
             $this->db->limit($paging);
         
         if (!empty($name))   
-            $this->db->like('UserID',$name);
+            $this->db->like('NGAC_AUTHLOG.UserID',$name);
             
         if (!empty($key))   
-            $this->db->where('FunctionKey',$key);   
+            $this->db->where('NGAC_AUTHLOG.FunctionKey',$key);   
         
         if (!empty($date_start))   
-            //$this->db->where('CONVERT(VARCHAR(10),TransactionTime, 105)>=',$date_start);
-            $this->db->where("(CONVERT(VARCHAR(10),TransactionTime, 105) BETWEEN '".$date_start."' AND '".$date_finish."')");  
+            $this->db->where("TransactionTime >='".$date_start."' AND TransactionTime <='".$date_finish."' ");  
         
-        if (!empty($date_finish))   
+        //if (!empty($date_finish))   
             //$this->db->where('CONVERT(VARCHAR(10),TransactionTime, 105)<=',$date_finish);          
         //$this->db->select('G.ID,G.GroupDurationName,G.Start,G.Finish'); 
         //$this->db->order_by('UserID','ASC');
         //$this->db->order_by('FunctionKey','ASC');
-        $this->db->order_by('IndexKey','DESC');
-        $this->db->order_by('TransactionTime','ASC');
-        $this->db->order_by('UserID','ASC');
-        $this->db->where_not_in('FunctionKey',0);
-        $this->db->where_not_in('UserID','');
-        $Q = $this->db->get('NGAC_AUTHLOG A');
+        //$this->db->order_by('NGAC_AUTHLOG.IndexKey','DESC');
+        $this->db->select('NGAC_AUTHLOG.IndexKey,NGAC_AUTHLOG.UserID,NGAC_USERINFO.Name,NGAC_AUTHLOG.FunctionKey,NGAC_AUTHLOG.TransactionTime');
+        $this->db->join('NGAC_USERINFO','NGAC_USERINFO.ID=NGAC_AUTHLOG.UserID');
+        //$this->db->order_by('NGAC_AUTHLOG.TransactionTime','ASC');
+        //$this->db->order_by('NGAC_AUTHLOG.UserID','ASC');
+        $this->db->where_not_in('NGAC_AUTHLOG.FunctionKey',0);
+        //$this->db->where_not_in('NGAC_AUTHLOG.UserID','');
+        $Q = $this->db->get('NGAC_AUTHLOG');
         return $Q->result_array();
     }
     

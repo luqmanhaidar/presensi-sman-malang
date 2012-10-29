@@ -47,7 +47,7 @@ class Overtimes extends CI_Model
             
         if (!empty($date_start))   
             //$this->db->where('CONVERT(VARCHAR(10),TransactionTime, 105)>=',$date_start);
-            $this->db->where("(CONVERT(VARCHAR(10),OvertimeDate, 105) BETWEEN '".$date_start."' AND '".$date_finish."')");  
+            $this->db->where("OvertimeDate >='".$date_start."' AND OvertimeDate <='".$date_finish."' ");  
         
         //if (!empty($date_finish))   
             //$this->db->where('CONVERT(VARCHAR(10),TransactionTime, 105)<=',$date_finish);          

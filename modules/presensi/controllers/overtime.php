@@ -44,8 +44,8 @@ class Overtime extends CI_Controller {
     function search()
     {
         $search = array ('overtime_search'=> $this->input->post('table_search'),
-                         'overtime_start' => $this->input->post('day').'-'.$this->input->post('month').'-'.$this->input->post('year'), 
-                         'overtime_finish'=> $this->input->post('day2').'-'.$this->input->post('month2').'-'.$this->input->post('year2'));    
+                         'overtime_start' => $this->input->post('month').'/'.$this->input->post('day').'/'.$this->input->post('year'), 
+                         'overtime_finish'=> $this->input->post('month2').'/'.$this->input->post('day2').'/'.$this->input->post('year2'));    
         $this->session->set_userdata($search);
         redirect('presensi/overtime/index',301);
     }
