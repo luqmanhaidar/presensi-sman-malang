@@ -5,10 +5,10 @@
 </head>
 <body>
  <table style="margin:0 auto;width:80%;border-collapse:collapse;background:#ecf3eb">
-    <caption><h3><?=$title?></h3></caption>
+    <caption><h3><?=$title?> </h3></caption>
 	<thead>
 		<tr>
-			<th class="align-left darkgrey" colspan="4"><?=$user?></th>
+			<th class="align-left darkgrey" colspan="4"><?=$user.'-'.$name?></th>
 		</tr>
 		<tr>
 			<th>No</th>

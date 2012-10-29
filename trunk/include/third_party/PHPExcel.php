@@ -27,10 +27,10 @@
 
 
 /** PHPExcel root directory */
-//if (!defined('ROOT')) {
-        //define('ROOT', dirname(__FILE__) . '/');
-        //require(ROOT . 'PHPExcel/Autoloader.php');
-		require_once(APPPATH."third_party/PHPExcel/Autoloader.php");//Require Loader Class n Config
+if (!defined('ROOT')) {
+        define('ROOT', dirname(__FILE__) . '/');
+        require(ROOT . 'PHPExcel/Autoloader.php');
+		//require_once(APPPATH."third_party/PHPExcel/Autoloader.php");//Require Loader Class n Config
 		
         Autoloader::Register();
         Shared_ZipStreamWrapper::register();
@@ -38,7 +38,7 @@
         if (ini_get('mbstring.func_overload') & 2) {
                 throw new Exception('Multibyte function overloading in PHP must be disabled for string functions (2).');
         }
-//}
+}
 
 
 /**
