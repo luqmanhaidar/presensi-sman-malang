@@ -10,7 +10,8 @@ class Report extends CI_Controller {
         $this->load->module_model('employee','log'); //load model usergroup form user
         $this->load->model('authlog'); //load model authlog form presensi   
         $this->load->module_model('employee','userinfo'); //load model usergroup form user 
-        $this->load->model('excelModel'); //load model authlog form presensi   
+        $this->load->module_model('employee','usergroup'); //load model usergroup form user
+		$this->load->model('excelModel'); //load model authlog form presensi   
         $this->load->library('excel');
         $this->load->helper('download');
         $this->load->helper('date');
@@ -123,20 +124,22 @@ class Report extends CI_Controller {
     function monthly($offset=0){
         $data['title']  = 'Laporan Bulanan';
         $data['logs']   =   $this->log->userLog();
-        $data['users']	= $this->userinfo->getDataFromUser();
+        $data['groups']	= $this->usergroup->getDataFromPosition();
         if($this->session->userdata('month_paging'))
             $paging = $this->session->userdata('month_paging');
         else
             $paging = config_item('paging');
         if($this->session->userdata('month_search')):
+			$group = $this->session->userdata('month_group');
             $month = $this->session->userdata('month_search');
             $year  = $this->session->userdata('year_search');
         else:
-            $month = '00';   
-            $year  = '2020';
+			$group = 1;
+            $month = '09';   
+            $year  = '2012';
         endif;           
         $this->session->set_userdata('month_offset',$offset);
-        $data['checks']  = $this->authlog->getPerMonthRecords($offset,$paging,$month,$year);
+        $data['checks']  = $this->authlog->getPerMonthRecords($offset,$paging,$month,$year,$group);
         $numrows = COUNT($this->authlog->getPerMonthRecords('','',$month,$year)); 
         if ($numrows > $paging):
             $config['base_url']   = site_url('presensi/report/monthly/');
@@ -159,6 +162,7 @@ class Report extends CI_Controller {
     function month_search()
     {
         $search = array ('month_search' => $this->input->post('month'),
+						 'month_group'  => $this->input->post('group'),
                          'year_search'  => $this->input->post('year'));    
         $this->session->set_userdata($search);
         redirect('presensi/report/monthly',301);
@@ -180,7 +184,8 @@ class Report extends CI_Controller {
 	function month_print()
     {
 		$data['title']		=	'Laporan Presensi Bulan  '.indonesian_monthName($this->session->userdata('month_search')).' '.$this->session->userdata('year_search');
-		$data['checks']		=	$this->authlog->getPerMonthRecords('','',$this->session->userdata('month_search'),$this->session->userdata('year_search'));
+		$data['position']	=	$this->usergroup->getPositionData($this->session->userdata('month_group'));
+		$data['checks']		=	$this->authlog->getPerMonthRecords('','',$this->session->userdata('month_search'),$this->session->userdata('year_search'),$this->session->userdata('month_group'));
         $this->load->vars($data);
         $this->load->theme('report/month',$data);
 	}
@@ -189,7 +194,7 @@ class Report extends CI_Controller {
     {
 		$this->load->library('pdf');
 		$data['title']		=	'Laporan Presensi Bulan '.indonesian_monthName($this->session->userdata('month_search')).' '.$this->session->userdata('year_search');
-        $data['checks']		=	$this->authlog->getPerMonthRecords('','',$this->session->userdata('month_search'),$this->session->userdata('year_search'));
+        $data['checks']		=	$this->authlog->getPerMonthRecords('','',$this->session->userdata('month_search'),$this->session->userdata('year_search'),$this->session->userdata('month_group'));
 		$this->load->vars($data);
         $file = $this->load->theme('report/month',$data,TRUE);
 		$this->pdf->pdf_create($file,$data['title']);
