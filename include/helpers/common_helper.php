@@ -110,3 +110,56 @@ function functionKey($key)
             break;    
     }  
 }
+
+function indonesianDayName($dayname)
+{
+    switch($dayname){
+        case "Monday" :
+            return "Senin";
+            break;   
+        case "Tuesday" :
+            return "Selasa";
+            break;
+        case "Wednesday";
+            return "Rabu";
+            break;
+        case "Thursday";
+            return "Kamis";
+            break;
+        case "Friday";
+            return "Jumat";
+            break;
+        case "Saturday";
+            return "Sabtu";
+            break;
+        case "Sunday";
+            return "Minggu";
+            break;
+    }
+}
+
+function code($num){
+    if($num<10)
+        return '0'.$num;
+    else
+        return $num;    
+}
+
+function numericToTime($total){
+    if($total>=3600)
+        $hour = code($total % 3600);
+    else
+        $hour = '00'; 
+     
+    if($hour>=60)
+        $minute =  code($hour % 60);
+    else
+        $minute = "00";
+    
+    if($minute>0)
+        $second = code($minute);
+    else
+        $second = "00";
+    
+    return $hour.':'.$minute.':'.$second;                      
+}              
