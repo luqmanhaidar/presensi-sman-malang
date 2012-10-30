@@ -9,6 +9,7 @@ class Report extends CI_Controller {
 		parent::__construct();
         $this->load->module_model('employee','log'); //load model usergroup form user
         $this->load->model('authlog'); //load model authlog form presensi   
+        $this->load->model('authprocess'); //load model authprocess form presensi   
         $this->load->module_model('employee','userinfo'); //load model usergroup form user 
         $this->load->module_model('employee','usergroup'); //load model usergroup form user
 		$this->load->model('excelModel'); //load model authlog form presensi   
@@ -140,7 +141,7 @@ class Report extends CI_Controller {
         endif;           
         $this->session->set_userdata('month_offset',$offset);
         $data['checks']  = $this->authlog->getPerMonthRecords($offset,$paging,$month,$year,$group);
-        $numrows = COUNT($this->authlog->getPerMonthRecords('','',$month,$year)); 
+        $numrows = COUNT($this->authlog->getPerMonthRecords('','',$month,$year,$group)); 
         if ($numrows > $paging):
             $config['base_url']   = site_url('presensi/report/monthly/');
             $config['total_rows'] = $numrows;
@@ -199,4 +200,68 @@ class Report extends CI_Controller {
         $file = $this->load->theme('report/month',$data,TRUE);
 		$this->pdf->pdf_create($file,$data['title']);
 	}
+    
+    function weekly($offset=0){
+        $data['title']  = 'Laporan Mingguan';
+        $data['logs']   =   $this->log->userLog();
+        $data['groups']	= $this->usergroup->getDataFromPosition();
+        if($this->session->userdata('week_paging'))
+            $paging = $this->session->userdata('week_paging');
+        else
+            $paging = config_item('paging');
+        if($this->session->userdata('week_month')):
+			$group = $this->session->userdata('week_group');
+            $month = $this->session->userdata('week_month');
+            $year  = $this->session->userdata('week_year');
+        else:
+			$group = 100;
+            $month = '09';   
+            $year  = '2012';
+        endif;           
+        $this->session->set_userdata('week_offset',$offset);
+        $data['checks']  = $this->authprocess->getAllRecords($offset,$paging);
+        $numrows = COUNT($this->authprocess->getAllRecords()); 
+        if ($numrows > $paging):
+            $config['base_url']   = site_url('presensi/report/weekly/');
+            $config['total_rows'] = $numrows;
+            $config['per_page']   = $paging;
+            $config['uri_segment']= 4;
+            $this->pagination->initialize($config);	 
+            $data['pagination']   = $this->pagination->create_links();
+        endif;    
+        $data['page']	= 'report/vweek';
+		$this->load->theme('default',$data);
+    }
+    
+    function week_search()
+    {
+        $month = $this->input->post('month');
+        $year  = $this->input->post('year');
+        $group = $this->input->post('group');
+        $search = array ('week_month' => $this->input->post('month'),
+						 'week_group'  => $this->input->post('group'),
+                         'week_year'  => $this->input->post('year'));    
+        $this->session->set_userdata($search);
+        $this->authprocess->removeAll();
+        
+        /** Query Insert ke AuthProcess **/
+        $query = $this->authlog->getPerWeekRecords($month,$year,$group,1);
+        foreach($query as $row):
+            $this->authprocess->save($row['UserID'],$row['TransactionTime']);
+        endforeach;
+        
+        /** Query Update ke AuthProcess **/
+        $query = $this->authlog->getPerWeekRecords($month,$year,$group,2);
+        foreach($query as $row):
+            $this->authprocess->update($row['UserID'],$row['MyDate'],$row['TransactionTime']);
+        endforeach;
+        redirect('presensi/report/weekly',301);
+        
+    }
+    
+    function week_paging($per_page)
+    {
+        $this->session->set_userdata('week_paging',$per_page);
+        redirect('presensi/report/weekly');
+    }
 }

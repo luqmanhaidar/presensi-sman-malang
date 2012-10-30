@@ -48,7 +48,7 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'L-20-PC\SQLEXPRESS';
+$db['default']['hostname'] = 'SUHE-PC\SQLEXPRESS';
 $db['default']['username'] = 'sa';
 $db['default']['password'] = 'm3mmm';
 $db['default']['database'] = 'NitgenAccessManager';
