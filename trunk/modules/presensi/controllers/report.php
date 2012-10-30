@@ -191,6 +191,7 @@ class Report extends CI_Controller {
 		$data['title']		=	'Laporan Presensi Bulan '.indonesian_monthName($this->session->userdata('month_search')).' '.$this->session->userdata('year_search');
         $data['checks']		=	$this->authlog->getPerMonthRecords('','',$this->session->userdata('month_search'),$this->session->userdata('year_search'));
 		$this->load->vars($data);
-        $this->load->theme('report/month',$data);
+        $file = $this->load->theme('report/month',$data,TRUE);
+		$this->pdf->pdf_create($file,$data['title']);
 	}
 }
