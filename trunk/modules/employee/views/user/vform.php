@@ -24,12 +24,12 @@
 					</p>
                     
                     <p class="inline-large-label button-height">
-						<label for="large-label-1" class="label">Group Durasi<small>(255 chars max.)</small></label>
+						<label for="large-label-1" class="label">Senin-Kamis<small>(255 chars max.)</small></label>
 						<?=form_dropdown('Work',$works,$value['GroupWork'],'class="select"')?>
 					</p>
                     
                     <p class="inline-large-label button-height">
-						<label for="large-label-1" class="label">Group Durasi<small>(255 chars max.)</small></label>
+						<label for="large-label-1" class="label">Jumat<small>(255 chars max.)</small></label>
 						<?=form_dropdown('Friday',$friday,$value['GroupFriday'],'class="select"')?>
 					</p>
 					
