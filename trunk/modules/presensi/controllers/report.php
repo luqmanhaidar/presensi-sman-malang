@@ -13,7 +13,8 @@ class Report extends CI_Controller {
         $this->load->model('excelModel'); //load model authlog form presensi   
         $this->load->library('excel');
         $this->load->helper('download');
-        if(!$this->session->userdata('user')):
+        $this->load->helper('date');
+		if(!$this->session->userdata('user')):
             //is_message_loginErr();
             //redirect('auth/user/index',301);
         endif;    
@@ -178,9 +179,18 @@ class Report extends CI_Controller {
 	
 	function month_print()
     {
-		$data['title']		=	'Laporan Bulanan';
-        $data['checks']		=	$this->authlog->getPerMonthRecords('','',$this->session->userdata('month_search'),$this->session->userdata('year_search'));
+		$data['title']		=	'Laporan Presensi Bulan  '.indonesian_monthName($this->session->userdata('month_search')).' '.$this->session->userdata('year_search');
+		$data['checks']		=	$this->authlog->getPerMonthRecords('','',$this->session->userdata('month_search'),$this->session->userdata('year_search'));
         $this->load->vars($data);
+        $this->load->theme('report/month',$data);
+	}
+	
+	function month_pdf()
+    {
+		$this->load->library('pdf');
+		$data['title']		=	'Laporan Presensi Bulan '.indonesian_monthName($this->session->userdata('month_search')).' '.$this->session->userdata('year_search');
+        $data['checks']		=	$this->authlog->getPerMonthRecords('','',$this->session->userdata('month_search'),$this->session->userdata('year_search'));
+		$this->load->vars($data);
         $this->load->theme('report/month',$data);
 	}
 }
