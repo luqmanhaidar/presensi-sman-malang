@@ -134,7 +134,7 @@ class Report extends CI_Controller {
             $month = $this->session->userdata('month_search');
             $year  = $this->session->userdata('year_search');
         else:
-			$group = 1;
+			$group = 100;
             $month = '09';   
             $year  = '2012';
         endif;           
