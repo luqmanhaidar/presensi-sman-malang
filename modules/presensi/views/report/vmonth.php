@@ -29,15 +29,14 @@
 						<th scope="col" width="5%">No</th>
 						<th scope="col" width="10%" class="align-left hide-on-mobile">ID User</th>
                         <th scope="col" class="align-left hide-on-mobile">Nama</th>
-                        <th scope="col" width="20%">Func Key</th>
-                        <th scope="col">Tanggal</th>
-                        <th scope="col">Jam</th>
+                        <th scope="col">Tgl Awal</th>
+						<th scope="col">Tgl.Akhir</th>
 					</tr>
 				</thead>
 
 				<tfoot>
 					<tr>
-						<td colspan="7">
+						<td colspan="5">
 							<?=COUNT($checks).' Data ditemukan.'?>
 						</td>
 					</tr>
@@ -45,18 +44,17 @@
 
 				<tbody>
 					<?php 
-                        $i=1;
+                        $x=1;
                         foreach($checks as $row):?>
 					<tr>
-						<td><?=$i;?></td>
+						<td><?=$x;?></td>
 						<td><?=$row['UserID'];?></td>
                         <td><?=$row['Name'];?></td>
-                        <td><?=$row['FunctionKey']?> (<?=functionKey($row['FunctionKey']);?>)</td>
-                        <td><?=indonesian_shortDate($row['TransactionTime']);?></td>
-                        <td><?=substr($row['TransactionTime'],11,8);?></td>
+                        <td><?=indonesian_shortDate($row['TransactionTime']).' '.substr($row['TransactionTime'],11,8);?></td>
+						<td><?=indonesian_shortDate($row['TransactionTimeMax']) .' '.substr($row['TransactionTimeMax'],11,8);?></td>
 					</tr>
                     <?php 
-                        $i++;
+                        $x=$x+1;
                         endforeach;?>
 				
 				</tbody>
