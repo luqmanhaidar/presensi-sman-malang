@@ -27,12 +27,18 @@
 
 				<thead>
 					<tr>
-						<th scope="col" width="5%">No</th>
-						<th scope="col" width="10%" class="align-left hide-on-mobile">ID User</th>
+						<th scope="col" width="3%">No</th>
+						<th scope="col" width="5%" class="align-left hide-on-mobile">ID</th>
                         <th scope="col" class="align-left hide-on-mobile">Nama</th>
+                        <th scope="col" class="align-left hide-on-mobile">M</th>
+                        <th scope="col" class="align-left hide-on-mobile">Hari</th>
 						<th scope="col" class="align-left hide-on-mobile">Tanggal</th>
-                        <th scope="col">Jam Masuk</th>
-						<th scope="col">jam Keluar</th>
+                        <th scope="col">WMK</th>
+                        <th scope="col">Masuk</th>
+                        <th scope="col">WSK</th>
+						<th scope="col">Pulang</th>
+                        <th scope="col">Telat</th>
+                        <th scope="col">PulCep</th>
 					</tr>
 				</thead>
 
@@ -52,9 +58,65 @@
 						<td><?=$x;?></td>
 						<td><?=$row['UserID'];?></td>
                         <td><?=$row['Name'];?></td>
+                         <td><?=$row['W'];?></td>
+                        <td><?=indonesianDayName($row['DayName']);?></td>
 						<td><?=$row['MyDate'];?></td>
-                        <td><?=$row['MyTimeStart'];?></td>
+                        <td>
+                        <?php
+                            $sk1 = (6 * 3600) + (30*60) + (0);
+                            $dt1 = (6 * 3600) + (45*60) + (0);
+                            
+                            
+                            $sk2 = (7 * 3600) + (0*60) + (0);
+                            $dt2 = (7 * 3600) + (15*60) + (0);
+                            $wm = (substr($row['MyTimeStart'],0,2) * 3600) + (substr($row['MyTimeStart'],3,2)*60) + (substr($row['MyTimeStart'],6,2));
+                            //echo $dt1."<br/>"; 
+                            //echo $dt2;
+                            if(($row['DayName']<>'Saturday') && ($wm >= $sk1)):
+                                $wmk = '07:00:00';
+                                $dt  = $dt2;
+                                $sk  = $sk2;
+                                if($row['DayName']<>"Friday")
+                                    $wpk = '15:30:00';
+                                else
+                                    $wpk = '15:00:00';    
+                            else:
+                                $wmk = '06:30:00';
+                                $dt  = $dt1;
+                                $sk  = $sk1;
+                                if($row['DayName']<>"Friday")
+                                    $wpk = '15:00:00';
+                                else
+                                    $wpk = '14:00:00';  
+                            endif;
+                            echo $wmk;
+                        ?>
+                        </td>
+                        <td><?=$row['MyTimeStart'];?><br />
+                        <?php
+                            //echo substr($row['MyTimeStart'],6,2);
+                            //$wm = (substr($row['MyTimeStart'],0,2) * 3600) + (substr($row['MyTimeStart'],3,2)*60) + (substr($row['MyTimeStart'],6,2));
+                            //echo $wm;
+                        ?>    
+                        </td>
+                        <td><?=$wpk;?></td>
 						<td><?=$row['MyTimeEnd'];?></td>
+                        <td>
+                            <?php
+                               if ($wm > $dt):
+                                    $d = $wm - $sk;
+                                    $hours = code(floor($d / 3600));
+                                    $mins = code(floor(($d - ($hours*3600)) / 60));
+                                    $seconds = code($d % 60);
+                                    $time = $hours.':'.$mins.':'.$seconds;     
+                               else:
+                                    $d = "-";
+                                    $time = "-";
+                               endif;          
+                               echo $time; 
+                            ?>
+                        </td>
+                        <td><?=$row['MyTimeEnd'];?></td>
 					</tr>
                     <?php 
                         $x=$x+1;
