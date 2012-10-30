@@ -68,7 +68,7 @@ class Authlog extends CI_Model
         return $Q->result_array();
     }
     
-    function getPerMonthRecords($offset='',$paging='',$month='',$year=''){
+    function getPerMonthRecords($offset='',$paging='',$month='',$year='',$group=''){
         if (!empty($offset))
             $this->db->offset($offset);
         
@@ -79,13 +79,16 @@ class Authlog extends CI_Model
             $this->db->where("datepart(MONTH,transactiontime)='".$month."'");  
             
         if (!empty($year))   
-            $this->db->where("datepart(YEAR,transactiontime)='".$year."'");    
+            $this->db->where("datepart(YEAR,transactiontime)='".$year."'");
+			
+		if (!empty($group))   
+            $this->db->where("GroupID=".$group);		
         
         //$this->db->select('NGAC_AUTHLOG.IndexKey,NGAC_AUTHLOG.UserID,NGAC_USERINFO.Name,NGAC_AUTHLOG.FunctionKey,NGAC_AUTHLOG.TransactionTime');
-		$this->db->select('NGAC_AUTHLOG.UserID,NGAC_USERINFO.Name,MIN(NGAC_AUTHLOG.TransactionTime) as TransactionTime,MAX(NGAC_AUTHLOG.TransactionTime) as TransactionTimeMax');
+		$this->db->select('NGAC_AUTHLOG.UserID,NGAC_USERINFO.Name,NGAC_USERINFO.Department,MIN(NGAC_AUTHLOG.TransactionTime) as TransactionTime,MAX(NGAC_AUTHLOG.TransactionTime) as TransactionTimeMax');
         $this->db->join('NGAC_USERINFO','NGAC_USERINFO.ID=NGAC_AUTHLOG.UserID');
         $this->db->where_not_in('NGAC_USERINFO.Privilege',1);
-        $this->db->group_by('NGAC_AUTHLOG.UserID,NGAC_USERINFO.Name');
+        $this->db->group_by('NGAC_AUTHLOG.UserID,NGAC_USERINFO.Name,NGAC_USERINFO.Department');
 		$Q = $this->db->get('NGAC_AUTHLOG');
         return $Q->result_array();
     }

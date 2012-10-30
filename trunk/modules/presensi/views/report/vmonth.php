@@ -13,7 +13,8 @@
 			<div class="table-header button-height">
 				<div class="float-right">
                     <form method="post" action="<?=site_url('presensi/report/month_search')?>">
-                    <?=form_dropdown('month',config_item('month'),$this->session->userdata('month_search'),'class="select"')?>
+                    <?=form_dropdown('group',$groups,$this->session->userdata('month_group'),'id="group" class="select white-gradient glossy" ');?>
+					<?=form_dropdown('month',config_item('month'),$this->session->userdata('month_search'),'class="select"')?>
                     <?=form_dropdown('year',config_item('year'),$this->session->userdata('year_search'),'class="select"')?>
                     <input type="submit" class="button blue-gradient glossy" value="Go" />
                     </form>
@@ -29,6 +30,7 @@
 						<th scope="col" width="5%">No</th>
 						<th scope="col" width="10%" class="align-left hide-on-mobile">ID User</th>
                         <th scope="col" class="align-left hide-on-mobile">Nama</th>
+						<th scope="col" class="align-left hide-on-mobile">Bagian</th>
                         <th scope="col">Tgl Awal</th>
 						<th scope="col">Tgl.Akhir</th>
 					</tr>
@@ -50,6 +52,7 @@
 						<td><?=$x;?></td>
 						<td><?=$row['UserID'];?></td>
                         <td><?=$row['Name'];?></td>
+						<td><?=$row['Department'];?></td>
                         <td><?=indonesian_shortDate($row['TransactionTime']).' '.substr($row['TransactionTime'],11,8);?></td>
 						<td><?=indonesian_shortDate($row['TransactionTimeMax']) .' '.substr($row['TransactionTimeMax'],11,8);?></td>
 					</tr>
