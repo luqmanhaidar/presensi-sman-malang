@@ -81,12 +81,30 @@ class Authlog extends CI_Model
         if (!empty($year))   
             $this->db->where("datepart(YEAR,transactiontime)='".$year."'");    
         
-        $this->db->select('NGAC_AUTHLOG.IndexKey,NGAC_AUTHLOG.UserID,NGAC_USERINFO.Name,NGAC_AUTHLOG.FunctionKey,NGAC_AUTHLOG.TransactionTime');
+        //$this->db->select('NGAC_AUTHLOG.IndexKey,NGAC_AUTHLOG.UserID,NGAC_USERINFO.Name,NGAC_AUTHLOG.FunctionKey,NGAC_AUTHLOG.TransactionTime');
+		$this->db->select('NGAC_AUTHLOG.UserID,NGAC_USERINFO.Name,MIN(NGAC_AUTHLOG.TransactionTime) as TransactionTime,MAX(NGAC_AUTHLOG.TransactionTime) as TransactionTimeMax');
         $this->db->join('NGAC_USERINFO','NGAC_USERINFO.ID=NGAC_AUTHLOG.UserID');
-        //$this->db->where_not_in('NGAC_AUTHLOG.FunctionKey',0);
-        $Q = $this->db->get('NGAC_AUTHLOG');
+        $this->db->where_not_in('NGAC_USERINFO.Privilege',1);
+        $this->db->group_by('NGAC_AUTHLOG.UserID,NGAC_USERINFO.Name');
+		$Q = $this->db->get('NGAC_AUTHLOG');
         return $Q->result_array();
     }
+	
+	function getUserTime($day,$user,$key){
+		$this->db->select('CONVERT(VARCHAR(8),TransactionTime, 108) AS MyTime');
+		$this->db->where("datepart(DAY,transactiontime)='".$day."'");
+		$this->db->where("datepart(MONTH,transactiontime)='".$this->session->userdata('month_search')."'");
+		$this->db->where("datepart(YEAR,transactiontime)='".$this->session->userdata('year_search')."'");
+		$this->db->where('NGAC_AUTHLOG.FunctionKey',$key);
+		$this->db->where('NGAC_AUTHLOG.UserID',$user);
+		$Q = $this->db->get('NGAC_AUTHLOG');
+        $row = $Q->row_array();
+		if ($row)
+			$value = $row['MyTime'];
+		else
+			$value = '-';
+		return $value;
+	}
     
     function save()
     {

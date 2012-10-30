@@ -93,7 +93,6 @@ class Report extends CI_Controller {
 		$data['title']		=	'Laporan Individu';
         $data['name']       =   $this->session->userdata('personal_name');
         $data['checks']		=	$this->authlog->getAllRecords('','',$this->session->userdata('personal_search'),$this->session->userdata('personal_key'),$this->session->userdata('personal_start'),$this->session->userdata('personal_finish'));
-        $data['page']	    =	'report/vreport';
 		$data['user']		=	$this->session->userdata('personal_search');
         $this->load->vars($data);
         $this->load->theme('report/personal',$data);
@@ -105,7 +104,6 @@ class Report extends CI_Controller {
 		$data['title']		=	'laporan Individu';
         $data['name']       =   $this->session->userdata('personal_name');
 		$data['checks']		=	$this->authlog->getAllRecords('','',$this->session->userdata('personal_search'),$this->session->userdata('personal_key'),$this->session->userdata('personal_start'),$this->session->userdata('personal_finish'));
-		$data['page']	    =	'report/vreport';
 		$data['user']		=	$this->session->userdata('personal_search');
         $this->load->vars($data);
         $file = $this->load->theme('report/personal',$data,TRUE);
@@ -138,7 +136,7 @@ class Report extends CI_Controller {
         endif;           
         $this->session->set_userdata('month_offset',$offset);
         $data['checks']  = $this->authlog->getPerMonthRecords($offset,$paging,$month,$year);
-        $numrows = COUNT($this->authlog->getAllRecords('','',$month,$year)); 
+        $numrows = COUNT($this->authlog->getPerMonthRecords('','',$month,$year)); 
         if ($numrows > $paging):
             $config['base_url']   = site_url('presensi/report/monthly/');
             $config['total_rows'] = $numrows;
@@ -164,5 +162,25 @@ class Report extends CI_Controller {
         $this->session->set_userdata($search);
         redirect('presensi/report/monthly',301);
     }
-    
+	
+	function month_preview(){
+		$export = $this->input->post('export');
+            
+		switch($export):
+			case 0 : $this->month_print();
+					 break;
+			case 1 : $this->month_pdf();
+			         break;
+			case 2 : $this->month_excel();
+			         break;
+		endswitch;
+	}
+	
+	function month_print()
+    {
+		$data['title']		=	'Laporan Bulanan';
+        $data['checks']		=	$this->authlog->getPerMonthRecords('','',$this->session->userdata('month_search'),$this->session->userdata('year_search'));
+        $this->load->vars($data);
+        $this->load->theme('report/month',$data);
+	}
 }
