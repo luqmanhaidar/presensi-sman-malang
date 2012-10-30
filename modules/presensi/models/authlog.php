@@ -88,6 +88,7 @@ class Authlog extends CI_Model
 		$this->db->select('NGAC_AUTHLOG.UserID,NGAC_USERINFO.Name,NGAC_USERINFO.Department,MIN(NGAC_AUTHLOG.TransactionTime) as TransactionTime,MAX(NGAC_AUTHLOG.TransactionTime) as TransactionTimeMax');
         $this->db->join('NGAC_USERINFO','NGAC_USERINFO.ID=NGAC_AUTHLOG.UserID');
         $this->db->where_not_in('NGAC_USERINFO.Privilege',1);
+        $this->db->where('AuthResult','0');
         $this->db->group_by('NGAC_AUTHLOG.UserID,NGAC_USERINFO.Name,NGAC_USERINFO.Department');
 		$Q = $this->db->get('NGAC_AUTHLOG');
         return $Q->result_array();
@@ -99,6 +100,7 @@ class Authlog extends CI_Model
 		$this->db->where("datepart(MONTH,transactiontime)='".$this->session->userdata('month_search')."'");
 		$this->db->where("datepart(YEAR,transactiontime)='".$this->session->userdata('year_search')."'");
 		$this->db->where('NGAC_AUTHLOG.FunctionKey',$key);
+        $this->db->where('AuthResult','0');
 		$this->db->where('NGAC_AUTHLOG.UserID',$user);
 		$Q = $this->db->get('NGAC_AUTHLOG');
         $row = $Q->row_array();
@@ -108,6 +110,26 @@ class Authlog extends CI_Model
 			$value = '-';
 		return $value;
 	}
+    
+    function getPerWeekRecords($month='',$year='',$group='',$key=''){
+        $this->db->select('NGAC_AUTHLOG.UserID,NGAC_USERINFO.Name,NGAC_USERINFO.Department,NGAC_AUTHLOG.TransactionTime,CONVERT(VARCHAR(10),TransactionTime, 105) as MyDate');
+        if (!empty($month))   
+            $this->db->where("datepart(MONTH,transactiontime)='".$month."'");  
+            
+        if (!empty($year))   
+            $this->db->where("datepart(YEAR,transactiontime)='".$year."'");
+			
+		if (!empty($group))   
+            $this->db->where("GroupID=".$group);
+            
+        if (!empty($key))   
+            $this->db->where("FunctionKey=".$key);
+        $this->db->where_not_in('NGAC_USERINFO.Privilege',1);
+        $this->db->where('AuthResult','0');        	
+        $this->db->join('NGAC_USERINFO','NGAC_USERINFO.ID=NGAC_AUTHLOG.UserID');
+		$Q = $this->db->get('NGAC_AUTHLOG');
+        return $Q->result_array();
+    }
     
     function save()
     {
