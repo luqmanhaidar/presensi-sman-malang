@@ -12,7 +12,7 @@
             
 			<div class="table-header button-height">
 				<div class="float-right">
-                    <form method="post" action="<?=site_url('presensi/report/search')?>">
+                    <form method="post" action="<?=site_url('presensi/report/personal_search')?>">
 					<?=form_dropdown('user',$users,$this->session->userdata('personal_search'),'class="select" style="width:200px"')?>
                     <?=form_dropdown('day',config_item('day'),substr($this->session->userdata('personal_start'),3,2),'class="select"')?>
                     <?=form_dropdown('month',config_item('month'),substr($this->session->userdata('personal_start'),0,2),'class="select"')?>
@@ -91,12 +91,12 @@
         function changeUrl() {
             var redirect;
             redirect = document.getElementById('show').value;
-            document.location.href = '<?=site_url("presensi/report/paging")?>/' + redirect;
+            document.location.href = '<?=site_url("presensi/report/personal_paging")?>/' + redirect;
         }
         
         /*function changeUrl2() {
             var redirect;
             redirect = document.getElementById('show2').value;
-            document.location.href = '<?=site_url("presensi/checkin/paging")?>/' + redirect;
+            document.location.href = '<?=site_url("presensi/checkin/personal_paging")?>/' + redirect;
         }*/
      </script>   

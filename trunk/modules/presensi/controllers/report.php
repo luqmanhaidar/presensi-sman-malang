@@ -54,13 +54,13 @@ class Report extends CI_Controller {
 		$this->load->theme('default',$data);
     }
     
-    function paging($per_page)
+    function personal_paging($per_page)
     {
         $this->session->set_userdata('personal_paging',$per_page);
         redirect('presensi/report/personal');
     }
     
-    function search()
+    function personal_search()
     {
         $search = array ('personal_search' => $this->input->post('user'),
                          'personal_key'    => $this->input->post('key'),
