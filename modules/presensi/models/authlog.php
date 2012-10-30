@@ -50,7 +50,7 @@ class Authlog extends CI_Model
             $this->db->where('NGAC_AUTHLOG.FunctionKey',$key);   
         
         if (!empty($date_start))   
-            $this->db->where("TransactionTime >='".$date_start."' AND TransactionTime <='".$date_finish."' ");  
+            $this->db->where("(TransactionTime >='".$date_start."') AND (TransactionTime <='".$date_finish."') ");  
         
         //if (!empty($date_finish))   
             //$this->db->where('CONVERT(VARCHAR(10),TransactionTime, 105)<=',$date_finish);          
@@ -64,6 +64,26 @@ class Authlog extends CI_Model
         //$this->db->order_by('NGAC_AUTHLOG.UserID','ASC');
         $this->db->where_not_in('NGAC_AUTHLOG.FunctionKey',0);
         //$this->db->where_not_in('NGAC_AUTHLOG.UserID','');
+        $Q = $this->db->get('NGAC_AUTHLOG');
+        return $Q->result_array();
+    }
+    
+    function getPerMonthRecords($offset='',$paging='',$month='',$year=''){
+        if (!empty($offset))
+            $this->db->offset($offset);
+        
+        if (!empty($paging))    
+            $this->db->limit($paging);
+        
+        if (!empty($month))   
+            $this->db->where("datepart(MONTH,transactiontime)='".$month."'");  
+            
+        if (!empty($year))   
+            $this->db->where("datepart(YEAR,transactiontime)='".$year."'");    
+        
+        $this->db->select('NGAC_AUTHLOG.IndexKey,NGAC_AUTHLOG.UserID,NGAC_USERINFO.Name,NGAC_AUTHLOG.FunctionKey,NGAC_AUTHLOG.TransactionTime');
+        $this->db->join('NGAC_USERINFO','NGAC_USERINFO.ID=NGAC_AUTHLOG.UserID');
+        //$this->db->where_not_in('NGAC_AUTHLOG.FunctionKey',0);
         $Q = $this->db->get('NGAC_AUTHLOG');
         return $Q->result_array();
     }

@@ -39,7 +39,7 @@ class Report extends CI_Controller {
             $search = $this->session->userdata('personal_search');
         else
             $search = 'xxxx';          
-        $this->session->set_userdata('log_offset',$offset);
+        $this->session->set_userdata('personal_offset',$offset);
         $data['checks']  = $this->authlog->getAllRecords($offset,$paging,$search,$this->session->userdata('personal_key'),$this->session->userdata('personal_start'),$this->session->userdata('personal_finish'));
         $numrows = COUNT($this->authlog->getAllRecords('','',$search,$this->session->userdata('personal_key'),$this->session->userdata('personal_start'),$this->session->userdata('personal_finish'))); 
         if ($numrows > $paging):
@@ -120,5 +120,49 @@ class Report extends CI_Controller {
         $data = file_get_contents("assets/Personal.xlsx"); // Read the file's contents
         force_download("Laporan-Individu",$data); 
 	}
+    
+    function monthly($offset=0){
+        $data['title']  = 'Laporan Bulanan';
+        $data['logs']   =   $this->log->userLog();
+        $data['users']	= $this->userinfo->getDataFromUser();
+        if($this->session->userdata('month_paging'))
+            $paging = $this->session->userdata('month_paging');
+        else
+            $paging = config_item('paging');
+        if($this->session->userdata('month_search')):
+            $month = $this->session->userdata('month_search');
+            $year  = $this->session->userdata('year_search');
+        else:
+            $month = '00';   
+            $year  = '2020';
+        endif;           
+        $this->session->set_userdata('month_offset',$offset);
+        $data['checks']  = $this->authlog->getPerMonthRecords($offset,$paging,$month,$year);
+        $numrows = COUNT($this->authlog->getAllRecords('','',$month,$year)); 
+        if ($numrows > $paging):
+            $config['base_url']   = site_url('presensi/report/monthly/');
+            $config['total_rows'] = $numrows;
+            $config['per_page']   = $paging;
+            $config['uri_segment']= 4;
+            $this->pagination->initialize($config);	 
+            $data['pagination']   = $this->pagination->create_links();
+        endif;    
+        $data['page']	= 'report/vmonth';
+		$this->load->theme('default',$data);
+    }
+    
+    function month_paging($per_page)
+    {
+        $this->session->set_userdata('month_paging',$per_page);
+        redirect('presensi/report/monthly');
+    }
+    
+    function month_search()
+    {
+        $search = array ('month_search' => $this->input->post('month'),
+                         'year_search'  => $this->input->post('year'));    
+        $this->session->set_userdata($search);
+        redirect('presensi/report/monthly',301);
+    }
     
 }
