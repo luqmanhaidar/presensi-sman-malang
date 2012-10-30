@@ -4,18 +4,17 @@
 <link type="text/css" rel="stylesheet" href="<?=base_url('themes/report/css/style.css');?>" />
 </head>
 <body>
- <table  class="width140">
-    <caption><h3><?=$title?> </h3></caption>
+ <table class="vmonth">
+    <caption><h3><?=$title?></h3></caption>
 	<thead>		
 		<tr>
 			<th rowspan="2">No</th>
 			<th rowspan="2" width="12%">Nama</th>
 			<th rowspan="2">Paraf</th>
-			<th colspan="31">Tanggal</th>
-			<th rowspan="2">Keterangan</th>
+			<th colspan="<?=days_in_month($this->session->userdata('month_search'))?>">Tanggal</th>
 		</tr>
 		<tr>
-			<?php for($i=1;$i<=31;$i++):?>
+			<?php for($i=1;$i<=days_in_month($this->session->userdata('month_search'));$i++):?>
 			<th><?=$i;?></th>
 			<?php endfor;?>
 		</tr>
@@ -28,18 +27,16 @@
 				<td rowspan="2"><?=$x;?></td>
 				<td rowspan="2"><?=$row['Name']?></td>
 				<td>TTD</td>
-				<?php for($i=1;$i<=31;$i++):?>
+				<?php for($i=1;$i<=days_in_month($this->session->userdata('month_search'));$i++):?>
 				  <td><?=substr($this->authlog->getUserTime($i,$row['UserID'],1),0,5);?></td>
 				<?php endfor;?>
-				<td></td>
 			</tr>
 			
 			<tr>
 				<td>TTD</td>
-				<?php for($i=1;$i<=31;$i++):?>
+				<?php for($i=1;$i<=days_in_month($this->session->userdata('month_search'));$i++):?>
 				  <td><?=substr($this->authlog->getUserTime($i,$row['UserID'],2),0,5);?></td>
 				<?php endfor;?>
-				<td></td>
 			</tr>
      <?php 
          $x++;
