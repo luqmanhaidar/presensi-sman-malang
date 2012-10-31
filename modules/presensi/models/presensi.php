@@ -34,6 +34,14 @@ class Presensi extends CI_Model
         return $query->row_array();
     }
     
+    function getVariabelDataByVar($var)
+    {
+        $this->db->select('*');   
+        $this->db->where("NGAC_VARIABEL.VariabelName",$var);
+        $query    = $this->db->get('NGAC_VARIABEL',1);
+        return $query->row_array();
+    }
+    
     function getAllRecords($offset='',$paging='',$name=''){
         if (!empty($offset))
             $this->db->offset($offset);
