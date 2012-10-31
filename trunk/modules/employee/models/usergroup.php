@@ -77,6 +77,22 @@ class Usergroup extends CI_Model
         return $query->row_array();
     }
     
+    function getGroupWorkData($id)
+    {
+        $this->db->select('*');   
+        $this->db->where("NGAC_GROUP_WORK.GroupWorkID",$id);
+        $query    = $this->db->get('NGAC_GROUP_WORK');
+        return $query->row_array();
+    }
+    
+    function getGroupFridayData($id)
+    {
+        $this->db->select('*');   
+        $this->db->where("NGAC_GROUP_FRIDAY.GroupFridayID",$id);
+        $query    = $this->db->get('NGAC_GROUP_FRIDAY');
+        return $query->row_array();
+    }
+    
     function getAllRecords($offset='',$paging='',$name=''){
         if (!empty($offset))
             $this->db->offset($offset);
