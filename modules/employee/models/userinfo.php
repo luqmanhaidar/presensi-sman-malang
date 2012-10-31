@@ -42,7 +42,7 @@ class Userinfo extends CI_Model
     
     function getUserData($id)
     {
-        $this->db->select('NGAC_USERINFO.ID as ID,NGAC_USERINFO.Name as Name,NGAC_USERINFO.GroupDurationID,NGAC_GROUP_DURATION.GroupDurationName as GroupDurationName,PasswordWeb,GroupWork,GroupFriday');   
+        $this->db->select('NGAC_USERINFO.ID as ID,NGAC_USERINFO.UserOrder,NGAC_USERINFO.Name as Name,NGAC_USERINFO.GroupDurationID,NGAC_GROUP_DURATION.GroupDurationName as GroupDurationName,PasswordWeb,GroupWork,GroupFriday');   
         $this->db->join('NGAC_GROUP','NGAC_GROUP.ID=NGAC_USERINFO.GroupID','LEFT');
         $this->db->join('NGAC_GROUP_DURATION','NGAC_GROUP_DURATION.ID=NGAC_USERINFO.GroupDurationID','LEFT');
         $this->db->where("NGAC_USERINFO.ID",$id);
@@ -66,7 +66,7 @@ class Userinfo extends CI_Model
         if ($pos <> 0)   
             $this->db->where('U.GroupID',$pos);    
                 
-        $this->db->select('U.ID,U.Name,G.GroupDurationName,W.GroupWorkName,F.GroupFridayName');
+        $this->db->select('U.ID,U.UserOrder,U.Name,G.GroupDurationName,W.GroupWorkName,F.GroupFridayName');
         $this->db->join('NGAC_GROUP_DURATION G','G.ID=U.GroupDurationID','LEFT');   
         $this->db->join('NGAC_GROUP_WORK W','W.GroupWorkID=U.GroupWork','LEFT');  
         $this->db->join('NGAC_GROUP_FRIDAY F','F.GroupFridayID=U.GroupFriday','LEFT');
@@ -99,6 +99,7 @@ class Userinfo extends CI_Model
     {
 		$id = $this->input->post('ID');
         $data['GroupDurationID'] = $this->input->post('Group');
+        $data['UserOrder'] = $this->input->post('Order');
         $data['GroupWork'] = $this->input->post('Work');
         $data['GroupFriday'] = $this->input->post('Friday');
         $this->db->where('ID',$id);
