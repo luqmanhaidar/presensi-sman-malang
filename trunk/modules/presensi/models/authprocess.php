@@ -23,6 +23,15 @@ class Authprocess extends CI_Model
         $this->db->update('NGAC_AUTHPROCESS',$value);
     }
     
+    function getAuthProcessData($user,$date)
+    {
+        $this->db->select('UserID');   
+        $this->db->where('UserID',$user);
+        $this->db->where('CONVERT(VARCHAR(10),ProcessDateStart, 105)=',indonesian_shortDate($date)); 
+        $query = $this->db->get('NGAC_AUTHPROCESS');
+        return $query->row_array();
+    }
+    
     function getAllRecords($offset='',$paging=''){
         if (!empty($offset))
             $this->db->offset($offset);

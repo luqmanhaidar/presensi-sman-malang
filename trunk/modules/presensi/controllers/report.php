@@ -247,7 +247,8 @@ class Report extends CI_Controller {
         /** Query Insert ke AuthProcess **/
         $query = $this->authlog->getPerWeekRecords($month,$year,$group,1);
         foreach($query as $row):
-            $this->authprocess->save($row['UserID'],$row['TransactionTime']);
+            if(COUNT($this->authprocess->getAuthProcessData($row['UserID'],$row['TransactionTime']))== 0)
+                $this->authprocess->save($row['UserID'],$row['TransactionTime']);
         endforeach;
         
         /** Query Update ke AuthProcess **/
