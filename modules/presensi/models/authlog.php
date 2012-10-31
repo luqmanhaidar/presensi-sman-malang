@@ -127,6 +127,8 @@ class Authlog extends CI_Model
         $this->db->where_not_in('NGAC_USERINFO.Privilege',1);
         $this->db->where('AuthResult','0');        	
         $this->db->join('NGAC_USERINFO','NGAC_USERINFO.ID=NGAC_AUTHLOG.UserID');
+        $this->db->order_by('UserID','ASC');
+        $this->db->order_by('TransactionTime','ASC');
 		$Q = $this->db->get('NGAC_AUTHLOG');
         return $Q->result_array();
     }
