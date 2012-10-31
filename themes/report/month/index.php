@@ -35,7 +35,7 @@
 			<tr>
 				<td rowspan="2"><?=$x;?></td>
 				<td rowspan="2"><?=$row['Name'].'<br/>'.$row['Department']?></td>
-				<td>TTD</td>
+				<td><img src="<?=base_url('assets/signature/'.$row['UserID'].'.jpg')?>" /></td>
 				<?php for($i=1;$i<=days_in_month($this->session->userdata('month_search'));$i++):?>
 				  <td><?=substr($this->authlog->getUserTime($i,$row['UserID'],1),0,5);?></td>
 				<?php endfor;?>
@@ -45,7 +45,7 @@
 			</tr>
 			
 			<tr>
-				<td>TTD</td>
+				<td><img src="<?=base_url('assets/signature/'.$row['UserID'].'.jpg')?>" /></td>
 				<?php for($i=1;$i<=days_in_month($this->session->userdata('month_search'));$i++):?>
 				  <td><?=substr($this->authlog->getUserTime($i,$row['UserID'],2),0,5);?></td>
 				<?php endfor;?>
