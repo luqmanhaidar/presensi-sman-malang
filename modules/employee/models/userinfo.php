@@ -70,6 +70,7 @@ class Userinfo extends CI_Model
         $this->db->join('NGAC_GROUP_DURATION G','G.ID=U.GroupDurationID','LEFT');   
         $this->db->join('NGAC_GROUP_WORK W','W.GroupWorkID=U.GroupWork','LEFT');  
         $this->db->join('NGAC_GROUP_FRIDAY F','F.GroupFridayID=U.GroupFriday','LEFT');
+        $this->db->where('U.Privilege',2);    
         $this->db->order_by('ID','ASC');
         $Q = $this->db->get('NGAC_USERINFO U');
         return $Q->result_array();

@@ -456,4 +456,26 @@ class Report extends CI_Controller {
         $this->session->set_userdata('week_paging',$per_page);
         redirect('presensi/report/weekly');
     }
+    
+    function week_preview(){
+		$export = $this->input->post('export');
+            
+		switch($export):
+			case 0 : $this->week_print();
+					 break;
+			case 1 : $this->week_pdf();
+			         break;
+			case 2 : $this->week_excel();
+			         break;
+		endswitch;
+	}
+    
+    function week_print()
+    {
+		$data['title']		=	'DAFTAR CEK CLOCK';
+		$data['users']	    =	$this->userinfo->getAllRecords('','','','',$this->session->userdata('week_group'));
+		//$data['records']	=	$this->authprocess->getAllRecords(0,10);
+        $this->load->vars($data);
+        $this->load->theme('report/week',$data);
+	}
 }

@@ -4,6 +4,7 @@ caption h3{font-size:14px}
 caption h4{font-size:12px}
 th,td{border:1px solid #222;font-size:12px;margin:0}
 th{padding:5px 5px;background:#CCC;width:auto}
+.mini{padding:1px 1px;width:auto;font-size:8px;}
 td{padding:4px 8px;background:#FFF;width:auto}
 .darkgrey{background:#696969}
 .align-left{text-align:left}
@@ -11,10 +12,51 @@ td{padding:4px 8px;background:#FFF;width:auto}
 .px20{width:20px}
 .left{text-align:left}
 img {width:20px;height: auto;}
-
+h3{font-size:14px;margin:0;}
+h5{font-size:10px;margin:0;}
 /*
 table{border-collapse:collapse;border-width:1px;border-color:#222}
 .vmonth{width:150%}
 table th{padding:5px;border-width:1px;border-style:solid;border-color:#222;background:#696969}
 table td{padding:5px;border-width:1px;border-style:solid;border-color:#222;background:#FFFFFF}
 */
+.mask{
+   position: relative;
+   overflow: hidden;
+   margin: 0px auto;
+   width: 100%;
+}
+.header{
+   float: left;
+   width: 100%;
+   padding:10px;
+
+}
+.colleft{
+   position: relative;
+   width: 100%;
+   right: 50%;
+   
+}
+.col1{
+   position: relative;
+   overflow: hidden;
+   float: left;
+   width: 49%;
+   left: 100%;
+   margin-bottom:10px;
+}
+.col0{
+   position: relative;
+   overflow: hidden;
+   float: left;
+   width: 48%;
+   left: 2%;
+   margin-bottom:10px;
+}
+.footer{
+   float: left;
+   width: 100%;
+   background-color: #b4caf7
+}
+
