@@ -246,15 +246,206 @@ class Report extends CI_Controller {
         
         /** Query Insert ke AuthProcess **/
         $query = $this->authlog->getPerWeekRecords($month,$year,$group,1);
-        foreach($query as $row):
-            if(COUNT($this->authprocess->getAuthProcessData($row['UserID'],$row['TransactionTime']))== 0)
-                $this->authprocess->save($row['UserID'],$row['TransactionTime']);
+        /** masuk kerja senin-kamis & sabtu I**/
+        $sk1 = (6 * 3600) + (30*60) + (0);
+        $dt1 = (6 * 3600) + (45*60) + (0); // telat 15 menit
+        $sd1 = '06:30:00';
+        /** masuk kerja senin-kamis II **/
+        $sk2 = (7 * 3600) + (0*60) + (0);
+        $dt2 = (7 * 3600) + (15*60) + (0); // telat 15 menit
+        $sd2 = '07:00:00';
+        /** pulang kerja sabtu **/
+        $wp1 =  (12 * 3600) + (30*60) + (0);
+        $w1  =  '12:30:00';
+        /** pulang kerja senin-kamis **/                    
+        $wp2 =  (14 * 3600) + (0*60) + (0);
+        $w2  =  '14:00:00';
+        /** pulang kerja senin-kamis **/                      
+        $wp3 =  (14 * 3600) + (30*60) + (0);
+        $w3  =  '14:30:00'; 
+        /** pulang kerja senin-kamis **/                      
+        $wp4 =  (15 * 3600) + (0*60) + (0);
+        $w4  =  '15:00:00';
+        /** pulang kerja senin-kamis **/                      
+        $wp5 =  (15 * 3600) + (30*60) + (0);
+        $w5  =  '15:30:00';
+        
+        
+                    
+        foreach($query as $row):   
+            if(COUNT($this->authprocess->getAuthProcessData($row['UserID'],$row['TransactionTime']))== 0):
+                if($row['GroupID']<=2):
+                    $sk  =  $this->usergroup->getGroupWorkData($row['GroupWork']);
+                    $jm  =  $this->usergroup->getGroupFridayData($row['GroupFriday']);
+                    if($sk):
+                        $dbSkStart = $sk['GroupWorkStart'];
+                        $dbSpStart = (substr($sk['GroupWorkStart'],0,2) * 3600) + (substr($sk['GroupWorkStart'],3,2)*60) + (substr($sk['GroupWorkStart'],6,2));
+                        $dbSpWork  = (substr($sk['GroupWorkStart'],0,2) * 3600) + ((substr($sk['GroupWorkStart'],3,2)+15)*60) + (substr($sk['GroupWorkStart'],6,2));   
+                        $dbSkEnd   = $sk['GroupWorkEnd'];
+                        $dbSpEnd   = (substr($sk['GroupWorkEnd'],0,2) * 3600) + (substr($sk['GroupWorkEnd'],3,2)*60) + (substr($sk['GroupWorkEnd'],6,2));
+                    else:
+                        $dbSkStart = $sd1;
+                        $dbSpStart = $sk1;
+                        $dbSpWork  = $dt1;
+                        $dbSkEnd   = $w3;
+                        $dbSpEnd   = $wp3; 
+                    endif;
+                endif;    
+                
+                $wm = (substr($row['MyTime'],0,2) * 3600) + (substr($row['MyTime'],3,2)*60) + (substr($row['MyTime'],6,2));
+                
+                if(($row['DayName']=='Saturday')):
+                    $wmk = $sd1;
+                    $dt  = $dt1;
+                    $sk  = $sk1;
+                    $wsk = $w1; // Wsk Senin-Kamis
+                    $wsp = $wp1;
+                elseif($row['DayName']=='Sunday'):
+                    $wmk = '';
+                    $dt  = 0;
+                    $sk  = 0;
+                    $wsk = ''; // Wsk Senin-Kamis
+                    $wsp = 0;
+                elseif(($row['DayName']<>'Saturday') && ($wm >= $sk1)  && ( ($row['GroupID']==1) || ($row['GroupID']==2) ) ):
+                    $wmk = $sd2;
+                    $dt  = $dt2;
+                    $sk  = $sk2;
+                    if($row['DayName']<>"Friday"):
+                        $wsk = $w5; // Wsk Senin-Kamis
+                        $wsp = $wp5;
+                    else:
+                        $wsk = $w4; // Wsk Jumat
+                        $wsp = $wp4;
+                    endif;
+                elseif(($row['DayName']<>'Saturday') && ($wm <= $sk1)  && ( ($row['GroupID']==1) || ($row['GroupID']==2) ) ):
+                    $wmk = $sd1;
+                    $dt  = $dt1;
+                    $sk  = $sk1;
+                    if($row['DayName']<>"Friday"):
+                        $wsk = $w3; // Wsk Senin-Kamis
+                        $wsp = $wp3;
+                    else:
+                        $wsk = $w2; // Wsk Jumat
+                        $wsp = $wp2;
+                        $row['TransactionTime'] = substr($row['TransactionTime'],0,11)." 06:30:00";
+                    endif;                  
+                elseif( ( ($row['GroupID']==1) || ($row['GroupID']==2) )):
+                    $wmk = $sd1;
+                    $dt  = $dt1;
+                    $sk  = $sk1;
+                    if($row['DayName']<>"Friday"):
+                        $wsk = $w3;
+                        $wsp = $wp3;
+                    else:
+                        $wsk = $w2; 
+                        $wsp = $wp2;
+                    endif;
+                elseif(($row['GroupID']>=3)):
+                    $wmk = $dbSkStart;
+                    $dt  = $dbSpWork;
+                    $sk  = $dbSpStart;
+                    if($row['DayName']<>"Friday"):
+                        $wsk = $dbSkEnd;
+                        $wsp = $dbSpEnd;
+                    else:
+                        $wsk = $w2; 
+                        $wsp = $wp2;
+                    endif;
+                endif; 
+                
+                if (($wm > $dt) && ($row['DayName']<>'Sunday')):
+                    $d = $wm - $sk;
+                    $hours = code(floor($d / 3600));
+                    $mins = code(floor(($d - ($hours*3600)) / 60));
+                    $seconds = code($d % 60);
+                    $late = $hours.':'.$mins.':'.$seconds;     
+                else:
+                    $d = "-";
+                    $late = "-";
+                endif;          
+                $this->authprocess->save($row['UserID'],$row['TransactionTime'],$wmk,$late);
+            endif;   
         endforeach;
         
         /** Query Update ke AuthProcess **/
         $query = $this->authlog->getPerWeekRecords($month,$year,$group,2);
         foreach($query as $row):
-            $this->authprocess->update($row['UserID'],$row['MyDate'],$row['TransactionTime']);
+            $ws = (substr($row['MyTime'],0,2) * 3600) + (substr($row['MyTime'],3,2)*60) + (substr($row['MyTime'],6,2));
+            if($row['GroupID']<=2):
+                $sk  =  $this->usergroup->getGroupWorkData($row['GroupWork']);
+                $jm  =  $this->usergroup->getGroupFridayData($row['GroupFriday']);
+                if($sk):
+                    $dbSkStart = $sk['GroupWorkStart'];
+                    $dbSpStart = (substr($sk['GroupWorkStart'],0,2) * 3600) + (substr($sk['GroupWorkStart'],3,2)*60) + (substr($sk['GroupWorkStart'],6,2));
+                    $dbSpWork  = (substr($sk['GroupWorkStart'],0,2) * 3600) + ((substr($sk['GroupWorkStart'],3,2)+15)*60) + (substr($sk['GroupWorkStart'],6,2));   
+                    $dbSkEnd   = $sk['GroupWorkEnd'];
+                    $dbSpEnd   = (substr($sk['GroupWorkEnd'],0,2) * 3600) + (substr($sk['GroupWorkEnd'],3,2)*60) + (substr($sk['GroupWorkEnd'],6,2));
+                else:
+                    $dbSkStart = $sd1;
+                    $dbSpStart = $sk1;
+                    $dbSpWork  = $dt1;
+                    $dbSkEnd   = $w3;
+                    $dbSpEnd   = $wp3; 
+                endif;
+            endif;  
+                            
+            if(($row['DayName']=='Saturday')):
+                $wmk = $sd1;
+                $dt  = $dt1;
+                $sk  = $sk1;
+                $wsk = $w1; // Wsk Senin-Kamis
+                $wsp = $wp1;
+            elseif($row['DayName']=='Sunday'):
+                $wmk = '';
+                $dt  = 0;
+                $sk  = 0;
+                $wsk = ''; // Wsk Senin-Kamis
+                $wsp = 0;
+            elseif(($row['DayName']<>'Saturday') && ($wm >= $sk1)  && ( ($row['GroupID']==1) || ($row['GroupID']==2) ) ):
+                $wmk = $sd2;
+                $dt  = $dt2;
+                $sk  = $sk2;
+                if($row['DayName']<>"Friday"):
+                    $wsk = $w5; // Wsk Senin-Kamis
+                    $wsp = $wp5;
+                else:
+                    $wsk = $w4; // Wsk Jumat
+                    $wsp = $wp4;
+                endif;       
+            elseif( ( ($row['GroupID']==1) || ($row['GroupID']==2) )):
+                $wmk = $sd1;
+                $dt  = $dt1;
+                $sk  = $sk1;
+                if($row['DayName']<>"Friday"):
+                    $wsk = $w3;
+                    $wsp = $wp3;
+                else:
+                    $wsk = $w2; 
+                    $wsp = $wp2;
+                endif;
+            elseif(($row['GroupID']>=3)):
+                $wmk = $dbSkStart;
+                $dt  = $dbSpWork;
+                $sk  = $dbSpStart;
+                if($row['DayName']<>"Friday"):
+                    $wsk = $dbSkEnd;
+                    $wsp = $dbSpEnd;
+                else:
+                    $wsk = $w2; 
+                    $wsp = $wp2;
+                endif;
+            endif; 
+            
+            if ($ws >= $wsp):
+                $early = "-";  
+            else:
+                $e = $wsp - $ws;
+                $hours = code(floor($e / 3600));
+                $mins = code(floor(($e - ($hours*3600)) / 60));
+                $seconds = code($e % 60);
+                $early = $hours.':'.$mins.':'.$seconds;   
+            endif;           
+            $this->authprocess->update($row['UserID'],$row['MyDate'],$row['TransactionTime'],$wsk,$early);
         endforeach;
         redirect('presensi/report/weekly',301);
         

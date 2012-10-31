@@ -112,7 +112,7 @@ class Authlog extends CI_Model
 	}
     
     function getPerWeekRecords($month='',$year='',$group='',$key=''){
-        $this->db->select('NGAC_AUTHLOG.UserID,NGAC_USERINFO.Name,NGAC_USERINFO.Department,NGAC_AUTHLOG.TransactionTime,CONVERT(VARCHAR(10),TransactionTime, 105) as MyDate');
+        $this->db->select('NGAC_AUTHLOG.UserID,NGAC_USERINFO.GroupID,GroupWork,GroupFriday,NGAC_USERINFO.Name,datename(dw,TransactionTime) as DayName,NGAC_AUTHLOG.TransactionTime,CONVERT(VARCHAR(10),TransactionTime, 105) as MyDate,CONVERT(VARCHAR(8),TransactionTime, 108) AS MyTime');
         if (!empty($month))   
             $this->db->where("datepart(MONTH,transactiontime)='".$month."'");  
             
