@@ -38,11 +38,16 @@ class Authprocess extends CI_Model
         return $query->row_array();
     }
     
-    function getAllRecords($offset='',$paging=''){
+    function getAllRecords($offset='',$paging='',$user='',$type='',$day=''){
         if (!empty($offset))
             $this->db->offset($offset);
         if (!empty($paging))    
-            $this->db->limit($paging);    
+            $this->db->limit($paging); 
+        if (!empty($user))   
+            $this->db->where('NGAC_AUTHPROCESS.UserID',$user);
+        if (!empty($day))   
+            $this->db->where('DATEPART(DAY,ProcessDateStart)',$day);    
+                   
         $this->db->select('UserID,Name,datename(dw,ProcessDateStart) as DayName,NGAC_USERINFO.GroupID,GroupWork,GroupFriday,CONVERT(VARCHAR(10),ProcessDateStart, 105) as MyDate,CONVERT(VARCHAR(8),ProcessDateStart, 108) AS MyTimeStart,CONVERT(VARCHAR(8),ProcessDateEnd, 108) AS MyTimeEnd');
         $this->db->select('ProcessDateWorkStart,ProcessDateWorkEnd,ProcessDateLate,ProcessDateEarly');
         $this->db->select('DATEPART(WEEK,ProcessDateStart)-DATEPART(WEEK,(ProcessDateStart-DATEPART(day,ProcessDateStart)+1)) as W');
@@ -50,8 +55,12 @@ class Authprocess extends CI_Model
         $this->db->join('NGAC_GROUP_WORK','NGAC_GROUP_WORK.GroupWorkID=NGAC_USERINFO.GroupWork','LEFT');
         $this->db->join('NGAC_GROUP_FRIDAY','NGAC_GROUP_FRIDAY.GroupFridayID=NGAC_USERINFO.GroupFriday','LEFT');
         $this->db->where('DATEPART(WEEK,ProcessDateStart)-DATEPART(WEEK,(ProcessDateStart-DATEPART(day,ProcessDateStart)+1))>=1');
+        $this->db->where('NGAC_USERINFO.privilege',2);
         $Q = $this->db->get('NGAC_AUTHPROCESS');
-        return $Q->result_array();
+        if($type=='row')
+            return $Q->row_array();
+        else
+            return $Q->result_array();
     }
     
     function removeAll()

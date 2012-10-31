@@ -5,7 +5,10 @@
 </head>
 <body>
  <table style="margin:0 auto;width:80%;border-collapse:collapse;background:#ecf3eb">
-    <caption><h3><?=$title?> </h3></caption>
+    <caption>
+    <h3><?=$title?></h3>
+    <h5><?=indonesian_monthName($this->session->userdata('month_search')).' '.$this->session->userdata('year_search')?></h5>
+    </caption>
 	<thead>
 		<tr>
 			<th class="align-left darkgrey" colspan="4"><?=$user.'-'.$name?></th>
