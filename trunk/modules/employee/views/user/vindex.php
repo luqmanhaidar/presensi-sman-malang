@@ -19,7 +19,8 @@
 				<div class="float-right">
                     <form method="post" action="<?=site_url('employee/user/search')?>">
 					Search&nbsp;<input type="text" name="table_search" id="table_search" value="<?=$this->session->userdata('user_search')?>" class="input mid-margin-left">
-				    <?=form_dropdown('table_group',$groups,$this->session->userdata('user_group'),'id="group" class="select white-gradient glossy" ');?>
+				    <?=form_dropdown('table_pos',$pos,$this->session->userdata('user_pos'),'id="week" class="select white-gradient glossy" ');?>
+                    <?=form_dropdown('table_group',$groups,$this->session->userdata('user_group'),'id="group" class="select white-gradient glossy" ');?>
                     <input type="submit" class="button blue-gradient glossy" value="Go" />
                     </form>
                 </div>
