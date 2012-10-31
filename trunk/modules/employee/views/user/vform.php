@@ -32,6 +32,11 @@
 						<label for="large-label-1" class="label">Jumat<small>(255 chars max.)</small></label>
 						<?=form_dropdown('Friday',$friday,$value['GroupFriday'],'class="select"')?>
 					</p>
+                    
+                    <p class="inline-large-label button-height">
+						<label for="large-label-1" class="label">Tanda Tangan<small>(max 1000Kb)</small></label>
+						<img src="<?=base_url('assets/signature/'.$value['ID'].'.jpg')?>" />
+					</p>
 					
 					<p class="button-height">
 						<input type="submit" class="button big" value="Simpan" />

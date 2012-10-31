@@ -30,6 +30,7 @@
 						<th scope="col" width="5%">No</th>
 						<th scope="col" width="10%" class="align-left hide-on-mobile">ID User</th>
                         <th scope="col" class="align-left hide-on-mobile">Nama</th>
+                        <th scope="col" width="5%" class="align-left hide-on-mobile">Paraf</th>
 						<th scope="col" class="align-left hide-on-mobile">Bagian</th>
                         <th scope="col">Tgl Awal</th>
 						<th scope="col">Tgl.Akhir</th>
@@ -52,6 +53,7 @@
 						<td><?=$x;?></td>
 						<td><?=$row['UserID'];?></td>
                         <td><?=$row['Name'];?></td>
+                        <td><img style="width:20px;height:auto;" src="<?=base_url('assets/signature/'.$row['UserID'].'.jpg')?>" /></td>
 						<td><?=$row['Department'];?></td>
                         <td><?=indonesian_shortDate($row['TransactionTime']).' '.substr($row['TransactionTime'],11,8);?></td>
 						<td><?=indonesian_shortDate($row['TransactionTimeMax']) .' '.substr($row['TransactionTimeMax'],11,8);?></td>
