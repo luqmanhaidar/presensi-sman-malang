@@ -44,7 +44,7 @@
 
 				<tfoot>
 					<tr>
-						<td colspan="6">
+						<td colspan="12">
 							<?=COUNT($checks).' Data ditemukan.'?>
 						</td>
 					</tr>

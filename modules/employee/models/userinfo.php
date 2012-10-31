@@ -50,7 +50,7 @@ class Userinfo extends CI_Model
         return $query->row_array();
     }
     
-    function getAllRecords($offset='',$paging='',$name='',$group=''){
+    function getAllRecords($offset='',$paging='',$name='',$group='',$pos=''){
         if (!empty($offset))
             $this->db->offset($offset);
         
@@ -59,8 +59,12 @@ class Userinfo extends CI_Model
         
         if (!empty($name))   
             $this->db->like('U.Name',$name);
+            
         if ($group <> 0)   
             $this->db->where('U.GroupDurationID',$group);
+        
+        if ($pos <> 0)   
+            $this->db->where('U.GroupID',$pos);    
                 
         $this->db->select('U.ID,U.Name,G.GroupDurationName,W.GroupWorkName,F.GroupFridayName');
         $this->db->join('NGAC_GROUP_DURATION G','G.ID=U.GroupDurationID','LEFT');   

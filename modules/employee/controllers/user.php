@@ -23,8 +23,9 @@ class User extends CI_Controller {
             $paging = config_item('paging');
         $this->session->set_userdata('user_offset',$offset);
         $data['groups']	= $this->usergroup->getDataFromGroup();
-        $data['users']  = $this->userinfo->getAllRecords($offset,$paging,$this->session->userdata('user_search'),$this->session->userdata('user_group'));
-        $numrows = COUNT($this->userinfo->getAllRecords('','',$this->session->userdata('user_search'),$this->session->userdata('user_group'))); 
+        $data['pos']	= $this->usergroup->getDataFromPosition();
+        $data['users']  = $this->userinfo->getAllRecords($offset,$paging,$this->session->userdata('user_search'),$this->session->userdata('user_group'),$this->session->userdata('user_pos'));
+        $numrows = COUNT($this->userinfo->getAllRecords('','',$this->session->userdata('user_search'),$this->session->userdata('user_group'),$this->session->userdata('user_pos'))); 
         if ($numrows > $paging):
             $config['base_url']   = site_url('employee/user/index/');
             $config['total_rows'] = $numrows;
@@ -46,6 +47,7 @@ class User extends CI_Controller {
     function search()
     {
         $search = array (   'user_search' =>  $this->input->post('table_search'),
+                            'user_pos'  =>  $this->input->post('table_pos'),
                             'user_group'  =>  $this->input->post('table_group'));    
         $this->session->set_userdata($search);
         redirect('employee/user/index');
