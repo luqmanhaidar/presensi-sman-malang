@@ -11,6 +11,11 @@
 
 					<br/>	
 					<h4 class="thin underline"><?=$title?></h4>
+                    
+                    <p class="inline-large-label button-height">
+						<label for="large-label-1" class="label">Urutan<small>(Urutan Cetak)</small></label>
+						<input type="text" name="Order" id="large-label-1" class="input small-margin-right" value="<?=$value['UserOrder']?>" />
+                    </p>
 
 					<p class="inline-large-label button-height">
 						<label for="large-label-1" class="label">ID User<small>( ID User)</small></label>
@@ -18,6 +23,7 @@
 					    <input type="hidden" name="ID" value="<?=$value['ID']?>" />
                     </p>
 					
+                    
 					<p class="inline-large-label button-height">
 						<label for="large-label-1" class="label">Group Durasi<small>(255 chars max.)</small></label>
 						<?=form_dropdown('Group',$groups,$value['GroupDurationID'],'class="select"')?>

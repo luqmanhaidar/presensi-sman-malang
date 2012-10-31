@@ -44,7 +44,8 @@ class Authlog extends CI_Model
             $this->db->limit($paging);
         
         if (!empty($name))   
-            $this->db->like('NGAC_AUTHLOG.UserID',$name);
+            $this->db->like('NGAC_AUTHLOG.UserID',$name ."");
+            
             
         if (!empty($key))   
             $this->db->where('NGAC_AUTHLOG.FunctionKey',$key);   
@@ -58,13 +59,13 @@ class Authlog extends CI_Model
         //$this->db->order_by('UserID','ASC');
         //$this->db->order_by('FunctionKey','ASC');
         //$this->db->order_by('NGAC_AUTHLOG.IndexKey','DESC');
-        $this->db->select('NGAC_AUTHLOG.IndexKey,NGAC_AUTHLOG.UserID,NGAC_USERINFO.Name,NGAC_AUTHLOG.FunctionKey,NGAC_AUTHLOG.TransactionTime');
+        
+        $this->db->select('NGAC_AUTHLOG.IndexKey,NGAC_AUTHLOG.UserID,NGAC_USERINFO.Name,NGAC_AUTHLOG.FunctionKey,MIN(NGAC_AUTHLOG.TransactionTime) as TransactionTime');
         $this->db->join('NGAC_USERINFO','NGAC_USERINFO.ID=NGAC_AUTHLOG.UserID');
-        //$this->db->order_by('NGAC_AUTHLOG.TransactionTime','ASC');
-        //$this->db->order_by('NGAC_AUTHLOG.UserID','ASC');
         $this->db->where_not_in('NGAC_AUTHLOG.FunctionKey',0);
-        //$this->db->where_not_in('NGAC_AUTHLOG.UserID','');
+        $this->db->group_by('NGAC_AUTHLOG.IndexKey,NGAC_AUTHLOG.UserID,NGAC_USERINFO.UserOrder,NGAC_USERINFO.Name,NGAC_AUTHLOG.FunctionKey,CONVERT(VARCHAR(10),TransactionTime,105)');
         $Q = $this->db->get('NGAC_AUTHLOG');
+        $this->db->order_by('NGAC_USERINFO.UserOrder','ASC');
         return $Q->result_array();
     }
     
@@ -89,8 +90,9 @@ class Authlog extends CI_Model
         $this->db->join('NGAC_USERINFO','NGAC_USERINFO.ID=NGAC_AUTHLOG.UserID');
         $this->db->where_not_in('NGAC_USERINFO.Privilege',1);
         $this->db->where('AuthResult','0');
-        $this->db->group_by('NGAC_AUTHLOG.UserID,NGAC_USERINFO.Name,NGAC_USERINFO.Department');
+        $this->db->group_by('NGAC_AUTHLOG.UserID,NGAC_USERINFO.UserOrder,NGAC_USERINFO.Name,NGAC_USERINFO.Department');
 		$Q = $this->db->get('NGAC_AUTHLOG');
+        $this->db->order_by('NGAC_USERINFO.UserOrder','ASC');
         return $Q->result_array();
     }
 	

@@ -33,7 +33,9 @@
 				<thead>
 					<tr>
 						<th scope="col" width="7%">ID</th>
+                        <th scope="col" width="4%" class="align-left hide-on-mobile">Urutan</th>
 						<th scope="col" class="align-left hide-on-mobile">Nama User</th>
+                        <th scope="col" width="5%" class="align-left hide-on-mobile">Paraf</th>
 						<th scope="col" class="align-left hide-on-mobile">Nama Kelompok</th>
                         <th scope="col" class="align-left hide-on-mobile">Work</th>
                         <th scope="col" class="align-left hide-on-mobile">Friday</th>
@@ -55,7 +57,9 @@
 					<?php foreach($users as $row):?>
 					<tr>
 						<td><?=$row['ID'];?></td>
+                        <td><?=$row['UserOrder'];?></td>
 						<td><?=$row['Name'];?></td>
+                        <td><img style="width:20px;height:auto;" src="<?=base_url('assets/signature/'.$row['ID'].'.jpg')?>" /></td>
 						<td><?=$row['GroupDurationName'];?></td>
                         <td><?=$row['GroupWorkName'];?></td>
                         <td><?=$row['GroupFridayName'];?></td>
