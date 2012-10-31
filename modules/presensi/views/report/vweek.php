@@ -65,41 +65,98 @@
                         <?php
                             $sk1 = (6 * 3600) + (30*60) + (0);
                             $dt1 = (6 * 3600) + (45*60) + (0);
-                            
+                            $sd1 = '06:30:00';
                             
                             $sk2 = (7 * 3600) + (0*60) + (0);
                             $dt2 = (7 * 3600) + (15*60) + (0);
-                            $wm = (substr($row['MyTimeStart'],0,2) * 3600) + (substr($row['MyTimeStart'],3,2)*60) + (substr($row['MyTimeStart'],6,2));
-                            //echo $dt1."<br/>"; 
-                            //echo $dt2;
-                            if(($row['DayName']<>'Saturday') && ($wm >= $sk1)):
-                                $wmk = '07:00:00';
-                                $dt  = $dt2;
-                                $sk  = $sk2;
-                                if($row['DayName']<>"Friday")
-                                    $wpk = '15:30:00';
-                                else
-                                    $wpk = '15:00:00';    
+                            $sd2 = '07:00:00';
+                              
+                            $wp1 =  (12 * 3600) + (30*60) + (0);
+                            $w1  =  '12:30:00';
+                            
+                            $wp2 =  (14 * 3600) + (0*60) + (0);
+                            $w2  =  '14:00:00';
+                            
+                            $wp3 =  (14 * 3600) + (30*60) + (0);
+                            $w3  =  '14:30:00'; 
+                            
+                            $wp4 =  (15 * 3600) + (0*60) + (0);
+                            $w4  =  '15:00:00';
+                            
+                            $wp5 =  (15 * 3600) + (30*60) + (0);
+                            $w5  =  '15:30:00';
+                            
+                            $sk  =  $this->usergroup->getGroupWorkData($row['GroupWork']);
+                            $jm  =  $this->usergroup->getGroupFridayData($row['GroupFriday']);
+                            
+                            if($sk):
+                                $dbSkStart = $sk['GroupWorkStart'];
+                                $dbSpStart = (substr($sk['GroupWorkStart'],0,2) * 3600) + (substr($sk['GroupWorkStart'],3,2)*60) + (substr($sk['GroupWorkStart'],6,2));
+                                $dbSpWork  = (substr($sk['GroupWorkStart'],0,2) * 3600) + ((substr($sk['GroupWorkStart'],3,2)+15)*60) + (substr($sk['GroupWorkStart'],6,2));   
+                                $dbSkEnd   = $sk['GroupWorkEnd'];
+                                $dbSpEnd   = (substr($sk['GroupWorkEnd'],0,2) * 3600) + (substr($sk['GroupWorkEnd'],3,2)*60) + (substr($sk['GroupWorkEnd'],6,2));
                             else:
-                                $wmk = '06:30:00';
+                                $dbSkStart = $sd1;
+                                $dbSpStart = $sk1;
+                                $dbSpWork  = $dt1;
+                                $dbSkEnd   = $w3;
+                                $dbSpEnd   = $wp3; 
+                            endif;
+                                
+                            $wm = (substr($row['MyTimeStart'],0,2) * 3600) + (substr($row['MyTimeStart'],3,2)*60) + (substr($row['MyTimeStart'],6,2));
+                            $ws = (substr($row['MyTimeEnd'],0,2) * 3600) + (substr($row['MyTimeEnd'],3,2)*60) + (substr($row['MyTimeEnd'],6,2));
+                            
+                            if(($row['DayName']=='Saturday')):
+                                $wmk = $sd1;
                                 $dt  = $dt1;
                                 $sk  = $sk1;
-                                if($row['DayName']<>"Friday")
-                                    $wpk = '15:00:00';
-                                else
-                                    $wpk = '14:00:00';  
+                                $wsk = $w1; // Wsk Senin-Kamis
+                                $wsp = $wp1;
+                            elseif($row['DayName']=='Sunday'):
+                                $wmk = '';
+                                $dt  = 0;
+                                $sk  = 0;
+                                $wsk = ''; // Wsk Senin-Kamis
+                                $wsp = 0;
+                            elseif(($row['DayName']<>'Saturday') && ($wm >= $sk1)  && ( ($row['GroupID']==1) || ($row['GroupID']==2) ) ):
+                                $wmk = $sd2;
+                                $dt  = $dt2;
+                                $sk  = $sk2;
+                                if($row['DayName']<>"Friday"):
+                                    $wsk = $w5; // Wsk Senin-Kamis
+                                    $wsp = $wp5;
+                                else:
+                                    $wsk = $w4; // Wsk Jumat
+                                    $wsp = $wp4;
+                                endif;       
+                            elseif( ( ($row['GroupID']==1) || ($row['GroupID']==2) )):
+                                $wmk = $sd1;
+                                $dt  = $dt1;
+                                $sk  = $sk1;
+                                if($row['DayName']<>"Friday"):
+                                    $wsk = $w3;
+                                    $wsp = $wp3;
+                                else:
+                                    $wsk = $w2; 
+                                    $wsp = $wp2;
+                                endif;
+                            elseif(($row['GroupID']>=3)):
+                                $wmk = $dbSkStart;
+                                $dt  = $dbSpWork;
+                                $sk  = $dbSpStart;
+                                if($row['DayName']<>"Friday"):
+                                    $wsk = $dbSkEnd;
+                                    $wsp = $dbSpEnd;
+                                else:
+                                    $wsk = $w2; 
+                                    $wsp = $wp2;
+                                endif;
                             endif;
                             echo $wmk;
                         ?>
                         </td>
-                        <td><?=$row['MyTimeStart'];?><br />
-                        <?php
-                            //echo substr($row['MyTimeStart'],6,2);
-                            //$wm = (substr($row['MyTimeStart'],0,2) * 3600) + (substr($row['MyTimeStart'],3,2)*60) + (substr($row['MyTimeStart'],6,2));
-                            //echo $wm;
-                        ?>    
-                        </td>
-                        <td><?=$wpk;?></td>
+                        <td><?=$row['MyTimeStart'];?><br /></td>
+                        <td><?=$wsk;?></td>
 						<td><?=$row['MyTimeEnd'];?></td>
                         <td>
                             <?php
@@ -108,15 +165,28 @@
                                     $hours = code(floor($d / 3600));
                                     $mins = code(floor(($d - ($hours*3600)) / 60));
                                     $seconds = code($d % 60);
-                                    $time = $hours.':'.$mins.':'.$seconds;     
+                                    $timestart = $hours.':'.$mins.':'.$seconds;     
                                else:
                                     $d = "-";
-                                    $time = "-";
+                                    $timestart = "-";
                                endif;          
-                               echo $time; 
+                               echo $timestart; 
                             ?>
                         </td>
-                        <td><?=$row['MyTimeEnd'];?></td>
+                        <td>
+                            <?php
+                               if ($ws >= $wsp):
+                                    $timeend = "-";  
+                               else:
+                                    $e = $wsp - $ws;
+                                    $hours = code(floor($e / 3600));
+                                    $mins = code(floor(($e - ($hours*3600)) / 60));
+                                    $seconds = code($e % 60);
+                                    $timeend = $hours.':'.$mins.':'.$seconds;   
+                               endif;          
+                               echo $timeend; 
+                            ?>
+                        </td>
 					</tr>
                     <?php 
                         $x=$x+1;
