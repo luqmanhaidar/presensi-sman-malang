@@ -176,6 +176,7 @@
 							<?php if($week[$m]):
 									echo $week[$m];
 								 else
+									echo '-';
 									 ?>
 						</td>
                         <td class="mini">
