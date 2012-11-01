@@ -158,7 +158,7 @@
 							<li><a href="<?=site_url('presensi/report/monthly')?>">Laporan Bulanan</a></li>
 							<li><a href="<?=site_url('presensi/report/weekly')?>">Laporan Mingguan</a></li>
 							<li><a href="<?=site_url('presensi/report/overtime')?>">Laporan Lembur</a></li>
-							<li><a href="<?=site_url('presensi/report/special_empolyee')?>">Laporan Pegawai Khusus</a></li>
+							<li><a href="<?=site_url('presensi/report/special_employee')?>">Laporan Pegawai Khusus</a></li>
 						</ul>
 					</li>
 					

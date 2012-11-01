@@ -33,7 +33,7 @@
         foreach($checks as $row):?>
 			<tr>
 				<td rowspan="4"><?=$x;?></td>
-				<td><?=$row['Name'].'<br/>'.$row['Department']?></td>
+				<td><?=$row['Name']?></td>
 				<td>Paraf</td>
 				<?php for($i=1;$i<=days_in_month($this->session->userdata('month_search'));$i++):?>
 				  <td>
@@ -71,7 +71,7 @@
 			</tr>
             
 			<tr>
-                <td></td>
+                <td><?=$row['Department']?></td>
 				<td>Plg.PK</td>
 				<?php for($i=1;$i<=days_in_month($this->session->userdata('month_search'));$i++):?>
 				  <td><?=substr($this->authlog->getUserTime($i,$row['UserID'],2),0,5);?></td>
