@@ -479,4 +479,73 @@ class Report extends CI_Controller {
         $this->load->vars($data);
         $this->load->theme('report/week',$data);
 	}
+	
+	function special_employee($offset=0){
+        $data['title']  = 'Laporan Pegawai Khusus';
+        $data['logs']   =   $this->log->userLog();
+        $data['groups']	= $this->usergroup->getDataFromPosition(6);
+        if($this->session->userdata('se_paging'))
+            $paging = $this->session->userdata('se_paging');
+        else
+            $paging = config_item('paging');
+        if($this->session->userdata('se_group')):
+			$group = $this->session->userdata('se_group');
+            $month = $this->session->userdata('se_month');
+            $year  = $this->session->userdata('se_year');
+        else:
+			$group = 100;
+            $month = '09';   
+            $year  = '2012';
+        endif;           
+        $this->session->set_userdata('se_offset',$offset);
+        $data['checks']  = $this->authlog->getPerMonthRecords($offset,$paging,$month,$year,$group);
+        $numrows = COUNT($this->authlog->getPerMonthRecords('','',$month,$year,$group)); 
+        if ($numrows > $paging):
+            $config['base_url']   = site_url('presensi/report/special_employee/');
+            $config['total_rows'] = $numrows;
+            $config['per_page']   = $paging;
+            $config['uri_segment']= 4;
+            $this->pagination->initialize($config);	 
+            $data['pagination']   = $this->pagination->create_links();
+        endif;    
+        $data['page']	= 'report/vse';
+		$this->load->theme('default',$data);
+    }
+    
+    function se_paging($per_page)
+    {
+        $this->session->set_userdata('se_paging',$per_page);
+        redirect('presensi/report/special_employee');
+    }
+    
+    function se_search()
+    {
+        $search = array ('se_month'    => $this->input->post('month'),
+						 'se_group'    => $this->input->post('group'),
+                         'se_year'     => $this->input->post('year'));    
+        $this->session->set_userdata($search);
+        redirect('presensi/report/special_employee',301);
+    }
+	
+	function se_preview(){
+		$export = $this->input->post('export');
+            
+		switch($export):
+			case 0 : $this->se_print();
+					 break;
+			case 1 : $this->se_pdf();
+			         break;
+			case 2 : $this->se_excel();
+			         break;
+		endswitch;
+	}
+	
+	function se_print()
+    {
+		$data['title']		=	'Laporan Pegawai Khusus Bulan  '.indonesian_monthName($this->session->userdata('se_month')).' '.$this->session->userdata('se_year');
+		$data['position']	=	$this->usergroup->getPositionData($this->session->userdata('se_group'));
+		$data['checks']		=	$this->authlog->getPerMonthRecords('','',$this->session->userdata('se_month'),$this->session->userdata('se_year'),$this->session->userdata('se_group'));
+        $this->load->vars($data);
+        $this->load->theme('report/se',$data);
+	}
 }
