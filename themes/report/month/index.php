@@ -4,7 +4,6 @@
 <link type="text/css" rel="stylesheet" href="<?=base_url('themes/report/css/style.css');?>" />
 </head>
 <body>
-
  <center></center>
  <table class="vmonth">
     <caption>
@@ -33,25 +32,46 @@
         $x=1;
         foreach($checks as $row):?>
 			<tr>
-				<td rowspan="2"><?=$x;?></td>
-				<td rowspan="2"><?=$row['Name'].'<br/>'.$row['Department']?></td>
-				<td><img src="<?=base_url('assets/signature/'.$row['UserID'].'.jpg')?>" /></td>
+				<td rowspan="4"><?=$x;?></td>
+				<td><?=$row['Name'].'<br/>'.$row['Department']?></td>
+				<td>Paraf</td>
+				<?php for($i=1;$i<=days_in_month($this->session->userdata('month_search'));$i++):?>
+				  <td>
+                    <?php if(count($this->authlog->getUserTime($i,$row['UserID'],1))>0) ?>
+                        <img src="<?=base_url('assets/signature/'.$row['UserID'].'.jpg')?>" />    
+                  </td>
+				<?php endfor;?>
+				<td rowspan="4">-</td>
+				<td rowspan="4">-</td>
+				<td rowspan="4">-</td>
+			</tr>
+            
+            <tr>
+				<td>-</td>
+				<td>Dtg.PK</td>
 				<?php for($i=1;$i<=days_in_month($this->session->userdata('month_search'));$i++):?>
 				  <td><?=substr($this->authlog->getUserTime($i,$row['UserID'],1),0,5);?></td>
 				<?php endfor;?>
-				<td rowspan="2">-</td>
-				<td rowspan="2">-</td>
-				<td rowspan="2">-</td>
 			</tr>
-			
+            
+            <tr>
+				<td>-</td>
+				<td>Paraf</td>
+				<?php for($i=1;$i<=days_in_month($this->session->userdata('month_search'));$i++):?>
+				  <td>
+                    <?php if(count($this->authlog->getUserTime($i,$row['UserID'],2))>0) ?>
+                        <img src="<?=base_url('assets/signature/'.$row['UserID'].'.jpg')?>" />
+                  </td>
+				<?php endfor;?>
+			</tr>
+            
 			<tr>
-				<td><img src="<?=base_url('assets/signature/'.$row['UserID'].'.jpg')?>" /></td>
+                <td></td>
+				<td>Plg.PK</td>
 				<?php for($i=1;$i<=days_in_month($this->session->userdata('month_search'));$i++):?>
 				  <td><?=substr($this->authlog->getUserTime($i,$row['UserID'],2),0,5);?></td>
 				<?php endfor;?>
-				
-			</tr>
-			
+			</tr>		
      <?php 
          $x++;
          endforeach;?>
@@ -59,4 +79,3 @@
  </table>
 </body>
 </html>
-
