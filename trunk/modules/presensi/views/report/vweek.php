@@ -41,7 +41,8 @@
                         <th scope="col">PulCep</th>
 					</tr>
 				</thead>
-
+				
+				<?php if($this->session->userdata('week_group')): ?>
 				<tfoot>
 					<tr>
 						<td colspan="12">
@@ -49,7 +50,7 @@
 						</td>
 					</tr>
 				</tfoot>
-
+				
 				<tbody>
 					<?php 
                         $x=1;
@@ -73,6 +74,8 @@
                         endforeach;?>
 				
 				</tbody>
+				
+				<?php endif;?>
 
 			</table>
 
