@@ -13,7 +13,7 @@
 	<thead>		
 		<tr>
 			<th rowspan="2">No</th>
-			<th rowspan="2" width="12%">Nama</th>
+			<th rowspan="2">Nama</th>
 			<th rowspan="2">Paraf</th>
 			<th colspan="<?=days_in_month($this->session->userdata('month_search'))?>">Tanggal</th>
 			<th colspan="3">Keterangan</th>
