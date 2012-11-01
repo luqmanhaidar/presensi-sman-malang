@@ -173,7 +173,7 @@
                     <tr>
                         <td class="mini"><?='Minggu ke-'.$m?></td>
                         <td class="mini">
-							<?php if($week[$m]):
+							<?php if($week[$m])
 									echo $week[$m];
 								 else
 									echo '-';
