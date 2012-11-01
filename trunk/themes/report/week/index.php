@@ -172,14 +172,21 @@
                     ?>
                     <tr>
                         <td class="mini"><?='Minggu ke-'.$m?></td>
-                        <td class="mini"><?=$week[$m];?></td>
+                        <td class="mini">
+							<?php if($week[$m]):
+									echo $week[$m];
+								 else
+									 ?>
+						</td>
                         <td class="mini">
                         <?php 
-                            $v = (substr($var,0,2) * 3600) + (substr($var,3,2)*60) + (substr($var,6,2));
-                            if($v<$week[$m])
-                                print "Memenuhi";
-                            else
-                                print "Tidak Memenuhi";    
+							if($week[$m]):
+								$v = (substr($var,0,2) * 3600) + (substr($var,3,2)*60) + (substr($var,6,2));
+								if($v<$week[$m])
+									print "Memenuhi";
+								else
+									print "Tidak Memenuhi"; 
+							endif;		
                         ?>
                         </td>
                         <td class="mini"><?=$late[$m];?></td>
