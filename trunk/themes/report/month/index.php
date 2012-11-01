@@ -37,9 +37,11 @@
 				<td>Paraf</td>
 				<?php for($i=1;$i<=days_in_month($this->session->userdata('month_search'));$i++):?>
 				  <td>
-                    <?php if(strlen(substr($this->authlog->getUserTime($i,$row['UserID'],1)),5)>1) ?>
-                        <img src="<?=base_url('assets/signature/'.$row['UserID'].'.jpg')?>" />
-                        <?=strlen($this->authlog->getUserTime($i,$row['UserID'],1));?>    
+                    <?php if(strlen($this->authlog->getUserTime($i,$row['UserID'],1))>2): ?>
+                        <img src="<?=base_url('assets/signature/'.$row['UserID'].'.jpg');?>" />
+                    <?php else: ?>   
+                        
+                    <?php endif;?>        
                   </td>
 				<?php endfor;?>
 				<td rowspan="4">-</td>
@@ -60,8 +62,10 @@
 				<td>Paraf</td>
 				<?php for($i=1;$i<=days_in_month($this->session->userdata('month_search'));$i++):?>
 				  <td>
-                    <?php if(count($this->authlog->getUserTime($i,$row['UserID'],2))>0) ?>
-                        <img src="<?=base_url('assets/signature/'.$row['UserID'].'.jpg')?>" />
+                    <?php if(strlen($this->authlog->getUserTime($i,$row['UserID'],2))>2): ?>
+                        <img src="<?=base_url('assets/signature/'.$row['UserID'].'.jpg');?>" />
+                    <?php else: ?>   
+                    <?php endif;?>
                   </td>
 				<?php endfor;?>
 			</tr>
