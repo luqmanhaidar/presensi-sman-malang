@@ -37,8 +37,9 @@
 				<td>Paraf</td>
 				<?php for($i=1;$i<=days_in_month($this->session->userdata('month_search'));$i++):?>
 				  <td>
-                    <?php if(count($this->authlog->getUserTime($i,$row['UserID'],1))>0) ?>
-                        <img src="<?=base_url('assets/signature/'.$row['UserID'].'.jpg')?>" />    
+                    <?php if(strlen(substr($this->authlog->getUserTime($i,$row['UserID'],1)),5)>1) ?>
+                        <img src="<?=base_url('assets/signature/'.$row['UserID'].'.jpg')?>" />
+                        <?=strlen($this->authlog->getUserTime($i,$row['UserID'],1));?>    
                   </td>
 				<?php endfor;?>
 				<td rowspan="4">-</td>
