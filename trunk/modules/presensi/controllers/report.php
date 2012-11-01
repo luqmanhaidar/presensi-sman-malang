@@ -8,7 +8,8 @@ class Report extends CI_Controller {
     {
 		parent::__construct();
         $this->load->module_model('employee','log'); //load model usergroup form user
-        $this->load->model('authlog'); //load model authlog form presensi   
+        $this->load->model('authlog'); //load model authlog form presensi
+        $this->load->model('presensi'); //load model presensi form presensi   
         $this->load->model('authprocess'); //load model authprocess form presensi   
         $this->load->module_model('employee','userinfo'); //load model usergroup form user 
         $this->load->module_model('employee','usergroup'); //load model usergroup form user
@@ -474,7 +475,7 @@ class Report extends CI_Controller {
     {
 		$data['title']		=	'DAFTAR CEK CLOCK';
 		$data['users']	    =	$this->userinfo->getAllRecords('','','','',$this->session->userdata('week_group'));
-		//$data['records']	=	$this->authprocess->getAllRecords(0,10);
+		$data['var']	    =	$this->presensi->getVariabelDataByVar('DMK');
         $this->load->vars($data);
         $this->load->theme('report/week',$data);
 	}

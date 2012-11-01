@@ -92,7 +92,7 @@ class Authlog extends CI_Model
         $this->db->where('AuthResult','0');
         $this->db->group_by('NGAC_AUTHLOG.UserID,NGAC_USERINFO.UserOrder,NGAC_USERINFO.Name,NGAC_USERINFO.Department');
 		$Q = $this->db->get('NGAC_AUTHLOG');
-        $this->db->order_by('NGAC_USERINFO.UserOrder','ASC');
+        //$this->db->order_by('NGAC_USERINFO.UserOrder','ASC');
         return $Q->result_array();
     }
 	

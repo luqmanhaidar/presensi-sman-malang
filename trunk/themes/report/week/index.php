@@ -173,7 +173,15 @@
                     <tr>
                         <td class="mini"><?='Minggu ke-'.$m?></td>
                         <td class="mini"><?=$week[$m];?></td>
-                        <td class="mini"></td>
+                        <td class="mini">
+                        <?php 
+                            $v = (substr($var,0,2) * 3600) + (substr($var,3,2)*60) + (substr($var,6,2));
+                            if($v<$week[$m])
+                                print "Memenuhi";
+                            else
+                                print "Tidak Memenuhi";    
+                        ?>
+                        </td>
                         <td class="mini"><?=$late[$m];?></td>
                         <td class="mini"><?=$early[$m];?></td>
                     </tr>
@@ -181,11 +189,10 @@
                </tbody>
                <tfoot>
                     <tr>
-                        <th class="mini" colspan="5">DWK = 70:00:00</th>
+                        <th class="mini" colspan="5"><?='DMK='.$var;?></th>
                     </tr>
                </tfoot>
         	</table>
-            
 	    </div>
         <?php
                $x++;

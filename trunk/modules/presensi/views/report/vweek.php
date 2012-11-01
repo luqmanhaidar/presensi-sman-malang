@@ -1,4 +1,4 @@
-<hgroup id="main-title" class="thin">
+       <hgroup id="main-title" class="thin">
 			<h1><?=$title?></h1>
 		</hgroup>
 
@@ -12,7 +12,7 @@
             
 			<div class="table-header button-height">
 				<div class="float-right">
-                    <form method="post" action="<?=site_url('presensi/report/week_search')?>">
+                    <form method="post"  action="<?=site_url('presensi/report/week_search')?>">
                     <?=form_dropdown('group',$groups,$this->session->userdata('week_group'),'id="week" class="select white-gradient glossy" ');?>
 					<?=form_dropdown('month',config_item('month'),$this->session->userdata('week_month'),'class="select"')?>
                     <?=form_dropdown('year',config_item('year'),$this->session->userdata('week_year'),'class="select"')?>
@@ -76,7 +76,7 @@
 
 			</table>
 
-			<form method="post" action="<?=site_url('presensi/report/week_preview')?>" class="table-footer button-height large-margin-bottom">
+			<form method="post" target="_blank" action="<?=site_url('presensi/report/week_preview')?>" class="table-footer button-height large-margin-bottom">
                 <div class="float-right">
                     <div class="button-group">
                       <?php if(!empty($pagination))

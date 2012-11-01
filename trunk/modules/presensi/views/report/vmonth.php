@@ -66,7 +66,7 @@
 
 			</table>
 
-			<form method="post" action="<?=site_url('presensi/report/month_preview')?>" class="table-footer button-height large-margin-bottom">
+			<form method="post" target="_blank" action="<?=site_url('presensi/report/month_preview')?>" class="table-footer button-height large-margin-bottom">
                 <div class="float-right">
                     <div class="button-group">
                       <?php if(!empty($pagination))
@@ -79,7 +79,6 @@
                 <?=form_dropdown('export',config_item('print'),'','id="print" class="select blue-gradient glossy" ');?>
 				<button type="submit" class="button blue-gradient glossy">Go</button>
 			</form>
-			
 		</div>
         
      <script>
