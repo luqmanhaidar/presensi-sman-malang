@@ -480,6 +480,38 @@ class Report extends CI_Controller {
         $this->load->theme('report/week',$data);
 	}
 	
+	function overtime($offset=0){
+        $data['title']  = 'Laporan Lemburan';
+        $data['logs']   =   $this->log->userLog();
+        $data['groups']	= $this->usergroup->getDataFromPosition();
+        if($this->session->userdata('overtime_paging'))
+            $paging = $this->session->userdata('overtime_paging');
+        else
+            $paging = config_item('paging');
+        if($this->session->userdata('overtime_month')):
+			$group = $this->session->userdata('overtime_group');
+            $month = $this->session->userdata('overtime_month');
+            $year  = $this->session->userdata('overtime_year');
+        else:
+			$group = 100;
+            $month = '09';   
+            $year  = '2012';
+        endif;           
+        $this->session->set_userdata('overtime_offset',$offset);
+        $data['checks']  = $this->authprocess->getAllRecords($offset,$paging);
+        $numrows = COUNT($this->authprocess->getAllRecords()); 
+        if ($numrows > $paging):
+            $config['base_url']   = site_url('presensi/report/overtime/');
+            $config['total_rows'] = $numrows;
+            $config['per_page']   = $paging;
+            $config['uri_segment']= 4;
+            $this->pagination->initialize($config);	 
+            $data['pagination']   = $this->pagination->create_links();
+        endif;    
+        $data['page']	= 'report/vovertime';
+		$this->load->theme('default',$data);
+    }
+	
 	function special_employee($offset=0){
         $data['title']  = 'Laporan Pegawai Khusus';
         $data['logs']   =   $this->log->userLog();
