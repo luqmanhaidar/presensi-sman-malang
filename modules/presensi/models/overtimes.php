@@ -35,7 +35,7 @@ class Overtimes extends CI_Model
         return $query->row_array();
     }
     
-    function getAllRecords($offset='',$paging='',$name='',$date_start='',$date_finish=''){
+    function getAllRecords($offset='',$paging='',$name='',$date_start='',$date_finish='',$group=''){
         if (!empty($offset))
             $this->db->offset($offset);
         
@@ -44,17 +44,18 @@ class Overtimes extends CI_Model
         
         if (!empty($name))   
             $this->db->like('UserID',$name);
+		
+		if (!empty($group))   
+            $this->db->where('GroupID',$group);	
             
-        if (!empty($date_start))   
-            //$this->db->where('CONVERT(VARCHAR(10),TransactionTime, 105)>=',$date_start);
-            $this->db->where("OvertimeDate >='".$date_start."' AND OvertimeDate <='".$date_finish."' ");  
-        
-        //if (!empty($date_finish))   
-            //$this->db->where('CONVERT(VARCHAR(10),TransactionTime, 105)<=',$date_finish);          
+        if (!empty($date_start)) 
+			 $this->db->where("(OvertimeDate >='".$date_start."') AND (OvertimeDate <=DATEADD(day,1,'".$date_finish."'))");  
+        $this->db->select('OvertimeID,CONVERT(VARCHAR(10),OvertimeDate,105) as MyDate,OvertimeDate,UserID,OvertimeDescription');       
         $this->db->order_by('OvertimeDate','DESC');
         $this->db->order_by('UserID','ASC');
         $this->db->where_not_in('UserID','');
-        $Q = $this->db->get('NGAC_OVERTIME');
+        $this->db->join('NGAC_USERINFO','NGAC_USERINFO.ID=NGAC_OVERTIME.UserID');
+		$Q = $this->db->get('NGAC_OVERTIME');
         return $Q->result_array();
     }
     

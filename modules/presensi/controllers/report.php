@@ -10,7 +10,9 @@ class Report extends CI_Controller {
         $this->load->module_model('employee','log'); //load model usergroup form user
         $this->load->model('authlog'); //load model authlog form presensi
         $this->load->model('presensi'); //load model presensi form presensi   
-        $this->load->model('authprocess'); //load model authprocess form presensi   
+        $this->load->model('authprocess'); //load model authprocess form presensi
+		$this->load->model('overtimes'); //load model presensi form presensi  
+		$this->load->model('authovertime'); //load model authprocess form presensi  		
         $this->load->module_model('employee','userinfo'); //load model usergroup form user 
         $this->load->module_model('employee','usergroup'); //load model usergroup form user
 		$this->load->model('excelModel'); //load model authlog form presensi   
@@ -492,18 +494,19 @@ class Report extends CI_Controller {
             $paging = $this->session->userdata('overtime_paging');
         else
             $paging = config_item('paging');
-        if($this->session->userdata('overtime_month')):
+			
+        if($this->session->userdata('overtime_group')):
 			$group = $this->session->userdata('overtime_group');
-            $month = $this->session->userdata('overtime_month');
-            $year  = $this->session->userdata('overtime_year');
+            $start = $this->session->userdata('overtime_start');
+			$end   = $this->session->userdata('overtime_finish');
         else:
 			$group = 100;
-            $month = '09';   
-            $year  = '2012';
-        endif;           
+            $start = '';
+			$end   = '';
+        endif;          
         $this->session->set_userdata('overtime_offset',$offset);
-        $data['checks']  = $this->authprocess->getAllRecords($offset,$paging);
-        $numrows = COUNT($this->authprocess->getAllRecords()); 
+        $data['checks']  = $this->authovertime->getAllRecords();
+        $numrows = COUNT($this->authovertime->getAllRecords()); 
         if ($numrows > $paging):
             $config['base_url']   = site_url('presensi/report/overtime/');
             $config['total_rows'] = $numrows;
@@ -515,6 +518,171 @@ class Report extends CI_Controller {
         $data['page']	= 'report/vovertime';
 		$this->load->theme('default',$data);
     }
+	
+	function overtime_search()
+    {
+        $search = array ('overtime_group'  => $this->input->post('group'),
+						 'overtime_start'  => $this->input->post('month').'/'.$this->input->post('day').'/'.$this->input->post('year'), 
+                         'overtime_finish' => $this->input->post('month2').'/'.$this->input->post('day2').'/'.$this->input->post('year2'));   
+        $start =  $this->input->post('month').'/'.$this->input->post('day').'/'.$this->input->post('year');
+		$end   =  $this->input->post('month2').'/'.$this->input->post('day2').'/'.$this->input->post('year2');
+		$group =  $this->input->post('group');
+		
+		$this->session->set_userdata($search);
+        $this->authovertime->removeAll();
+        /** Query Insert ke AuthProcess **/
+        $query = $this->overtimes->getAllRecords('','','',$start,$end,$group);
+        /** masuk kerja senin-kamis & sabtu I**/
+        //$sk1 = (6 * 3600) + (30*60) + (0);
+        //$dt1 = (6 * 3600) + (45*60) + (0); // telat 15 menit
+        //$sd1 = '06:30:00';
+        /** masuk kerja senin-kamis II **/
+        //$sk2 = (7 * 3600) + (0*60) + (0);
+        //$dt2 = (7 * 3600) + (15*60) + (0); // telat 15 menit
+        //$sd2 = '07:00:00';
+        /** pulang kerja sabtu **/
+        //$wp1 =  (12 * 3600) + (30*60) + (0);
+        //$w1  =  '12:30:00';
+        /** pulang kerja senin-kamis **/                    
+        //$wp2 =  (14 * 3600) + (0*60) + (0);
+        //$w2  =  '14:00:00';
+        /** pulang kerja senin-kamis **/                      
+        //$wp3 =  (14 * 3600) + (30*60) + (0);
+        //$w3  =  '14:30:00'; 
+        /** pulang kerja senin-kamis **/                      
+        //$wp4 =  (15 * 3600) + (0*60) + (0);
+        //$w4  =  '15:00:00';
+        /** pulang kerja senin-kamis **/                      
+        //$wp5 =  (15 * 3600) + (30*60) + (0);
+        //$w5  =  '15:30:00';
+                    
+        foreach($query as $row):   
+            //if(COUNT($this->authprocess->getAuthProcessData($row['UserID'],$row['TransactionTime']))== 0):
+                //if($row['GroupID']<=2):
+                  //  $sk  =  $this->usergroup->getGroupWorkData($row['GroupWork']);
+                   // $jm  =  $this->usergroup->getGroupFridayData($row['GroupFriday']);
+                   // if($sk):
+                    //    $dbSkStart = $sk['GroupWorkStart'];
+                    //    $dbSpStart = (substr($sk['GroupWorkStart'],0,2) * 3600) + (substr($sk['GroupWorkStart'],3,2)*60) + (substr($sk['GroupWorkStart'],6,2));
+                    //    $dbSpWork  = (substr($sk['GroupWorkStart'],0,2) * 3600) + ((substr($sk['GroupWorkStart'],3,2)+15)*60) + (substr($sk['GroupWorkStart'],6,2));   
+                    //    $dbSkEnd   = $sk['GroupWorkEnd'];
+                    //    $dbSpEnd   = (substr($sk['GroupWorkEnd'],0,2) * 3600) + (substr($sk['GroupWorkEnd'],3,2)*60) + (substr($sk['GroupWorkEnd'],6,2));
+                    //else:
+                    //    $dbSkStart = $sd1;
+                    //    $dbSpStart = $sk1;
+                    //    $dbSpWork  = $dt1;
+                    //    $dbSkEnd   = $w3;
+                    //    $dbSpEnd   = $wp3; 
+                    //endif;
+                //endif;    
+                
+                //$wm = (substr($row['MyTime'],0,2) * 3600) + (substr($row['MyTime'],3,2)*60) + (substr($row['MyTime'],6,2));
+                
+                //if(($row['DayName']=='Saturday')):
+                //    $wmk = $sd1;
+                //    $dt  = $dt1;
+                //    $sk  = $sk1;
+                //    $wsk = $w1; // Wsk Senin-Kamis
+                //    $wsp = $wp1;
+                //elseif($row['DayName']=='Sunday'):
+                //    $wmk = '';
+                //    $dt  = 0;
+                //    $sk  = 0;
+                //    $wsk = ''; // Wsk Senin-Kamis
+                //    $wsp = 0;
+                //elseif(($row['DayName']<>'Saturday') && ($wm >= $sk1)  && ( ($row['GroupID']==1) || ($row['GroupID']==2) ) ):
+                //    $wmk = $sd2;
+                //    $dt  = $dt2;
+                //    $sk  = $sk2;
+                //    if($row['DayName']<>"Friday"):
+                //        $wsk = $w5; // Wsk Senin-Kamis
+                //        $wsp = $wp5;
+                //    else:
+                //        $wsk = $w4; // Wsk Jumat
+                //        $wsp = $wp4;
+                //    endif;
+                //elseif(($row['DayName']<>'Saturday') && ($wm <= $sk1)  && ( ($row['GroupID']==1) || ($row['GroupID']==2) ) ):
+               //     $wmk = $sd1;
+                //    $dt  = $dt1;
+                //    $sk  = $sk1;
+                //    if($row['DayName']<>"Friday"):
+                //        $wsk = $w3; // Wsk Senin-Kamis
+                 //       $wsp = $wp3;
+                 //   else:
+                 //       $wsk = $w2; // Wsk Jumat
+                 //       $wsp = $wp2;
+                 //       $row['TransactionTime'] = substr($row['TransactionTime'],0,11)." 06:30:00";
+                 //   endif;                  
+               //elseif( ( ($row['GroupID']==1) || ($row['GroupID']==2) )):
+                //    $wmk = $sd1;
+                //    $dt  = $dt1;
+                //    $sk  = $sk1;
+                //    if($row['DayName']<>"Friday"):
+                 //       $wsk = $w3;
+                 //       $wsp = $wp3;
+                 ///   else:
+                 //       $wsk = $w2; 
+                  //      $wsp = $wp2;
+                  //  endif;
+                //elseif(($row['GroupID']>=3)):
+                //    $wmk = $dbSkStart;
+                //    $dt  = $dbSpWork;
+                //    $sk  = $dbSpStart;
+                //    if($row['DayName']<>"Friday"):
+                //        $wsk = $dbSkEnd;
+                //        $wsp = $dbSpEnd;
+                //    else:
+                //        $wsk = $w2; 
+                //        $wsp = $wp2;
+                 //   endif;
+                //endif; 
+                
+                //if (($wm > $dt) && ($row['DayName']<>'Sunday')):
+                //    $d = $wm - $sk;
+                //    $hours = code(floor($d / 3600));
+                //    $mins = code(floor(($d - ($hours*3600)) / 60));
+                //    $seconds = code($d % 60);
+                //    $late = $hours.':'.$mins.':'.$seconds;     
+               // else:
+               //     $d = "-";
+               //     $late = "-";
+               // endif;          
+			$tm1 = $this->authlog->getUserTime($row['MyDate'],$row['UserID'],'3');	
+			$tm2 = $this->authlog->getUserTime($row['MyDate'],$row['UserID'],'4');
+            $this->authovertime->save($row['UserID'],$row['OvertimeDate'],$tm1,$tm2);
+            //endif;   
+        endforeach;
+        redirect('presensi/report/overtime',301);
+        
+    }
+    
+    function overtime_paging($per_page)
+    {
+        $this->session->set_userdata('overtime_paging',$per_page);
+        redirect('presensi/report/overtime');
+    }
+    
+    function overtime_preview(){
+		$export = $this->input->post('export');
+            
+		switch($export):
+			case 0 : $this->overtime_print();
+					 break;
+			case 1 : $this->overtime_pdf();
+			         break;
+			case 2 : $this->overtime_excel();
+			         break;
+		endswitch;
+	}
+    
+    function overtime_print()
+    {
+		$data['title']  =  'Laporan Lembur';
+		$data['var']	=  $this->presensi->getVariabelDataByVar('ULB');
+		$data['checks'] =  $this->authlog->getPerMonthRecords('','',$this->session->userdata('eat_start'),$this->session->userdata('eat_finish'),$this->session->userdata('eat_group'));
+        $this->load->vars($data);
+        $this->load->theme('report/payroll-1',$data);
+	}
 	
 	function special_employee($offset=0){
         $data['title']  = 'Laporan Pegawai Khusus';
