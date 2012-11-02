@@ -556,9 +556,9 @@ class Report extends CI_Controller {
     
     function se_search()
     {
-        $search = array ('se_month'    => $this->input->post('month'),
-						 'se_group'    => $this->input->post('group'),
-                         'se_year'     => $this->input->post('year'));    
+        $search = array ('se_group'  => $this->input->post('group'),
+						 'se_start'  => $this->input->post('month').'/'.$this->input->post('day').'/'.$this->input->post('year'), 
+                         'se_finish' => $this->input->post('month2').'/'.$this->input->post('day2').'/'.$this->input->post('year2'));     
         $this->session->set_userdata($search);
         redirect('presensi/report/special_employee',301);
     }
@@ -580,7 +580,7 @@ class Report extends CI_Controller {
     {
 		$data['title']		=	'Laporan Presensi Pegawai Khusus Periode  '.$this->session->userdata('se_start').' s/d '.$this->session->userdata('se_finish');
 		$data['position']	=  $this->usergroup->getPositionData($this->session->userdata('se_group'));
-		$data['checks']		=  $this->authlog->getPerMonthRecords('','',$this->session->userdata('month_start'),$this->session->userdata('month_finish'),$this->session->userdata('month_group'));
+		$data['checks']		=  $this->authlog->getPerMonthRecords('','',$this->session->userdata('se_start'),$this->session->userdata('se_finish'),$this->session->userdata('se_group'));
         $data['days']	    =  $this->authlog->getDay($this->session->userdata('se_start'),$this->session->userdata('se_finish'));
         $this->load->vars($data);
         $this->load->theme('report/se',$data);
