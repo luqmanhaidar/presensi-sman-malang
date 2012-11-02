@@ -12,16 +12,21 @@
             
 			<div class="table-header button-height">
 				<div class="float-right">
-                    <form method="post"  action="<?=site_url('presensi/report/week_search')?>">
-                    <?=form_dropdown('group',$groups,$this->session->userdata('week_group'),'id="week" class="select white-gradient glossy" ');?>
-					<?=form_dropdown('month',config_item('month'),$this->session->userdata('week_month'),'class="select"')?>
-                    <?=form_dropdown('year',config_item('year'),$this->session->userdata('week_year'),'class="select"')?>
+                    <form method="post"  action="<?=site_url('presensi/report/overtime_search')?>">
+                    <?=form_dropdown('group',$groups,$this->session->userdata('overtime_group'),'id="week" class="select white-gradient glossy" ');?>
+					<?=form_dropdown('day',config_item('day'),substr($this->session->userdata('overtime_start'),3,2),'class="select"')?>
+                    <?=form_dropdown('month',config_item('month'),substr($this->session->userdata('overtime_start'),0,2),'class="select"')?>
+                    <?=form_dropdown('year',config_item('year'),substr($this->session->userdata('overtime_start'),6,4),'class="select"')?>
+                    s/d
+                    <?=form_dropdown('day2',config_item('day'),substr($this->session->userdata('overtime_finish'),3,2),'class="select"')?>
+                    <?=form_dropdown('month2',config_item('month'),substr($this->session->userdata('overtime_finish'),0,2),'class="select"')?>
+                    <?=form_dropdown('year2',config_item('year'),substr($this->session->userdata('overtime_finish'),6,4),'class="select"')?>
                     <input type="submit" class="button blue-gradient glossy" value="Go" />
                     </form>
                 </div>
                 
 				Show&nbsp;
-                <?=form_dropdown('show',config_item('per_page'),$this->session->userdata('week_paging'),'id="show" class="select blue-gradient glossy" onchange="changeUrl();" ');?>
+                <?=form_dropdown('show',config_item('per_page'),$this->session->userdata('overtime_paging'),'id="show" class="select blue-gradient glossy" onchange="changeUrl();" ');?>
 			</div>
 			<table class="table responsive-table" id="sorting-example1">
 
@@ -38,7 +43,7 @@
 					</tr>
 				</thead>
 				
-				<?php if($this->session->userdata('overtime_group')): ?>
+				<?php if($this->session->userdata('overtime_start')): ?>
 				<tfoot>
 					<tr>
 						<td colspan="8">
@@ -51,19 +56,15 @@
 					<?php 
                         $x=1;
                         foreach($checks as $row):?>
-					<tr <?php if($row['DayName']=='Sunday') print 'style="background:#FF0000;color:#222"'; ?>  >
+					<tr >
 						<td><?=$x;?></td>
 						<td><?=$row['UserID'];?></td>
                         <td><?=$row['Name'];?></td>
-                         <td><?=$row['W'];?></td>
-                        <td><?=indonesianDayName($row['DayName']);?></td>
-						<td><?=$row['MyDate'];?></td>
-                        <td><?=$row['ProcessDateWorkStart']?></td>
-                        <td><?=$row['MyTimeStart'];?><br /></td>
-                        <td><?=$row['ProcessDateWorkEnd']?></td>
-						<td><?=$row['MyTimeEnd'];?></td>
-                        <td><?=$row['ProcessDateLate']?></td>
-                        <td><?=$row['ProcessDateEarly']?></td>
+                        <td><?=$row['MyDate'];?></td>
+                        <td><?=$row['OvertimeStart'];?></td>
+						<td><?=$row['OvertimeEnd'];?></td>
+						<td><?=$row['OvertimeDuration'];?></td>
+                        <td><?=$row['OvertimeNominal']?></td>
 					</tr>
                     <?php 
                         $x=$x+1;
@@ -75,7 +76,7 @@
 
 			</table>
 
-			<form method="post" target="_blank" action="<?=site_url('presensi/report/week_preview')?>" class="table-footer button-height large-margin-bottom">
+			<form method="post" target="_blank" action="<?=site_url('presensi/report/overtime_preview')?>" class="table-footer button-height large-margin-bottom">
                 <div class="float-right">
                     <div class="button-group">
                       <?php if(!empty($pagination))
@@ -95,12 +96,7 @@
         function changeUrl() {
             var redirect;
             redirect = document.getElementById('show').value;
-            document.location.href = '<?=site_url("presensi/report/week_paging")?>/' + redirect;
+            document.location.href = '<?=site_url("presensi/report/overtime_paging")?>/' + redirect;
         }
         
-        /*function changeUrl2() {
-            var redirect;
-            redirect = document.getElementById('show2').value;
-            document.location.href = '<?=site_url("presensi/report/week_paging")?>/' + redirect;
-        }*/
      </script>   
