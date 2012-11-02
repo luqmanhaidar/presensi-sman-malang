@@ -81,10 +81,10 @@ class Report extends CI_Controller {
 	
 	function eat_print()
     {
-		$data['title']		=	'Laporan Gaji Format 1';
-        $data['name']       =   $this->session->userdata('personal_name');
-        $data['checks']		=	$this->authlog->getAllRecords('','',$this->session->userdata('personal_search'),$this->session->userdata('personal_key'),$this->session->userdata('personal_start'),$this->session->userdata('personal_finish'));
-		$data['user']		=	$this->session->userdata('personal_search');
+		$data['title']  =  'Laporan Gaji Format 1';
+        $data['name']   =  $this->session->userdata('personal_name');
+		$data['var']	=  $this->presensi->getVariabelDataByVar('UMK');
+		$data['checks'] =  $this->authlog->getPerMonthRecords('','',$this->session->userdata('eat_start'),$this->session->userdata('eat_finish'),$this->session->userdata('eat_group'));
         $this->load->vars($data);
         $this->load->theme('report/payroll-1',$data);
 	}
@@ -92,11 +92,85 @@ class Report extends CI_Controller {
 	function eat_pdf()
     {
 		$this->load->library('pdf');
-		$data['title']		=	'Laporan Gaji Format-1 Bulan '.indonesian_monthName($this->session->userdata('month_search')).' '.$this->session->userdata('year_search');
-        $data['checks']		=	$this->authlog->getPerMonthRecords('','',$this->session->userdata('month_search'),$this->session->userdata('year_search'),$this->session->userdata('month_group'));
-		$this->load->vars($data);
-        $file = $this->load->theme('report/month',$data,TRUE);
+		$data['title']  =  'Laporan Gaji Format 1';
+        $data['name']   =  $this->session->userdata('personal_name');
+		$data['var']	=  $this->presensi->getVariabelDataByVar('UMK');
+		$data['checks'] =  $this->authlog->getPerMonthRecords('','',$this->session->userdata('eat_start'),$this->session->userdata('eat_finish'),$this->session->userdata('eat_group'));
+		$data['user']   =  $this->session->userdata('personal_search');
+        $this->load->vars($data);
+        $file=$this->load->theme('report/payroll-1',$data,TRUE);
 		$this->pdf->pdf_create($file,$data['title']);
+	}
+	
+	function transport($offset=0){
+        $data['title']  = 'Laporan Gaji Format 2';
+        $data['logs']   =   $this->log->userLog();
+        $data['groups']	= $this->usergroup->getDataFromPosition();
+        if($this->session->userdata('transport_paging'))
+            $paging = $this->session->userdata('transport_paging');
+        else
+            $paging = config_item('paging');
+        if($this->session->userdata('transport_group')):
+			$group = $this->session->userdata('transport_group');
+            $start = $this->session->userdata('transport_start');
+			$end   = $this->session->userdata('transport_finish');
+        else:
+			$group = '';
+			$start = '';
+			$end   = '';
+        endif;                    
+        $this->session->set_userdata('transport_offset',$offset);
+        $data['checks']  = $this->authlog->getPerMonthRecords($offset,$paging,$start,$end,$group);
+        $numrows = COUNT($this->authlog->getPerMonthRecords('','',$start,$end,$group)); 
+        if ($numrows > $paging):
+            $config['base_url']   = site_url('payroll/report/transport/');
+            $config['total_rows'] = $numrows;
+            $config['per_page']   = $paging;
+            $config['uri_segment']= 4;
+            $this->pagination->initialize($config);	 
+            $data['pagination']   = $this->pagination->create_links();
+        endif;
+		$data['var']	= $this->presensi->getVariabelDataByVar('UTR');
+        $data['page']	= 'report/vtransport';
+		$this->load->theme('default',$data);
+    }
+    
+    function transport_paging($per_page)
+    {
+        $this->session->set_userdata('transport_paging',$per_page);
+        redirect('payroll/report/transport');
+    }
+    
+    function transport_search()
+    {
+        $search = array ('transport_group'  => $this->input->post('group'),
+						 'transport_start'  => $this->input->post('month').'/'.$this->input->post('day').'/'.$this->input->post('year'), 
+                         'transport_finish' => $this->input->post('month2').'/'.$this->input->post('day2').'/'.$this->input->post('year2'));  
+        $this->session->set_userdata($search);
+        redirect('payroll/report/transport',301);
+    }
+	
+	function transport_preview(){
+		$export = $this->input->post('export');
+            
+		switch($export):
+			case 0 : $this->transport_print();
+					 break;
+			case 1 : $this->transport_pdf();
+			         break;
+			case 2 : $this->transport_excel();
+			         break;
+		endswitch;
+	}
+	
+	function transport_print()
+    {
+		$data['title']  =  'Laporan Gaji Format 2';
+        $data['name']   =  $this->session->userdata('personal_name');
+		$data['var']	=  $this->presensi->getVariabelDataByVar('UTR');
+		$data['checks'] =  $this->authlog->getPerMonthRecords('','',$this->session->userdata('transport_start'),$this->session->userdata('transport_finish'),$this->session->userdata('transport_group'));
+        $this->load->vars($data);
+        $this->load->theme('report/payroll-2',$data);
 	}
     
 }
