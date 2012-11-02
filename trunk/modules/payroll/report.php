@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-/** Dashboard Menu Press System **/
+/** Payroll Menu Press System **/
 
 class Report extends CI_Controller {
     
@@ -17,6 +17,10 @@ class Report extends CI_Controller {
         $this->load->library('excel');
         $this->load->helper('download');
         $this->load->helper('date');    
+	}
+	
+	function index(){
+		echo 'x';
 	}
     
     function eat($offset=0){
