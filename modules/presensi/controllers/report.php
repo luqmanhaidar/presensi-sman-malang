@@ -131,18 +131,18 @@ class Report extends CI_Controller {
             $paging = $this->session->userdata('month_paging');
         else
             $paging = config_item('paging');
-        if($this->session->userdata('month_search')):
+        if($this->session->userdata('month_group')):
 			$group = $this->session->userdata('month_group');
-            $month = $this->session->userdata('month_search');
-            $year  = $this->session->userdata('year_search');
+            $start = $this->session->userdata('month_start');
+			$end   = $this->session->userdata('month_finish');
         else:
-			$group = 100;
-            $month = '09';   
-            $year  = '2012';
+			$group = '';
+			$start = '';
+			$end   = '';
         endif;           
         $this->session->set_userdata('month_offset',$offset);
-        $data['checks']  = $this->authlog->getPerMonthRecords($offset,$paging,$month,$year,$group);
-        $numrows = COUNT($this->authlog->getPerMonthRecords('','',$month,$year,$group)); 
+        $data['checks']  = $this->authlog->getPerMonthRecords($offset,$paging,$start,$end,$group);
+        $numrows = COUNT($this->authlog->getPerMonthRecords('','',$start,$end,$group)); 
         if ($numrows > $paging):
             $config['base_url']   = site_url('presensi/report/monthly/');
             $config['total_rows'] = $numrows;
@@ -163,9 +163,9 @@ class Report extends CI_Controller {
     
     function month_search()
     {
-        $search = array ('month_search' => $this->input->post('month'),
-						 'month_group'  => $this->input->post('group'),
-                         'year_search'  => $this->input->post('year'));    
+        $search = array ('month_group'  => $this->input->post('group'),
+						 'month_start'  => $this->input->post('month').'/'.$this->input->post('day').'/'.$this->input->post('year'), 
+                         'month_finish' => $this->input->post('month2').'/'.$this->input->post('day2').'/'.$this->input->post('year2'));    
         $this->session->set_userdata($search);
         redirect('presensi/report/monthly',301);
     }
@@ -185,10 +185,11 @@ class Report extends CI_Controller {
 	
 	function month_print()
     {
-		$data['title']		=	'Laporan Presensi Bulan  '.indonesian_monthName($this->session->userdata('month_search')).' '.$this->session->userdata('year_search');
+		$data['title']		=	'Laporan Presensi Bulanan Periode  '.$this->session->userdata('month_start').' s/d '.$this->session->userdata('month_finish');
 		$data['position']	=	$this->usergroup->getPositionData($this->session->userdata('month_group'));
-		$data['checks']		=	$this->authlog->getPerMonthRecords('','',$this->session->userdata('month_search'),$this->session->userdata('year_search'),$this->session->userdata('month_group'));
-        $this->load->vars($data);
+		$data['checks']		=	$this->authlog->getPerMonthRecords('','',$this->session->userdata('month_start'),$this->session->userdata('month_finish'),$this->session->userdata('month_group'));
+        $data['days']	    =  $this->authlog->getDay($this->session->userdata('month_start'),$this->session->userdata('month_finish'));
+		$this->load->vars($data);
         $this->load->theme('report/month',$data);
 	}
 	
@@ -210,15 +211,17 @@ class Report extends CI_Controller {
             $paging = $this->session->userdata('week_paging');
         else
             $paging = config_item('paging');
-        if($this->session->userdata('week_month')):
+		
+        if($this->session->userdata('week_group')):
 			$group = $this->session->userdata('week_group');
-            $month = $this->session->userdata('week_month');
-            $year  = $this->session->userdata('week_year');
+            $start = $this->session->userdata('week_start');
+			$end   = $this->session->userdata('week_finish');
         else:
 			$group = 100;
-            $month = '09';   
-            $year  = '2012';
-        endif;           
+            $start = '';
+			$end   = '';
+        endif; 
+		
         $this->session->set_userdata('week_offset',$offset);
         $data['checks']  = $this->authprocess->getAllRecords($offset,$paging);
         $numrows = COUNT($this->authprocess->getAllRecords()); 
@@ -236,17 +239,18 @@ class Report extends CI_Controller {
     
     function week_search()
     {
-        $month = $this->input->post('month');
-        $year  = $this->input->post('year');
-        $group = $this->input->post('group');
-        $search = array ('week_month' => $this->input->post('month'),
-						 'week_group'  => $this->input->post('group'),
-                         'week_year'  => $this->input->post('year'));    
-        $this->session->set_userdata($search);
+        $search = array ('week_group'  => $this->input->post('group'),
+						 'week_start'  => $this->input->post('month').'/'.$this->input->post('day').'/'.$this->input->post('year'), 
+                         'week_finish' => $this->input->post('month2').'/'.$this->input->post('day2').'/'.$this->input->post('year2'));   
+        $start =  $this->input->post('month').'/'.$this->input->post('day').'/'.$this->input->post('year');
+		$end   =  $this->input->post('month2').'/'.$this->input->post('day2').'/'.$this->input->post('year2');
+		$group =  $this->input->post('group');
+		
+		$this->session->set_userdata($search);
         $this->authprocess->removeAll();
         
         /** Query Insert ke AuthProcess **/
-        $query = $this->authlog->getPerWeekRecords($month,$year,$group,1);
+        $query = $this->authlog->getPerWeekRecords($start,$end,$group,1);
         /** masuk kerja senin-kamis & sabtu I**/
         $sk1 = (6 * 3600) + (30*60) + (0);
         $dt1 = (6 * 3600) + (45*60) + (0); // telat 15 menit
@@ -270,8 +274,6 @@ class Report extends CI_Controller {
         /** pulang kerja senin-kamis **/                      
         $wp5 =  (15 * 3600) + (30*60) + (0);
         $w5  =  '15:30:00';
-        
-        
                     
         foreach($query as $row):   
             if(COUNT($this->authprocess->getAuthProcessData($row['UserID'],$row['TransactionTime']))== 0):
@@ -369,7 +371,7 @@ class Report extends CI_Controller {
         endforeach;
         
         /** Query Update ke AuthProcess **/
-        $query = $this->authlog->getPerWeekRecords($month,$year,$group,2);
+        $query = $this->authlog->getPerWeekRecords($start,$end,$group,2);
         foreach($query as $row):
             $ws = (substr($row['MyTime'],0,2) * 3600) + (substr($row['MyTime'],3,2)*60) + (substr($row['MyTime'],6,2));
             if($row['GroupID']<=2):
@@ -474,6 +476,8 @@ class Report extends CI_Controller {
     function week_print()
     {
 		$data['title']		=	'DAFTAR CEK CLOCK';
+		$data['days']	    =   $this->authlog->getDay($this->session->userdata('week_start'),$this->session->userdata('week_finish'));
+		$data['periode']	=	'Periode '.$this->session->userdata('week_start'). ' s/d '. $this->session->userdata('week_finish');
 		$data['users']	    =	$this->userinfo->getAllRecords('','','','',$this->session->userdata('week_group'));
 		$data['var']	    =	$this->presensi->getVariabelDataByVar('DMK');
         $this->load->vars($data);
@@ -522,16 +526,16 @@ class Report extends CI_Controller {
             $paging = config_item('paging');
         if($this->session->userdata('se_group')):
 			$group = $this->session->userdata('se_group');
-            $month = $this->session->userdata('se_month');
-            $year  = $this->session->userdata('se_year');
+            $start = $this->session->userdata('se_start');
+			$end   = $this->session->userdata('se_finish');
         else:
-			$group = 100;
-            $month = '09';   
-            $year  = '2012';
+			$group = '';
+            $start = '';
+			$end   = '';
         endif;           
         $this->session->set_userdata('se_offset',$offset);
-        $data['checks']  = $this->authlog->getPerMonthRecords($offset,$paging,$month,$year,$group);
-        $numrows = COUNT($this->authlog->getPerMonthRecords('','',$month,$year,$group)); 
+        $data['checks']  = $this->authlog->getPerMonthRecords($offset,$paging,$start,$end,$group);
+        $numrows = COUNT($this->authlog->getPerMonthRecords('','',$start,$end,$group)); 
         if ($numrows > $paging):
             $config['base_url']   = site_url('presensi/report/special_employee/');
             $config['total_rows'] = $numrows;
@@ -574,9 +578,10 @@ class Report extends CI_Controller {
 	
 	function se_print()
     {
-		$data['title']		=	'Laporan Pegawai Khusus Bulan  '.indonesian_monthName($this->session->userdata('se_month')).' '.$this->session->userdata('se_year');
-		$data['position']	=	$this->usergroup->getPositionData($this->session->userdata('se_group'));
-		$data['checks']		=	$this->authlog->getPerMonthRecords('','',$this->session->userdata('se_month'),$this->session->userdata('se_year'),$this->session->userdata('se_group'));
+		$data['title']		=	'Laporan Presensi Pegawai Khusus Periode  '.$this->session->userdata('se_start').' s/d '.$this->session->userdata('se_finish');
+		$data['position']	=  $this->usergroup->getPositionData($this->session->userdata('se_group'));
+		$data['checks']		=  $this->authlog->getPerMonthRecords('','',$this->session->userdata('month_start'),$this->session->userdata('month_finish'),$this->session->userdata('month_group'));
+        $data['days']	    =  $this->authlog->getDay($this->session->userdata('se_start'),$this->session->userdata('se_finish'));
         $this->load->vars($data);
         $this->load->theme('report/se',$data);
 	}

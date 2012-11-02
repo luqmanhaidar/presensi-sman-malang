@@ -26,8 +26,7 @@
                     <input type="submit" class="button blue-gradient glossy" value="Go" />
                     </form>
                 </div>
-                
-				Show&nbsp;
+             
                 <?=form_dropdown('show',config_item('per_page'),$this->session->userdata('personal_paging'),'id="show" class="select blue-gradient glossy" onchange="changeUrl();" ');?>
 			</div>
 			<table class="table responsive-table" id="sorting-example1">

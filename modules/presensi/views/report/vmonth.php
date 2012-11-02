@@ -14,13 +14,18 @@
 				<div class="float-right">
                     <form method="post" action="<?=site_url('presensi/report/month_search')?>">
                     <?=form_dropdown('group',$groups,$this->session->userdata('month_group'),'id="group" class="select white-gradient glossy" ');?>
-					<?=form_dropdown('month',config_item('month'),$this->session->userdata('month_search'),'class="select"')?>
-                    <?=form_dropdown('year',config_item('year'),$this->session->userdata('year_search'),'class="select"')?>
+					
+                    <?=form_dropdown('day',config_item('day'),substr($this->session->userdata('month_start'),3,2),'class="select"')?>
+                    <?=form_dropdown('month',config_item('month'),substr($this->session->userdata('month_start'),0,2),'class="select"')?>
+                    <?=form_dropdown('year',config_item('year'),substr($this->session->userdata('month_start'),6,4),'class="select"')?>
+                    s/d
+                    <?=form_dropdown('day2',config_item('day'),substr($this->session->userdata('month_finish'),3,2),'class="select"')?>
+                    <?=form_dropdown('month2',config_item('month'),substr($this->session->userdata('month_finish'),0,2),'class="select"')?>
+                    <?=form_dropdown('year2',config_item('year'),substr($this->session->userdata('month_finish'),6,4),'class="select"')?>
                     <input type="submit" class="button blue-gradient glossy" value="Go" />
                     </form>
                 </div>
-                
-				Show&nbsp;
+         
                 <?=form_dropdown('show',config_item('per_page'),$this->session->userdata('month_paging'),'id="show" class="select blue-gradient glossy" onchange="changeUrl();" ');?>
 			</div>
 			<table class="table responsive-table" id="sorting-example1">

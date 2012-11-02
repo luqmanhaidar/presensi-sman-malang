@@ -46,7 +46,7 @@ class Authprocess extends CI_Model
         if (!empty($user))   
             $this->db->where('NGAC_AUTHPROCESS.UserID',$user);
         if (!empty($day))   
-            $this->db->where('DATEPART(DAY,ProcessDateStart)',$day);    
+            $this->db->where('CONVERT(VARCHAR(10),ProcessDateStart, 105)=',$day);    
                    
         $this->db->select('UserID,Name,datename(dw,ProcessDateStart) as DayName,NGAC_USERINFO.GroupID,GroupWork,GroupFriday,CONVERT(VARCHAR(10),ProcessDateStart, 105) as MyDate,CONVERT(VARCHAR(8),ProcessDateStart, 108) AS MyTimeStart,CONVERT(VARCHAR(8),ProcessDateEnd, 108) AS MyTimeEnd');
         $this->db->select('ProcessDateWorkStart,ProcessDateWorkEnd,ProcessDateLate,ProcessDateEarly');

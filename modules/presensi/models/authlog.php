@@ -36,6 +36,15 @@ class Authlog extends CI_Model
         return $query->row_array();
     }
     
+	function getDay($date_start='',$date_finish=''){
+		$this->db->select('CONVERT(VARCHAR(10),TransactionTime, 105) as DAY');
+		$this->db->where("(TransactionTime >='".$date_start."') AND (TransactionTime <=DATEADD(day,1,'".$date_finish."'))");  
+		$this->db->group_by('CONVERT(VARCHAR(10),TransactionTime,105)');
+		$this->db->order_by('CONVERT(VARCHAR(10),TransactionTime,105)','ASC');
+		$Q = $this->db->get('NGAC_AUTHLOG');
+		return $Q->result_array();
+	}
+	
     function getAllRecords($offset='',$paging='',$name='',$key='',$date_start='',$date_finish=''){
         if (!empty($offset))
             $this->db->offset($offset);
@@ -51,59 +60,49 @@ class Authlog extends CI_Model
             $this->db->where('NGAC_AUTHLOG.FunctionKey',$key);   
         
         if (!empty($date_start))   
-            $this->db->where("(TransactionTime >='".$date_start."') AND (TransactionTime <='".$date_finish."') ");  
-        
-        //if (!empty($date_finish))   
-            //$this->db->where('CONVERT(VARCHAR(10),TransactionTime, 105)<=',$date_finish);          
-        //$this->db->select('G.ID,G.GroupDurationName,G.Start,G.Finish'); 
-        //$this->db->order_by('UserID','ASC');
-        //$this->db->order_by('FunctionKey','ASC');
-        //$this->db->order_by('NGAC_AUTHLOG.IndexKey','DESC');
+            $this->db->where("(TransactionTime >='".$date_start."') AND (TransactionTime <=DATEADD(day,1,'".$date_finish."'))");  
         
         $this->db->select('NGAC_AUTHLOG.IndexKey,NGAC_AUTHLOG.UserID,NGAC_USERINFO.Name,NGAC_AUTHLOG.FunctionKey,MIN(NGAC_AUTHLOG.TransactionTime) as TransactionTime');
         $this->db->join('NGAC_USERINFO','NGAC_USERINFO.ID=NGAC_AUTHLOG.UserID');
         $this->db->where_not_in('NGAC_AUTHLOG.FunctionKey',0);
         $this->db->group_by('NGAC_AUTHLOG.IndexKey,NGAC_AUTHLOG.UserID,NGAC_USERINFO.UserOrder,NGAC_USERINFO.Name,NGAC_AUTHLOG.FunctionKey,CONVERT(VARCHAR(10),TransactionTime,105)');
         $Q = $this->db->get('NGAC_AUTHLOG');
-        $this->db->order_by('NGAC_USERINFO.UserOrder','ASC');
+        $this->db->order_by('ABS(NGAC_USERINFO.UserOrder)','ASC');
         return $Q->result_array();
     }
     
-    function getPerMonthRecords($offset='',$paging='',$month='',$year='',$group=''){
-        if (!empty($offset))
+    function getPerMonthRecords($offset='',$paging='',$date_start='',$date_finish='',$group=''){
+        if (empty($paging))
+			$this->db->order_by('NGAC_USERINFO.UserOrder','ASC');	
+		
+		if (!empty($offset))
             $this->db->offset($offset);
         
         if (!empty($paging))    
             $this->db->limit($paging);
-        
-        if (!empty($month))   
-            $this->db->where("datepart(MONTH,transactiontime)='".$month."'");  
-            
-        if (!empty($year))   
-            $this->db->where("datepart(YEAR,transactiontime)='".$year."'");
+			
+		if (!empty($date_start))   
+            $this->db->where("(TransactionTime >='".$date_start."') AND (TransactionTime <=DATEADD(day,1,'".$date_finish."'))");    
 			
 		if (!empty($group))   
-            $this->db->where("GroupID=".$group);		
-        
-        //$this->db->select('NGAC_AUTHLOG.IndexKey,NGAC_AUTHLOG.UserID,NGAC_USERINFO.Name,NGAC_AUTHLOG.FunctionKey,NGAC_AUTHLOG.TransactionTime');
-		$this->db->select('NGAC_AUTHLOG.UserID,NGAC_USERINFO.Name,NGAC_USERINFO.Department,MIN(NGAC_AUTHLOG.TransactionTime) as TransactionTime,MAX(NGAC_AUTHLOG.TransactionTime) as TransactionTimeMax');
+            $this->db->where("NGAC_USERINFO.GroupID=".$group);
+		$this->db->select('NGAC_AUTHLOG.UserID,NGAC_USERINFO.Name,NGAC_USERINFO.Department,NGAC_GROUP.Name as GroupName,MIN(NGAC_AUTHLOG.TransactionTime) as TransactionTime,MAX(NGAC_AUTHLOG.TransactionTime) as TransactionTimeMax,COUNT(DISTINCT(CONVERT(VARCHAR(10),TransactionTime, 105))) as Total ');
         $this->db->join('NGAC_USERINFO','NGAC_USERINFO.ID=NGAC_AUTHLOG.UserID');
+		$this->db->join('NGAC_GROUP','NGAC_GROUP.ID=NGAC_USERINFO.GroupID');
         $this->db->where_not_in('NGAC_USERINFO.Privilege',1);
         $this->db->where('AuthResult','0');
-        $this->db->group_by('NGAC_AUTHLOG.UserID,NGAC_USERINFO.UserOrder,NGAC_USERINFO.Name,NGAC_USERINFO.Department');
+        $this->db->group_by('NGAC_AUTHLOG.UserID,NGAC_USERINFO.UserOrder,NGAC_USERINFO.Name,NGAC_USERINFO.Department,NGAC_GROUP.Name');
 		$Q = $this->db->get('NGAC_AUTHLOG');
-        //$this->db->order_by('NGAC_USERINFO.UserOrder','ASC');
         return $Q->result_array();
     }
 	
 	function getUserTime($day,$user,$key){
 		$this->db->select('CONVERT(VARCHAR(8),TransactionTime, 108) AS MyTime');
-		$this->db->where("datepart(DAY,transactiontime)='".$day."'");
-		$this->db->where("datepart(MONTH,transactiontime)='".$this->session->userdata('month_search')."'");
-		$this->db->where("datepart(YEAR,transactiontime)='".$this->session->userdata('year_search')."'");
+		$this->db->where("CONVERT(VARCHAR(10),TransactionTime,105)='".$day."'");
 		$this->db->where('NGAC_AUTHLOG.FunctionKey',$key);
         $this->db->where('AuthResult','0');
 		$this->db->where('NGAC_AUTHLOG.UserID',$user);
+		$this->db->order_by('CONVERT(VARCHAR(10),TransactionTime,105)','ASC');
 		$Q = $this->db->get('NGAC_AUTHLOG');
         $row = $Q->row_array();
 		if ($row)
@@ -113,14 +112,11 @@ class Authlog extends CI_Model
 		return $value;
 	}
     
-    function getPerWeekRecords($month='',$year='',$group='',$key=''){
+    function getPerWeekRecords($start='',$end='',$group='',$key=''){
         $this->db->select('NGAC_AUTHLOG.UserID,NGAC_USERINFO.GroupID,GroupWork,GroupFriday,NGAC_USERINFO.Name,datename(dw,TransactionTime) as DayName,NGAC_AUTHLOG.TransactionTime,CONVERT(VARCHAR(10),TransactionTime, 105) as MyDate,CONVERT(VARCHAR(8),TransactionTime, 108) AS MyTime');
-        if (!empty($month))   
-            $this->db->where("datepart(MONTH,transactiontime)='".$month."'");  
-            
-        if (!empty($year))   
-            $this->db->where("datepart(YEAR,transactiontime)='".$year."'");
-			
+        if (!empty($start))   
+            $this->db->where("(TransactionTime >='".$start."') AND (TransactionTime <=DATEADD(day,1,'".$end."'))");  
+           
 		if (!empty($group))   
             $this->db->where("GroupID=".$group);
             
