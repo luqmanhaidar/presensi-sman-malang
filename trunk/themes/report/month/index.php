@@ -8,20 +8,20 @@
  <table class="vmonth">
     <caption>
 		<h3><?=$title?></h3>
-		<h4><?='Group:' .$position['Name'];?></h4>
+		<h4><?='Group :' .$position['Name'];?></h4>
 	</caption>
 	<thead>		
 		<tr>
 			<th rowspan="2">No</th>
 			<th rowspan="2">Nama</th>
 			<th rowspan="2">Paraf</th>
-			<th colspan="<?=days_in_month($this->session->userdata('month_search'))?>">Tanggal</th>
+			<th colspan="<?=COUNT($days)?>">Tanggal</th>
 			<th colspan="3">Keterangan</th>
 		</tr>
 		<tr>
-			<?php for($i=1;$i<=days_in_month($this->session->userdata('month_search'));$i++):?>
-			<th><?=$i;?></th>
-			<?php endfor;?>
+			<?php foreach($days as $rec):?>
+			<th><?=substr($rec['DAY'],0,2);?></th>
+			<?php endforeach;?>
 			<th>S</th>
 			<th>I</th>
 			<th>T</th>
@@ -33,49 +33,46 @@
         foreach($checks as $row):?>
 			<tr>
 				<td rowspan="4"><?=$x;?></td>
-				<td><?=$row['Name']?></td>
+				<td rowspan="4"><?=$row['Name'].'<br/>'.$row['Department']?></td>
 				<td>Paraf</td>
-				<?php for($i=1;$i<=days_in_month($this->session->userdata('month_search'));$i++):?>
+				<?php foreach($days as $rec):?>
 				  <td>
-                    <?php if(strlen($this->authlog->getUserTime($i,$row['UserID'],1))>2): ?>
+                    <?php if(strlen($this->authlog->getUserTime($rec['DAY'],$row['UserID'],1))>2): ?>
                         <img src="<?=base_url('assets/signature/'.$row['UserID'].'.jpg');?>" />
                     <?php else: ?>   
                         
                     <?php endif;?>        
                   </td>
-				<?php endfor;?>
+				<?php endforeach;?>
 				<td rowspan="4">-</td>
 				<td rowspan="4">-</td>
 				<td rowspan="4">-</td>
 			</tr>
             
             <tr>
-				<td>-</td>
 				<td>Dtg.PK</td>
-				<?php for($i=1;$i<=days_in_month($this->session->userdata('month_search'));$i++):?>
-				  <td><?=substr($this->authlog->getUserTime($i,$row['UserID'],1),0,5);?></td>
-				<?php endfor;?>
+				<?php foreach($days as $rec):?>
+				  <td><?=substr($this->authlog->getUserTime($rec['DAY'],$row['UserID'],1),0,5);?></td>
+				<?php endforeach;?>
 			</tr>
             
             <tr>
-				<td>-</td>
 				<td>Paraf</td>
-				<?php for($i=1;$i<=days_in_month($this->session->userdata('month_search'));$i++):?>
+				<?php foreach($days as $rec):?>
 				  <td>
-                    <?php if(strlen($this->authlog->getUserTime($i,$row['UserID'],2))>2): ?>
+                    <?php if(strlen($this->authlog->getUserTime($rec['DAY'],$row['UserID'],2))>2): ?>
                         <img src="<?=base_url('assets/signature/'.$row['UserID'].'.jpg');?>" />
                     <?php else: ?>   
                     <?php endif;?>
                   </td>
-				<?php endfor;?>
+				<?php endforeach;?>
 			</tr>
             
 			<tr>
-                <td><?=$row['Department']?></td>
 				<td>Plg.PK</td>
-				<?php for($i=1;$i<=days_in_month($this->session->userdata('month_search'));$i++):?>
-				  <td><?=substr($this->authlog->getUserTime($i,$row['UserID'],2),0,5);?></td>
-				<?php endfor;?>
+				<?php foreach($days as $rec):?>
+				  <td><?=substr($this->authlog->getUserTime($rec['DAY'],$row['UserID'],2),0,5);?></td>
+				<?php endforeach;?>
 			</tr>		
      <?php 
          $x++;

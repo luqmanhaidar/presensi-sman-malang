@@ -19,7 +19,7 @@
 	        <table class="center">
                 <caption>
                 <h3><?=$title?></h3>
-                <h5><?=indonesian_monthName($this->session->userdata('week_month')).' '.$this->session->userdata('week_year')?></h5>
+                <h5><?=$periode?></h5>
                 </caption>
             	<thead>
             		<tr>
@@ -38,7 +38,7 @@
                 <tbody>
                     
                     <?php 
-                    $m = days_in_month($this->session->userdata('week_month'),$this->session->userdata('week_year'));
+                    //$m = COUNT($days);
                     $w[1]=0;
                     $l[1]=0;
                     $e[1]=0;
@@ -54,8 +54,8 @@
                     $w[5]=0;
                     $l[5]=0;
                     $e[5]=0;
-                    for($i=1;$i<=$m;$i++): 
-                        $row = $this->authprocess->getAllRecords('','',$user['ID'],'row',$i);
+                    foreach($days as $rec): 
+                        $row = $this->authprocess->getAllRecords('','',$user['ID'],'row',$rec['DAY']);
                         if($row):
                             
                     ?>
@@ -133,7 +133,7 @@
                     </tr>
                     <?php
                         endif;
-                    endfor;?>
+                    endforeach;?>
                </tbody>
         	</table>
             
