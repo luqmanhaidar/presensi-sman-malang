@@ -12,7 +12,7 @@ class Report extends CI_Controller {
         $this->load->module_model('presensi','presensi'); //load model presensi form presensi   
         $this->load->module_model('employee','userinfo'); //load model usergroup form user 
         $this->load->module_model('employee','usergroup'); //load model usergroup form user
-		//$this->load->model('excelModel'); //load model authlog form presensi   
+        $this->load->model('excelModel'); //load model excelModel
         $this->load->library('excel');
         $this->load->helper('download');
         $this->load->helper('date');    
@@ -31,9 +31,9 @@ class Report extends CI_Controller {
             $start = $this->session->userdata('eat_start');
 			$end   = $this->session->userdata('eat_finish');
         else:
-			$group = '';
-			$start = '';
-			$end   = '';
+			$group = '100';
+			$start = date('m/d/y');
+			$end   = date('m/d/y');
         endif;                    
         $this->session->set_userdata('eat_offset',$offset);
         $data['checks']  = $this->authlog->getPerMonthRecords($offset,$paging,$start,$end,$group);
@@ -93,13 +93,23 @@ class Report extends CI_Controller {
     {
 		$this->load->library('pdf');
 		$data['title']  =  'Laporan Gaji Format 1';
-        $data['name']   =  $this->session->userdata('personal_name');
 		$data['var']	=  $this->presensi->getVariabelDataByVar('UMK');
 		$data['checks'] =  $this->authlog->getPerMonthRecords('','',$this->session->userdata('eat_start'),$this->session->userdata('eat_finish'),$this->session->userdata('eat_group'));
-		$data['user']   =  $this->session->userdata('personal_search');
         $this->load->vars($data);
         $file=$this->load->theme('report/payroll-1',$data,TRUE);
 		$this->pdf->pdf_create($file,$data['title']);
+	}
+    
+    function eat_excel()
+    {
+        $start = $this->session->userdata('eat_start'); 
+        $end   = $this->session->userdata('eat_finish');
+        $group = $this->session->userdata('eat_group'); 
+        $recs  = $this->authlog->getPerMonthRecords('','',$start,$end,$group);
+        $var   = $this->presensi->getVariabelDataByVar('UMK');   
+		$excel = $this->excelModel->eat_excel($recs,$var);
+        $data = file_get_contents("assets/Lap-Gaji-Format-1.xlsx"); // Read the file's contents
+        force_download("Lap-Gaji-Format-1",$data); 
 	}
 	
 	function transport($offset=0){
@@ -115,9 +125,9 @@ class Report extends CI_Controller {
             $start = $this->session->userdata('transport_start');
 			$end   = $this->session->userdata('transport_finish');
         else:
-			$group = '';
-			$start = '';
-			$end   = '';
+			$group = '1000';
+			$start = date('m/d/y');
+			$end   = date('m/d/y');
         endif;                    
         $this->session->set_userdata('transport_offset',$offset);
         $data['checks']  = $this->authlog->getPerMonthRecords($offset,$paging,$start,$end,$group);
@@ -171,6 +181,29 @@ class Report extends CI_Controller {
 		$data['checks'] =  $this->authlog->getPerMonthRecords('','',$this->session->userdata('transport_start'),$this->session->userdata('transport_finish'),$this->session->userdata('transport_group'));
         $this->load->vars($data);
         $this->load->theme('report/payroll-2',$data);
+	}
+    
+    function transport_pdf()
+    {
+		$this->load->library('pdf');
+		$data['title']  =  'Laporan Gaji Format 2';
+		$data['var']	=  $this->presensi->getVariabelDataByVar('UTR');
+		$data['checks'] =  $this->authlog->getPerMonthRecords('','',$this->session->userdata('transport_start'),$this->session->userdata('transport_finish'),$this->session->userdata('transport_group'));
+        $this->load->vars($data);
+        $file=$this->load->theme('report/payroll-2',$data,TRUE);
+		$this->pdf->pdf_create($file,$data['title']);
+	}
+    
+    function transport_excel()
+    {
+        $start = $this->session->userdata('transport_start'); 
+        $end   = $this->session->userdata('transport_finish');
+        $group = $this->session->userdata('transport_group'); 
+        $recs  = $this->authlog->getPerMonthRecords('','',$start,$end,$group);
+        $var   = $this->presensi->getVariabelDataByVar('UTR');   
+		$excel = $this->excelModel->transport_excel($recs,$var);
+        $data = file_get_contents("assets/Lap-Gaji-Format-2.xlsx"); // Read the file's contents
+        force_download("Lap-Gaji-Format-2",$data); 
 	}
     
 }
