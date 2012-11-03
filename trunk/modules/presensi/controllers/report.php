@@ -489,6 +489,7 @@ class Report extends CI_Controller {
 	function overtime($offset=0){
         $data['title']  = 'Laporan Lemburan';
         $data['logs']   =   $this->log->userLog();
+        $data['overtime']= $this->presensi->getVariabelDataByVar('ULB');
         $data['groups']	= $this->usergroup->getDataFromPosition();
         if($this->session->userdata('overtime_paging'))
             $paging = $this->session->userdata('overtime_paging');
@@ -506,6 +507,7 @@ class Report extends CI_Controller {
         endif;          
         $this->session->set_userdata('overtime_offset',$offset);
         $data['checks']  = $this->authovertime->getAllRecords();
+        
         $numrows = COUNT($this->authovertime->getAllRecords()); 
         if ($numrows > $paging):
             $config['base_url']   = site_url('presensi/report/overtime/');
@@ -646,11 +648,31 @@ class Report extends CI_Controller {
                // else:
                //     $d = "-";
                //     $late = "-";
-               // endif;          
+               // endif;
+               
+            $min = $this->presensi->getVariabelDataByVar('LMN');
+            $max = $this->presensi->getVariabelDataByVar('LMX');              
 			$tm1 = $this->authlog->getUserTime($row['MyDate'],$row['UserID'],'3');	
-			$tm2 = $this->authlog->getUserTime($row['MyDate'],$row['UserID'],'4');
-            $this->authovertime->save($row['UserID'],$row['OvertimeDate'],$tm1,$tm2);
-            //endif;   
+			//$tm2 = $this->authlog->getUserTime($row['MyDate'],$row['UserID'],'4');
+            $tm2 = '18:00:00';
+            
+            //$min_value = (substr($min,0,2) * 3600) + ((substr($min,3,2)+15)*60) + (substr($min,6,2));
+            //$max_value = (substr($max,0,2) * 3600) + ((substr($max,3,2)+15)*60) + (substr($max,6,2));
+            $tm1_value = (substr($tm1,0,2) * 3600) + ((substr($tm1,3,2)+15)*60) + (substr($tm1,6,2));
+            $tm2_value = (substr($tm2,0,2) * 3600) + ((substr($tm2,3,2)+15)*60) + (substr($tm2,6,2));
+            $duration  =  $tm2 - $tm1;
+            
+            if(($duration>=$min))
+                $duration = $duration / 60;
+            else
+                $duration = 0;
+                
+            if(($duration<=$max))
+                $duration = $duration / 60;
+            else
+                $duration = $max / 60;             
+            
+            $this->authovertime->save($row['UserID'],$row['OvertimeDate'],$tm1,$tm2,$duration); 
         endforeach;
         redirect('presensi/report/overtime',301);
         

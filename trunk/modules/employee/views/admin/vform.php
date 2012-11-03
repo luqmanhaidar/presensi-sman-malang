@@ -20,7 +20,7 @@
 					
 					<p class="inline-large-label button-height">
 						<label for="large-label-1" class="label">Password<small>(50 chars max.)</small></label>
-						<input type="text" name="password"  id="large-label-1" class="input medium-margin-right" value="<?=$value['PasswordWeb']?>" />
+						<input type="password" name="password"  id="large-label-1" class="input medium-margin-right" value="***" />
 					</p>
 					
 					<p class="button-height">
