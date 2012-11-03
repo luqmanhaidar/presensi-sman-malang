@@ -1,7 +1,7 @@
 <html>
 <head>
 <title><?=$title?></title>
-<link type="text/css" rel="stylesheet" href="<?=base_url('themes/report/css/style.css');?>" />
+<link type="text/css" media="screen" rel="stylesheet" href="<?=base_url('themes/report/css/style.css');?>" />
 </head>
 <body>
 <div class="mask">

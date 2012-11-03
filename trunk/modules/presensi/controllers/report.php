@@ -486,6 +486,19 @@ class Report extends CI_Controller {
         $this->load->theme('report/week',$data);
 	}
 	
+	function week_pdf()
+    {
+		$this->load->library('pdf');
+		$data['title']		=	'DAFTAR CEK CLOCK';
+		$data['days']	    =   $this->authlog->getDay($this->session->userdata('week_start'),$this->session->userdata('week_finish'));
+		$data['periode']	=	'Periode '.$this->session->userdata('week_start'). ' s/d '. $this->session->userdata('week_finish');
+		$data['users']	    =	$this->userinfo->getAllRecords('','','','',$this->session->userdata('week_group'));
+		$data['var']	    =	$this->presensi->getVariabelDataByVar('DMK');
+        $this->load->vars($data);
+        $file = $this->load->theme('report/week',$data,TRUE);
+		$this->pdf->pdf_create($file,$data['title']);
+	}
+	
 	function overtime($offset=0){
         $data['title']  = 'Laporan Lemburan';
         $data['logs']   =   $this->log->userLog();

@@ -86,7 +86,8 @@ class ExcelModel extends CI_Model
 		
         // Save it as an excel 2007 file
         $objWriter = IOFactory::createWriter($objPHPExcel, "Excel2007");
-        $file="Personal.xlsx";
+		//$objWriter = IOFactory::createWriter($objPHPexcel,'PDF'); 
+        $file="Personal.pdf";
         $objWriter->save('assets/'.$file);
         redirect(base_url('assets/'.$file),301);
     }
@@ -260,7 +261,7 @@ class ExcelModel extends CI_Model
         
         // Save it as an excel 2007 file
         $objWriter = IOFactory::createWriter($objPHPExcel, "Excel2007");
-        $file="Lap-Gaji-Format-1.xlsx";
+        $file="Lap-Lembur.xlsx";
         $objWriter->save('assets/'.$file);
         redirect(base_url('assets/'.$file),301);
     }
