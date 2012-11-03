@@ -199,7 +199,7 @@ def("DOMPDF_DEFAULT_MEDIA_TYPE", "screen");
  *
  * @see CPDF_Adapter::PAPER_SIZES for valid sizes
  */
-def("DOMPDF_DEFAULT_PAPER_SIZE", "A4");
+def("DOMPDF_DEFAULT_PAPER_SIZE", "letter");
 
 /**
  * The default font family
@@ -304,7 +304,7 @@ def("DOMPDF_FONT_HEIGHT_RATIO", 1.1);
  * Allows people to disabled CSS float support
  * @var bool
  */
-def("DOMPDF_ENABLE_CSS_FLOAT", true);
+def("DOMPDF_ENABLE_CSS_FLOAT", false);
 
 /**
  * Prepend the DOMPDF autoload function the spl_autoload stack
@@ -316,7 +316,7 @@ def("DOMPDF_AUTOLOAD_PREPEND", true);
 /**
  * Use the more-than-experimental HTML5 Lib parser
  */
-def("DOMPDF_ENABLE_HTML5PARSER", true);
+def("DOMPDF_ENABLE_HTML5PARSER", false);
 require_once(DOMPDF_LIB_DIR . "/html5lib/Parser.php");
 
 // ### End of user-configurable options ###

@@ -4,7 +4,7 @@
 <link type="text/css" rel="stylesheet" href="<?=base_url('themes/report/css/style.css');?>" />
 </head>
 <body>
- <table style="margin:0 auto;width:80%;border-collapse:collapse;background:#ecf3eb">
+ <table>
     <caption>
     <h3><?=$title?></h3>
     <h5><?=$this->session->userdata('overtime_start').' s/d '.$this->session->userdata('overtime_finish')?></h5>

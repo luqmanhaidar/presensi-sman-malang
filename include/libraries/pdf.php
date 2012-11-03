@@ -5,7 +5,8 @@ class Pdf {
 	    require_once(APPPATH."third_party/Dompdf/dompdf_config.inc.php");//Require Loader Class n Config
 	    spl_autoload_register('DOMPDF_autoload');//Autoload Resource
 	    $dompdf = new DOMPDF();//Instansiasi
-	    $dompdf->load_html($html);//Load HTML File untuk dirender
+	    $dompdf->set_paper("A4", "portrait");
+		$dompdf->load_html($html);//Load HTML File untuk dirender
 	    $dompdf->render();//Proses Rendering File
 	    if ($stream) {
 		$dompdf->stream($filename.".pdf");
