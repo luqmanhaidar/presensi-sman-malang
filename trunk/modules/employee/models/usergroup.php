@@ -21,7 +21,7 @@ class Usergroup extends CI_Model
 	
 	function getDataFromPosition($id=''){
 		$data    = array();
-        $data[0] = 'None';
+        //$data[0] = 'None';
 		if($id)
 		$this->db->where('ID>=',$id);
 		$query   = $this->db->get('NGAC_GROUP');
