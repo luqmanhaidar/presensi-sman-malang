@@ -595,6 +595,29 @@ class Report extends CI_Controller {
         $this->load->vars($data);
         $this->load->theme('report/overtime',$data);
 	}
+    
+    function overtime_pdf()
+    {
+        $this->load->library('pdf');
+		$data['title']  =  'Laporan Lembur';
+		$data['var']	=  $this->presensi->getVariabelDataByVar('ULB');
+		$data['checks'] =  $this->authovertime->getAllRecords();
+        $this->load->vars($data);
+        $file = $this->load->theme('report/overtime',$data,TRUE);
+		$this->pdf->pdf_create($file,$data['title']);
+	}
+    
+    function overtime_excel()
+    {
+        $start = $this->session->userdata('overtimt_start'); 
+        $end   = $this->session->userdata('overtime_finish');
+        $group = $this->session->userdata('overtime_group'); 
+        $recs  = $this->authovertime->getAllRecords();
+        $var   = $this->presensi->getVariabelDataByVar('ULB');   
+		$excel = $this->excelModel->overtime_excel($recs,$var);
+        $data = file_get_contents("assets/Lap-Lembur.xlsx"); // Read the file's contents
+        force_download("Lap-Lembur",$data); 
+	}
 	
 	function special_employee($offset=0){
         $data['title']  = 'Laporan Pegawai Khusus';
@@ -664,5 +687,17 @@ class Report extends CI_Controller {
         $data['days']	    =  $this->authlog->getDay($this->session->userdata('se_start'),$this->session->userdata('se_finish'));
         $this->load->vars($data);
         $this->load->theme('report/se',$data);
+	}
+    
+    function se_pdf()
+    {
+        $this->load->library('pdf');
+		$data['title']		=	'Laporan Presensi Pegawai Khusus Periode  '.$this->session->userdata('se_start').' s/d '.$this->session->userdata('se_finish');
+		$data['position']	=  $this->usergroup->getPositionData($this->session->userdata('se_group'));
+		$data['checks']		=  $this->authlog->getPerMonthRecords('','',$this->session->userdata('se_start'),$this->session->userdata('se_finish'),$this->session->userdata('se_group'));
+        $data['days']	    =  $this->authlog->getDay($this->session->userdata('se_start'),$this->session->userdata('se_finish'));
+        $this->load->vars($data);
+        $file = $this->load->theme('report/se',$data,TRUE);
+		$this->pdf->pdf_create($file,$data['title']);
 	}
 }
