@@ -63,8 +63,8 @@
                         <td><?=$row['MyDate'];?></td>
                         <td><?=$row['OvertimeStart'];?></td>
 						<td><?=$row['OvertimeEnd'];?></td>
-						<td><?=$row['OvertimeDuration'];?></td>
-                        <td><?=$row['OvertimeNominal']?></td>
+						<td class="align-right"><?=$row['OvertimeDuration'];?></td>
+                        <td class="align-right"><?=number_format($row['OvertimeDuration']* $overtime,0);?></td>
 					</tr>
                     <?php 
                         $x=$x+1;

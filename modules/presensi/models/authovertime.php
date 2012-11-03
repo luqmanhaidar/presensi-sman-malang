@@ -7,13 +7,14 @@ class Authovertime extends CI_Model
         parent::__construct(); // Call the Model constructor
     }
     
-    function save($user,$date,$tm1,$tm2)
+    function save($user,$date,$tm1,$tm2,$duration)
     {
 		$value = array(
                     'UserID'              =>  $user,
                     'OvertimeDate'		  =>  $date,  
                     'OvertimeStart'       =>  $tm1,
-                    'OvertimeEnd'     	 =>  $tm2);
+                    'OvertimeEnd'     	  =>  $tm2,
+                    'OvertimeDuration'    =>  $duration);
         $this->db->insert('NGAC_AUTHOVERTIME',$value);
     }
    
