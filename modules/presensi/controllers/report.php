@@ -190,7 +190,7 @@ class Report extends CI_Controller {
 		$data['title']		=	'Laporan Presensi Bulanan Periode  '.$this->session->userdata('month_start').' s/d '.$this->session->userdata('month_finish');
 		$data['position']	=	$this->usergroup->getPositionData($this->session->userdata('month_group'));
 		$data['checks']		=	$this->authlog->getPerMonthRecords('','',$this->session->userdata('month_start'),$this->session->userdata('month_finish'),$this->session->userdata('month_group'));
-        $data['days']	    =  $this->authlog->getDay($this->session->userdata('month_start'),$this->session->userdata('month_finish'));
+        $data['days']	    =   $this->authlog->getDay($this->session->userdata('month_start'),$this->session->userdata('month_finish'));
 		$this->load->vars($data);
         $this->load->theme('report/month',$data);
 	}
@@ -204,6 +204,19 @@ class Report extends CI_Controller {
         $file = $this->load->theme('report/month',$data,TRUE);
 		$this->pdf->pdf_create($file,$data['title']);
 	}
+    
+    function month_excel()
+    {
+        $start = $this->session->userdata('month_start'); 
+        $end   = $this->session->userdata('month_finish');
+        $group = $this->session->userdata('month_group'); 
+        $pos   = $this->usergroup->getPositionData($this->session->userdata('month_group'));
+        $recs  = $this->authlog->getPerMonthRecords('','',$start,$end,$group);
+        $days  = $this->authlog->getDay($this->session->userdata('month_start'),$this->session->userdata('month_finish'));   
+		$excel = $this->excelModel->month_excel($recs,$start,$end,$group,$days,$pos,'Tanggal');
+        $data = file_get_contents("assets/Lap-Bulanan.xlsx"); // Read the file's contents
+        force_download("Lap-Bulanan",$data); 
+    }
     
     function weekly($offset=0){
         $data['title']  = 'Laporan Mingguan';
@@ -622,7 +635,7 @@ class Report extends CI_Controller {
     
     function overtime_excel()
     {
-        $start = $this->session->userdata('overtimt_start'); 
+        $start = $this->session->userdata('overtime_start'); 
         $end   = $this->session->userdata('overtime_finish');
         $group = $this->session->userdata('overtime_group'); 
         $recs  = $this->authovertime->getAllRecords();
@@ -713,4 +726,17 @@ class Report extends CI_Controller {
         $file = $this->load->theme('report/se',$data,TRUE);
 		$this->pdf->pdf_create($file,$data['title']);
 	}
+    
+    function se_excel()
+    {
+        $start = $this->session->userdata('se_start'); 
+        $end   = $this->session->userdata('se_finish');
+        $group = $this->session->userdata('se_group'); 
+        $pos   = $this->usergroup->getPositionData($this->session->userdata('se_group'));
+        $recs  = $this->authlog->getPerMonthRecords('','',$start,$end,$group);
+        $days  = $this->authlog->getDay($this->session->userdata('se_start'),$this->session->userdata('se_finish'));   
+		$excel = $this->excelModel->month_excel($recs,$start,$end,$group,$days,$pos,'SESI');
+        $data = file_get_contents("assets/Lap-Bulanan.xlsx"); // Read the file's contents
+        force_download("Lap-Bulanan",$data); 
+    }
 }
