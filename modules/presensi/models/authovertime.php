@@ -28,7 +28,7 @@ class Authovertime extends CI_Model
         return $query->row_array();
     }
     
-    function getAllRecords($offset='',$paging='',$user='',$type='',$day=''){
+    /*function getAllRecords($offset='',$paging='',$user='',$type='',$day=''){
         if (!empty($offset))
             $this->db->offset($offset);
         if (!empty($paging))    
@@ -50,6 +50,14 @@ class Authovertime extends CI_Model
             return $Q->row_array();
         else
             return $Q->result_array();
+    }*/
+    
+    function getAllRecords(){
+        $this->db->select('*,(CONVERT(VARCHAR(10),OvertimeDate, 105)) AS MyDate');    
+        $this->db->order_by('NGAC_USERINFO.UserOrder','ASC'); 
+        $this->db->join('NGAC_USERINFO','NGAC_USERINFO.ID=NGAC_AUTHOVERTIME.UserID');    
+        $Q = $this->db->get('NGAC_AUTHOVERTIME');
+        return $Q->result_array();
     }
     
     function removeAll()

@@ -25,6 +25,7 @@
 	<tbody>
 	<?php 
         $i=1;
+        $grand_total = 0;
         foreach($checks as $row):?>
 			<tr>
 				<td class="mini"><?=$i;?></td>
@@ -37,8 +38,18 @@
 			</tr>
      <?php 
          $i++;
+         $grand_total = $grand_total + $total;
          endforeach;?>
     </tbody>
+    
+    <tfoot>
+		<tr>
+            <th class="mini align-right" colspan="5">Total</th>
+			<th class="mini align-right"><?=number_format($grand_total,0);?></th>
+			<th class="mini"></th>
+		</tr>
+    </tfoot>
+    
  </table>
 
 </body>
