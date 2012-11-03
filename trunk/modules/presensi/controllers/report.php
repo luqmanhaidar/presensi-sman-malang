@@ -650,31 +650,42 @@ class Report extends CI_Controller {
                //     $late = "-";
                // endif;
                
-            $min = $this->presensi->getVariabelDataByVar('LMN');
-            $max = $this->presensi->getVariabelDataByVar('LMX');              
+            $min = number_format($this->presensi->getVariabelDataByVar('LMN'),0);
+            $max = number_format($this->presensi->getVariabelDataByVar('LMX'));              
 			$tm1 = $this->authlog->getUserTime($row['MyDate'],$row['UserID'],'3');	
 			//$tm2 = $this->authlog->getUserTime($row['MyDate'],$row['UserID'],'4');
-            $tm2 = '18:00:00';
+            $tm2 = '19:00:00';
             
             //$min_value = (substr($min,0,2) * 3600) + ((substr($min,3,2)+15)*60) + (substr($min,6,2));
             //$max_value = (substr($max,0,2) * 3600) + ((substr($max,3,2)+15)*60) + (substr($max,6,2));
-            $tm1_value = (substr($tm1,0,2) * 3600) + ((substr($tm1,3,2)+15)*60) + (substr($tm1,6,2));
-            $tm2_value = (substr($tm2,0,2) * 3600) + ((substr($tm2,3,2)+15)*60) + (substr($tm2,6,2));
-            $duration  =  $tm2 - $tm1;
+            $tm1_value = (substr($tm1,0,2) * 3600) + ((substr($tm1,3,2)*60)) + (substr($tm1,6,2));
+            $tm2_value = (substr($tm2,0,2) * 3600) + ((substr($tm2,3,2)*60)) + (substr($tm2,6,2));
+            $tm1_value = $tm1/60; 
+            $tm2_value = $tm2/60;
+            $duration  =  $tm2_value - $tm1_value;
+            $meal      =  180; 
+            $over      =  number_format($duration / 60,0);
             
             if(($duration>=$min))
-                $duration = $duration / 60;
+                $over = number_format($over/60,0);
             else
-                $duration = 0;
+                $over = 0;
                 
-            if(($duration<=$max))
-                $duration = $duration / 60;
+            if($duration>=$meal)
+                $meal = $this->presensi->getVariabelDataByVar('ULM');
+             else
+                $meal = 0;       
+                
+            if(($duration>=$max))
+                $over = $max;
             else
-                $duration = $max / 60;             
+                $over = number_format($over/60,0);
             
-            $this->authovertime->save($row['UserID'],$row['OvertimeDate'],$tm1,$tm2,$duration); 
+            echo $duration;
+                          
+            $this->authovertime->save($row['UserID'],$row['OvertimeDate'],$tm1,$tm2,$over,$meal); 
         endforeach;
-        redirect('presensi/report/overtime',301);
+        //redirect('presensi/report/overtime',301);
         
     }
     
