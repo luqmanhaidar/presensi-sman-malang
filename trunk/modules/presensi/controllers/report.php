@@ -138,9 +138,9 @@ class Report extends CI_Controller {
             $start = $this->session->userdata('month_start');
 			$end   = $this->session->userdata('month_finish');
         else:
-			$group = '';
-			$start = '';
-			$end   = '';
+			$group = '100';
+			$start = date('m/d/y');
+			$end   = date('m/d/y');
         endif;           
         $this->session->set_userdata('month_offset',$offset);
         $data['checks']  = $this->authlog->getPerMonthRecords($offset,$paging,$start,$end,$group);
@@ -532,160 +532,39 @@ class Report extends CI_Controller {
 		
 		$this->session->set_userdata($search);
         $this->authovertime->removeAll();
-        /** Query Insert ke AuthProcess **/
+        /** Query Insert ke AuthOvertime **/
         $query = $this->overtimes->getAllRecords('','','',$start,$end,$group);
-        /** masuk kerja senin-kamis & sabtu I**/
-        //$sk1 = (6 * 3600) + (30*60) + (0);
-        //$dt1 = (6 * 3600) + (45*60) + (0); // telat 15 menit
-        //$sd1 = '06:30:00';
-        /** masuk kerja senin-kamis II **/
-        //$sk2 = (7 * 3600) + (0*60) + (0);
-        //$dt2 = (7 * 3600) + (15*60) + (0); // telat 15 menit
-        //$sd2 = '07:00:00';
-        /** pulang kerja sabtu **/
-        //$wp1 =  (12 * 3600) + (30*60) + (0);
-        //$w1  =  '12:30:00';
-        /** pulang kerja senin-kamis **/                    
-        //$wp2 =  (14 * 3600) + (0*60) + (0);
-        //$w2  =  '14:00:00';
-        /** pulang kerja senin-kamis **/                      
-        //$wp3 =  (14 * 3600) + (30*60) + (0);
-        //$w3  =  '14:30:00'; 
-        /** pulang kerja senin-kamis **/                      
-        //$wp4 =  (15 * 3600) + (0*60) + (0);
-        //$w4  =  '15:00:00';
-        /** pulang kerja senin-kamis **/                      
-        //$wp5 =  (15 * 3600) + (30*60) + (0);
-        //$w5  =  '15:30:00';
-                    
-        foreach($query as $row):   
-            //if(COUNT($this->authprocess->getAuthProcessData($row['UserID'],$row['TransactionTime']))== 0):
-                //if($row['GroupID']<=2):
-                  //  $sk  =  $this->usergroup->getGroupWorkData($row['GroupWork']);
-                   // $jm  =  $this->usergroup->getGroupFridayData($row['GroupFriday']);
-                   // if($sk):
-                    //    $dbSkStart = $sk['GroupWorkStart'];
-                    //    $dbSpStart = (substr($sk['GroupWorkStart'],0,2) * 3600) + (substr($sk['GroupWorkStart'],3,2)*60) + (substr($sk['GroupWorkStart'],6,2));
-                    //    $dbSpWork  = (substr($sk['GroupWorkStart'],0,2) * 3600) + ((substr($sk['GroupWorkStart'],3,2)+15)*60) + (substr($sk['GroupWorkStart'],6,2));   
-                    //    $dbSkEnd   = $sk['GroupWorkEnd'];
-                    //    $dbSpEnd   = (substr($sk['GroupWorkEnd'],0,2) * 3600) + (substr($sk['GroupWorkEnd'],3,2)*60) + (substr($sk['GroupWorkEnd'],6,2));
-                    //else:
-                    //    $dbSkStart = $sd1;
-                    //    $dbSpStart = $sk1;
-                    //    $dbSpWork  = $dt1;
-                    //    $dbSkEnd   = $w3;
-                    //    $dbSpEnd   = $wp3; 
-                    //endif;
-                //endif;    
-                
-                //$wm = (substr($row['MyTime'],0,2) * 3600) + (substr($row['MyTime'],3,2)*60) + (substr($row['MyTime'],6,2));
-                
-                //if(($row['DayName']=='Saturday')):
-                //    $wmk = $sd1;
-                //    $dt  = $dt1;
-                //    $sk  = $sk1;
-                //    $wsk = $w1; // Wsk Senin-Kamis
-                //    $wsp = $wp1;
-                //elseif($row['DayName']=='Sunday'):
-                //    $wmk = '';
-                //    $dt  = 0;
-                //    $sk  = 0;
-                //    $wsk = ''; // Wsk Senin-Kamis
-                //    $wsp = 0;
-                //elseif(($row['DayName']<>'Saturday') && ($wm >= $sk1)  && ( ($row['GroupID']==1) || ($row['GroupID']==2) ) ):
-                //    $wmk = $sd2;
-                //    $dt  = $dt2;
-                //    $sk  = $sk2;
-                //    if($row['DayName']<>"Friday"):
-                //        $wsk = $w5; // Wsk Senin-Kamis
-                //        $wsp = $wp5;
-                //    else:
-                //        $wsk = $w4; // Wsk Jumat
-                //        $wsp = $wp4;
-                //    endif;
-                //elseif(($row['DayName']<>'Saturday') && ($wm <= $sk1)  && ( ($row['GroupID']==1) || ($row['GroupID']==2) ) ):
-               //     $wmk = $sd1;
-                //    $dt  = $dt1;
-                //    $sk  = $sk1;
-                //    if($row['DayName']<>"Friday"):
-                //        $wsk = $w3; // Wsk Senin-Kamis
-                 //       $wsp = $wp3;
-                 //   else:
-                 //       $wsk = $w2; // Wsk Jumat
-                 //       $wsp = $wp2;
-                 //       $row['TransactionTime'] = substr($row['TransactionTime'],0,11)." 06:30:00";
-                 //   endif;                  
-               //elseif( ( ($row['GroupID']==1) || ($row['GroupID']==2) )):
-                //    $wmk = $sd1;
-                //    $dt  = $dt1;
-                //    $sk  = $sk1;
-                //    if($row['DayName']<>"Friday"):
-                 //       $wsk = $w3;
-                 //       $wsp = $wp3;
-                 ///   else:
-                 //       $wsk = $w2; 
-                  //      $wsp = $wp2;
-                  //  endif;
-                //elseif(($row['GroupID']>=3)):
-                //    $wmk = $dbSkStart;
-                //    $dt  = $dbSpWork;
-                //    $sk  = $dbSpStart;
-                //    if($row['DayName']<>"Friday"):
-                //        $wsk = $dbSkEnd;
-                //        $wsp = $dbSpEnd;
-                //    else:
-                //        $wsk = $w2; 
-                //        $wsp = $wp2;
-                 //   endif;
-                //endif; 
-                
-                //if (($wm > $dt) && ($row['DayName']<>'Sunday')):
-                //    $d = $wm - $sk;
-                //    $hours = code(floor($d / 3600));
-                //    $mins = code(floor(($d - ($hours*3600)) / 60));
-                //    $seconds = code($d % 60);
-                //    $late = $hours.':'.$mins.':'.$seconds;     
-               // else:
-               //     $d = "-";
-               //     $late = "-";
-               // endif;
-               
+        foreach($query as $row):       
             $min = number_format($this->presensi->getVariabelDataByVar('LMN'),0);
             $max = number_format($this->presensi->getVariabelDataByVar('LMX'));              
 			$tm1 = $this->authlog->getUserTime($row['MyDate'],$row['UserID'],'3');	
-			//$tm2 = $this->authlog->getUserTime($row['MyDate'],$row['UserID'],'4');
-            $tm2 = '19:00:00';
-            
-            //$min_value = (substr($min,0,2) * 3600) + ((substr($min,3,2)+15)*60) + (substr($min,6,2));
-            //$max_value = (substr($max,0,2) * 3600) + ((substr($max,3,2)+15)*60) + (substr($max,6,2));
+			$tm2 = $this->authlog->getUserTime($row['MyDate'],$row['UserID'],'4');
+            //$tm2 = '22:30:00';
             $tm1_value = (substr($tm1,0,2) * 3600) + ((substr($tm1,3,2)*60)) + (substr($tm1,6,2));
             $tm2_value = (substr($tm2,0,2) * 3600) + ((substr($tm2,3,2)*60)) + (substr($tm2,6,2));
-            $tm1_value = $tm1/60; 
-            $tm2_value = $tm2/60;
-            $duration  =  $tm2_value - $tm1_value;
-            $meal      =  180; 
-            $over      =  number_format($duration / 60,0);
+            $tm1_value = $tm1_value/60; 
+            $tm2_value = $tm2_value/60;
+            $duration  =  number_format($tm2_value - $tm1_value,0);
+            $meal      =  120; 
             
-            if(($duration>=$min))
-                $over = number_format($over/60,0);
-            else
+            if(($duration >= $min)):
+                if(($duration >= $max))
+                    $over = $max/60;
+                else
+                    $over = $duration/60;
+            else:
                 $over = 0;
+            endif;    
                 
             if($duration>=$meal)
                 $meal = $this->presensi->getVariabelDataByVar('ULM');
              else
                 $meal = 0;       
                 
-            if(($duration>=$max))
-                $over = $max;
-            else
-                $over = number_format($over/60,0);
-            
-            echo $duration;
-                          
+            //$over = substr($duration/60,0,1);            
             $this->authovertime->save($row['UserID'],$row['OvertimeDate'],$tm1,$tm2,$over,$meal); 
         endforeach;
-        //redirect('presensi/report/overtime',301);
+        redirect('presensi/report/overtime',301);
         
     }
     
@@ -712,9 +591,9 @@ class Report extends CI_Controller {
     {
 		$data['title']  =  'Laporan Lembur';
 		$data['var']	=  $this->presensi->getVariabelDataByVar('ULB');
-		$data['checks'] =  $this->authlog->getPerMonthRecords('','',$this->session->userdata('eat_start'),$this->session->userdata('eat_finish'),$this->session->userdata('eat_group'));
+		$data['checks'] =  $this->authovertime->getAllRecords();
         $this->load->vars($data);
-        $this->load->theme('report/payroll-1',$data);
+        $this->load->theme('report/overtime',$data);
 	}
 	
 	function special_employee($offset=0){
@@ -730,9 +609,9 @@ class Report extends CI_Controller {
             $start = $this->session->userdata('se_start');
 			$end   = $this->session->userdata('se_finish');
         else:
-			$group = '';
-            $start = '';
-			$end   = '';
+			$group = '100';
+            $start = date('m/d/Y');
+			$end   = date('m/d/Y');
         endif;           
         $this->session->set_userdata('se_offset',$offset);
         $data['checks']  = $this->authlog->getPerMonthRecords($offset,$paging,$start,$end,$group);

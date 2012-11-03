@@ -70,7 +70,7 @@
 
 			</table>
 
-			<form method="post" action="<?=site_url('presensi/report/personal_preview')?>" class="table-footer button-height large-margin-bottom">
+			<form method="post" target="_blank" action="<?=site_url('presensi/report/personal_preview')?>" class="table-footer button-height large-margin-bottom">
                 <div class="float-right">
                     <div class="button-group">
                       <?php if(!empty($pagination))
@@ -93,9 +93,4 @@
             document.location.href = '<?=site_url("presensi/report/personal_paging")?>/' + redirect;
         }
         
-        /*function changeUrl2() {
-            var redirect;
-            redirect = document.getElementById('show2').value;
-            document.location.href = '<?=site_url("presensi/checkin/personal_paging")?>/' + redirect;
-        }*/
      </script>   

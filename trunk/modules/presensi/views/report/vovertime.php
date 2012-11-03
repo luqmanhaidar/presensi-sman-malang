@@ -40,13 +40,15 @@
                         <th scope="col">Selesai</th>
                         <th scope="col">Durasi</th>
 						<th scope="col">Nominal</th>
+                        <th scope="col">Uang Makan</th>
+                        <th scope="col">Total</th>
 					</tr>
 				</thead>
 				
 				<?php if($this->session->userdata('overtime_start')): ?>
 				<tfoot>
 					<tr>
-						<td colspan="8">
+						<td colspan="10">
 							<?=COUNT($checks).' Data ditemukan.'?>
 						</td>
 					</tr>
@@ -64,7 +66,9 @@
                         <td><?=$row['OvertimeStart'];?></td>
 						<td><?=$row['OvertimeEnd'];?></td>
 						<td class="align-right"><?=$row['OvertimeDuration'];?></td>
-                        <td class="align-right"><?=number_format($row['OvertimeDuration']* $overtime,0);?></td>
+                        <td class="align-right"><?=number_format($total=$row['OvertimeDuration']* $overtime,0);?></td>
+                        <td class="align-right"><?=number_format($row['OvertimeMeal'],0);?></td>
+                        <td class="align-right"><?=number_format($total + $row['OvertimeMeal'],0);?></td>
 					</tr>
                     <?php 
                         $x=$x+1;
