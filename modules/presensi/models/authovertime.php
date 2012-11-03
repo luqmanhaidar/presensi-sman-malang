@@ -7,13 +7,14 @@ class Authovertime extends CI_Model
         parent::__construct(); // Call the Model constructor
     }
     
-    function save($user,$date,$tm1,$tm2,$duration)
+    function save($user,$date,$tm1,$tm2,$duration,$meal)
     {
 		$value = array(
                     'UserID'              =>  $user,
                     'OvertimeDate'		  =>  $date,  
                     'OvertimeStart'       =>  $tm1,
                     'OvertimeEnd'     	  =>  $tm2,
+                    'OvertimeMeal'     	  =>  $meal,
                     'OvertimeDuration'    =>  $duration);
         $this->db->insert('NGAC_AUTHOVERTIME',$value);
     }
@@ -38,7 +39,7 @@ class Authovertime extends CI_Model
             $this->db->where('CONVERT(VARCHAR(10),OvertimeDate, 105)=',$day);    
 			
         $this->db->join('NGAC_USERINFO','NGAC_USERINFO.ID=NGAC_AUTHOVERTIME.UserID'); 
-		$this->db->select('NGAC_AUTHOVERTIME.UserID,CONVERT(VARCHAR(10),OvertimeDate,105) as MyDate,NGAC_USERINFO.Name,OvertimeStart,OvertimeEnd,OvertimeDuration,OvertimeNominal');
+		$this->db->select('NGAC_AUTHOVERTIME.UserID,CONVERT(VARCHAR(10),OvertimeDate,105) as MyDate,NGAC_USERINFO.Name,OvertimeStart,OvertimeEnd,OvertimeDuration,OvertimeMeal');
         //$this->db->select('NGAC_AUTHOVERTIME.UserID,NGAC_USERINFO.Name,NGAC_USERINFO.GroupID,CONVERT(VARCHAR(8),NGAC_AUTHOVERTIME.OvertimeStart,108) AS MyTimeStart,CONVERT(VARCHAR(8),NGAC_AUTHOVERTIME.OvertimeEnd, 108) AS MyTimeEnd');
         //$this->db->select('DATEPART(WEEK,AUTHOVERTIME.OvertimeDate)-DATEPART(WEEK,(AUTHOVERTIME.OvertimeDate-DATEPART(day,AUTHOVERTIME.OvertimeDate)+1)) as W'); 
 		$this->db->where('DATEPART(WEEK,NGAC_AUTHOVERTIME.OvertimeDate)-DATEPART(WEEK,(NGAC_AUTHOVERTIME.OvertimeDate-DATEPART(day,NGAC_AUTHOVERTIME.OvertimeDate)+1))>=1');
