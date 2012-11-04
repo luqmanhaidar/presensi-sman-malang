@@ -4,8 +4,7 @@
 <link type="text/css" rel="stylesheet" href="<?=base_url('themes/report/css/style.css');?>" />
 </head>
 <body>
- <center></center>
- <table class="vmonth">
+    <table class="vmonth">
     <caption>
 		<h3><?=$title?></h3>
 		<h4><?='Group :' .$position['Name'];?></h4>
@@ -28,56 +27,66 @@
 		</tr>
     </thead>
 	<tbody>
-	<?php 
-        $x=1;
-        foreach($checks as $row):?>
-			<tr>
-				<td rowspan="4"><?=$x;?></td>
-				<td rowspan="4"><?=$row['Name'].'<br/>'.$row['Department']?></td>
-				<td>Paraf</td>
-				<?php foreach($days as $rec):?>
-				  <td>
-                    <?php if(strlen($this->authlog->getUserTime($rec['DAY'],$row['UserID'],1))>2): ?>
-                        <img src="<?=base_url('assets/signature/'.$row['UserID'].'.jpg');?>" />
-                    <?php else: ?>   
-                        
-                    <?php endif;?>        
-                  </td>
-				<?php endforeach;?>
-				<td rowspan="4">-</td>
-				<td rowspan="4">-</td>
-				<td rowspan="4">-</td>
-			</tr>
-            
-            <tr>
-				<td>Dtg.PK</td>
-				<?php foreach($days as $rec):?>
-				  <td><?=substr($this->authlog->getUserTime($rec['DAY'],$row['UserID'],1),0,5);?></td>
-				<?php endforeach;?>
-			</tr>
-            
-            <tr>
-				<td>Paraf</td>
-				<?php foreach($days as $rec):?>
-				  <td>
-                    <?php if(strlen($this->authlog->getUserTime($rec['DAY'],$row['UserID'],2))>2): ?>
-                        <img src="<?=base_url('assets/signature/'.$row['UserID'].'.jpg');?>" />
-                    <?php else: ?>   
-                    <?php endif;?>
-                  </td>
-				<?php endforeach;?>
-			</tr>
-            
-			<tr>
-				<td>Plg.PK</td>
-				<?php foreach($days as $rec):?>
-				  <td><?=substr($this->authlog->getUserTime($rec['DAY'],$row['UserID'],2),0,5);?></td>
-				<?php endforeach;?>
-			</tr>		
-     <?php 
-         $x++;
-         endforeach;?>
+ <?php
+    $x=1;
+    foreach($checks as $row): 
+ ?>
+    <tr>
+       <th rowspan="4" class="white"><?=$x?></th>
+	   <th rowspan="4" class="white"><?=$row['Name'].'<br/>'.$row['Department']?></th>
+	   <th class="white">Paraf</th>
+	   <?php foreach($days as $rec):?>
+	   <th class="white">
+            <?php if(strlen($this->authlog->getUserTime($rec['DAY'],$row['UserID'],1))>2): ?>
+            <img src="<?=base_url('assets/signature/'.$row['UserID'].'.jpg');?>" />
+            <?php else: ?>               
+            <?php endif;?>    
+       </th>
+	   <?php endforeach;?>
+	   <th class="white">-</th>
+	   <th class="white">-</th>
+	   <th class="white">-</th>
+	</tr>
+	<tr>
+        <th class="white">Dtg.PK</th>
+	    <?php foreach($days as $rec):?>
+	    <th class="white"><?=substr($this->authlog->getUserTime($rec['DAY'],$row['UserID'],1),0,5);?></th>
+	    <?php endforeach;?>	
+        <th class="white">-</th>
+	    <th class="white">-</th>
+	    <th class="white">-</th>
+	</tr>
+    <tr>
+	   <th class="white">Paraf</th>
+	   <?php foreach($days as $rec):?>
+	   <th class="white">
+            <?php if(strlen($this->authlog->getUserTime($rec['DAY'],$row['UserID'],2))>2): ?>
+            <img src="<?=base_url('assets/signature/'.$row['UserID'].'.jpg');?>" />
+            <?php else: ?>               
+            <?php endif;?>    
+       </th>
+	   <?php endforeach;?>
+       <th class="white">-</th>
+	   <th class="white">-</th>
+	   <th class="white">-</th>
+	</tr>
+    
+    <tr>
+        <th class="white">Plg.PK</th>
+	    <?php foreach($days as $rec):?>
+	    <th class="white"><?=substr($this->authlog->getUserTime($rec['DAY'],$row['UserID'],2),0,5);?></th>
+	    <?php endforeach;?>	
+        <th class="white">-</th>
+	    <th class="white">-</th>
+	    <th class="white">-</th>
+	</tr>
+    
+ <?php 
+    $x++;
+    endforeach;
+ ?>   
     </tbody>
- </table>
+    </table>
+    
 </body>
 </html>
