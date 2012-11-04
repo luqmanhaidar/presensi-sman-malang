@@ -422,13 +422,17 @@ class ExcelModel extends CI_Model
                     
                 else
                     $day = count($days);
+                    //$day=0;
                  
             elseif($c==0):
                 $colx = 8;
                 $rowx = 4;
                 $j    = 0;
+                //$day=0;
                 $day  = count($days)+7;
-            endif;    
+            endif; 
+            
+            
                     
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$colx,$row-$rowx-$j-$day,$i." DAFTAR CEK CLOCK"); // Title
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$colx,$row-$rowx-$day)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
@@ -724,7 +728,9 @@ class ExcelModel extends CI_Model
                 $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+6+$colx,$row-$rowx-$day)->applyFromArray($styleArray);
                 
                 $row++;
+                
             endfor; 
+            
             
             /** DMK **/
             $row = $row++;
@@ -738,17 +744,14 @@ class ExcelModel extends CI_Model
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$colx+4,$row-$rowx-$day)->applyFromArray($styleArray);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$colx+5,$row-$rowx-$day)->applyFromArray($styleArray);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$colx+6,$row-$rowx-$day)->applyFromArray($styleArray);
-      
-            //$row=$row-count($days)-5;
-            //$row = $row-5;
-            //$row++;
             
-            //if($i>=2)
-                //$row=($row-count($days))+0;
-                 
+            if($i>1)
+                $row=$row-(count($days));
+            //$row--;      
             $i++;
         endforeach;
-      
+        
+        //$row=$row-5;
         // Save it as an excel 2007 file
         $objWriter = IOFactory::createWriter($objPHPExcel, "Excel2007"); 
         $file="Lap-Mingguan.xlsx";
