@@ -501,7 +501,7 @@ class Report extends CI_Controller {
 	
 	function week_pdf()
     {
-		$this->load->library('pdf');
+		/*$this->load->library('pdf');
 		$data['title']		=	'DAFTAR CEK CLOCK';
 		$data['days']	    =   $this->authlog->getDay($this->session->userdata('week_start'),$this->session->userdata('week_finish'));
 		$data['periode']	=	'Periode '.$this->session->userdata('week_start'). ' s/d '. $this->session->userdata('week_finish');
@@ -509,7 +509,17 @@ class Report extends CI_Controller {
 		$data['var']	    =	$this->presensi->getVariabelDataByVar('DMK');
         $this->load->vars($data);
         $file = $this->load->theme('report/week',$data,TRUE);
-		$this->pdf->pdf_create($file,$data['title']);
+		$this->pdf->pdf_create($file,$data['title']);*/
+        $start = $this->session->userdata('week_start'); 
+        $end   = $this->session->userdata('week_finish');
+        $group = $this->session->userdata('week_group'); 
+        $pos   = $this->usergroup->getPositionData($this->session->userdata('week_group'));
+        $recs  = $this->userinfo->getAllRecords('','','','',$group);
+        $days  = $this->authlog->getDay($start,$end);  
+        $var   = $this->presensi->getVariabelDataByVar('DMK');
+		$excel = $this->excelModel->week_pdf($recs,$start,$end,$group,$days,$pos,$var);
+        $data = file_get_contents("assets/Lap-Mingguan.pdf"); // Read the file's contents
+        force_download("Lap-Mingguan",$data); 
 	}
     
     function week_excel()
