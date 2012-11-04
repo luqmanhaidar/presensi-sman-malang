@@ -45,28 +45,27 @@
                     </p>
                     
                     <p class="inline-large-label button-height">
-                        <label for="large-label-1" class="label">Dari Tanggal<small> (Tanggal Berjalan)</small></label>
+                        <label for="large-label-1" class="label">Tanggal<small> (Tanggal Berjalan)</small></label>
                         <?=form_dropdown('day',config_item('day'),$day,'class="select"')?>
                         <?=form_dropdown('month',config_item('month'),$month,'class="select"')?>
                         <?=form_dropdown('year',config_item('year'),$year,'class="select"')?>
                     </p>
                     
-                    <p class="inline-large-label button-height">
+                    <!--<p class="inline-large-label button-height">
                         <label for="large-label-1" class="label">Sampai Tanggal<small> (Tanggal Terakhir)</small></label>
                         <?=form_dropdown('day2',config_item('day'),$day2,'class="select"')?>
                         <?=form_dropdown('month2',config_item('month'),$month2,'class="select"')?>
                         <?=form_dropdown('year2',config_item('year'),$year2,'class="select"')?>
                         <input type="hidden" name="ID" value="<?php if($value<>'') echo $value['OtherID'];  ?>" />
                     </p>
-                    
+                    -->
                     
 				    <p class="inline-large-label button-height">
 						<label for="large-label-1" class="label">Keterangan<small> ( max 200)</small></label>
 						<input type="text" name="description" style="width:90%;" id="large-label-1" class="input medium-margin-right" value="<?php if($value<>'') echo $value['OtherDescription'];  ?>" />
                         
                     </p>
-                   
-					
+                   	
 					<p class="button-height">
 						<input type="submit" class="button big" value="Simpan" />
 						<a href="<?=site_url('presensi/other/index/'.$this->session->userdata('other_offset'))?>" class="button big">Back</a>

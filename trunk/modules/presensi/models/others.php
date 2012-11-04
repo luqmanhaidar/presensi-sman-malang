@@ -76,23 +76,23 @@ class Others extends CI_Model
         date_add($date, date_interval_create_from_date_string('7 days'));
         echo 'Tambahkan 7 hari: '.date_format($date,'d-m-Y');
         **/
+        //'OtherDateFinish'     =>  $this->input->post('year2').'-'. $this->input->post('month2').'-'. $this->input->post('day2'),
   		$value = array(
                         'UserID'              =>  $this->input->post('user'),
                         'OtherType'           =>  $this->input->post('type'),
                         'OtherDateStart'      =>  $this->input->post('year').'-'. $this->input->post('month').'-'. $this->input->post('day'),
-                        'OtherDateFinish'     =>  $this->input->post('year2').'-'. $this->input->post('month2').'-'. $this->input->post('day2'),
                         'OtherDescription'    =>  $this->input->post('description'));
         $this->db->insert('NGAC_OTHER',$value);
     }
 
     function update()
     {
+        //'OtherDateFinish'     =>  $this->input->post('year2').'-'. $this->input->post('month2').'-'. $this->input->post('day2'),
 		$id = $this->input->post('ID');
         $value = array(
                     'UserID'              =>  $this->input->post('user'),
                     'OtherType'           =>  $this->input->post('type'),
                     'OtherDateStart'      =>  $this->input->post('year').'-'. $this->input->post('month').'-'. $this->input->post('day'),
-                    'OtherDateFinish'     =>  $this->input->post('year2').'-'. $this->input->post('month2').'-'. $this->input->post('day2'),
                     'OtherDescription'    =>  $this->input->post('description'));
         $this->db->where('OtherID',$id);
         $this->db->update('NGAC_OTHER',$value);
