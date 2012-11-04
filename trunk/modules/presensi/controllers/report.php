@@ -200,7 +200,9 @@ class Report extends CI_Controller {
 		$this->load->library('pdf');
 		$data['title']		=	'Laporan Presensi Bulan '.indonesian_monthName($this->session->userdata('month_search')).' '.$this->session->userdata('year_search');
         $data['checks']		=	$this->authlog->getPerMonthRecords('','',$this->session->userdata('month_search'),$this->session->userdata('year_search'),$this->session->userdata('month_group'));
-		$this->load->vars($data);
+		$data['days']	    =   $this->authlog->getDay($this->session->userdata('month_start'),$this->session->userdata('month_finish'));
+        $data['position']   =   $this->usergroup->getPositionData($this->session->userdata('month_group'));
+        $this->load->vars($data);
         $file = $this->load->theme('report/month',$data,TRUE);
 		$this->pdf->pdf_create($file,$data['title']);
 	}
