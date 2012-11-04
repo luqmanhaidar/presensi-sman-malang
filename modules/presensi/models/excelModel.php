@@ -785,6 +785,7 @@ class ExcelModel extends CI_Model
         $objPHPExcel->getActiveSheet()->getPageMargins()->setLeft(0.50);
         $objPHPExcel->getActiveSheet()->getPageMargins()->setBottom(0.25);
         $objPHPExcel->getActiveSheet()->getPageSetup()->setScale(95);
+        $objPHPExcel->getActiveSheet()->setShowGridlines(true);
         /** Setup Page **/  
         
         $row=1;
