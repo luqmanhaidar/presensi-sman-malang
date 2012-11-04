@@ -54,6 +54,7 @@
                     $w[5]=0;
                     $l[5]=0;
                     $e[5]=0;
+                    //echo count($days);
                     foreach($days as $rec): 
                         $row = $this->authprocess->getAllRecords('','',$user['ID'],'row',$rec['DAY']);
                         if($row):

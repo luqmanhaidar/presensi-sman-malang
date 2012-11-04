@@ -38,6 +38,7 @@ class Authlog extends CI_Model
     
 	function getDay($date_start='',$date_finish=''){
 		$this->db->select('CONVERT(VARCHAR(10),TransactionTime, 105) as DAY');
+        //$this->db->select('DATEPART(WEEK,CONVERT(VARCHAR(10),TransactionTime,105))-DATEPART(WEEK,(TransactionTime-DATEPART(day,TransactionTime)+1)) as W');
 		$this->db->where("(TransactionTime >='".$date_start."') AND (TransactionTime <=DATEADD(day,1,'".$date_finish."'))");  
 		$this->db->group_by('CONVERT(VARCHAR(10),TransactionTime,105)');
 		$this->db->order_by('CONVERT(VARCHAR(10),TransactionTime,105)','ASC');
