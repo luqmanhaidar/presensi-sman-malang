@@ -43,9 +43,9 @@
             <?php endif;?>    
        </th>
 	   <?php endforeach;?>
-	   <th class="white">-</th>
-	   <th class="white">-</th>
-	   <th class="white">-</th>
+	   <th class="white"><?=$this->others->getUserTime($row['UserID'],$this->session->userdata('month_start'),$this->session->userdata('month_finish'),"Sakit")?></th>
+	   <th class="white"><?=$this->others->getUserTime($row['UserID'],$this->session->userdata('month_start'),$this->session->userdata('month_finish'),"Ijin")?></th>
+	   <th class="white"><?=$this->others->getUserTime($row['UserID'],$this->session->userdata('month_start'),$this->session->userdata('month_finish'),"Tugas")?></th>
 	</tr>
 	<tr>
         <th class="white">Dtg.PK</th>

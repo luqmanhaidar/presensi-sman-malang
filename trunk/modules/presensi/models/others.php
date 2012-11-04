@@ -19,6 +19,14 @@ class Others extends CI_Model
 		return $data;
 	}
     
+    function getUserTime($user,$date_start,$date_finish,$type){
+        $this->db->where('UserID',$user);
+        $this->db->where("(OtherDateStart >='".$date_start."') AND (OtherDateStart <=DATEADD(day,1,'".$date_finish."'))");
+        $this->db->where('OtherType',$type);
+        $Q=$this->db->get('NGAC_OTHER'); 
+        return $Q->num_rows(); 
+    }
+    
     function getCountOther($id,$date)
     {
         $this->db->where('UserID',$id);   
@@ -48,7 +56,8 @@ class Others extends CI_Model
         if (!empty($type))   
             $this->db->where('OtherType',$type);    
         if (!empty($date_start))   
-            $this->db->where("OtherDateStart >='".$date_start."' AND OtherDateStart <='".$date_finish."' ");
+            //$this->db->where("OtherDateStart >='".$date_start."' AND OtherDateStart <='".$date_finish."' ");
+            $this->db->where("(OtherDateStart >='".$date_start."') AND (OtherDateStart <=DATEADD(day,1,'".$date_finish."'))");  
             //$this->db->where('CONVERT(VARCHAR(10),TransactionTime, 105)>=',$date_start);
             //$this->db->where("(CONVERT(VARCHAR(10),OvertimeDate, 105) BETWEEN '".$date_start."' AND '".$date_finish."')");  
         
