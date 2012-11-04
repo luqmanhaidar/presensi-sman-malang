@@ -36,9 +36,11 @@
 						<th scope="col" width="10%" class="align-left hide-on-mobile">ID User</th>
                         <th scope="col" class="align-left hide-on-mobile">Nama</th>
                         <th scope="col" width="5%" class="align-left hide-on-mobile">Paraf</th>
-						<th scope="col" class="align-left hide-on-mobile">Bagian</th>
                         <th scope="col">Tgl Awal</th>
 						<th scope="col">Tgl.Akhir</th>
+                        <th scope="col">S</th>
+                        <th scope="col">I</th>
+                        <th scope="col">T</th>
 					</tr>
 				</thead>
 
@@ -59,10 +61,12 @@
 						<td><?=$row['UserID'];?></td>
                         <td><?=$row['Name'];?></td>
                         <td><img style="width:20px;height:auto;" src="<?=base_url('assets/signature/'.$row['UserID'].'.jpg')?>" /></td>
-						<td><?=$row['Department'];?></td>
                         <td><?=indonesian_shortDate($row['TransactionTime']).' '.substr($row['TransactionTime'],11,8);?></td>
 						<td><?=indonesian_shortDate($row['TransactionTimeMax']) .' '.substr($row['TransactionTimeMax'],11,8);?></td>
-					</tr>
+					    <td><?=$this->others->getUserTime($row['UserID'],$this->session->userdata('month_start'),$this->session->userdata('month_finish'),"Sakit")?></td>
+                        <td><?=$this->others->getUserTime($row['UserID'],$this->session->userdata('month_start'),$this->session->userdata('month_finish'),"Ijin")?></td>
+                        <td><?=$this->others->getUserTime($row['UserID'],$this->session->userdata('month_start'),$this->session->userdata('month_finish'),"Tugas")?></td>
+                    </tr>
                     <?php 
                         $x=$x+1;
                         endforeach;?>

@@ -226,21 +226,21 @@ class ExcelModel extends CI_Model
                 $j++;
             endforeach;
             
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$j+0,$row,'-');
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$j+0,$row,$this->others->getUserTime($var['UserID'],$this->session->userdata('month_start'),$this->session->userdata('month_finish'),"Sakit"));
             $objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+$j+0,$row,$col+$j+0,$row+3);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+0,$row)->getAlignment()->setVertical(Style_Alignment::VERTICAL_CENTER);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+0,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+0,$row)->applyFromArray($styleArray);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+0,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
             
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$j+1,$row,'-');
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$j+1,$row,$this->others->getUserTime($var['UserID'],$this->session->userdata('month_start'),$this->session->userdata('month_finish'),"Ijin"));
             $objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+$j+1,$row,$col+$j+1,$row+3);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+1,$row)->getAlignment()->setVertical(Style_Alignment::VERTICAL_CENTER);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+1,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+1,$row)->applyFromArray($styleArray);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+1,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
             
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$j+2,$row,'-');
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$j+2,$row,$this->others->getUserTime($var['UserID'],$this->session->userdata('month_start'),$this->session->userdata('month_finish'),"Tugas"));
             $objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+$j+2,$row,$col+$j+2,$row+3);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+2,$row)->getAlignment()->setVertical(Style_Alignment::VERTICAL_CENTER);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+2,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
