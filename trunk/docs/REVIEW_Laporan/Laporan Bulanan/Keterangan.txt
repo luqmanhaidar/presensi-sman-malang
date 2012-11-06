@@ -1,0 +1,50 @@
+Untuk REQUEST DATA diubah ke: GRUP JABATAN ; BULAN : TAHUN
+
+Karena output yang diminta sudah secara otomatis semua tanggal pada bulan tersebut.
+
+
+Format harus sama persis seperti hasi l file "Format Laporan Bulanan.jpg"
+Untuk kolom yang hari minggu diberi warna abu-abu.
+
+Ada 3 Hal yang saya lingkari Merah, yaitu:
+
+1. Header Nama Lembaga
+   Hasil sebagaimana yang diperlihatkan. Cukup sekali cetak di halaman awal.
+
+
+2. Info tiap user
+
+Informasi yang ditampilkan adalah:
+Nama
+Golongan PNS
+Posisi
+
+Ketrangan itu bisa diambil melalui query database berikut:
+ngac_userinfo:Name 
+ngac_userinfo:Description 
+ngac_userinfo:Department 
+
+
+3. Keterangan
+Disini ada 6 Info singkatan, yaitu:
+ - S (Sakit): Jumlah sakit yang ada dalam bulan tersebut
+ - I (Ijin) : Jumlah Ijin yang ada dalam Bulan tersebut
+ - C (Cuti) : Jumlah Cuti  yang ada dalam Bulan tersebut
+ - DL (Dinas Luar) : Jumlah Dinas luar dalam Bulan tersebut
+ - TK (Tanpa Keterangan) : Jumlah tanpa keterangan
+ - M (Masuk) : Jumlah Masuk dalam Bulan tersebut
+
+
+Sehubungan dengan ini, item (S, I, C, DL) itu diinput melalui menu "INPUT PRESENSI-IZIN KERJA"
+Jadi nanti yang ditampilkan adalah jumlah untuk tiap user berdasarkan input pada menu tersebut.
+
+Mohon untuk menu addNEW "INPUT PRESENSI-IZIN KERJA" ditambahi opsi berikut:
+ - S (Sakit): Jumlah sakit yang ada dalam bulan tersebut
+ - I (Ijin) : Jumlah Ijin yang ada dalam Bulan tersebut
+ - C (Cuti) : Jumlah Cuti  yang ada dalam Bulan tersebut
+ - DL (Dinas Luar) : Jumlah Dinas luar dalam Bulan tersebut
+
+
+Lalu untuk Kolom TK, adalah Output jumlah = Hari Bulan (30 atau 31) - (S+I+C+DL).
+
+Lalu untuk M (Masuk) adalah jumlah banyaknya TTD pada bulan tersebut, dimana asal ada F1 pada hari tersebut dihitung masuk 1 hari. Sehingga diitampilkan banyak hari si user masuk.
