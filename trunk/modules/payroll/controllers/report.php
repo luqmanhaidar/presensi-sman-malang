@@ -59,7 +59,22 @@ class Report extends CI_Controller {
     
     function eat_search()
     {
+        $day   = $this->input->post('day');
+        $month = $this->input->post('month');
+        if(!validateDate($day,$month)):
+            $this->session->set_flashdata('message',config_item('range_error'));
+            redirect('payroll/report/eat/'.$this->session->userdata('eat_offset'),301);
+        endif; 
+        
+        $day   = $this->input->post('day2');
+        $month = $this->input->post('month2');
+        if(!validateDate($day,$month)):
+            $this->session->set_flashdata('message',config_item('range_error'));
+            redirect('payroll/report/eat/'.$this->session->userdata('eat_offset'),301);
+        endif;     
+        
         $search = array ('eat_group'  => $this->input->post('group'),
+                         'eat_holiday'=> $this->input->post('holiday'),
 						 'eat_start'  => $this->input->post('month').'/'.$this->input->post('day').'/'.$this->input->post('year'), 
                          'eat_finish' => $this->input->post('month2').'/'.$this->input->post('day2').'/'.$this->input->post('year2'));  
         $this->session->set_userdata($search);
@@ -153,6 +168,20 @@ class Report extends CI_Controller {
     
     function transport_search()
     {
+        $day   = $this->input->post('day');
+        $month = $this->input->post('month');
+        if(!validateDate($day,$month)):
+            $this->session->set_flashdata('message',config_item('range_error'));
+            redirect('payroll/report/transport/'.$this->session->userdata('transport_offset'),301);
+        endif; 
+        
+        $day   = $this->input->post('day2');
+        $month = $this->input->post('month2');
+        if(!validateDate($day,$month)):
+            $this->session->set_flashdata('message',config_item('range_error'));
+            redirect('payroll/report/transport/'.$this->session->userdata('transport_offset'),301);
+        endif;     
+        
         $search = array ('transport_group'  => $this->input->post('group'),
 						 'transport_start'  => $this->input->post('month').'/'.$this->input->post('day').'/'.$this->input->post('year'), 
                          'transport_finish' => $this->input->post('month2').'/'.$this->input->post('day2').'/'.$this->input->post('year2'));  
