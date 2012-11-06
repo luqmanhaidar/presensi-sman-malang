@@ -96,9 +96,10 @@ class Report extends CI_Controller {
 	
 	function eat_print()
     {
-		$data['title']  =  'Laporan Gaji Format 1';
-        $data['name']   =  $this->session->userdata('personal_name');
-		$data['var']	=  $this->presensi->getVariabelDataByVar('UMK');
+		$data['title']  =  'DAFTAR OPERASIONAL KEHADIRAN DAN PENAMBAHAN GIZI';
+        $data['group']  =  $this->usergroup->getPositionData($this->session->userdata('eat_group')); 
+		$data['eat']	=  $this->presensi->getVariabelDataByVar('UMK');
+        $data['trp']	=  $this->presensi->getVariabelDataByVar('UTR');
 		$data['checks'] =  $this->authlog->getPerMonthRecords('','',$this->session->userdata('eat_start'),$this->session->userdata('eat_finish'),$this->session->userdata('eat_group'));
         $this->load->vars($data);
         $this->load->theme('report/payroll-1',$data);
@@ -107,8 +108,10 @@ class Report extends CI_Controller {
 	function eat_pdf()
     {
 		$this->load->library('pdf');
-		$data['title']  =  'Laporan Gaji Format 1';
-		$data['var']	=  $this->presensi->getVariabelDataByVar('UMK');
+		$data['title']  =  'DAFTAR OPERASIONAL KEHADIRAN DAN PENAMBAHAN GIZI ';
+        $data['group']  =  $this->usergroup->getPositionData($this->session->userdata('eat_group')); 
+		$data['eat']	=  $this->presensi->getVariabelDataByVar('UMK');
+        $data['trp']	=  $this->presensi->getVariabelDataByVar('UTR');
 		$data['checks'] =  $this->authlog->getPerMonthRecords('','',$this->session->userdata('eat_start'),$this->session->userdata('eat_finish'),$this->session->userdata('eat_group'));
         $this->load->vars($data);
         $file=$this->load->theme('report/payroll-1',$data,TRUE);
@@ -119,10 +122,12 @@ class Report extends CI_Controller {
     {
         $start = $this->session->userdata('eat_start'); 
         $end   = $this->session->userdata('eat_finish');
-        $group = $this->session->userdata('eat_group'); 
-        $recs  = $this->authlog->getPerMonthRecords('','',$start,$end,$group);
-        $var   = $this->presensi->getVariabelDataByVar('UMK');   
-		$excel = $this->excelModel->eat_excel($recs,$var);
+        $id    = $this->session->userdata('eat_group'); 
+        $group =  $this->usergroup->getPositionData($id);
+        $recs  = $this->authlog->getPerMonthRecords('','',$start,$end,$id);
+        $eat   =  $this->presensi->getVariabelDataByVar('UMK');
+        $trp   =  $this->presensi->getVariabelDataByVar('UTR');
+		$excel = $this->excelModel->eat_excel($recs,$trp,$eat,$group);
         $data = file_get_contents("assets/Lap-Gaji-Format-1.xlsx"); // Read the file's contents
         force_download("Lap-Gaji-Format-1",$data); 
 	}
@@ -205,7 +210,6 @@ class Report extends CI_Controller {
 	function transport_print()
     {
 		$data['title']  =  'Laporan Gaji Format 2';
-        $data['name']   =  $this->session->userdata('personal_name');
 		$data['var']	=  $this->presensi->getVariabelDataByVar('UTR');
 		$data['checks'] =  $this->authlog->getPerMonthRecords('','',$this->session->userdata('transport_start'),$this->session->userdata('transport_finish'),$this->session->userdata('transport_group'));
         $this->load->vars($data);
