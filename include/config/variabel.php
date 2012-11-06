@@ -1,4 +1,5 @@
 <?php
+    $config['holiday']  =  array(0=>'Libur','1'=>'1','2'=>'2','3'=>'3','4'=>'4','5'=>'5');  
     $config['paging']   =   15;
     $config['key']      =   array(''=>'All','1'=>'1','2'=>'2','3'=>'3','4'=>'4');
     $config['type']     =   array('Sakit'=>'Sakit','Ijin'=>'Ijin','Tugas'=>'Tugas');
