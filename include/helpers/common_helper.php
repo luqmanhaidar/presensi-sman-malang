@@ -162,4 +162,27 @@ function numericToTime($total){
         $second = "00";
     
     return $hour.':'.$minute.':'.$second;                      
+}
+
+function validateDate($date,$month)
+{
+    switch($month):
+        case '01':$max_date=31;break;
+        case '02':$max_date=28;break;
+        case '03':$max_date=31;break;
+        case '04':$max_date=30;break;
+        case '05':$max_date=31;break;
+        case '06':$max_date=30;break;
+        case '07':$max_date=31;break;
+        case '08':$max_date=31;break;
+        case '09':$max_date=30;break;
+        case '10':$max_date=31;break;
+        case '11':$max_date=30;break;
+        case '12':$max_date=31;break;
+    endswitch;
+    
+    if ($date <= $max_date)
+        return true;
+    else
+        return false;    
 }              

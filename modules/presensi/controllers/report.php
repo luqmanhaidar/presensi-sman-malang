@@ -69,15 +69,29 @@ class Report extends CI_Controller {
     
     function personal_search()
     {
+        $day   = $this->input->post('day');
+        $month = $this->input->post('month');
+        if(!validateDate($day,$month)):
+            $this->session->set_flashdata('message',config_item('range_error'));
+            redirect('presensi/report/personal/'.$this->session->userdata('personal_offset'),301);
+        endif; 
+        
+        $day   = $this->input->post('day2');
+        $month = $this->input->post('month2');
+        if(!validateDate($day,$month)):
+            $this->session->set_flashdata('message',config_item('range_error'));
+            redirect('presensi/report/personal/'.$this->session->userdata('personal_offset'),301);
+        endif;     
+            
         $search = array ('personal_search' => $this->input->post('user'),
                          'personal_key'    => $this->input->post('key'),
                          'personal_start'  => $this->input->post('month').'/'.$this->input->post('day').'/'.$this->input->post('year'), 
                          'personal_finish' => $this->input->post('month2').'/'.$this->input->post('day2').'/'.$this->input->post('year2'));    
         $this->session->set_userdata($search);
-        redirect('presensi/report/personal',301);
+        redirect('presensi/report/personal/'.$this->session->userdata('personal_offset'),301);
     }
 	
-	function personal_preview(){
+	function personal_preview(){    
 		$export = $this->input->post('export');
         $row = $this->userinfo->getUserData($this->session->userdata('personal_search'));
         if(COUNT($row)>0)
