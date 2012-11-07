@@ -19,9 +19,13 @@ class Others extends CI_Model
 		return $data;
 	}
     
-    function getUserTime($user,$date_start,$date_finish,$type){
+    function getUserTime($user,$month,$year,$type){
         $this->db->where('UserID',$user);
-        $this->db->where("(OtherDateStart >='".$date_start."') AND (OtherDateStart <=DATEADD(day,1,'".$date_finish."'))");
+       if (!empty($month))   
+            $this->db->where("DATEPART(MONTH,OtherDateStart)='".$month."'");  
+            
+        if (!empty($year))   
+            $this->db->where("DATEPART(YEAR,OtherDateStart)='".$year."'"); 
         $this->db->where('OtherType',$type);
         $Q=$this->db->get('NGAC_OTHER'); 
         return $Q->num_rows(); 
