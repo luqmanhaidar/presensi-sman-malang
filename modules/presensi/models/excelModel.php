@@ -92,7 +92,7 @@ class ExcelModel extends CI_Model
         redirect(base_url('assets/'.$file),301);
     }
     
-    function month_excel($recs,$start,$end,$group,$days,$pos,$desc){      						
+    function month_excel($recs,$month,$year,$group,$days,$pos,$desc){      						
 		$objPHPExcel = new PHPExcel();
         $objDrawing = new Worksheet_Drawing();  // PHPExcel_Worksheet_MemoryDrawing
 		$objPHPExcel->getProperties()->setTitle("title")
@@ -119,14 +119,20 @@ class ExcelModel extends CI_Model
 		
         $row=1;
         $col=0;
-		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,"Laporan Presensi Bulanan Periode ".$start." s/d ".$end); // Title
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,"KEMENTRIAN AGAMA"); // Title
         $objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col,$row,$col+5,$row);
         
         $row++;
         $col=0;
-		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,"Group ".$pos['Name']); // Title
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,"MADRASAH ALIYAH NEGERI 3 MALANG"); // Title
         $objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col,$row,$col+5,$row);
-		
+        
+        $row++;
+        $col=0;
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,"JL.BANDUNG NO.7 Telp.0341-551357,588333"); // Title
+        $objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col,$row,$col+5,$row);
+        
+  
         $row=$row+3;
         $col=0;
         //No
@@ -144,6 +150,8 @@ class ExcelModel extends CI_Model
         $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+1)->setWidth(30);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+1,$row-1)->applyFromArray($styleArray);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+1,$row-1)->getFill()->applyFromArray($fill);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+1,$row)->applyFromArray($styleArray);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+1,$row)->getFill()->applyFromArray($fill);
         
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+2,$row-1,'Paraf');
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+2,$row-1)->getAlignment()->setVertical(Style_Alignment::VERTICAL_CENTER);
@@ -154,15 +162,15 @@ class ExcelModel extends CI_Model
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+2,$row-1)->getFill()->applyFromArray($fill);
         
         $i=3;
-        foreach($days as $rec):
+        for($x=1;$x<=$days;$x++):
             //Days
-    		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$i,$row,substr($rec['DAY'],0,2));
+    		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$i,$row,code($x));
             $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+$i)->setWidth(7);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$i,$row)->applyFromArray($styleArray);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$i,$row)->getFill()->applyFromArray($fill);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$i,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
         $i++;
-        endforeach;
+        endfor;
         
         //Tanggal
 		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+3,$row-1,$desc);
@@ -171,12 +179,19 @@ class ExcelModel extends CI_Model
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+3,$row-1,$col+($i-1),$row-1)->applyFromArray($styleArray);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+3,$row-1,$col+($i-1),$row-1)->getFill()->applyFromArray($fill);
         
+        for($c=3+1;$c<$i;$c++):
+            $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$c,$row-1)->applyFromArray($styleArray);
+        endfor;
+        
         
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$i+0,$row-1,'Keterangan');
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$i+1,$row-1)->getAlignment()->setVertical(Style_Alignment::VERTICAL_CENTER);
-        $objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+$i+0,$row-1,$col+$i+2,$row-1);
+        $objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+$i+0,$row-1,$col+$i+3,$row-1);
         $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+$i+0)->setWidth(25);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$i+0,$row-1)->applyFromArray($styleArray);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$i+1,$row-1)->applyFromArray($styleArray);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$i+2,$row-1)->applyFromArray($styleArray);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$i+3,$row-1)->applyFromArray($styleArray);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$i+0,$row-1)->getFill()->applyFromArray($fill);
         
         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$i+0,$row,'S');
@@ -191,11 +206,17 @@ class ExcelModel extends CI_Model
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$i+1,$row)->applyFromArray($styleArray);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$i+1,$row)->getFill()->applyFromArray($fill);
         
-        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$i+2,$row,'T');
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$i+2,$row,'C');
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$i+2,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
         $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+$i+2)->setWidth(7);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$i+2,$row)->applyFromArray($styleArray);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$i+2,$row)->getFill()->applyFromArray($fill);
+        
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$i+3,$row,'DL');
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$i+3,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
+        $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+$i+3)->setWidth(7);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$i+3,$row)->applyFromArray($styleArray);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$i+3,$row)->getFill()->applyFromArray($fill);
 		
         $row=$row+1;
         $col=0;
@@ -209,43 +230,58 @@ class ExcelModel extends CI_Model
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->getAlignment()->setVertical(Style_Alignment::VERTICAL_CENTER);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
             
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+1,$row,$var['Name']);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+1,$row,$var['Name'].' '.$var['Description'].' '.$var['Department']);
+            $objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+1,$row,$col+1,$row+3);
 			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+1,$row)->applyFromArray($styleArray);
-            $objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+1,$row,$col+1,$row+1);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+1,$row)->getAlignment()->setVertical(Style_Alignment::VERTICAL_CENTER);
+            $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+1,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
+            $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+1,$row)->getAlignment()->setWrapText(true);
             
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+2,$row,"Paraf");
 			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+2,$row)->applyFromArray($styleArray);
             
             $j=3;
-            foreach($days as $rec):
+            for($i=1;$i<=$days;$i++):
                 //Days
         		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$j,$row,'');
                 $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j,$row)->applyFromArray($styleArray);
                 $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
+                
+                $date = $year."/".$month."/".code($i);
+                $datename = date('l', strtotime($date));
+                if($datename=="Sunday")
+                    $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j,$row)->getFill()->applyFromArray($fill);
+                
                 $j++;
-            endforeach;
+            endfor;
             
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$j+0,$row,$this->others->getUserTime($var['UserID'],$this->session->userdata('month_start'),$this->session->userdata('month_finish'),"Sakit"));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$j+0,$row,$this->others->getUserTime($var['UserID'],$month,$year,"Sakit"));
             $objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+$j+0,$row,$col+$j+0,$row+3);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+0,$row)->getAlignment()->setVertical(Style_Alignment::VERTICAL_CENTER);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+0,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+0,$row)->applyFromArray($styleArray);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+0,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
             
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$j+1,$row,$this->others->getUserTime($var['UserID'],$this->session->userdata('month_start'),$this->session->userdata('month_finish'),"Ijin"));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$j+1,$row,$this->others->getUserTime($var['UserID'],$month,$year,"Ijin"));
             $objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+$j+1,$row,$col+$j+1,$row+3);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+1,$row)->getAlignment()->setVertical(Style_Alignment::VERTICAL_CENTER);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+1,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+1,$row)->applyFromArray($styleArray);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+1,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
             
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$j+2,$row,$this->others->getUserTime($var['UserID'],$this->session->userdata('month_start'),$this->session->userdata('month_finish'),"Tugas"));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$j+2,$row,$this->others->getUserTime($var['UserID'],$month,$year,"Cuti"));
             $objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+$j+2,$row,$col+$j+2,$row+3);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+2,$row)->getAlignment()->setVertical(Style_Alignment::VERTICAL_CENTER);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+2,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+2,$row)->applyFromArray($styleArray);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+2,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
+            
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$j+3,$row,$this->others->getUserTime($var['UserID'],$month,$year,"Tugas"));
+            $objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+$j+3,$row,$col+$j+3,$row+3);
+            $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+3,$row)->getAlignment()->setVertical(Style_Alignment::VERTICAL_CENTER);
+            $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+3,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
+            $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+3,$row)->applyFromArray($styleArray);
+            $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+3,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
             
             $i++;
             $row++;
@@ -254,32 +290,42 @@ class ExcelModel extends CI_Model
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,'');
 			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->applyFromArray($styleArray);
             
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+1,$row,'');
-			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+1,$row)->applyFromArray($styleArray);
+            //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+1,$row,'');
+			//$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+1,$row)->applyFromArray($styleArray);
             
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+2,$row,"Dtg.PK");
 			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+2,$row)->applyFromArray($styleArray);
             
             $j=3;
-            foreach($days as $rec):
+            for($i=1;$i<=$days;$i++):
                 //Days
-        		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$j,$row,substr($this->authlog->getUserTime($rec['DAY'],$var['UserID'],1),0,5));
+        		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$j,$row,substr($this->authlog->getUserTime(code($i).'-'.$month.'-'.$year,$var['UserID'],1),0,5));
                 $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j,$row)->applyFromArray($styleArray);
                 $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
+                $date = $year."/".$month."/".code($i);
+                $datename = date('l', strtotime($date));
+                if($datename=="Sunday")
+                    $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j,$row)->getFill()->applyFromArray($fill);
+                
                 $j++;
-            endforeach;
+            endfor;
             
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$j+0,$row,'');
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+0,$row)->applyFromArray($styleArray);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+0,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
             
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$j+1,$row,'');
-            $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+1,$row)->applyFromArray($styleArray);
-            $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+1,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
+            //$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+1,$row)->applyFromArray($styleArray);
+            //$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+1,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
             
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$j+2,$row,'');
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+2,$row)->applyFromArray($styleArray);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+2,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
+            
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$j+3,$row,'');
+            $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+3,$row)->applyFromArray($styleArray);
+            $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+3,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
+            
             
             
             $i++;
@@ -289,34 +335,43 @@ class ExcelModel extends CI_Model
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,'');
 			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->applyFromArray($styleArray);
             
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+1,$row,'Jab: '.$var['Department']);
+            /*$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+1,$row,$var['Description']);
 			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+1,$row)->applyFromArray($styleArray);
             $objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+1,$row,$col+1,$row+1);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+1,$row)->getAlignment()->setVertical(Style_Alignment::VERTICAL_CENTER);
-            
+            */
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+2,$row,"Paraf");
 			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+2,$row)->applyFromArray($styleArray);
             
             $j=3;
-            foreach($days as $rec):
+            for($i=1;$i<=$days;$i++):
                 //Days
         		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$j,$row,'');
                 $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j,$row)->applyFromArray($styleArray);
                 $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
+                $date = $year."/".$month."/".code($i);
+                $datename = date('l', strtotime($date));
+                if($datename=="Sunday")
+                    $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j,$row)->getFill()->applyFromArray($fill);
+                
                 $j++;
-            endforeach;
+            endfor;
             
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$j+0,$row,'');
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+0,$row)->applyFromArray($styleArray);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+0,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
             
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$j+1,$row,'');
-            $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+1,$row)->applyFromArray($styleArray);
-            $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+1,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
+            //$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$j+1,$row,'');
+            //$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+1,$row)->applyFromArray($styleArray);
+            //$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+1,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
             
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$j+2,$row,'');
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+2,$row)->applyFromArray($styleArray);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+2,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
+            
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$j+3,$row,'');
+            $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+3,$row)->applyFromArray($styleArray);
+            $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+3,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
             
             
             $i++;
@@ -326,20 +381,25 @@ class ExcelModel extends CI_Model
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,'');
 			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->applyFromArray($styleArray);
             
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+1,$row,'');
-			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+1,$row)->applyFromArray($styleArray);
+            /*$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+1,$row,$var['Department']);
+			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+1,$row)->applyFromArray($styleArray);*/
             
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+2,$row,"Plg.PK");
 			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+2,$row)->applyFromArray($styleArray);
             
             $j=3;
-            foreach($days as $rec):
+            for($i=1;$i<=$days;$i++):
                 //Days
-        		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$j,$row,substr($this->authlog->getUserTime($rec['DAY'],$var['UserID'],2),0,5));
+        		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$j,$row,substr($this->authlog->getUserTime(code($i).'-'.$month.'-'.$year,$var['UserID'],2),0,5));
                 $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j,$row)->applyFromArray($styleArray);
                 $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
+                $date = $year."/".$month."/".code($i);
+                $datename = date('l', strtotime($date));
+                if($datename=="Sunday")
+                    $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j,$row)->getFill()->applyFromArray($fill);
+                
                 $j++;
-            endforeach;
+            endfor;
             
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$j+0,$row,'');
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+0,$row)->applyFromArray($styleArray);
@@ -352,6 +412,10 @@ class ExcelModel extends CI_Model
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$j+2,$row,'');
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+2,$row)->applyFromArray($styleArray);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+2,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
+            
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+$j+3,$row,'');
+            $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+3,$row)->applyFromArray($styleArray);
+            $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+3,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
             
             
             $i++;
