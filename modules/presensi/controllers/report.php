@@ -209,8 +209,11 @@ class Report extends CI_Controller {
 	function month_print()
     {
 		$data['title']		=	'DAFTAR HADIR PEGAWAI';
-		$data['position']	=	$this->usergroup->getPositionData($this->session->userdata('month_group'));
-		$data['checks']		=	$this->authlog->getPerMonthRecords('','',$this->session->userdata('month_start'),$this->session->userdata('month_finish'),$this->session->userdata('month_group'));
+        $group = $this->session->userdata('month_group');
+        $month = $this->session->userdata('month_month');
+		$year  = $this->session->userdata('month_year');
+		$data['position']	=	$this->usergroup->getPositionData($group);
+		$data['checks']		=	$this->authlog->getMonthRecords('','',$month,$year,$group);
         //$data['days']	    =   $this->authlog->getDay($this->session->userdata('month_start'),$this->session->userdata('month_finish'));
 		$data['days']       =   days_in_month($this->session->userdata('month_month'));
         $data['month']      =   $this->session->userdata('month_month');
@@ -222,24 +225,30 @@ class Report extends CI_Controller {
 	function month_pdf()
     {
 		$this->load->library('pdf');
-		$data['title']		=	'Laporan Presensi Bulan '.indonesian_monthName($this->session->userdata('month_search')).' '.$this->session->userdata('year_search');
-        $data['checks']		=	$this->authlog->getPerMonthRecords('','',$this->session->userdata('month_search'),$this->session->userdata('year_search'),$this->session->userdata('month_group'));
-		$data['days']	    =   $this->authlog->getDay($this->session->userdata('month_start'),$this->session->userdata('month_finish'));
-        $data['position']   =   $this->usergroup->getPositionData($this->session->userdata('month_group'));
+        $data['title']		=	'DAFTAR HADIR PEGAWAI';
+        $group = $this->session->userdata('month_group');
+        $month = $this->session->userdata('month_month');
+		$year  = $this->session->userdata('month_year');
+		$data['position']	=	$this->usergroup->getPositionData($group);
+		$data['checks']		=	$this->authlog->getMonthRecords('','',$month,$year,$group);
+        //$data['days']	    =   $this->authlog->getDay($this->session->userdata('month_start'),$this->session->userdata('month_finish'));
+		$data['days']       =   days_in_month($this->session->userdata('month_month'));
+        $data['month']      =   $this->session->userdata('month_month');
+        $data['year']       =   $this->session->userdata('month_year');    
         $this->load->vars($data);
         $file = $this->load->theme('report/month',$data,TRUE);
-		$this->pdf->pdf_create($file,$data['title']);
+        $this->pdf->pdf_create($file,$data['title']);
 	}
     
     function month_excel()
     {
-        $start = $this->session->userdata('month_start'); 
-        $end   = $this->session->userdata('month_finish');
-        $group = $this->session->userdata('month_group'); 
-        $pos   = $this->usergroup->getPositionData($this->session->userdata('month_group'));
-        $recs  = $this->authlog->getPerMonthRecords('','',$start,$end,$group);
-        $days  = $this->authlog->getDay($this->session->userdata('month_start'),$this->session->userdata('month_finish'));   
-		$excel = $this->excelModel->month_excel($recs,$start,$end,$group,$days,$pos,'Tanggal');
+        $group = $this->session->userdata('month_group');
+        $month = $this->session->userdata('month_month');
+		$year  = $this->session->userdata('month_year');
+        $pos   = $this->usergroup->getPositionData($group);
+        $recs  = $this->authlog->getMonthRecords('','',$month,$year,$group);
+        $days  =   days_in_month($month);
+		$excel = $this->excelModel->month_excel($recs,$month,$year,$group,$days,$pos,'Tanggal');
         $data = file_get_contents("assets/Lap-Bulanan.xlsx"); // Read the file's contents
         force_download("Lap-Bulanan",$data); 
     }

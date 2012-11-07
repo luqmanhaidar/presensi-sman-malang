@@ -40,7 +40,8 @@
 						<th scope="col">Tgl.Akhir</th>
                         <th scope="col">S</th>
                         <th scope="col">I</th>
-                        <th scope="col">T</th>
+                        <th scope="col">C</th>
+                        <th scope="col">DL</th>
 					</tr>
 				</thead>
 
@@ -65,6 +66,7 @@
 						<td><?=indonesian_shortDate($row['TransactionTimeMax']) .' '.substr($row['TransactionTimeMax'],11,8);?></td>
 					    <td><?=$this->others->getUserTime($row['UserID'],$this->session->userdata('month_start'),$this->session->userdata('month_finish'),"Sakit")?></td>
                         <td><?=$this->others->getUserTime($row['UserID'],$this->session->userdata('month_start'),$this->session->userdata('month_finish'),"Ijin")?></td>
+                        <td><?=$this->others->getUserTime($row['UserID'],$this->session->userdata('month_start'),$this->session->userdata('month_finish'),"Cuti")?></td>
                         <td><?=$this->others->getUserTime($row['UserID'],$this->session->userdata('month_start'),$this->session->userdata('month_finish'),"Tugas")?></td>
                     </tr>
                     <?php 
