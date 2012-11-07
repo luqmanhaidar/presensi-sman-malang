@@ -128,7 +128,7 @@ class Report extends CI_Controller {
 		$data['user']		=	$this->session->userdata('personal_search');
         $this->load->vars($data);
         $file = $this->load->theme('report/personal',$data,TRUE);
-		$this->pdf->pdf_create($file,'Laporan Individu');
+		$this->pdf->pdf_create("Test",'Laporan Individu');
 	}
     
     function personal_excel()
