@@ -290,6 +290,7 @@ class Report extends CI_Controller {
     function week_search()
     {
         $search = array ('week_group'  => $this->input->post('group'),
+                         'week_type'   => $this->input->post('type'),   
 						 'week_start'  => $this->input->post('month').'/'.$this->input->post('day').'/'.$this->input->post('year'), 
                          'week_finish' => $this->input->post('month2').'/'.$this->input->post('day2').'/'.$this->input->post('year2'));   
         $start =  $this->input->post('month').'/'.$this->input->post('day').'/'.$this->input->post('year');

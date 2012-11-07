@@ -21,12 +21,63 @@
                     <?=form_dropdown('day2',config_item('day'),substr($this->session->userdata('week_finish'),3,2),'class="select"')?>
                     <?=form_dropdown('month2',config_item('month'),substr($this->session->userdata('week_finish'),0,2),'class="select"')?>
                     <?=form_dropdown('year2',config_item('year'),substr($this->session->userdata('week_finish'),6,4),'class="select"')?>
+                    <?=form_dropdown('type',config_item('week_type'),$this->session->userdata('week_type'),'id="week_type" class="select white-gradient glossy" ');?>
                     <input type="submit" class="button blue-gradient glossy" value="Go" />
                     </form>
                 </div>
            
                 <?=form_dropdown('show',config_item('per_page'),$this->session->userdata('week_paging'),'id="show" class="select blue-gradient glossy" onchange="changeUrl();" ');?>
 			</div>
+            
+            <?php if($this->session->userdata('week_type')=='M2'):?>
+            <table class="table responsive-table" id="sorting-example1">
+
+				<thead>
+					<tr>
+						<th scope="col" width="3%">No</th>
+						<th scope="col" width="5%" class="align-left hide-on-mobile">ID</th>
+                        <th scope="col" class="align-left hide-on-mobile">Nama</th>
+                        <th scope="col" class="align-left hide-on-mobile">Minggu 1</th>
+                        <th scope="col" class="align-left hide-on-mobile">Minggu 2</th>
+						<th scope="col" class="align-left hide-on-mobile">Minggu 3</th>
+                        <th scope="col" class="align-left hide-on-mobile">Minggu 4</th>
+                        <th scope="col" class="align-left hide-on-mobile">Minggu 5</th>
+					</tr>
+				</thead>
+                <tbody>
+                    <?php 
+                        $x=1;
+                        foreach($checks as $row):?>
+                        <tr <?php if($row['DayName']=='Sunday') print 'style="background:#FF0000;color:#222"'; ?>  >
+    						<td><?=$x;?></td>
+    						<td><?=$row['UserID'];?></td>
+                            <td><?=$row['Name'];?></td>
+                            <td><?=$row['W'];?></td>
+                            <td><?=$row['W'];?></td>
+                            <td><?=$row['W'];?></td>
+                            <td><?=$row['W'];?></td>
+                            <td><?=$row['W'];?></td>
+					   </tr>
+                     <?php 
+                        $x=$x+1;
+                        endforeach;
+                     ?>   
+                </tbody>
+            </table>    
+            <form method="post" target="_blank" action="<?=site_url('presensi/report/week_preview')?>" class="table-footer button-height large-margin-bottom">
+                <div class="float-right">
+                    <div class="button-group">
+                      <?php if(!empty($pagination))
+                                echo $pagination;
+                      ?>
+                    </div>
+				</div>
+                 <?php // form_dropdown('show2',config_item('per_page'),$this->session->userdata('log_paging'),'id="show2" class="select blue-gradient glossy" onchange="changeUrl2();" ');?>
+				
+                <?=form_dropdown('export',config_item('print'),'','id="print" class="select blue-gradient glossy" ');?>
+				<button type="submit" class="button blue-gradient glossy">Go</button>
+			</form>
+            <?php else:?>
 			<table class="table responsive-table" id="sorting-example1">
 
 				<thead>
@@ -82,6 +133,7 @@
 				<?php endif;?>
 
 			</table>
+            
 
 			<form method="post" target="_blank" action="<?=site_url('presensi/report/week_preview')?>" class="table-footer button-height large-margin-bottom">
                 <div class="float-right">
@@ -96,6 +148,7 @@
                 <?=form_dropdown('export',config_item('print'),'','id="print" class="select blue-gradient glossy" ');?>
 				<button type="submit" class="button blue-gradient glossy">Go</button>
 			</form>
+            <?php endif;?>
 			
 		</div>
         
