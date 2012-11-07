@@ -15,13 +15,13 @@
                     <form method="post" action="<?=site_url('presensi/report/month_search')?>">
                     <?=form_dropdown('group',$groups,$this->session->userdata('month_group'),'id="group" class="select white-gradient glossy" ');?>
 					
-                    <?=form_dropdown('day',config_item('day'),substr($this->session->userdata('month_start'),3,2),'class="select"')?>
+                    <?php //form_dropdown('day',config_item('day'),substr($this->session->userdata('month_start'),3,2),'class="select"')?>
                     <?=form_dropdown('month',config_item('month'),substr($this->session->userdata('month_start'),0,2),'class="select"')?>
                     <?=form_dropdown('year',config_item('year'),substr($this->session->userdata('month_start'),6,4),'class="select"')?>
-                    s/d
-                    <?=form_dropdown('day2',config_item('day'),substr($this->session->userdata('month_finish'),3,2),'class="select"')?>
-                    <?=form_dropdown('month2',config_item('month'),substr($this->session->userdata('month_finish'),0,2),'class="select"')?>
-                    <?=form_dropdown('year2',config_item('year'),substr($this->session->userdata('month_finish'),6,4),'class="select"')?>
+                    <!---s/d--->
+                    <?php //form_dropdown('day2',config_item('day'),substr($this->session->userdata('month_finish'),3,2),'class="select"')?>
+                    <?php //form_dropdown('month2',config_item('month'),substr($this->session->userdata('month_finish'),0,2),'class="select"')?>
+                    <?php //form_dropdown('year2',config_item('year'),substr($this->session->userdata('month_finish'),6,4),'class="select"')?>
                     <input type="submit" class="button blue-gradient glossy" value="Go" />
                     </form>
                 </div>
@@ -46,7 +46,7 @@
 
 				<tfoot>
 					<tr>
-						<td colspan="7">
+						<td colspan="9">
 							<?=COUNT($checks).' Data ditemukan.'?>
 						</td>
 					</tr>
