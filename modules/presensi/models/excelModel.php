@@ -132,7 +132,19 @@ class ExcelModel extends CI_Model
 		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,"JL.BANDUNG NO.7 Telp.0341-551357,588333"); // Title
         $objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col,$row,$col+5,$row);
         
-  
+        $row=$row+2;
+        $col=0;
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,"DAFTAR HADIR PEGAWAI"); // Title
+        $objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col,$row,$col+2+$days,$row);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
+        
+        $row++;
+        $col=0;
+        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,"BULAN ".indonesian_monthName($month)." ".$year); // Title
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
+        $objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col,$row,$col+2+$days,$row);
+        
+        
         $row=$row+3;
         $col=0;
         //No

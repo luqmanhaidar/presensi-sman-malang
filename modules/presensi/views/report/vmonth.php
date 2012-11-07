@@ -16,8 +16,8 @@
                     <?=form_dropdown('group',$groups,$this->session->userdata('month_group'),'id="group" class="select white-gradient glossy" ');?>
 					
                     <?php //form_dropdown('day',config_item('day'),substr($this->session->userdata('month_start'),3,2),'class="select"')?>
-                    <?=form_dropdown('month',config_item('month'),substr($this->session->userdata('month_start'),0,2),'class="select"')?>
-                    <?=form_dropdown('year',config_item('year'),substr($this->session->userdata('month_start'),6,4),'class="select"')?>
+                    <?=form_dropdown('month',config_item('month'),$this->session->userdata('month_month'),'class="select"')?>
+                    <?=form_dropdown('year',config_item('year'),$this->session->userdata('month_year'),'class="select"')?>
                     <!---s/d--->
                     <?php //form_dropdown('day2',config_item('day'),substr($this->session->userdata('month_finish'),3,2),'class="select"')?>
                     <?php //form_dropdown('month2',config_item('month'),substr($this->session->userdata('month_finish'),0,2),'class="select"')?>
