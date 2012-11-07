@@ -232,11 +232,12 @@ class ExcelModel extends CI_Model
 		
         $row=$row+1;
         $col=0;
-        $i=1;
+        //$i=1;
+        $no=1;
         foreach($recs as $var):
             
              /** Paraf Datang PK **/
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,$i);
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,$no);
 			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->applyFromArray($styleArray);
             $objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col,$row,$col,$row+3);
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->getAlignment()->setVertical(Style_Alignment::VERTICAL_CENTER);
@@ -430,7 +431,7 @@ class ExcelModel extends CI_Model
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+$j+3,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
             
             
-            $i++;
+            $no++;
             $row++;
             $i=$i-3;
         endforeach;

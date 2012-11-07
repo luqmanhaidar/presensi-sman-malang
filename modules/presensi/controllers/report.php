@@ -790,9 +790,9 @@ class Report extends CI_Controller {
     {
 		$this->load->library('pdf');
         $data['title']		=	'DAFTAR HADIR PEGAWAI';
-        $group = $this->session->userdata('month_group');
-        $month = $this->session->userdata('month_month');
-		$year  = $this->session->userdata('month_year');
+        $group = $this->session->userdata('se_group');
+        $month = $this->session->userdata('se_month');
+		$year  = $this->session->userdata('se_year');
 		$data['position']	=	$this->usergroup->getPositionData($group);
 		$data['checks']		=	$this->authlog->getMonthRecords('','',$month,$year,$group);
         //$data['days']	    =   $this->authlog->getDay($this->session->userdata('month_start'),$this->session->userdata('month_finish'));
@@ -806,14 +806,14 @@ class Report extends CI_Controller {
     
     function se_excel()
     {
-        $group = $this->session->userdata('month_group');
-        $month = $this->session->userdata('month_month');
-		$year  = $this->session->userdata('month_year');
+        $group = $this->session->userdata('se_group');
+        $month = $this->session->userdata('se_month');
+		$year  = $this->session->userdata('se_year');
         $pos   = $this->usergroup->getPositionData($group);
         $recs  = $this->authlog->getMonthRecords('','',$month,$year,$group);
-        $days  =   days_in_month($month);
+        $days  = days_in_month($month);
 		$excel = $this->excelModel->month_excel($recs,$month,$year,$group,$days,$pos,'Tanggal');
-        $data = file_get_contents("assets/Lap-Bulanan.xlsx"); // Read the file's contents
-        force_download("Lap-Bulanan",$data); 
+        $data = file_get_contents("assets/Lap-Pegawai-Khusus.xlsx"); // Read the file's contents
+        force_download("Lap-Pegawai-Khusus",$data); 
     }
 }
