@@ -3,7 +3,7 @@
 class Pdf {
 	function pdf_create($html, $filename, $stream=TRUE){
 	    require_once(APPPATH."third_party/Dompdf/dompdf_config.inc.php");//Require Loader Class n Config
-	    spl_autoload_register('DOMPDF_autoload');//Autoload Resource
+	    //spl_autoload_register('DOMPDF_autoload');//Autoload Resource
 	    $dompdf = new DOMPDF();//Instansiasi
 	    $dompdf->set_paper("A4", "portrait");
 		$dompdf->load_html($html);//Load HTML File untuk dirender
@@ -14,6 +14,7 @@ class Pdf {
 		$CI =& get_instance();
 		$CI->load->helper('file');
 		write_file($filename, $dompdf->output());//file name adalah ABSOLUTE PATH dari tempat menyimpan file PDF
+        exit(0);
 	    }
 	}
 }
