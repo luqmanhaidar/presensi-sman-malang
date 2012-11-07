@@ -715,16 +715,16 @@ class Report extends CI_Controller {
             $paging = config_item('paging');
         if($this->session->userdata('se_group')):
 			$group = $this->session->userdata('se_group');
-            $start = $this->session->userdata('se_start');
-			$end   = $this->session->userdata('se_finish');
+            $month = $this->session->userdata('se_month');
+			$year  = $this->session->userdata('se_year');
         else:
 			$group = '100';
-            $start = date('m/d/Y');
-			$end   = date('m/d/Y');
+            $month = date('m');
+			$year  = date('Y');
         endif;           
         $this->session->set_userdata('se_offset',$offset);
-        $data['checks']  = $this->authlog->getPerMonthRecords($offset,$paging,$start,$end,$group);
-        $numrows = COUNT($this->authlog->getPerMonthRecords('','',$start,$end,$group)); 
+        $data['checks']  = $this->authlog->getMonthRecords($offset,$paging,$month,$year,$group);
+        $numrows = COUNT($this->authlog->getMonthRecords('','',$month,$year,$group)); 
         if ($numrows > $paging):
             $config['base_url']   = site_url('presensi/report/special_employee/');
             $config['total_rows'] = $numrows;
@@ -745,10 +745,16 @@ class Report extends CI_Controller {
     
     function se_search()
     {
-        $search = array ('se_group'  => $this->input->post('group'),
+        /*$search = array ('se_group'  => $this->input->post('group'),
 						 'se_start'  => $this->input->post('month').'/'.$this->input->post('day').'/'.$this->input->post('year'), 
                          'se_finish' => $this->input->post('month2').'/'.$this->input->post('day2').'/'.$this->input->post('year2'));     
+        */
+        $search = array ('se_group'  => $this->input->post('group'),
+                         'se_month'  => $this->input->post('month'),
+                         'se_year'   => $this->input->post('year')
+                        );
         $this->session->set_userdata($search);
+        //echo $this->session->userdata('se_group');
         redirect('presensi/report/special_employee',301);
     }
 	
@@ -767,35 +773,46 @@ class Report extends CI_Controller {
 	
 	function se_print()
     {
-		$data['title']		=	'Laporan Presensi Pegawai Khusus Periode  '.$this->session->userdata('se_start').' s/d '.$this->session->userdata('se_finish');
-		$data['position']	=  $this->usergroup->getPositionData($this->session->userdata('se_group'));
-		$data['checks']		=  $this->authlog->getPerMonthRecords('','',$this->session->userdata('se_start'),$this->session->userdata('se_finish'),$this->session->userdata('se_group'));
-        $data['days']	    =  $this->authlog->getDay($this->session->userdata('se_start'),$this->session->userdata('se_finish'));
+		$data['title']		=	'DAFTAR HADIR PEGAWAI';
+        $group = $this->session->userdata('se_group');
+        $month = $this->session->userdata('se_month');
+		$year  = $this->session->userdata('se_year');
+		$data['position']	=	$this->usergroup->getPositionData($group);
+		$data['checks']		=	$this->authlog->getMonthRecords('','',$month,$year,$group);
+		$data['days']       =   days_in_month($month);  
+        $data['month']      =   $this->session->userdata('se_month');
+        $data['year']       =   $this->session->userdata('se_year');   
         $this->load->vars($data);
         $this->load->theme('report/se',$data);
 	}
-    
-    function se_pdf()
+	
+	function se_pdf()
     {
-        $this->load->library('pdf');
-		$data['title']		=	'Laporan Presensi Pegawai Khusus Periode  '.$this->session->userdata('se_start').' s/d '.$this->session->userdata('se_finish');
-		$data['position']	=  $this->usergroup->getPositionData($this->session->userdata('se_group'));
-		$data['checks']		=  $this->authlog->getPerMonthRecords('','',$this->session->userdata('se_start'),$this->session->userdata('se_finish'),$this->session->userdata('se_group'));
-        $data['days']	    =  $this->authlog->getDay($this->session->userdata('se_start'),$this->session->userdata('se_finish'));
+		$this->load->library('pdf');
+        $data['title']		=	'DAFTAR HADIR PEGAWAI';
+        $group = $this->session->userdata('month_group');
+        $month = $this->session->userdata('month_month');
+		$year  = $this->session->userdata('month_year');
+		$data['position']	=	$this->usergroup->getPositionData($group);
+		$data['checks']		=	$this->authlog->getMonthRecords('','',$month,$year,$group);
+        //$data['days']	    =   $this->authlog->getDay($this->session->userdata('month_start'),$this->session->userdata('month_finish'));
+		$data['days']       =   days_in_month($this->session->userdata('month_month'));
+        $data['month']      =   $this->session->userdata('se_month');
+        $data['year']       =   $this->session->userdata('se_year');    
         $this->load->vars($data);
-        $file = $this->load->theme('report/se',$data,TRUE);
-		$this->pdf->pdf_create($file,$data['title']);
+        $file = $this->load->theme('report/month',$data,TRUE);
+        $this->pdf->pdf_create($file,$data['title']);
 	}
     
     function se_excel()
     {
-        $start = $this->session->userdata('se_start'); 
-        $end   = $this->session->userdata('se_finish');
-        $group = $this->session->userdata('se_group'); 
-        $pos   = $this->usergroup->getPositionData($this->session->userdata('se_group'));
-        $recs  = $this->authlog->getPerMonthRecords('','',$start,$end,$group);
-        $days  = $this->authlog->getDay($this->session->userdata('se_start'),$this->session->userdata('se_finish'));   
-		$excel = $this->excelModel->month_excel($recs,$start,$end,$group,$days,$pos,'SESI');
+        $group = $this->session->userdata('month_group');
+        $month = $this->session->userdata('month_month');
+		$year  = $this->session->userdata('month_year');
+        $pos   = $this->usergroup->getPositionData($group);
+        $recs  = $this->authlog->getMonthRecords('','',$month,$year,$group);
+        $days  =   days_in_month($month);
+		$excel = $this->excelModel->month_excel($recs,$month,$year,$group,$days,$pos,'Tanggal');
         $data = file_get_contents("assets/Lap-Bulanan.xlsx"); // Read the file's contents
         force_download("Lap-Bulanan",$data); 
     }
