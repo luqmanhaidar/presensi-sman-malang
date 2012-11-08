@@ -926,6 +926,9 @@ class ExcelModel extends CI_Model
 		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+9,$row+1)->applyFromArray($styleArray);
 		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+9,$row+2)->applyFromArray($styleArray);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+9,$row)->getFill()->applyFromArray($fill);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+9,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+9,$row)->getAlignment()->setVertical(Style_Alignment::VERTICAL_CENTER);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+9,$row)->getAlignment()->setWrapText(true);
         
 		//KETERANGAN KETIDAKHADIRAN
 		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+10,$row,'KETERANGAN KETIDAK HADIRAN');
@@ -935,6 +938,9 @@ class ExcelModel extends CI_Model
 		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+10,$row+1)->applyFromArray($styleArray);
 		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+10,$row+2)->applyFromArray($styleArray);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+10,$row)->getFill()->applyFromArray($fill);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+10,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+10,$row)->getAlignment()->setVertical(Style_Alignment::VERTICAL_CENTER);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+10,$row)->getAlignment()->setWrapText(true);
 		
 		$row++;
 		$col=0;
