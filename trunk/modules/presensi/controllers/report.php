@@ -543,6 +543,7 @@ class Report extends CI_Controller {
     {
 		if($this->session->userdata('week_type')=='M2'):
 			$data['title']		=	'LAPORAN MINGGUAN';
+			$data['users']	    =	$this->userinfo->getAllRecords('','','','',$this->session->userdata('week_group'));
 			$this->load->theme('report/week2',$data);
 		else:
 			$data['title']		=	'DAFTAR CEK CLOCK';
