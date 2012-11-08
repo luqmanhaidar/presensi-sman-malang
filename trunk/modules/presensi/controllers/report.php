@@ -224,7 +224,7 @@ class Report extends CI_Controller {
 	
 	function month_pdf()
     {
-		$this->load->library('pdf');
+		/*$this->load->library('pdf');
         $data['title']		=	'DAFTAR HADIR PEGAWAI';
         $group = $this->session->userdata('month_group');
         $month = $this->session->userdata('month_month');
@@ -237,7 +237,64 @@ class Report extends CI_Controller {
         $data['year']       =   $this->session->userdata('month_year');    
         $this->load->vars($data);
         $file = $this->load->theme('report/month',$data,TRUE);
-        $this->pdf->pdf_create($file,$data['title']);
+        $this->pdf->pdf_create($file,$data['title']);*/
+        $month =   $this->session->userdata('month_month');
+        $year  =   $this->session->userdata('month_year');   
+        
+        $this->load->helper('tcpdf');
+        $pdf = tcpdf();
+        $pdf->setPageOrientation ('L', '', 8); 
+        $pdf->setPrintHeader(false);
+        $pdf->setPrintFooter(false);
+        
+        $pdf->AddPage();
+  
+        /** initialization of x & y axis **/
+        $x = 7;
+        $y = 7;
+        $pdf->SetFont('helvetica', '', 12);
+        $pdf->SetFillColor(255, 255, 255);
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetDrawColor(0, 0, 0);
+        $pdf->SetLineWidth(0.3);
+        
+        /** Cel Title **/
+        $pdf->SetY($y);$pdf->SetX($x); 	
+        $pdf->Cell(275, 4,'KEMENTRIAN AGAMA', 0, 0, 'L', 1); 
+        
+         /** Cel Title **/
+        $y=$y+6;
+        $x=$x+0;
+        $pdf->SetY($y);$pdf->SetX($x);
+        $pdf->Cell(275, 4,'MADRASAH ALIYAH NEGERI 3 MALANG', 0, 0, 'L', 1);
+        
+         /** Cel Title **/
+        $y=$y+6;
+        $x=$x+0;
+        $pdf->SetY($y);$pdf->SetX($x);
+        $pdf->Cell(275, 4,'JL.BANDUNG NO.7 Telp.0341-551357,588333  ', 0, 0, 'L', 1);
+        
+        $x2=$x+285;
+        $y=$y+8;
+        $x=$x+0;
+        $style = array('width' => 0.7, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0));
+        $pdf->Line($x,$y,$x2,$y,$style);
+        
+        $y=$y+2;
+        $x=$x+0;
+        $pdf->SetY($y);$pdf->SetX($x);
+        $pdf->Cell(275, 4,'DAFTAR HADIR PEGAWAI', 0, 0, 'C', 1);
+        
+        $y=$y+5;
+        $x=$x+0;
+        $pdf->SetY($y);$pdf->SetX($x);
+        $pdf->Cell(275, 4,'Bulan : '.indonesian_monthName($month).' '.$year, 0, 0, 'C', 1);
+        
+        $y=$y+5;
+        $x=$x+0;
+        $pdf->Cell(275,4,'No', 1, 1, 'C', 1, '', 0, true, 'T', 'C');
+        
+        $pdf->Output("Laporan-Bulanan.pdf","I"); 
 	}
     
     function month_excel()
