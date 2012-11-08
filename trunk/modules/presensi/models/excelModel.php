@@ -830,7 +830,7 @@ class ExcelModel extends CI_Model
         redirect(base_url('assets/'.$file),301);
     }
 	
-	function week2_excel($user,$name){
+	function week2_excel($recs,$start,$end,$group,$days,$pos,$var){
         //$this->user_logs->saveLog('Export Excell Admission Report');           						
 		$objPHPExcel = new PHPExcel();
 		$objPHPExcel->getProperties()->setTitle("title")
