@@ -381,9 +381,14 @@ class Report extends CI_Controller {
             /*Paraf Dtg PK*/
             $x=64;
             for($j=1;$j<=$days;$j++):
+                $pdf->SetFillColor(205, 201, 201);
+                if(getSunday($year,$month,code($j)))
+                    $colour=1;
+                else    
+                    $colour=0;
                 $pdf->SetY($y);
     		    $pdf->SetX($x+($j*10)); 
-                $pdf->MultiCell(10,10,"\n"."", 1, 'C', 0, 0, '', '', true);
+                $pdf->MultiCell(10,10,"\n"."", 1, 'C', $colour, 0, '', '', true);
             endfor;
             
             $pdf->MultiCell(7,40,"\n".$this->others->getUserTime($rec['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Sakit"), 1, 'C', 0, 0, '', '', true);
@@ -395,9 +400,14 @@ class Report extends CI_Controller {
             $y=$y+10;
             $x=64;
             for($j=1;$j<=$days;$j++):
+                $pdf->SetFillColor(205, 201, 201);
+                if(getSunday($year,$month,code($j)))
+                    $colour=1;
+                else    
+                    $colour=0;
                 $pdf->SetY($y);
     		    $pdf->SetX($x+($j*10)); 
-                $pdf->MultiCell(10,10,"\n".substr($this->authlog->getUserTime(code($j).'-'.$month.'-'.$year,$rec['UserID'],1),0,5), 1, 'C', 0, 0, '', '', true);
+                $pdf->MultiCell(10,10,"\n".substr($this->authlog->getUserTime(code($j).'-'.$month.'-'.$year,$rec['UserID'],1),0,5), 1, 'C', $colour, 0, '', '', true);
             endfor;
             
             /*$pdf->MultiCell(7,10,"\n".'1', 1, 'C', 0, 0, '', '', true);
@@ -409,14 +419,15 @@ class Report extends CI_Controller {
             $y=$y+10;
             $x=64;
             for($j=1;$j<=$days;$j++):
-                if(getSunday($year,$month,code($i)))
-                    $pdf->SetFillColor(205, 201, 201);
+                $pdf->SetFillColor(205, 201, 201);
+                if(getSunday($year,$month,code($j)))
+                    $colour=1;
                 else    
-                    $pdf->SetFillColor(255, 255, 255);
+                    $colour=0;
                 
                 $pdf->SetY($y);
     		    $pdf->SetX($x+($j*10)); 
-                $pdf->MultiCell(10,10,"\n"."", 1, 'C', 0, 0, '', '', true);
+                $pdf->MultiCell(10,10,"\n",1, 'C',$colour,0, '', '', true);
             endfor;
             
             /*$pdf->MultiCell(7,10,"\n".'1', 1, 'C', 0, 0, '', '', true);
@@ -428,9 +439,14 @@ class Report extends CI_Controller {
             $y=$y+10;
             $x=64;
             for($j=1;$j<=$days;$j++):
+                $pdf->SetFillColor(205, 201, 201);
+                if(getSunday($year,$month,code($j)))
+                    $colour=1;
+                else    
+                    $colour=0;
                 $pdf->SetY($y);
     		    $pdf->SetX($x+($j*10)); 
-                $pdf->MultiCell(10,10,"\n".substr($this->authlog->getUserTime(code($j).'-'.$month.'-'.$year,$rec['UserID'],2),0,5), 1, 'C', 0, 0, '', '', true);
+                $pdf->MultiCell(10,10,"\n".substr($this->authlog->getUserTime(code($j).'-'.$month.'-'.$year,$rec['UserID'],2),0,5), 1, 'C', $colour, 0, '', '', true);
             endfor;
             /*
             $pdf->MultiCell(7,10,"\n".'1', 1, 'C', 0, 0, '', '', true);
