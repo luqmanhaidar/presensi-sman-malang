@@ -869,29 +869,52 @@ class ExcelModel extends CI_Model
         $col=0;
 		
 		//No
-		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,'No');
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,'NO');
         $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col)->setWidth(5);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->applyFromArray($styleArray);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->getFill()->applyFromArray($fill);
 		
 		//Nama
-		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+1,$row,'Nama');
-        $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+1)->setWidth(25);
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+1,$row,'NAMA');
+        $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+1)->setWidth(35);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+1,$row)->applyFromArray($styleArray);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+1,$row)->getFill()->applyFromArray($fill);
 		
 		//Status
-		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+2,$row,'Status');
-        $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+2)->setWidth(20);
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+2,$row,'STATUS');
+        $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+2)->setWidth(25);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+2,$row)->applyFromArray($styleArray);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+2,$row)->getFill()->applyFromArray($fill);
 		
 		//Waktu
-		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+3,$row,'Jam KBM');
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+3,$row,'JAM KBM');
         $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+3)->setWidth(15);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+3,$row)->applyFromArray($styleArray);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+3,$row)->getFill()->applyFromArray($fill);
         
+		//Jam
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+4,$row,"PEMENUHAN 37 1/2 JAM");
+        $objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+4,$row,$col+8,$row);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+4,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+4,$row)->applyFromArray($styleArray);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+5,$row)->applyFromArray($styleArray);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+6,$row)->applyFromArray($styleArray);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+7,$row)->applyFromArray($styleArray);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+8,$row)->applyFromArray($styleArray);
+        
+		//TM
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+9,$row,'KETERANGAN TM');
+        $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+9)->setWidth(25);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+9,$row)->applyFromArray($styleArray);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+9,,$row)->getFill()->applyFromArray($fill);
+        
+		//KETERANGAN KETIDAKHADIRAN
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+10,$row,'KETERANGAN KETIDAK HADIRAN');
+        $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+10)->setWidth(45);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+10,$row)->applyFromArray($styleArray);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+10,,$row)->getFill()->applyFromArray($fill);
+        
+		
         $row=$row + 1;
 		$col=0;
 		$i=1;
@@ -914,7 +937,7 @@ class ExcelModel extends CI_Model
         // Save it as an excel 2007 file
         $objWriter = IOFactory::createWriter($objPHPExcel, "Excel2007");
 		//$objWriter = IOFactory::createWriter($objPHPexcel,'PDF'); 
-        $file="Personal.xlsx";
+        $file="Mingguan-2.xlsx";
         $objWriter->save('assets/'.$file);
         redirect(base_url('assets/'.$file),301);
     }
