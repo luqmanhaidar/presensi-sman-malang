@@ -201,4 +201,13 @@ function validateDate($date,$month)
         return true;
     else
         return false;    
+}
+
+function getSunday($year,$month,$day){
+    $date = $year."/".$month."/".$day;
+    $datename = date('l', strtotime($date));
+    if($datename=="Sunday")
+        return true;
+    else
+        return false; 
 }              
