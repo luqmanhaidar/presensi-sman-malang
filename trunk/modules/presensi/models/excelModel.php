@@ -895,7 +895,7 @@ class ExcelModel extends CI_Model
         $row=$row + 1;
 		$col=0;
 		$i=1;
-		foreach($data['users'] as $rec):
+		foreach($recs as $rec):
 			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,$i);
 			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->applyFromArray($styleArray);
 			 
