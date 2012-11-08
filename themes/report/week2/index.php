@@ -69,7 +69,7 @@
 							$wm3='M3';
 						else:
 							$wx3=0;
-							$wm3='M3';
+							$wm3='';
 						endif;
 						
 						if(timeToNumber($var)>=$w4):
@@ -77,7 +77,7 @@
 							$wm4='M4';
 						else:
 							$wx4=0;
-							$wm4='M4';
+							$wm4='';
 						endif;
 						
 						if(timeToNumber($var)>=$w5):
@@ -85,7 +85,7 @@
 							$wm5='M5';
 						else:
 							$wx5=0;
-							$wm5='M5';
+							$wm5='';
 						endif;
 						
 						print 'TM:'.$wx1+$wx2+$wx3+$wx4+$wx5.'['.$wm1.$wm2.$wm3.$wm4.$wm5.']';
