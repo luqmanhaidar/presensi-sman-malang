@@ -277,7 +277,7 @@ class Report extends CI_Controller {
         $pdf->SetY($y);$pdf->SetX($x);
         $pdf->Cell(275, 4,'JL.BANDUNG NO.7 Telp.0341-551357,588333  ', 0, 0, 'L', 1);
         
-        $x2=$x+285;
+        $x2=$x+400;
         $y=$y+8;
         $x=$x+0;
         $style = array('width' => 0.7, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0));
@@ -286,12 +286,12 @@ class Report extends CI_Controller {
         $y=$y+2;
         $x=$x+0;
         $pdf->SetY($y);$pdf->SetX($x);
-        $pdf->Cell(275, 4,'DAFTAR HADIR PEGAWAI', 0, 0, 'C', 1);
+        $pdf->Cell(350, 4,'DAFTAR HADIR PEGAWAI', 0, 0, 'C', 1);
         
         $y=$y+5;
         $x=$x+0;
         $pdf->SetY($y);$pdf->SetX($x);
-        $pdf->Cell(275, 4,'Bulan : '.indonesian_monthName($month).' '.$year, 0, 0, 'C', 1);
+        $pdf->Cell(350, 4,'Bulan : '.indonesian_monthName($month).' '.$year, 0, 0, 'C', 1);
         
         $pdf->SetFont('helvetica', '', 8);
         $pdf->SetFillColor(205, 201, 201);
@@ -1080,7 +1080,7 @@ class Report extends CI_Controller {
 	
 	function se_pdf()
     {
-		$this->load->library('pdf');
+		/**$this->load->library('pdf');
         $data['title']		=	'DAFTAR HADIR PEGAWAI';
         $group = $this->session->userdata('se_group');
         $month = $this->session->userdata('se_month');
@@ -1093,7 +1093,220 @@ class Report extends CI_Controller {
         $data['year']       =   $this->session->userdata('se_year');    
         $this->load->vars($data);
         $file = $this->load->theme('report/month',$data,TRUE);
-        $this->pdf->pdf_create($file,$data['title']);
+        $this->pdf->pdf_create($file,$data['title']);**/
+        $group = $this->session->userdata('se_group');
+        $month =   $this->session->userdata('se_month');
+        $year  =   $this->session->userdata('se_year'); 
+        $days  =   days_in_month($month);
+        $records=   $this->authlog->getMonthRecords('','',$month,$year,$group);  
+        
+        $this->load->helper('tcpdf');
+        $pdf = tcpdf();
+        $pdf->setPageOrientation ('L','Letter',8); 
+        $pdf->setPrintHeader(false);
+        $pdf->setPrintFooter(false);
+        
+        $pdf->AddPage("L","A3");
+  
+        /** initialization of x & y axis **/
+        $x = 7;
+        $y = 7;
+        $pdf->SetFont('helvetica', '', 12);
+        $pdf->SetFillColor(255, 255, 255);
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetDrawColor(0, 0, 0);
+        $pdf->SetLineWidth(0.1);
+        
+        /** Cel Title **/
+        $pdf->SetY($y);$pdf->SetX($x); 	
+        $pdf->Cell(275, 4,'KEMENTRIAN AGAMA', 0, 0, 'L', 1); 
+        
+         /** Cel Title **/
+        $y=$y+6;
+        $x=$x+0;
+        $pdf->SetY($y);$pdf->SetX($x);
+        $pdf->Cell(275, 4,'MADRASAH ALIYAH NEGERI 3 MALANG', 0, 0, 'L', 1);
+        
+         /** Cel Title **/
+        $y=$y+6;
+        $x=$x+0;
+        $pdf->SetY($y);$pdf->SetX($x);
+        $pdf->Cell(275, 4,'JL.BANDUNG NO.7 Telp.0341-551357,588333  ', 0, 0, 'L', 1);
+        
+        $x2=$x+405;
+        $y=$y+8;
+        $x=$x+0;
+        $style = array('width' => 0.7, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0));
+        $pdf->Line($x,$y,$x2,$y,$style);
+        
+        $y=$y+2;
+        $x=$x+0;
+        $pdf->SetY($y);$pdf->SetX($x);
+        $pdf->Cell(350, 4,'DAFTAR HADIR PEGAWAI', 0, 0, 'C', 1);
+        
+        $y=$y+5;
+        $x=$x+0;
+        $pdf->SetY($y);$pdf->SetX($x);
+        $pdf->Cell(350, 4,'Bulan : '.indonesian_monthName($month).' '.$year, 0, 0, 'C', 1);
+        
+        $pdf->SetFont('helvetica', '', 8);
+        $pdf->SetFillColor(205, 201, 201);
+        $pdf->SetLineWidth(0.1);
+        $y=$y+7;
+        $x=$x+0;
+        $pdf->SetY($y);$pdf->SetX($x); 	
+        $pdf->Cell(10, 12,'No', 1, 1, 'C', 1, '', 0, false, 'T', 'C');
+        
+        $y=$y+0;
+        $x=$x+10;
+        $pdf->SetY($y);$pdf->SetX($x); 	
+        $pdf->Cell(45,12,'Nama', 1, 1, 'C', 1, '', 0, false, 'T','C');
+        
+        $y=$y+0;
+        $x=$x+45;
+        $pdf->SetY($y);$pdf->SetX($x); 	
+        $pdf->Cell(12,12,'Paraf', 1, 1, 'C', 1, '', 0, false, 'T','C');
+        
+        $y=$y+0;
+        $x=$x+12;
+        $pdf->SetY($y);$pdf->SetX($x); 	
+        $pdf->Cell(($days * 10),6,'Tanggal', 1, 1, 'C', 1, '', 0, false, 'T','C');
+         
+        $y = $y + 6;
+        $x = $x + 0;
+        //$line= $x;
+        for($i=1;$i<=$days;$i++):
+            $y=$y + 0;
+            $x = $x;
+            $pdf->SetY($y);$pdf->SetX($x); 	
+            $pdf->Cell(10,6,code($i), 1, 1, 'C', 1, '', 0, false, 'T','C');
+            $x = $x + 10;
+        endfor;
+        
+        $y=$y-6;
+        $x=$x+0;
+        $pdf->SetY($y);$pdf->SetX($x); 	
+        $pdf->Cell((4 * 7) ,6,'Keterangan', 1, 1, 'C', 1, '', 0, false, 'T','C');
+        
+        $y=$y+6;
+        $x=$x+0;
+        $pdf->SetY($y);$pdf->SetX($x); 	
+        $pdf->Cell(7,6,'S', 1, 1, 'C', 1, '', 0, false, 'T','C');
+        
+        $y=$y+0;
+        $x=$x+7;
+        $pdf->SetY($y);$pdf->SetX($x); 	
+        $pdf->Cell(7,6,'I', 1, 1, 'C', 1, '', 0, false, 'T','C');
+        
+        $y=$y+0;
+        $x=$x+7;
+        $pdf->SetY($y);$pdf->SetX($x); 	
+        $pdf->Cell(7,6,'C', 1, 1, 'C', 1, '', 0, false, 'T','C');
+        
+        $y=$y+0;
+        $x=$x+7;
+        $pdf->SetY($y);$pdf->SetX($x); 	
+        $pdf->Cell(7,6,'DL', 1, 1, 'C', 1, '', 0, false, 'T','C');
+        
+        $pdf->SetFillColor(255, 255, 255);
+        
+        $i=1;
+        //$x=7;
+        $y=$y+6;
+        $row_height=40;	
+        foreach($records as $rec):
+            $x=7;
+            $pdf->SetY($y);
+		    $pdf->SetX($x); 
+            $pdf->MultiCell(10,$row_height,"\n\n".$i, 1, 'C', 0, 0, '', '', true); 
+            $pdf->MultiCell(45,$row_height,"\n"."\n".$rec['Name']."\n".$rec['Description']."\n".$rec['Department'],1, 'L', 0, 0, '', '', true); 
+            $pdf->MultiCell(12,10,"\n".'Paraf', 1, 'C', 0, 0, '', '', true); 
+            
+            $pdf->SetY($y+10);
+            $pdf->SetX($x+55);  
+            $pdf->MultiCell(12,10,"\n".'Dtg.PK', 1, 'C', 0, 0, '', '', true);
+            
+            $pdf->SetY($y+20);
+            $pdf->SetX($x+55);  
+            $pdf->MultiCell(12,10,"\n".'Paraf', 1, 'C', 0, 0, '', '', true);
+            
+            $pdf->SetY($y+30);
+            $pdf->SetX($x+55);  
+            $pdf->MultiCell(12,10,"\n".'Plg.PK', 1, 'C', 0, 0, '', '', true);
+            
+            /*Paraf Dtg PK*/
+            $x=64;
+            for($j=1;$j<=$days;$j++):
+                $pdf->SetFillColor(205, 201, 201);
+                if(getSunday($year,$month,code($j)))
+                    $colour=1;
+                else    
+                    $colour=0;
+                $pdf->SetY($y);
+    		    $pdf->SetX($x+($j*10)); 
+                $pdf->MultiCell(10,10,"\n"."", 1, 'C', $colour, 0, '', '', true);
+            endfor;
+            
+            $pdf->MultiCell(7,40,"\n".$this->others->getUserTime($rec['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Sakit"), 1, 'C', 0, 0, '', '', true);
+            $pdf->MultiCell(7,40,"\n".$this->others->getUserTime($rec['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Ijin"), 1, 'C', 0, 0, '', '', true);
+            $pdf->MultiCell(7,40,"\n".$this->others->getUserTime($rec['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Cuti"), 1, 'C', 0, 0, '', '', true);
+            $pdf->MultiCell(7,40,"\n".$this->others->getUserTime($rec['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Tugas"), 1, 'C', 0, 0, '', '', true);
+            
+            /*Dtg PK*/
+            $y=$y+10;
+            $x=64;
+            for($j=1;$j<=$days;$j++):
+                $pdf->SetFillColor(205, 201, 201);
+                if(getSunday($year,$month,code($j)))
+                    $colour=1;
+                else    
+                    $colour=0;
+                $pdf->SetY($y);
+    		    $pdf->SetX($x+($j*10)); 
+                $pdf->MultiCell(10,10,"\n".substr($this->authlog->getUserTime(code($j).'-'.$month.'-'.$year,$rec['UserID'],1),0,5), 1, 'C', $colour, 0, '', '', true);
+            endfor;
+            
+            /* Paraf Plg PK*/
+            $y=$y+10;
+            $x=64;
+            for($j=1;$j<=$days;$j++):
+                $pdf->SetFillColor(205, 201, 201);
+                if(getSunday($year,$month,code($j)))
+                    $colour=1;
+                else    
+                    $colour=0;
+                
+                $pdf->SetY($y);
+    		    $pdf->SetX($x+($j*10)); 
+                $pdf->MultiCell(10,10,"\n",1, 'C',$colour,0, '', '', true);
+            endfor;
+            
+            /* Paraf Plg PK*/
+            $y=$y+10;
+            $x=64;
+            for($j=1;$j<=$days;$j++):
+                $pdf->SetFillColor(205, 201, 201);
+                if(getSunday($year,$month,code($j)))
+                    $colour=1;
+                else    
+                    $colour=0;
+                $pdf->SetY($y);
+    		    $pdf->SetX($x+($j*10)); 
+                $pdf->MultiCell(10,10,"\n".substr($this->authlog->getUserTime(code($j).'-'.$month.'-'.$year,$rec['UserID'],2),0,5), 1, 'C', $colour, 0, '', '', true);
+            endfor;
+           
+            $y=$y+10;
+            $i++;
+      
+            $this_y=$pdf->getY();
+            if($this_y >= 260):
+	               $pdf->AddPage();
+                   $y=7;
+                   $x=7;
+            endif;          
+        endforeach;
+ 
+        $pdf->Output("Laporan-Bulanan.pdf","I"); 
 	}
     
     function se_excel()
