@@ -561,15 +561,23 @@ class Report extends CI_Controller {
 	function week_pdf()
     {
 		$this->load->library('pdf');
-		$data['title']		=	'DAFTAR CEK CLOCK';
-		$data['days']	    =   $this->authlog->getDay($this->session->userdata('week_start'),$this->session->userdata('week_finish'));
-		$data['periode']	=	'Periode '.$this->session->userdata('week_start'). ' s/d '. $this->session->userdata('week_finish');
-		$data['users']	    =	$this->userinfo->getAllRecords('','','','',$this->session->userdata('week_group'));
-		$data['var']	    =	$this->presensi->getVariabelDataByVar('DMK');
-        $this->load->vars($data);
-        $file = $this->load->theme('report/week',$data,TRUE);
-		$this->pdf->pdf_create($file,$data['title']);
-        
+		if($this->session->userdata('week_type')=='M2'):
+			$data['title']		=	'REKAPITULASI PEMENUHAN JAM MENGAJAR GURU MAN 3 MALANG';
+			$data['periode']	=	'LAPORAN PERIODE '.$this->session->userdata('week_start').' s/d '.$this->session->userdata('week_finish');
+			$data['users']	    =	$this->userinfo->getAllRecords('','','','',$this->session->userdata('week_group'));
+			$data['var']	    =	$this->presensi->getVariabelDataByVar('DMK');
+			$file = $this->load->theme('report/week2',$data);
+			$this->pdf->pdf_create($file,$data['title']);
+		else:
+			$data['title']		=	'DAFTAR CEK CLOCK';
+			$data['days']	    =   $this->authlog->getDay($this->session->userdata('week_start'),$this->session->userdata('week_finish'));
+			$data['periode']	=	'Periode '.$this->session->userdata('week_start'). ' s/d '. $this->session->userdata('week_finish');
+			$data['users']	    =	$this->userinfo->getAllRecords('','','','',$this->session->userdata('week_group'));
+			$data['var']	    =	$this->presensi->getVariabelDataByVar('DMK');
+			$this->load->vars($data);
+			$file = $this->load->theme('report/week',$data,TRUE);
+			$this->pdf->pdf_create($file,$data['title']);
+		endif;	
         /**$start = $this->session->userdata('week_start'); 
         $end   = $this->session->userdata('week_finish');
         $group = $this->session->userdata('week_group'); 
