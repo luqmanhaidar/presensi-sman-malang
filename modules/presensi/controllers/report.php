@@ -566,7 +566,7 @@ class Report extends CI_Controller {
 			$data['periode']	=	'LAPORAN PERIODE '.$this->session->userdata('week_start').' s/d '.$this->session->userdata('week_finish');
 			$data['users']	    =	$this->userinfo->getAllRecords('','','','',$this->session->userdata('week_group'));
 			$data['var']	    =	$this->presensi->getVariabelDataByVar('DMK');
-			$file = $this->load->theme('report/week2',$data);
+			$file = $this->load->theme('report/week2',$data,TRUE);
 			$this->pdf->pdf_create($file,$data['title']);
 		else:
 			$data['title']		=	'DAFTAR CEK CLOCK';
