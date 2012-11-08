@@ -50,35 +50,45 @@
 					<?php
 						if(timeToNumber($var)>=$w1):
 							$wx1=1;
+							$wm1='M1';
 						else:
 							$wx1=0;
+							$wm1='';
 						endif;
 						
 						if(timeToNumber($var)>=$w2):
 							$wx2=1;
+							$wm2='M2';
 						else:
 							$wx2=0;
+							$wm2='';
 						endif;
 						
 						if(timeToNumber($var)>=$w3):
 							$wx3=1;
+							$wm3='M3';
 						else:
 							$wx3=0;
+							$wm3='M3';
 						endif;
 						
 						if(timeToNumber($var)>=$w4):
 							$wx4=1;
+							$wm4='M4';
 						else:
 							$wx4=0;
+							$wm4='M4';
 						endif;
 						
 						if(timeToNumber($var)>=$w5):
 							$wx5=1;
+							$wm5='M5';
 						else:
 							$wx5=0;
+							$wm5='M5';
 						endif;
 						
-						print 'TM:'.$wx1+$wx2+$wx3+$wx4+$wx5;
+						print 'TM:'.$wx1+$wx2+$wx3+$wx4+$wx5.'['.$wm1.$wm2.$wm3.$wm4.$wm5.']';
 					?>
 				</td>
 				<td></td>
