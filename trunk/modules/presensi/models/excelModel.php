@@ -943,7 +943,7 @@ class ExcelModel extends CI_Model
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+4,$row)->getFill()->applyFromArray($fill);
 		
 		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+5,$row,'MINGGU KE 2');
-		$objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+5,$row,$col+4,$row+1);
+		$objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+5,$row,$col+5,$row+1);
 		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+5,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
 		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+5,$row)->getAlignment()->setVertical(Style_Alignment::VERTICAL_CENTER);
 		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+5,$row)->getAlignment()->setWrapText(true);
@@ -951,7 +951,7 @@ class ExcelModel extends CI_Model
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+5,$row)->getFill()->applyFromArray($fill);
         
 		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+6,$row,'MINGGU KE 3');
-		$objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+6,$row,$col+4,$row+1);
+		$objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+6,$row,$col+6,$row+1);
 		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+6,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
 		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+6,$row)->getAlignment()->setVertical(Style_Alignment::VERTICAL_CENTER);
 		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+6,$row)->getAlignment()->setWrapText(true);
@@ -959,7 +959,7 @@ class ExcelModel extends CI_Model
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+6,$row)->getFill()->applyFromArray($fill);
         
 		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+7,$row,'MINGGU KE 4');
-		$objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+7,$row,$col+4,$row+1);
+		$objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+7,$row,$col+7,$row+1);
 		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+7,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
 		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+7,$row)->getAlignment()->setVertical(Style_Alignment::VERTICAL_CENTER);
 		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+7,$row)->getAlignment()->setWrapText(true);
@@ -967,7 +967,7 @@ class ExcelModel extends CI_Model
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+7,$row)->getFill()->applyFromArray($fill);
 		
 		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+8,$row,'MINGGU KE 5');
-		$objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+8,$row,$col+4,$row+1);
+		$objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+8,$row,$col+7,$row+1);
 		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+8,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
 		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+8,$row)->getAlignment()->setVertical(Style_Alignment::VERTICAL_CENTER);
 		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+8,$row)->getAlignment()->setWrapText(true);
@@ -1016,7 +1016,76 @@ class ExcelModel extends CI_Model
 			 
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+3,$row,"");
 			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+3,$row)->applyFromArray($styleArray);
-            $i++;
+			
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+4,$row,numberToTime($w1=$this->authprocess->getWeekDuration(1,$row['ID'])));
+			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+4,$row)->applyFromArray($styleArray);
+			
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+5,$row,numberToTime($w2=$this->authprocess->getWeekDuration(2,$row['ID'])));
+			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+5,$row)->applyFromArray($styleArray);
+			
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+6,$row,numberToTime($w3=$this->authprocess->getWeekDuration(3,$row['ID'])));
+			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+6,$row)->applyFromArray($styleArray);
+            
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+7,$row,numberToTime($w4=$this->authprocess->getWeekDuration(4,$row['ID'])));
+			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+7,$row)->applyFromArray($styleArray);
+			
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+8,$row,numberToTime($w5=$this->authprocess->getWeekDuration(5,$row['ID'])));
+			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+8,$row)->applyFromArray($styleArray);
+			
+			if(timeToNumber($var)>=$w1):
+				$wx1=1;
+				$wm1='M1';
+			else:
+				$wx1=0;
+				$wm1='';
+			endif;
+						
+			if(timeToNumber($var)>=$w2):
+				$wx2=1;
+				$wm2='M2';
+			else:
+				$wx2=0;
+				$wm2='';
+			endif;
+						
+			if(timeToNumber($var)>=$w3):
+				$wx3=1;
+				$wm3='M3';
+			else:
+				$wx3=0;
+				$wm3='';
+			endif;
+						
+			if(timeToNumber($var)>=$w4):
+				$wx4=1;
+				$wm4='M4';
+			else:
+				$wx4=0;
+				$wm4='';
+			endif;
+						
+			if($w5):
+				if(timeToNumber($var)>=$w5):
+					$wx5=1;
+					$wm5='M5';
+				else:
+					$wx5=0;
+					$wm5='';
+				endif;
+			else:
+				$wx5=0;
+				$wm5='';
+			endif;
+			
+			$desc = 'TM:'.($wx1+$wx2+$wx3+$wx4+$wx5).'['.$wm1.$wm2.$wm3.$wm4.$wm5.']';
+			
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+9,$row,$desc));
+			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+9,$row)->applyFromArray($styleArray);
+			
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+10,$row,""));
+			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+10,$row)->applyFromArray($styleArray);
+			
+			$i++;
             $row++;
         endforeach;    
 		
