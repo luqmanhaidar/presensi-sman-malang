@@ -1058,18 +1058,23 @@ class ExcelModel extends CI_Model
 			
 			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+4,$row,numberToTime($w1=$this->authprocess->getWeekDuration(1,$rec['ID'])));
 			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+4,$row)->applyFromArray($styleArray);
+			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+4,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
 			
 			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+5,$row,numberToTime($w2=$this->authprocess->getWeekDuration(2,$rec['ID'])));
 			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+5,$row)->applyFromArray($styleArray);
+			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+5,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
 			
 			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+6,$row,numberToTime($w3=$this->authprocess->getWeekDuration(3,$rec['ID'])));
 			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+6,$row)->applyFromArray($styleArray);
-            
+            $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+6,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
+			
 			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+7,$row,numberToTime($w4=$this->authprocess->getWeekDuration(4,$rec['ID'])));
 			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+7,$row)->applyFromArray($styleArray);
+			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+7,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
 			
 			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+8,$row,numberToTime($w5=$this->authprocess->getWeekDuration(5,$rec['ID'])));
 			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+8,$row)->applyFromArray($styleArray);
+			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+8,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
 			
 			if(timeToNumber($var)>=$w1):
 				$wx1=1;
