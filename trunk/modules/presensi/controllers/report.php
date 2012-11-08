@@ -541,13 +541,18 @@ class Report extends CI_Controller {
     
     function week_print()
     {
-		$data['title']		=	'DAFTAR CEK CLOCK';
-		$data['days']	    =   $this->authlog->getDay($this->session->userdata('week_start'),$this->session->userdata('week_finish'));
-		$data['periode']	=	'Periode '.$this->session->userdata('week_start'). ' s/d '. $this->session->userdata('week_finish');
-		$data['users']	    =	$this->userinfo->getAllRecords('','','','',$this->session->userdata('week_group'));
-		$data['var']	    =	$this->presensi->getVariabelDataByVar('DMK');
-        $this->load->vars($data);
-        $this->load->theme('report/week',$data);
+		if($this->session->userdata('week_type')=='M2'):
+			$data['title']		=	'LAPORAN MINGGUAN';
+			$this->load->theme('report/week2',$data);
+		else:
+			$data['title']		=	'DAFTAR CEK CLOCK';
+			$data['days']	    =   $this->authlog->getDay($this->session->userdata('week_start'),$this->session->userdata('week_finish'));
+			$data['periode']	=	'Periode '.$this->session->userdata('week_start'). ' s/d '. $this->session->userdata('week_finish');
+			$data['users']	    =	$this->userinfo->getAllRecords('','','','',$this->session->userdata('week_group'));
+			$data['var']	    =	$this->presensi->getVariabelDataByVar('DMK');
+			$this->load->vars($data);
+			$this->load->theme('report/week',$data);	
+		endif;	
 	}
 	
 	function week_pdf()
