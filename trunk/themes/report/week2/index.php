@@ -5,7 +5,7 @@
 </head>
 <body>
  <table>
-    <caption style="margin:10px 0">
+    <caption style="margin:10px 0;text-align:left">
     <h3><?=$title?></h3>
 	<hr style="border:1px solid #333"/>
     <h3><?=$periode?></h3>
@@ -46,6 +46,8 @@
 				<td><?=$this->authprocess->getWeekDuration(3,$row['ID'])?></td>
 				<td><?=$this->authprocess->getWeekDuration(4,$row['ID'])?></td>
 				<td><?=$this->authprocess->getWeekDuration(5,$row['ID'])?></td>
+				<td></td>
+				<td></td>
 			</tr>
      <?php 
          $i++;
