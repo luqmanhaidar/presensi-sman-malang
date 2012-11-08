@@ -829,6 +829,95 @@ class ExcelModel extends CI_Model
         $objWriter->save('assets/'.$file);
         redirect(base_url('assets/'.$file),301);
     }
+	
+	function week2_excel($user,$name){
+        //$this->user_logs->saveLog('Export Excell Admission Report');           						
+		$objPHPExcel = new PHPExcel();
+		$objPHPExcel->getProperties()->setTitle("title")
+					->setDescription("description");
+					 $objPHPExcel->setActiveSheetIndex(0);
+		$styleArray = array( 'borders' => array( 'allborders' => array(
+                             'style' => Style_Border::BORDER_THIN )));
+        $fill = array(
+                        'type'       => Style_Fill::FILL_SOLID,
+                        'rotation'   => 0,
+                        'startcolor' => array(
+                                'rgb' => 'CCCCCC'
+                        ),
+                        'endcolor'   => array(
+                                'argb' => 'CCCCCC'
+                        )
+                );       
+	  	
+		$fontArray = array(
+			'font' => array(
+			'bold' => true
+			)
+			);
+		
+        $row=1;
+        $col=0;
+        
+        //No
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,"REKAPITULASI PEMENUHAN JAM MENGAJAR GURU MAN 3 MALANG");       
+		
+		$row++;
+		$col=0;
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,"LAPORAN PERIODE ".$this->session->userdata('week_start').' s/d '.$this->session->userdata('week_finish'));
+		
+		$row=$row+1;
+        $col=0;
+		
+		//No
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,'No');
+        $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col)->setWidth(5);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->applyFromArray($styleArray);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->getFill()->applyFromArray($fill);
+		
+		//Nama
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+1,$row,'Nama');
+        $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+1)->setWidth(25);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+1,$row)->applyFromArray($styleArray);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+1,$row)->getFill()->applyFromArray($fill);
+		
+		//Status
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+2,$row,'Status');
+        $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+2)->setWidth(20);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+2,$row)->applyFromArray($styleArray);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+2,$row)->getFill()->applyFromArray($fill);
+		
+		//Waktu
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+3,$row,'Jam KBM');
+        $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+3)->setWidth(15);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+3,$row)->applyFromArray($styleArray);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+3,$row)->getFill()->applyFromArray($fill);
+        
+        $row=$row + 1;
+		$col=0;
+		$i=1;
+		foreach($data['users'] as $rec):
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,$i);
+			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->applyFromArray($styleArray);
+			 
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+1,$row,$rec['Name']);
+			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+1,$row)->applyFromArray($styleArray);
+			 
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+2,$row,$rec['Description']);
+			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+2,$row)->applyFromArray($styleArray);
+			 
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+3,$row,"");
+			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+3,$row)->applyFromArray($styleArray);
+            $i++;
+            $row++;
+        endforeach;    
+		
+        // Save it as an excel 2007 file
+        $objWriter = IOFactory::createWriter($objPHPExcel, "Excel2007");
+		//$objWriter = IOFactory::createWriter($objPHPexcel,'PDF'); 
+        $file="Personal.xlsx";
+        $objWriter->save('assets/'.$file);
+        redirect(base_url('assets/'.$file),301);
+    }
     
     function week_pdf($recs,$start,$end,$group,$days,$pos,$var){      						
 		$objPHPExcel = new PHPExcel();
