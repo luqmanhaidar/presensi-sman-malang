@@ -79,11 +79,11 @@ class Authprocess extends CI_Model
     }
 	
 	function getWeekDuration($week='',$user=''){     
-        $this->db->select(' NGAC_AUTHPROCESS.UserID,SUM(NGAC_AUTHPROCESS.ProcessDuration) AS Total');
-        $this->db->select('DATEPART(WEEK, NGAC_AUTHPROCESS.ProcessDateStart) - DATEPART(WEEK,NGAC_AUTHPROCESS.ProcessDateStart - DATEPART(day, NGAC_AUTHPROCESS.ProcessDateStart) + 1)');
-		$this->db->group_by('NGAC_AUTHPROCESS.UserID');
-        $this->db->group_by('DATEPART(WEEK, NGAC_AUTHPROCESS.ProcessDateStart) - DATEPART(WEEK,NGAC_AUTHPROCESS.ProcessDateStart - DATEPART(day, NGAC_AUTHPROCESS.ProcessDateStart) + 1)');
-        $this->db->where('DATEPART(WEEK, NGAC_AUTHPROCESS.ProcessDateStart) - DATEPART(WEEK,NGAC_AUTHPROCESS.ProcessDateStart - DATEPART(day, NGAC_AUTHPROCESS.ProcessDateStart) + 1)',$week);
+        $this->db->select('NGAC_AUTHPROCESS.UserID,SUM(NGAC_AUTHPROCESS.ProcessDuration) AS Total');
+        //$this->db->select('DATEPART(WEEK, NGAC_AUTHPROCESS.ProcessDateStart) - DATEPART(WEEK,NGAC_AUTHPROCESS.ProcessDateStart - DATEPART(day, NGAC_AUTHPROCESS.ProcessDateStart) + 1)');
+		//$this->db->group_by('NGAC_AUTHPROCESS.UserID');
+        //$this->db->group_by('DATEPART(WEEK, NGAC_AUTHPROCESS.ProcessDateStart) - DATEPART(WEEK,NGAC_AUTHPROCESS.ProcessDateStart - DATEPART(day, NGAC_AUTHPROCESS.ProcessDateStart) + 1)');
+        //$this->db->where('DATEPART(WEEK, NGAC_AUTHPROCESS.ProcessDateStart) - DATEPART(WEEK,NGAC_AUTHPROCESS.ProcessDateStart - DATEPART(day, NGAC_AUTHPROCESS.ProcessDateStart) + 1)',$week);
 		$this->db->where('NGAC_AUTHPROCESS.UserID',$user);
 		$Q = $this->db->get('NGAC_AUTHPROCESS');
         $data = $Q->row_array();
