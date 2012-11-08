@@ -41,11 +41,11 @@
 				<td><?=$row['Name'];?></td>
 				<td><?=$row['Description']?></td>
                 <td><?='';?></td>
-				<td><?=$this->authprocess->getWeekDuration(1,$row['ID'])?></td>
-				<td><?=$this->authprocess->getWeekDuration(2,$row['ID'])?></td>
-				<td><?=$this->authprocess->getWeekDuration(3,$row['ID'])?></td>
-				<td><?=$this->authprocess->getWeekDuration(4,$row['ID'])?></td>
-				<td><?=$this->authprocess->getWeekDuration(5,$row['ID'])?></td>
+				<td class="center"><?=$this->authprocess->getWeekDuration(1,$row['ID'])?></td>
+				<td class="center"><?=$this->authprocess->getWeekDuration(2,$row['ID'])?></td>
+				<td class="center"><?=$this->authprocess->getWeekDuration(3,$row['ID'])?></td>
+				<td class="center"><?=$this->authprocess->getWeekDuration(4,$row['ID'])?></td>
+				<td class="center"><?=$this->authprocess->getWeekDuration(5,$row['ID'])?></td>
 				<td></td>
 				<td></td>
 			</tr>
