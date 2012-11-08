@@ -66,7 +66,7 @@ class Userinfo extends CI_Model
         if ($pos <> 0)   
             $this->db->where('U.GroupID',$pos);    
                 
-        $this->db->select('U.ID,U.UserOrder,U.Name,G.GroupDurationName,W.GroupWorkName,F.GroupFridayName');
+        $this->db->select('U.ID,U.UserOrder,U.Name,U.Description,U.Department,G.GroupDurationName,W.GroupWorkName,F.GroupFridayName');
         $this->db->join('NGAC_GROUP_DURATION G','G.ID=U.GroupDurationID','LEFT');   
         $this->db->join('NGAC_GROUP_WORK W','W.GroupWorkID=U.GroupWork','LEFT');  
         $this->db->join('NGAC_GROUP_FRIDAY F','F.GroupFridayID=U.GroupFriday','LEFT');
