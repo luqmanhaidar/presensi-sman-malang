@@ -1079,7 +1079,7 @@ class ExcelModel extends CI_Model
 			
 			$desc = 'TM:'.($wx1+$wx2+$wx3+$wx4+$wx5).'['.$wm1.$wm2.$wm3.$wm4.$wm5.']';
 			
-			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+9,$row,$desc));
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+9,$row,$desc);
 			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+9,$row)->applyFromArray($styleArray);
 			
 			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+10,$row,""));
