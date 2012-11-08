@@ -298,6 +298,20 @@ class Report extends CI_Controller {
     
     function week_search()
     {
+        $day   = $this->input->post('day');
+        $month = $this->input->post('month');
+        if(!validateDate($day,$month)):
+            $this->session->set_flashdata('message',config_item('range_error'));
+            redirect('presensi/report/weekly/'.$this->session->userdata('week_offset'),301);
+        endif; 
+        
+        $day   = $this->input->post('day2');
+        $month = $this->input->post('month2');
+        if(!validateDate($day,$month)):
+            $this->session->set_flashdata('message',config_item('range_error'));
+            redirect('presensi/report/weekly/'.$this->session->userdata('week_offset'),301);
+        endif;     
+            
         $search = array ('week_group'  => $this->input->post('group'),
                          'week_type'   => $this->input->post('type'),   
 						 'week_start'  => $this->input->post('month').'/'.$this->input->post('day').'/'.$this->input->post('year'), 
