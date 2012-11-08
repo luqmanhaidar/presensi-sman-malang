@@ -80,7 +80,7 @@
 							$wm4='';
 						endif;
 						
-						if($w5)
+						if($w5):
 							if(timeToNumber($var)>=$w5):
 								$wx5=1;
 								$wm5='M5';
