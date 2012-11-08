@@ -870,37 +870,41 @@ class ExcelModel extends CI_Model
 		
 		//No
 		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,'NO');
+		$objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col,$row,$col,$row+2);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->getAlignment()->setVertical(Style_Alignment::VERTICAL_CENTER);
         $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col)->setWidth(5);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->applyFromArray($styleArray);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->getFill()->applyFromArray($fill);
 		
 		//Nama
 		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+1,$row,'NAMA');
+		$objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+1,$row,$col+1,$row+2);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->getAlignment()->setVertical(Style_Alignment::VERTICAL_CENTER);
         $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+1)->setWidth(35);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+1,$row)->applyFromArray($styleArray);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+1,$row)->getFill()->applyFromArray($fill);
 		
 		//Status
-		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+2,$row,'STATUS');
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+2,$row,'STATUS KEPEG');
+		$objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+2,$row,$col+2,$row+2);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->getAlignment()->setVertical(Style_Alignment::VERTICAL_CENTER);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+2,$row)->getAlignment()->setWrapText(true);
         $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+2)->setWidth(25);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+2,$row)->applyFromArray($styleArray);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+2,$row)->getFill()->applyFromArray($fill);
 		
 		//Waktu
-		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+3,$row,'JAM KBM');
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+3,$row,'JAM KBM PER MINGGU');
+		$objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+3,$row,$col+3,$row+2);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->getAlignment()->setVertical(Style_Alignment::VERTICAL_CENTER);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+3,$row)->getAlignment()->setWrapText(true);
         $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+3)->setWidth(15);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+3,$row)->applyFromArray($styleArray);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+3,$row)->getFill()->applyFromArray($fill);
-        
-		//Jam
-		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+4,$row,"PEMENUHAN 37 1/2 JAM");
-        $objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+4,$row,$col+8,$row);
-        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+4,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
-        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+4,$row)->applyFromArray($styleArray);
-		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+5,$row)->applyFromArray($styleArray);
-		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+6,$row)->applyFromArray($styleArray);
-		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+7,$row)->applyFromArray($styleArray);
-		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+8,$row)->applyFromArray($styleArray);
         
 		//TM
 		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+9,$row,'KETERANGAN TM');
@@ -913,8 +917,90 @@ class ExcelModel extends CI_Model
         $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+10)->setWidth(45);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+10,$row)->applyFromArray($styleArray);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+10,$row)->getFill()->applyFromArray($fill);
-        
 		
+		$row++;
+		$col=0;
+		//No
+		//$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,'');
+        
+		//Nama
+		//$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+1,$row,'NAMA');
+        
+		//Status
+		//$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+2,$row,'STATUS');
+        
+		//Waktu
+		//$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+3,$row,'JAM KBM');
+        
+		//Jam
+		//TM
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+4,$row,'MINGGU KE 1');
+		$objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+4,$row,$col+4,$row+1);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+4,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+4,$row)->getAlignment()->setVertical(Style_Alignment::VERTICAL_CENTER);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+4,$row)->getAlignment()->setWrapText(true);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+4,$row)->applyFromArray($styleArray);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+4,$row)->getFill()->applyFromArray($fill);
+		
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+5,$row,'MINGGU KE 2');
+		$objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+5,$row,$col+4,$row+1);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+5,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+5,$row)->getAlignment()->setVertical(Style_Alignment::VERTICAL_CENTER);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+5,$row)->getAlignment()->setWrapText(true);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+5,$row)->applyFromArray($styleArray);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+5,$row)->getFill()->applyFromArray($fill);
+        
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+6,$row,'MINGGU KE 3');
+		$objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+6,$row,$col+4,$row+1);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+6,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+6,$row)->getAlignment()->setVertical(Style_Alignment::VERTICAL_CENTER);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+6,$row)->getAlignment()->setWrapText(true);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+6,$row)->applyFromArray($styleArray);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+6,$row)->getFill()->applyFromArray($fill);
+        
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+7,$row,'MINGGU KE 4');
+		$objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+7,$row,$col+4,$row+1);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+7,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+7,$row)->getAlignment()->setVertical(Style_Alignment::VERTICAL_CENTER);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+7,$row)->getAlignment()->setWrapText(true);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+7,$row)->applyFromArray($styleArray);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+7,$row)->getFill()->applyFromArray($fill);
+		
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+8,$row,'MINGGU KE 5');
+		$objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+8,$row,$col+4,$row+1);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+8,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+8,$row)->getAlignment()->setVertical(Style_Alignment::VERTICAL_CENTER);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+8,$row)->getAlignment()->setWrapText(true);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+8,$row)->applyFromArray($styleArray);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+8,$row)->getFill()->applyFromArray($fill);
+		//TM
+		//$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+9,$row,'KETERANGAN TM');
+        
+		//KETERANGAN KETIDAKHADIRAN
+		//$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+10,$row,'KETERANGAN KETIDAK HADIRAN');
+        $row++;
+		$col=0;
+		//No
+		//$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,'');
+        
+		//Nama
+		//$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+1,$row,'NAMA');
+        
+		//Status
+		//$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+2,$row,'STATUS');
+        
+		//Waktu
+		//$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+3,$row,'JAM KBM');
+        
+		//Jam
+		//$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+4,$row,"PEMENUHAN 37 1/2 JAM");
+        
+		//TM
+		//$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+9,$row,'KETERANGAN TM');
+        
+		//KETERANGAN KETIDAKHADIRAN
+		//$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+10,$row,'KETERANGAN KETIDAK HADIRAN');
+        
         $row=$row + 1;
 		$col=0;
 		$i=1;
