@@ -1050,19 +1050,19 @@ class ExcelModel extends CI_Model
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+3,$row,"");
 			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+3,$row)->applyFromArray($styleArray);
 			
-			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+4,$row,numberToTime($w1=$this->authprocess->getWeekDuration(1,$row['ID'])));
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+4,$row,numberToTime($w1=$this->authprocess->getWeekDuration(1,$rec['ID'])));
 			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+4,$row)->applyFromArray($styleArray);
 			
-			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+5,$row,numberToTime($w2=$this->authprocess->getWeekDuration(2,$row['ID'])));
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+5,$row,numberToTime($w2=$this->authprocess->getWeekDuration(2,$rec['ID'])));
 			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+5,$row)->applyFromArray($styleArray);
 			
-			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+6,$row,numberToTime($w3=$this->authprocess->getWeekDuration(3,$row['ID'])));
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+6,$row,numberToTime($w3=$this->authprocess->getWeekDuration(3,$rec['ID'])));
 			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+6,$row)->applyFromArray($styleArray);
             
-			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+7,$row,numberToTime($w4=$this->authprocess->getWeekDuration(4,$row['ID'])));
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+7,$row,numberToTime($w4=$this->authprocess->getWeekDuration(4,$rec['ID'])));
 			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+7,$row)->applyFromArray($styleArray);
 			
-			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+8,$row,numberToTime($w5=$this->authprocess->getWeekDuration(5,$row['ID'])));
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+8,$row,numberToTime($w5=$this->authprocess->getWeekDuration(5,$rec['ID'])));
 			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+8,$row)->applyFromArray($styleArray);
 			
 			if(timeToNumber($var)>=$w1):
