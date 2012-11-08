@@ -41,12 +41,46 @@
 				<td><?=$row['Name'];?></td>
 				<td><?=$row['Description']?></td>
                 <td><?='';?></td>
-				<td class="center"><?=numberToTime($this->authprocess->getWeekDuration(1,$row['ID']))?></td>
-				<td class="center"><?=numberToTime($this->authprocess->getWeekDuration(2,$row['ID']))?></td>
-				<td class="center"><?=numberToTime($this->authprocess->getWeekDuration(3,$row['ID']))?></td>
-				<td class="center"><?=numberToTime($this->authprocess->getWeekDuration(4,$row['ID']))?></td>
-				<td class="center"><?=numberToTime($this->authprocess->getWeekDuration(5,$row['ID']))?></td>
-				<td></td>
+				<td class="center"><?=numberToTime($w1=$this->authprocess->getWeekDuration(1,$row['ID']))?></td>
+				<td class="center"><?=numberToTime($w2=$this->authprocess->getWeekDuration(2,$row['ID']))?></td>
+				<td class="center"><?=numberToTime($w3=$this->authprocess->getWeekDuration(3,$row['ID']))?></td>
+				<td class="center"><?=numberToTime($w4=$this->authprocess->getWeekDuration(4,$row['ID']))?></td>
+				<td class="center"><?=numberToTime($w5=$this->authprocess->getWeekDuration(5,$row['ID']))?></td>
+				<td>
+					<?php
+						if(timeToNumber($var)>=$w1):
+							$wx1=1;
+						else
+							$wx1=0;
+						endif;
+						
+						if(timeToNumber($var)>=$w2):
+							$wx2=1;
+						else
+							$wx2=0;
+						endif;
+						
+						if(timeToNumber($var)>=$w3):
+							$wx3=1;
+						else
+							$wx3=0;
+						endif;
+						
+						if(timeToNumber($var)>=$w4):
+							$wx4=1;
+						else
+							$wx4=0;
+						endif;
+						
+						if(timeToNumber($var)>=$w5):
+							$wx5=1;
+						else
+							$wx5=0;
+						endif;
+						
+						print 'TM:'.$wx1+$wx2+$wx3+$wx4+$wx5;
+					?>
+				</td>
 				<td></td>
 			</tr>
      <?php 
