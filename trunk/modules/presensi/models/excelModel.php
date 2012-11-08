@@ -1082,7 +1082,7 @@ class ExcelModel extends CI_Model
 			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+9,$row,$desc);
 			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+9,$row)->applyFromArray($styleArray);
 			
-			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+10,$row,""));
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+10,$row,"");
 			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+10,$row)->applyFromArray($styleArray);
 			
 			$i++;
