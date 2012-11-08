@@ -5,10 +5,10 @@
 </head>
 <body>
  <table>
-    <caption>
+    <caption style="margin:10px 0">
     <h3><?=$title?></h3>
 	<hr style="border:1px solid #333"/>
-    <h5><?=$periode?></h5>
+    <h3><?=$periode?></h3>
     </caption>
 	<thead>
 			<th rowspan="2">NO</th>
