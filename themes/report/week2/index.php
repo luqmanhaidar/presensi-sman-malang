@@ -14,11 +14,26 @@
 			<th class="align-left darkgrey" colspan="4"><?=$user.'-'.$name?></th>
 		</tr>
 		<tr>
-			<th>No</th>
-			<th width="20%">Tanggal</th>
-			<th>Jenis</th>
-			<th>Waktu</th>
+			<th rowspan="2">NO</th>
+			<th rowspan="2" width="20%">NAMA</th>
+			<th rowspan="2">STATUS <br/>KEPEG</th>
+			<th rowspan="2">JAM KBM <br/>PER<br/>MINGGU</th>
+			<th colspan="5">PEMENUHAN 37 1/2 JAM</th>
+			<th rowspan="2">KETERANGAN TM</th>
+			<th rowspan="2">KETERANGAN KETIDAK HADIRAN</th>
 		</tr>
+		<tr>
+			<th rowspan="1">MINGGU<br/>KE 1</th>
+			<th rowspan="1">MINGGU<br/>KE 2</th>
+			<th rowspan="1">MINGGU<br/>KE 3</th>
+			<th rowspan="1">MINGGU<br/>KE 4</th>
+			<th rowspan="1">MINGGU<br/>KE 5</th>
+		</tr>
+		<tr>
+		</tr>
+		
+		
+		
     </thead>
 	<tbody>
 	<?php 
