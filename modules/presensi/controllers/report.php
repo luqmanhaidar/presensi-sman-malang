@@ -271,10 +271,19 @@ class Report extends CI_Controller {
             $start = '';
 			$end   = '';
         endif; 
+        $data['var']	    =	$this->presensi->getVariabelDataByVar('DMK');
+        
+        if($this->session->userdata('week_type')=='M2'):
+            $record  = $this->authprocess->getAllWeekRecord($offset,$paging);
+            $num_rec = COUNT($this->authprocess->getAllWeekRecord());
+        else:
+            $record  = $this->authprocess->getAllRecords($offset,$paging);
+            $num_rec = COUNT($this->authprocess->getAllRecords());
+        endif;    
 		
         $this->session->set_userdata('week_offset',$offset);
-        $data['checks']  = $this->authprocess->getAllRecords($offset,$paging);
-        $numrows = COUNT($this->authprocess->getAllRecords()); 
+        $data['checks']  = $record;
+        $numrows = $num_rec; 
         if ($numrows > $paging):
             $config['base_url']   = site_url('presensi/report/weekly/');
             $config['total_rows'] = $numrows;
@@ -498,8 +507,14 @@ class Report extends CI_Controller {
                 $mins = code(floor(($e - ($hours*3600)) / 60));
                 $seconds = code($e % 60);
                 $early = $hours.':'.$mins.':'.$seconds;   
-            endif;           
-            $this->authprocess->update($row['UserID'],$row['MyDate'],$row['TransactionTime'],$wsk,$early);
+            endif;
+            
+            $duration = $wsp-$sk;
+            
+            if($duration<0)
+                $duration = 0;
+                       
+            $this->authprocess->update($row['UserID'],$row['MyDate'],$row['TransactionTime'],$wsk,$early,$duration);
         endforeach;
         redirect('presensi/report/weekly',301);
         
