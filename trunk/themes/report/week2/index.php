@@ -96,7 +96,14 @@
 						print 'TM:'.($wx1+$wx2+$wx3+$wx4+$wx5).'['.$wm1.$wm2.$wm3.$wm4.$wm5.']';
 					?>
 				</td>
-				<td></td>
+				<td>
+                    <?php
+                        $recs =$this->others->getAllRecords('','','','',$start,$end,$row['ID']);
+                        foreach($recs as $rec):
+                            print code($rec['DAY']).'/'.code($rec['MONTH']).' '.$rec['OtherType'] .'('.$rec['OtherDescription'].')'.' ';
+                        endforeach;
+                    ?>
+                </td>
 			</tr>
      <?php 
          $i++;

@@ -63,14 +63,14 @@ class Other extends CI_Controller {
     
     public function save()
     {
-        $d2=GregorianToJD($this->input->post('month2'),$this->input->post('day2'),$this->input->post('year2'));
+        /*$d2=GregorianToJD($this->input->post('month2'),$this->input->post('day2'),$this->input->post('year2'));
         $d1=GregorianToJD($this->input->post('month'),$this->input->post('day'),$this->input->post('year'));
         $d = $d2 - $d1;
         
         if($d < 0 ):
             $this->session->set_flashdata('message',config_item('date_error'));
             redirect('presensi/other/index/'.$this->session->userdata('other_offset'),301);
-		endif;
+		endif;*/
         
         $user = $this->input->post('user');
         $date = $this->input->post('day').'-'.$this->input->post('month').'-'.$this->input->post('year');
