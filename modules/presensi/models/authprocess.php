@@ -87,7 +87,11 @@ class Authprocess extends CI_Model
 		$this->db->where('NGAC_AUTHPROCESS.UserID',$user);
 		$Q = $this->db->get('NGAC_AUTHPROCESS');
         $data = $Q->row_array();
-		return $data['Total'];
+		if ($Q->num_rows>0)
+			$val = $data['Total'];
+		else
+			$val = 0;
+		return $val;
     }
     
     function removeAll()
