@@ -7,13 +7,10 @@
  <table>
     <caption>
     <h3><?=$title?></h3>
-    <h5><?=indonesian_monthName($this->session->userdata('month_search')).' '.$this->session->userdata('year_search')?></h5>
+	<hr style="border:1px solid #333"/>
+    <h5><?=$periode?></h5>
     </caption>
 	<thead>
-		<tr>
-			<th class="align-left darkgrey" colspan="4"><?=$user.'-'.$name?></th>
-		</tr>
-		<tr>
 			<th rowspan="2">NO</th>
 			<th rowspan="2" width="20%">NAMA</th>
 			<th rowspan="2">STATUS <br/>KEPEG</th>
@@ -44,11 +41,11 @@
 				<td><?=$row['Name'];?></td>
 				<td><?=$row['Description']?></td>
                 <td><?='';?></td>
-				<td><?=$this->authprocess->getWeekDuration(1,$row['UserID'])?></td>
-				<td><?=$this->authprocess->getWeekDuration(2,$row['UserID'])?></td>
-				<td><?=$this->authprocess->getWeekDuration(3,$row['UserID'])?></td>
-				<td><?=$this->authprocess->getWeekDuration(4,$row['UserID'])?></td>
-				<td><?=$this->authprocess->getWeekDuration(5,$row['UserID'])?></td>
+				<td><?=$this->authprocess->getWeekDuration(1,$row['ID'])?></td>
+				<td><?=$this->authprocess->getWeekDuration(2,$row['ID'])?></td>
+				<td><?=$this->authprocess->getWeekDuration(3,$row['ID'])?></td>
+				<td><?=$this->authprocess->getWeekDuration(4,$row['ID'])?></td>
+				<td><?=$this->authprocess->getWeekDuration(5,$row['ID'])?></td>
 			</tr>
      <?php 
          $i++;
