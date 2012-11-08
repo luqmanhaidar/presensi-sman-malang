@@ -171,6 +171,15 @@ function numberToTime($numeric){
     return $hours.':'.$mins.':'.$seconds;   
 }
 
+function timeToNumber($time){
+	$number = (substr($time,0,2) * 3600) + (substr($time,3,2)*60) + (substr($time,6,2));
+	if($number)
+		$number=$number;
+	else
+		$number=0;
+	return $number;
+}
+
 function validateDate($date,$month)
 {
     switch($month):
