@@ -967,7 +967,7 @@ class ExcelModel extends CI_Model
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+7,$row)->getFill()->applyFromArray($fill);
 		
 		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+8,$row,'MINGGU KE 5');
-		$objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+8,$row,$col+7,$row+1);
+		$objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+8,$row,$col+8,$row+1);
 		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+8,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
 		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+8,$row)->getAlignment()->setVertical(Style_Alignment::VERTICAL_CENTER);
 		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+8,$row)->getAlignment()->setWrapText(true);
