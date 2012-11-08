@@ -93,7 +93,7 @@
 							$wm5='';
 						endif;
 						
-						print 'TM:'.$wx1+$wx2+$wx3+$wx4+$wx5.'['.$wm1.$wm2.$wm3.$wm4.$wm5.']';
+						print 'TM:'.($wx1+$wx2+$wx3+$wx4+$wx5).'['.$wm1.$wm2.$wm3.$wm4.$wm5.']';
 					?>
 				</td>
 				<td></td>
