@@ -50,31 +50,31 @@
 					<?php
 						if(timeToNumber($var)>=$w1):
 							$wx1=1;
-						else
+						else:
 							$wx1=0;
 						endif;
 						
 						if(timeToNumber($var)>=$w2):
 							$wx2=1;
-						else
+						else:
 							$wx2=0;
 						endif;
 						
 						if(timeToNumber($var)>=$w3):
 							$wx3=1;
-						else
+						else:
 							$wx3=0;
 						endif;
 						
 						if(timeToNumber($var)>=$w4):
 							$wx4=1;
-						else
+						else:
 							$wx4=0;
 						endif;
 						
 						if(timeToNumber($var)>=$w5):
 							$wx5=1;
-						else
+						else:
 							$wx5=0;
 						endif;
 						
