@@ -85,7 +85,7 @@ class Authprocess extends CI_Model
         $this->db->group_by('DATEPART(WEEK, NGAC_AUTHPROCESS.ProcessDateStart) - DATEPART(WEEK,NGAC_AUTHPROCESS.ProcessDateStart - DATEPART(day, NGAC_AUTHPROCESS.ProcessDateStart) + 1)');
         $this->db->where('DATEPART(WEEK, NGAC_AUTHPROCESS.ProcessDateStart) - DATEPART(WEEK,NGAC_AUTHPROCESS.ProcessDateStart - DATEPART(day, NGAC_AUTHPROCESS.ProcessDateStart) + 1)=',$week);
 		$this->db->where('NGAC_AUTHPROCESS.UserID',$user);
-		$Q = $this->db->get('NGAC_AUTHPROCESS');
+		$Q = $this->db->get('NGAC_AUTHPROCESS',1);
         $data = $Q->row_array();
 		if ($Q->num_rows>0)
 			$val = $data['Total'];
