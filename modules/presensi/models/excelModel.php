@@ -906,13 +906,13 @@ class ExcelModel extends CI_Model
 		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+9,$row,'KETERANGAN TM');
         $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+9)->setWidth(25);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+9,$row)->applyFromArray($styleArray);
-        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+9,,$row)->getFill()->applyFromArray($fill);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+9,$row)->getFill()->applyFromArray($fill);
         
 		//KETERANGAN KETIDAKHADIRAN
 		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+10,$row,'KETERANGAN KETIDAK HADIRAN');
         $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+10)->setWidth(45);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+10,$row)->applyFromArray($styleArray);
-        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+10,,$row)->getFill()->applyFromArray($fill);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+10,$row)->getFill()->applyFromArray($fill);
         
 		
         $row=$row + 1;
