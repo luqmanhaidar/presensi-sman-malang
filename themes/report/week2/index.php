@@ -4,7 +4,7 @@
 <link type="text/css" rel="stylesheet" href="<?=base_url('themes/report/css/style.css');?>" />
 </head>
 <body>
- <table style="margin:0 auto;width:80%;border-collapse:collapse;background:#ecf3eb">
+ <table>
     <caption>
     <h3><?=$title?></h3>
     <h5><?=indonesian_monthName($this->session->userdata('month_search')).' '.$this->session->userdata('year_search')?></h5>
@@ -38,12 +38,17 @@
 	<tbody>
 	<?php 
         $i=1;
-        foreach($checks as $row):?>
+        foreach($users as $row):?>
 			<tr>
 				<td><?=$i;?></td>
-				<td><?=indonesian_shortDate($row['TransactionTime']);?></td>
-				<td><?=$row['FunctionKey']?> (<?=functionKey($row['FunctionKey']);?>)</td>
-                <td><?=substr($row['TransactionTime'],11,8);?></td>
+				<td><?=$row['Name'];?></td>
+				<td><?=$row['Description']?></td>
+                <td><?='';?></td>
+				<td><?=$this->authprocess->getWeekDuration(1,$row['UserID'])?></td>
+				<td><?=$this->authprocess->getWeekDuration(2,$row['UserID'])?></td>
+				<td><?=$this->authprocess->getWeekDuration(3,$row['UserID'])?></td>
+				<td><?=$this->authprocess->getWeekDuration(4,$row['UserID'])?></td>
+				<td><?=$this->authprocess->getWeekDuration(5,$row['UserID'])?></td>
 			</tr>
      <?php 
          $i++;
