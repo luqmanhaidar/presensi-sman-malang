@@ -41,7 +41,7 @@
 				<td><?=$row['Name'];?></td>
 				<td><?=$row['Description']?></td>
                 <td><?='';?></td>
-				<td class="center"><?=numberToTime($this->authprocess->getWeekDuration(1,$row['ID']))?></td>
+				<td class="center"><?=$this->authprocess->getWeekDuration(1,$row['ID'])?></td>
 				<td class="center"><?=numberToTime($this->authprocess->getWeekDuration(2,$row['ID']))?></td>
 				<td class="center"><?=numberToTime($this->authprocess->getWeekDuration(3,$row['ID']))?></td>
 				<td class="center"><?=numberToTime($this->authprocess->getWeekDuration(4,$row['ID']))?></td>
