@@ -1126,8 +1126,15 @@ class ExcelModel extends CI_Model
 			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+9,$row,$desc);
 			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+9,$row)->applyFromArray($styleArray);
 			
-			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+10,$row,"");
+            $recs =$this->others->getAllRecords('','','','',$start,$end,$rec['ID']);
+            $other='';
+            foreach($recs as $value):
+                $other .= code($value['DAY']).'/'.code($value['MONTH']).' '.$value['OtherType'] .'('.$value['OtherDescription'].')'.' ';
+            endforeach;
+            
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+10,$row,$other);
 			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+10,$row)->applyFromArray($styleArray);
+            $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+10,$row)->getAlignment()->setWrapText(true);
 			
 			$i++;
             $row++;

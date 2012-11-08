@@ -47,7 +47,7 @@ class Others extends CI_Model
         return $query->row_array();
     }
     
-    function getAllRecords($offset='',$paging='',$name='',$type='',$date_start='',$date_finish=''){
+    function getAllRecords($offset='',$paging='',$name='',$type='',$date_start='',$date_finish='',$user=''){
         if (!empty($offset))
             $this->db->offset($offset);
         
@@ -56,6 +56,9 @@ class Others extends CI_Model
         
         if (!empty($name))   
             $this->db->like('UserID',$name);
+        
+        if (!empty($user))   
+            $this->db->where('UserID',$user);    
         
         if (!empty($type))   
             $this->db->where('OtherType',$type);    
@@ -67,6 +70,7 @@ class Others extends CI_Model
         
         //if (!empty($date_finish))   
             //$this->db->where('CONVERT(VARCHAR(10),TransactionTime, 105)<=',$date_finish);          
+        $this->db->select('DATEPART(DAY,OtherDateStart) AS DAY,DATEPART(MONTH,OtherDateStart) AS MONTH,*');
         $this->db->order_by('OtherDateStart','ASC');
         $this->db->order_by('UserID','ASC');
         $this->db->where_not_in('UserID','');
