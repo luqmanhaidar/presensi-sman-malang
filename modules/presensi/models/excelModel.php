@@ -880,8 +880,8 @@ class ExcelModel extends CI_Model
 		//Nama
 		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+1,$row,'NAMA');
 		$objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+1,$row,$col+1,$row+2);
-		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
-		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->getAlignment()->setVertical(Style_Alignment::VERTICAL_CENTER);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+1,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+1,$row)->getAlignment()->setVertical(Style_Alignment::VERTICAL_CENTER);
         $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+1)->setWidth(35);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+1,$row)->applyFromArray($styleArray);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+1,$row)->getFill()->applyFromArray($fill);
@@ -889,8 +889,8 @@ class ExcelModel extends CI_Model
 		//Status
 		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+2,$row,'STATUS KEPEG');
 		$objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+2,$row,$col+2,$row+2);
-		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
-		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->getAlignment()->setVertical(Style_Alignment::VERTICAL_CENTER);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+2,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+2,$row)->getAlignment()->setVertical(Style_Alignment::VERTICAL_CENTER);
 		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+2,$row)->getAlignment()->setWrapText(true);
         $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+2)->setWidth(25);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+2,$row)->applyFromArray($styleArray);
@@ -899,12 +899,24 @@ class ExcelModel extends CI_Model
 		//Waktu
 		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+3,$row,'JAM KBM PER MINGGU');
 		$objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+3,$row,$col+3,$row+2);
-		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
-		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->getAlignment()->setVertical(Style_Alignment::VERTICAL_CENTER);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+3,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+3,$row)->getAlignment()->setVertical(Style_Alignment::VERTICAL_CENTER);
 		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+3,$row)->getAlignment()->setWrapText(true);
         $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+3)->setWidth(15);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+3,$row)->applyFromArray($styleArray);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+3,$row)->getFill()->applyFromArray($fill);
+		
+		//Waktu
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+4,$row,'PEMENUHAN 37 1/2 JAM');
+		$objPHPExcel->getActiveSheet()->mergeCellsByColumnAndRow($col+4,$row,$col+8,$row);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+4,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+4,$row)->applyFromArray($styleArray);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+4,$row)->getFill()->applyFromArray($fill);
+		
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+5,$row)->applyFromArray($styleArray);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+6,$row)->applyFromArray($styleArray);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+7,$row)->applyFromArray($styleArray);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+8,$row)->applyFromArray($styleArray);
         
 		//TM
 		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+9,$row,'KETERANGAN TM');
@@ -922,15 +934,19 @@ class ExcelModel extends CI_Model
 		$col=0;
 		//No
 		//$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,'');
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->applyFromArray($styleArray);
         
 		//Nama
 		//$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+1,$row,'NAMA');
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+1,$row)->applyFromArray($styleArray);
         
 		//Status
 		//$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+2,$row,'STATUS');
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+2,$row)->applyFromArray($styleArray);
         
 		//Waktu
 		//$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+3,$row,'JAM KBM');
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+3,$row)->applyFromArray($styleArray);
         
 		//Jam
 		//TM
@@ -982,24 +998,30 @@ class ExcelModel extends CI_Model
 		$col=0;
 		//No
 		//$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,'');
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->applyFromArray($styleArray);
         
 		//Nama
 		//$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+1,$row,'NAMA');
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+1,$row)->applyFromArray($styleArray);
         
 		//Status
 		//$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+2,$row,'STATUS');
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+2,$row)->applyFromArray($styleArray);
         
 		//Waktu
 		//$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+3,$row,'JAM KBM');
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+3,$row)->applyFromArray($styleArray);
         
 		//Jam
 		//$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+4,$row,"PEMENUHAN 37 1/2 JAM");
         
 		//TM
 		//$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+9,$row,'KETERANGAN TM');
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+9,$row)->applyFromArray($styleArray);
         
 		//KETERANGAN KETIDAKHADIRAN
 		//$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+10,$row,'KETERANGAN KETIDAK HADIRAN');
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+10,$row)->applyFromArray($styleArray);
         
         $row=$row + 1;
 		$col=0;
