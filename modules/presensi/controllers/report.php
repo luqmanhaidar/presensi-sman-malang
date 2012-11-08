@@ -542,7 +542,8 @@ class Report extends CI_Controller {
     function week_print()
     {
 		if($this->session->userdata('week_type')=='M2'):
-			$data['title']		=	'LAPORAN MINGGUAN';
+			$data['title']		=	'REKAPITULASI PEMENUHAN JAM MENGAJAR GURU MAN 3 MALANG';
+			$data['periode']	=	'LAPORAN PERIODE '.$this->session->userdata('week_start').' s/d '.$this->session->userdata('week_finish');
 			$data['users']	    =	$this->userinfo->getAllRecords('','','','',$this->session->userdata('week_group'));
 			$this->load->theme('report/week2',$data);
 		else:
