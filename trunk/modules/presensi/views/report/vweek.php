@@ -37,32 +37,50 @@
 						<th scope="col" width="3%">No</th>
 						<th scope="col" width="5%" class="align-left hide-on-mobile">ID</th>
                         <th scope="col" class="align-left hide-on-mobile">Nama</th>
-                        <th scope="col" class="align-left hide-on-mobile">Minggu 1</th>
-                        <th scope="col" class="align-left hide-on-mobile">Minggu 2</th>
-						<th scope="col" class="align-left hide-on-mobile">Minggu 3</th>
-                        <th scope="col" class="align-left hide-on-mobile">Minggu 4</th>
-                        <th scope="col" class="align-left hide-on-mobile">Minggu 5</th>
+                        <th scope="col" class="align-left hide-on-mobile">Minggu Ke</th>
+                        <th scope="col" class="align-left hide-on-mobile">Total</th>
+                        <th scope="col" class="align-left hide-on-mobile">Keterangan</th>
 					</tr>
 				</thead>
                 <tbody>
                     <?php 
                         $x=1;
                         foreach($checks as $row):?>
-                        <tr <?php if($row['DayName']=='Sunday') print 'style="background:#FF0000;color:#222"'; ?>  >
+                        <tr>
     						<td><?=$x;?></td>
     						<td><?=$row['UserID'];?></td>
                             <td><?=$row['Name'];?></td>
-                            <td><?=$row['W'];?></td>
-                            <td><?=$row['W'];?></td>
-                            <td><?=$row['W'];?></td>
-                            <td><?=$row['W'];?></td>
-                            <td><?=$row['W'];?></td>
+                            <td><?=$row['Week_'];?></td>
+                            <td>
+                            <?php
+                                $d = $row['Total'];
+                                $hours = code(floor($d / 3600));
+                                $mins = code(floor(($d - ($hours*3600)) / 60));
+                                $seconds = code($d % 60);
+                                $tot_hour = $hours.":".$mins.":".$seconds;
+                                echo $tot_hour;
+                            ?>
+                            </td>
+                            <td>
+                            <?php 
+                                $dmk = (substr($var,0,2) * 3600) + (substr($var,3,2)*60) + (substr($var,6,2));
+                                if($d>=$dmk)
+                                    print "M";
+                                else
+                                    print "TM";    
+                            ?>
+                            </td>
 					   </tr>
                      <?php 
                         $x=$x+1;
                         endforeach;
                      ?>   
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="6"><?='DMK :'.$var;?></td>
+                    </tr>
+                </tfoot>
             </table>    
             <form method="post" target="_blank" action="<?=site_url('presensi/report/week_preview')?>" class="table-footer button-height large-margin-bottom">
                 <div class="float-right">
