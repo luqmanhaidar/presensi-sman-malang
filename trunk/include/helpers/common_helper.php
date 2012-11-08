@@ -164,7 +164,7 @@ function numericToTime($total){
     return $hour.':'.$minute.':'.$second;                      
 }
 
-function numericToTime($numeric){
+function numberToTime($numeric){
 	$hours = code(floor($numeric / 3600));
     $mins = code(floor(($numeric - ($hours*3600)) / 60));
     $seconds = code($numeric % 60);
