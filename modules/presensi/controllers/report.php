@@ -545,6 +545,7 @@ class Report extends CI_Controller {
 			$data['title']		=	'REKAPITULASI PEMENUHAN JAM MENGAJAR GURU MAN 3 MALANG';
 			$data['periode']	=	'LAPORAN PERIODE '.$this->session->userdata('week_start').' s/d '.$this->session->userdata('week_finish');
 			$data['users']	    =	$this->userinfo->getAllRecords('','','','',$this->session->userdata('week_group'));
+			$data['var']	    =	$this->presensi->getVariabelDataByVar('DMK');
 			$this->load->theme('report/week2',$data);
 		else:
 			$data['title']		=	'DAFTAR CEK CLOCK';
