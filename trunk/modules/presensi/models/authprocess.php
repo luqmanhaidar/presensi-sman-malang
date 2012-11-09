@@ -69,9 +69,9 @@ class Authprocess extends CI_Model
             $this->db->offset($offset);
         if (!empty($paging))    
             $this->db->limit($paging);     
-        $this->db->select(' NGAC_AUTHPROCESS.UserID,NGAC_USERINFO.Name,SUM(NGAC_AUTHPROCESS.ProcessDuration) AS Total');
+        $this->db->select('NGAC_AUTHPROCESS.UserID,NGAC_USERINFO.ID,NGAC_USERINFO.Description,NGAC_USERINFO.Name,SUM(NGAC_AUTHPROCESS.ProcessDuration) AS Total');
         $this->db->select('DATEPART(WEEK,NGAC_AUTHPROCESS.ProcessDateStart) - DATEPART(WEEK, NGAC_AUTHPROCESS.ProcessDateStart - DATEPART(day, NGAC_AUTHPROCESS.ProcessDateStart) + 1) AS Week_');
-        $this->db->group_by('NGAC_AUTHPROCESS.UserID, NGAC_USERINFO.Name');
+        $this->db->group_by('NGAC_AUTHPROCESS.UserID,NGAC_USERINFO.ID,NGAC_USERINFO.Name,NGAC_USERINFO.Description');
         $this->db->group_by('DATEPART(WEEK, NGAC_AUTHPROCESS.ProcessDateStart) - DATEPART(WEEK,NGAC_AUTHPROCESS.ProcessDateStart - DATEPART(day, NGAC_AUTHPROCESS.ProcessDateStart) + 1)');
         $this->db->join('NGAC_USERINFO','NGAC_USERINFO.ID = NGAC_AUTHPROCESS.UserID');
         $Q = $this->db->get('NGAC_AUTHPROCESS');
