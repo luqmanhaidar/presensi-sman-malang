@@ -832,7 +832,7 @@ class Report extends CI_Controller {
 			//$pdf->AddPage();
 			$strContent = $view;
 			$pdf->WriteHTML($strContent);
-			$pdf->Output("Lap-Mingguan-2.pdf","D");
+			$pdf->Output("Lap-Mingguan-2.pdf","I");
 		else:
 			$data['title']		=	'DAFTAR CEK CLOCK';
 			$data['days']	    =   $this->authlog->getDay($this->session->userdata('week_start'),$this->session->userdata('week_finish'));
