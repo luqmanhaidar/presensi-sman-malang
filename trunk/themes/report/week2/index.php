@@ -17,8 +17,8 @@
 			<th rowspan="2">STATUS <br/>KEPEG</th>
 			<th rowspan="2">JAM KBM <br/>PER<br/>MINGGU</th>
 			<th colspan="5">PEMENUHAN 37 1/2 JAM</th>
-			<th rowspan="2">KETERANGAN TM</th>
-			<th rowspan="2">KETERANGAN KETIDAK HADIRAN</th>
+			<th rowspan="3">KETERANGAN TM</th>
+			<th rowspan="3">KETERANGAN KETIDAK HADIRAN</th>
 		</tr>
 		<tr>
 			<th rowspan="1">MINGGU<br/>KE 1</th>
