@@ -390,7 +390,7 @@ class Report extends CI_Controller {
                 $pdf->SetY($y);
     		    $pdf->SetX($x+($j*10)); 
                 $pdf->MultiCell(10,10,"\n"."", 1, 'C', $colour, 0, '', '', true);
-                $pdf->SetXY($x_image,$y);
+                $pdf->SetXY($x_image,$y+2);
                 $pdf->Image('./assets/signature/31222.jpg','','',5, 5, '', '', 'T', false,75, '', false, false,0, false, false, false);
                 $x_image=$x_image+10.1;
             endfor;
