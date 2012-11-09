@@ -121,14 +121,16 @@ class Report extends CI_Controller {
 	
 	function personal_pdf()
     {
-		$this->load->library('pdf');
-		$data['title']		=	'laporan Individu';
+        $this->load->helper('tcpdf');    
+        $data['title']		=	'laporan Individu';
         $data['name']       =   $this->session->userdata('personal_name');
 		$data['checks']		=	$this->authlog->getAllRecords('','',$this->session->userdata('personal_search'),$this->session->userdata('personal_key'),$this->session->userdata('personal_start'),$this->session->userdata('personal_finish'));
 		$data['user']		=	$this->session->userdata('personal_search');
         $this->load->vars($data);
-        $file = $this->load->theme('report/personal',$data,TRUE);
-		$this->pdf->pdf_create("Test",'Laporan Individu');
+        $content = $this->load->theme('report/personal',$data,TRUE);
+        $html2pdf = html2pdf('P','A4');
+        $html2pdf->WriteHTML($content);
+        $html2pdf->Output('Laporan-Individu.pdf');
 	}
     
     function personal_excel()
