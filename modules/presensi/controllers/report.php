@@ -388,7 +388,7 @@ class Report extends CI_Controller {
                     $colour=0;
                 $pdf->SetY($y);
     		    $pdf->SetX($x+($j*10)); 
-				$pdf->MultiCell(10,10,"\n"."S", 1, 'C', $colour, 0, '', '', true);
+				$pdf->MultiCell(12,10,"\n"."", 1, 'C', $colour, 0, '', '', true);
             endfor;
 			
             $y=$y-1;
