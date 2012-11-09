@@ -390,13 +390,13 @@ class Report extends CI_Controller {
                 $pdf->SetY($y);
     		    $pdf->SetX($x+($j*10)); 
                 $pdf->MultiCell(10,10,"\n"."", 1, 'C', $colour, 0, '', '', true);
-                $pdf->SetXY($x_image,$y+2);
+                $pdf->SetXY($x_image,$y);
                 $pdf->Image('./assets/signature/31222.jpg','','',5, 5, '', '', 'T', false,75, '', false, false,0, false, false, false);
                 $x_image=$x_image+10.1;
             endfor;
             
             //$y = $y-1;
-			$pdf->SetY($y-1);
+			//$pdf->SetY($y-1);
             $pdf->MultiCell(7,40,"\n".$this->others->getUserTime($rec['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Sakit"), 1, 'C', 0, 0, '', '', true);
             $pdf->MultiCell(7,40,"\n".$this->others->getUserTime($rec['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Ijin"), 1, 'C', 0, 0, '', '', true);
             $pdf->MultiCell(7,40,"\n".$this->others->getUserTime($rec['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Cuti"), 1, 'C', 0, 0, '', '', true);
