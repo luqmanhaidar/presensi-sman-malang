@@ -865,7 +865,7 @@ class ExcelModel extends CI_Model
 		$col=0;
 		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,"LAPORAN PERIODE ".$this->session->userdata('week_start').' s/d '.$this->session->userdata('week_finish'));
 		
-		$row=$row+1;
+		$row=$row+2;
         $col=0;
 		
 		//No
