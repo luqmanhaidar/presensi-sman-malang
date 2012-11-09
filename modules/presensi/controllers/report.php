@@ -380,7 +380,7 @@ class Report extends CI_Controller {
             
             /*Paraf Dtg PK*/
             $x=64;
-            //$x_image=76;
+            $x_image=76;
             for($j=1;$j<=$days;$j++):
                 $pdf->SetFillColor(205, 201, 201);
                 if(getSunday($year,$month,code($j)))
@@ -390,10 +390,9 @@ class Report extends CI_Controller {
                 $pdf->SetY($y);
     		    $pdf->SetX($x+($j*10)); 
                 $pdf->MultiCell(10,10,"\n"."", 1, 'C', $colour, 0, '', '', true);
-                //$pdf->SetXY($x_image,$y);
-                //$pdf->Image('./assets/signature/31222.jpg','','',5, 5, '', '', 'T', false,75, '', false, false,0, false, false, false);
-                //$pdf->Image('./assets/signature/31222.jpg','','',5, 5, '', '', 'T', false,75, '', false, false,0, false, false, false);
-                //$x_image=$x_image+10.1;
+                $pdf->SetXY($x_image,$y);
+                $pdf->Image('./assets/signature/31222.jpg','','',5, 5, '', '', 'T', false,75, '', false, false,0, false, false, false);
+                $x_image=$x_image+10.1;
             endfor;
             
             //$y = $y-1;
