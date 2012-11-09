@@ -391,7 +391,7 @@ class Report extends CI_Controller {
     		    $pdf->SetX($x+($j*10)); 
                 $pdf->MultiCell(10,10,"\n"."", 1, 'C', $colour, 0, '', '', true);
 				if(strlen($this->authlog->getUserTime(code($j).'-'.$month.'-'.$year,$rec['UserID'],1))>2):
-					$pdf->SetXY($x_image,$y);
+					$pdf->SetXY($x_image,$y+1);
 					$pdf->Image('./assets/signature/31222.jpg','','',5, 5, '', '', 'T', false,75, '', false, false,0, false, false, false);
 				endif;
                 $x_image=$x_image+10.1;
