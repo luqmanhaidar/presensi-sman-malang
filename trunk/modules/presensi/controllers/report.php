@@ -354,22 +354,6 @@ class Report extends CI_Controller {
         
         $pdf->SetFillColor(255, 255, 255);
         
-		$i=1;
-		$x=7;
-        $y=$y+6;
-		foreach($records as $rec):
-			$pdf->SetY($y);$pdf->SetX($x); 	
-			$pdf->Cell(10,40,$i, 1, 1, 'C', 1, '', 0, false, 'T', 'C');
-			$y=$y+10;
-			$i++;
-			
-			$this_y = $pdf->getY();
-            if($this_y >= 240):
-	               $pdf->AddPage();
-            endif;
-			
-		endforeach;
-		/*
         $i=1;
         //$x=7;
         $y=$y+6;
@@ -393,27 +377,32 @@ class Report extends CI_Controller {
             $pdf->SetY($y+30);
             $pdf->SetX($x+55);  
             $pdf->MultiCell(12,10,"\n".'Plg.PK', 1, 'C', 0, 0, '', '', true);
-            */
-            /*Paraf Dtg PK
+            
+            /*Paraf Dtg PK*/
             $x=64;
+            //$x_image=76;
             for($j=1;$j<=$days;$j++):
                 $pdf->SetFillColor(205, 201, 201);
                 if(getSunday($year,$month,code($j)))
                     $colour=1;
                 else    
                     $colour=0;
-                //$pdf->SetY($y+1);
+                $pdf->SetY($y);
     		    $pdf->SetX($x+($j*10)); 
-				$pdf->MultiCell(10,12,"\n"."", 1, 'C', $colour, 0, '', '', true);
+                $pdf->MultiCell(10,10,"\n"."", 1, 'C', $colour, 0, '', '', true);
+                //$pdf->SetXY($x_image,$y);
+                //$pdf->Image('./assets/signature/31222.jpg','','',5, 5, '', '', 'T', false,75, '', false, false,0, false, false, false);
+                //$pdf->Image('./assets/signature/31222.jpg','','',5, 5, '', '', 'T', false,75, '', false, false,0, false, false, false);
+                //$x_image=$x_image+10.1;
             endfor;
-			*/
-           // $y=$y-1;
-           // $pdf->MultiCell(7,40,"\n".$this->others->getUserTime($rec['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Sakit"), 1, 'C', 0, 0, '', '', true);
-           // $pdf->MultiCell(7,40,"\n".$this->others->getUserTime($rec['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Ijin"), 1, 'C', 0, 0, '', '', true);
-           // $pdf->MultiCell(7,40,"\n".$this->others->getUserTime($rec['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Cuti"), 1, 'C', 0, 0, '', '', true);
-           // $pdf->MultiCell(7,40,"\n".$this->others->getUserTime($rec['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Tugas"), 1, 'C', 0, 0, '', '', true);
             
-            /*Dtg PK
+            //$y = $y-1;
+            $pdf->MultiCell(7,40,"\n".$this->others->getUserTime($rec['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Sakit"), 1, 'C', 0, 0, '', '', true);
+            $pdf->MultiCell(7,40,"\n".$this->others->getUserTime($rec['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Ijin"), 1, 'C', 0, 0, '', '', true);
+            $pdf->MultiCell(7,40,"\n".$this->others->getUserTime($rec['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Cuti"), 1, 'C', 0, 0, '', '', true);
+            $pdf->MultiCell(7,40,"\n".$this->others->getUserTime($rec['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Tugas"), 1, 'C', 0, 0, '', '', true);
+            
+            /*Dtg PK*/
             $y=$y+10;
             $x=64;
             for($j=1;$j<=$days;$j++):
@@ -426,13 +415,13 @@ class Report extends CI_Controller {
     		    $pdf->SetX($x+($j*10)); 
                 $pdf->MultiCell(10,10,"\n".substr($this->authlog->getUserTime(code($j).'-'.$month.'-'.$year,$rec['UserID'],1),0,5), 1, 'C', $colour, 0, '', '', true);
             endfor;
-            */
+            
             /*$pdf->MultiCell(7,10,"\n".'1', 1, 'C', 0, 0, '', '', true);
             $pdf->MultiCell(7,10,"\n".'1', 1, 'C', 0, 0, '', '', true);
             $pdf->MultiCell(7,10,"\n".'1', 1, 'C', 0, 0, '', '', true);
             $pdf->MultiCell(7,10,"\n".'1', 1, 'C', 0, 0, '', '', true);*/
             
-            /* Paraf Plg PK
+            /* Paraf Plg PK*/
             $y=$y+10;
             $x=64;
             for($j=1;$j<=$days;$j++):
@@ -446,13 +435,13 @@ class Report extends CI_Controller {
     		    $pdf->SetX($x+($j*10)); 
                 $pdf->MultiCell(10,10,"\n",1, 'C',$colour,0, '', '', true);
             endfor;
-            */
+            
             /*$pdf->MultiCell(7,10,"\n".'1', 1, 'C', 0, 0, '', '', true);
             $pdf->MultiCell(7,10,"\n".'1', 1, 'C', 0, 0, '', '', true);
             $pdf->MultiCell(7,10,"\n".'1', 1, 'C', 0, 0, '', '', true);
             $pdf->MultiCell(7,10,"\n".'1', 1, 'C', 0, 0, '', '', true);*/
             
-            /* Paraf Plg PK
+            /* Paraf Plg PK*/
             $y=$y+10;
             $x=64;
             for($j=1;$j<=$days;$j++):
@@ -465,25 +454,24 @@ class Report extends CI_Controller {
     		    $pdf->SetX($x+($j*10)); 
                 $pdf->MultiCell(10,10,"\n".substr($this->authlog->getUserTime(code($j).'-'.$month.'-'.$year,$rec['UserID'],2),0,5), 1, 'C', $colour, 0, '', '', true);
             endfor;
-			*/
             /*
             $pdf->MultiCell(7,10,"\n".'1', 1, 'C', 0, 0, '', '', true);
             $pdf->MultiCell(7,10,"\n".'1', 1, 'C', 0, 0, '', '', true);
             $pdf->MultiCell(7,10,"\n".'1', 1, 'C', 0, 0, '', '', true);
             $pdf->MultiCell(7,10,"\n".'1', 1, 'C', 0, 0, '', '', true);*/
             
-            //$y=$y+10;
-            //$i++;
+            $y=$y+10;
+            $i++;
             //$pdf->SetY($y);
-            //$this_y = $pdf->getY();
-            //if($this_y >= 240):
-	        //       $pdf->AddPage();
-                   //$y=7;
-                   //$x=7;
+            $this_y=$pdf->getY();
+            if($this_y >= 240):
+	               $pdf->AddPage();
+                   $y=7;
+                   $x=7;
                    //$pdf->SetY($y);$pdf->SetX($x); 	
                    //$pdf->Cell(10, 12,'No', 1, 1, 'C', 1, '', 0, false, 'T', 'C');
-            //endif;          
-        //endforeach;
+            endif;          
+        endforeach;
         
         
         $pdf->Output("Laporan-Bulanan.pdf","I"); 
