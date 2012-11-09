@@ -801,7 +801,7 @@ class Report extends CI_Controller {
 			$data['periode']	=	'LAPORAN PERIODE '.$this->session->userdata('week_start').' s/d '.$this->session->userdata('week_finish');
 			$data['start']      =   $this->session->userdata('week_start');
             $data['end']        =   $this->session->userdata('week_finish'); 
-            $data['users']	    =	$this->authprocess->getAllWeekRecord();
+            $data['users']	    =	$this->userinfo->getAllRecords('','','','',$this->session->userdata('week_group'));
 			$data['var']	    =	$this->presensi->getVariabelDataByVar('DMK');
 			$this->load->theme('report/week2',$data);
 		else:
@@ -826,13 +826,7 @@ class Report extends CI_Controller {
             $data['users']	    =	$this->userinfo->getAllRecords('','','','',$this->session->userdata('week_group'));
 			$data['var']	    =	$this->presensi->getVariabelDataByVar('DMK');
 			$file = $this->load->theme('report/week2',$data,TRUE);
-			$this->pdf->pdf_create($file,$data['title'],$stream=TRUE,'A4',"Landscape");	
-			//$this->load->helper('tcpdf');
-			//$pdf = html2pdf();
-			//$pdf->AddPage();
-			//$strContent = "google.com";
-			//$pdf->WriteHTML($strContent);
-			//$pdf->Output("Lap-Mingguan-2.pdf","I");
+			$this->pdf->pdf_create($file,$data['title'],$stream=TRUE,'A4',"Landscape");
 		else:
 			$data['title']		=	'DAFTAR CEK CLOCK';
 			$data['days']	    =   $this->authlog->getDay($this->session->userdata('week_start'),$this->session->userdata('week_finish'));
@@ -843,16 +837,7 @@ class Report extends CI_Controller {
 			$file = $this->load->theme('report/week',$data,TRUE);
 			$this->pdf->pdf_create($file,$data['title']);
 		endif;	
-        /**$start = $this->session->userdata('week_start'); 
-        $end   = $this->session->userdata('week_finish');
-        $group = $this->session->userdata('week_group'); 
-        $pos   = $this->usergroup->getPositionData($this->session->userdata('week_group'));
-        $recs  = $this->userinfo->getAllRecords('','','','',$group);
-        $days  = $this->authlog->getDay($start,$end);  
-        $var   = $this->presensi->getVariabelDataByVar('DMK');
-		$excel = $this->excelModel->week_pdf($recs,$start,$end,$group,$days,$pos,$var);
-        $data = file_get_contents("assets/Lap-Mingguan.pdf"); // Read the file's contents
-        force_download("Lap-Mingguan",$data); **/
+        
 	}
     
     function week_excel()
