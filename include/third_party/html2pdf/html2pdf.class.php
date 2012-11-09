@@ -40,7 +40,7 @@ if (!defined('__CLASS_HTML2PDF__')) {
          */
         public $parsingHtml = null;
 
-        protected $_langue           = 'fr';        // locale of the messages
+        protected $_langue           = 'en';        // locale of the messages
         protected $_orientation      = 'P';         // page orientation : Portrait ou Landscape
         protected $_format           = 'A4';        // page format : A4, A3, ...
         protected $_encoding         = '';          // charset encoding
