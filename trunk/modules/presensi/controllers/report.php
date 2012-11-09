@@ -825,14 +825,14 @@ class Report extends CI_Controller {
             $data['end']        =   $this->session->userdata('week_finish'); 
             $data['users']	    =	$this->userinfo->getAllRecords('','','','',$this->session->userdata('week_group'));
 			$data['var']	    =	$this->presensi->getVariabelDataByVar('DMK');
-			$view = $this->load->theme('report/week2',$data,TRUE);
-			
-			$this->load->helper('tcpdf');
-			$pdf = html2pdf();
+			$file = $this->load->theme('report/week2',$data,TRUE);
+			$this->pdf->pdf_create($file,$data['title']);	
+			//$this->load->helper('tcpdf');
+			//$pdf = html2pdf();
 			//$pdf->AddPage();
-			$strContent = "google.com";
-			$pdf->WriteHTML($strContent);
-			$pdf->Output("Lap-Mingguan-2.pdf","I");
+			//$strContent = "google.com";
+			//$pdf->WriteHTML($strContent);
+			//$pdf->Output("Lap-Mingguan-2.pdf","I");
 		else:
 			$data['title']		=	'DAFTAR CEK CLOCK';
 			$data['days']	    =   $this->authlog->getDay($this->session->userdata('week_start'),$this->session->userdata('week_finish'));
