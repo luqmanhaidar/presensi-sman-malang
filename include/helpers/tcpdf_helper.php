@@ -8,5 +8,5 @@
 	}
 	
 	function html2pdf(){
-		return new HTML2FPDF();
+		return new HTML2PDF(); 
 	}
