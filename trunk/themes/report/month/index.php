@@ -3,20 +3,20 @@
 <title><?=$title?></title>
 <link type="text/css" rel="stylesheet" href="<?=base_url('themes/report/css/style.css');?>" />
 </head>
-<body>
+<body style="font-size:10px;">
     <h3>KEMENTRIAN AGAMA</h3>
     <h3>MADRASAH ALIYAH NEGERI 3 MALANG</h3>
     <h3>JL.BANDUNG NO.7 Telp.0341-551357,588333</h3>
     <hr style="border:2px solid #222;" />
     <table class="vmonth">
     <!--<caption style="margin-bottom:15px;margin-top:5px;">-->
-		<h3><?=$title?></h3>
-		<h3><?='Bulan : '.indonesian_monthName($month).' '.$year;?></h3>
+		<h3 class="center"><?=$title?></h3>
+		<h3 class="center"><?='Bulan : '.indonesian_monthName($month).' '.$year;?></h3>
 	<!--</caption>-->
 	<thead>		
 		<tr>
 			<th rowspan="2">No</th>
-			<th style="width:20%;" rowspan="2">Nama</th>
+			<th rowspan="2">Nama</th>
 			<th rowspan="2">Paraf</th>
 			<th colspan="<?=$days?>">Tanggal</th>
 			<th colspan="4">Keterangan</th>
@@ -38,7 +38,7 @@
  ?>
     <tr>
        <th rowspan="4" class="white"><?=$x?></th>
-	   <th rowspan="4" class="white"><?=$row['Name'].'<br/>'.$row['Description'].'<br/>'.$row['Department']?></th>
+	   <th rowspan="4" class="white align-left"><?=$row['Name'].'<br/>'.$row['Description'].'<br/>'.$row['Department']?></th>
 	   <th class="white">Paraf</th>
 	   <?php for($i=1;$i<=$days;$i++):
             $date = $year."/".$month."/".code($i);
