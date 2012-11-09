@@ -354,6 +354,7 @@ class Report extends CI_Controller {
         
         $pdf->SetFillColor(255, 255, 255);
         
+		/*
         $i=1;
         //$x=7;
         $y=$y+6;
@@ -377,8 +378,8 @@ class Report extends CI_Controller {
             $pdf->SetY($y+30);
             $pdf->SetX($x+55);  
             $pdf->MultiCell(12,10,"\n".'Plg.PK', 1, 'C', 0, 0, '', '', true);
-            
-            /*Paraf Dtg PK*/
+            */
+            /*Paraf Dtg PK
             $x=64;
             for($j=1;$j<=$days;$j++):
                 $pdf->SetFillColor(205, 201, 201);
@@ -390,14 +391,14 @@ class Report extends CI_Controller {
     		    $pdf->SetX($x+($j*10)); 
 				$pdf->MultiCell(10,12,"\n"."", 1, 'C', $colour, 0, '', '', true);
             endfor;
-			
+			*/
             $y=$y-1;
             $pdf->MultiCell(7,40,"\n".$this->others->getUserTime($rec['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Sakit"), 1, 'C', 0, 0, '', '', true);
             $pdf->MultiCell(7,40,"\n".$this->others->getUserTime($rec['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Ijin"), 1, 'C', 0, 0, '', '', true);
             $pdf->MultiCell(7,40,"\n".$this->others->getUserTime($rec['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Cuti"), 1, 'C', 0, 0, '', '', true);
             $pdf->MultiCell(7,40,"\n".$this->others->getUserTime($rec['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Tugas"), 1, 'C', 0, 0, '', '', true);
             
-            /*Dtg PK*/
+            /*Dtg PK
             $y=$y+10;
             $x=64;
             for($j=1;$j<=$days;$j++):
@@ -410,13 +411,13 @@ class Report extends CI_Controller {
     		    $pdf->SetX($x+($j*10)); 
                 $pdf->MultiCell(10,10,"\n".substr($this->authlog->getUserTime(code($j).'-'.$month.'-'.$year,$rec['UserID'],1),0,5), 1, 'C', $colour, 0, '', '', true);
             endfor;
-            
+            */
             /*$pdf->MultiCell(7,10,"\n".'1', 1, 'C', 0, 0, '', '', true);
             $pdf->MultiCell(7,10,"\n".'1', 1, 'C', 0, 0, '', '', true);
             $pdf->MultiCell(7,10,"\n".'1', 1, 'C', 0, 0, '', '', true);
             $pdf->MultiCell(7,10,"\n".'1', 1, 'C', 0, 0, '', '', true);*/
             
-            /* Paraf Plg PK*/
+            /* Paraf Plg PK
             $y=$y+10;
             $x=64;
             for($j=1;$j<=$days;$j++):
@@ -430,13 +431,13 @@ class Report extends CI_Controller {
     		    $pdf->SetX($x+($j*10)); 
                 $pdf->MultiCell(10,10,"\n",1, 'C',$colour,0, '', '', true);
             endfor;
-            
+            */
             /*$pdf->MultiCell(7,10,"\n".'1', 1, 'C', 0, 0, '', '', true);
             $pdf->MultiCell(7,10,"\n".'1', 1, 'C', 0, 0, '', '', true);
             $pdf->MultiCell(7,10,"\n".'1', 1, 'C', 0, 0, '', '', true);
             $pdf->MultiCell(7,10,"\n".'1', 1, 'C', 0, 0, '', '', true);*/
             
-            /* Paraf Plg PK*/
+            /* Paraf Plg PK
             $y=$y+10;
             $x=64;
             for($j=1;$j<=$days;$j++):
@@ -449,6 +450,7 @@ class Report extends CI_Controller {
     		    $pdf->SetX($x+($j*10)); 
                 $pdf->MultiCell(10,10,"\n".substr($this->authlog->getUserTime(code($j).'-'.$month.'-'.$year,$rec['UserID'],2),0,5), 1, 'C', $colour, 0, '', '', true);
             endfor;
+			*/
             /*
             $pdf->MultiCell(7,10,"\n".'1', 1, 'C', 0, 0, '', '', true);
             $pdf->MultiCell(7,10,"\n".'1', 1, 'C', 0, 0, '', '', true);
