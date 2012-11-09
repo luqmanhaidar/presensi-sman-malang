@@ -829,7 +829,7 @@ class Report extends CI_Controller {
 			
 			$this->load->helper('tcpdf');
 			$pdf = html2pdf();
-			$pdf->AddPage();
+			//$pdf->AddPage();
 			$strContent = $view;
 			$pdf->WriteHTML($strContent);
 			$pdf->Output("Lap-Mingguan-2.pdf","D");
