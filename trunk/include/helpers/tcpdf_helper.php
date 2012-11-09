@@ -6,7 +6,7 @@
 		return new TCPDF(PDF_PAGE_ORIENTATION,PDF_UNIT,PDF_PAGE_FORMAT,true);
 	}
 	
-	function html2pdf($orientation='P',$paper='A4',$language='fr'){
+	function html2pdf($orientation='P',$paper='A4',$language='en'){
 		require_once(APPPATH.'third_party/html2pdf/html2pdf.class.php');
 		return new HTML2PDF($orientation,$paper,$language); 
 	}

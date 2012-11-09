@@ -236,7 +236,7 @@ class Report extends CI_Controller {
         $content=$this->load->theme('report/month',$data,TRUE);
         $html2pdf = html2pdf('L','A3');
         $html2pdf->WriteHTML($content);
-        $html2pdf->Output('exemple.pdf');
+        $html2pdf->Output('Laporan-Bulanan.pdf');
     }
     
 	function month2_pdf()
@@ -845,14 +845,17 @@ class Report extends CI_Controller {
 			$file = $this->load->theme('report/week2',$data,TRUE);
 			$this->pdf->pdf_create($file,$data['title'],$stream=TRUE,'A4',"Landscape");
 		else:
-			$data['title']		=	'DAFTAR CEK CLOCK';
+            $this->load->helper('tcpdf');    
+           $data['title']		=	'DAFTAR CEK CLOCK';
 			$data['days']	    =   $this->authlog->getDay($this->session->userdata('week_start'),$this->session->userdata('week_finish'));
 			$data['periode']	=	'Periode '.$this->session->userdata('week_start'). ' s/d '. $this->session->userdata('week_finish');
 			$data['users']	    =	$this->userinfo->getAllRecords('','','','',$this->session->userdata('week_group'));
 			$data['var']	    =	$this->presensi->getVariabelDataByVar('DMK');
 			$this->load->vars($data);
-			$file = $this->load->theme('report/week',$data,TRUE);
-			$this->pdf->pdf_create($file,$data['title']);
+			$content = $this->load->theme('report/week',$data,TRUE);
+            $html2pdf = html2pdf('P','A4');
+            $html2pdf->WriteHTML($content);
+            $html2pdf->Output('Lap-Mingguan.pdf');
 		endif;	
         
 	}
