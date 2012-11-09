@@ -833,10 +833,6 @@ class Report extends CI_Controller {
 			$strContent = $view;
 			$pdf->WriteHTML($strContent);
 			$pdf->Output("Lap-Mingguan-2.pdf","D");
-			//$this->load->library('pdfcrowd');
-			//$this->load->helper('tcpdf')
-			//$client = cpdf();
-			//$pdf = $client->convertURI('http://bbc.co.uk/');
 		else:
 			$data['title']		=	'DAFTAR CEK CLOCK';
 			$data['days']	    =   $this->authlog->getDay($this->session->userdata('week_start'),$this->session->userdata('week_finish'));
