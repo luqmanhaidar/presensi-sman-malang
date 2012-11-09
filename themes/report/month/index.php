@@ -9,10 +9,10 @@
     <h3>JL.BANDUNG NO.7 Telp.0341-551357,588333</h3>
     <hr style="border:2px solid #222;" />
     <table class="vmonth">
-    <caption style="margin-bottom:15px;margin-top:5px;">
+    <!--<caption style="margin-bottom:15px;margin-top:5px;">-->
 		<h3><?=$title?></h3>
 		<h3><?='Bulan : '.indonesian_monthName($month).' '.$year;?></h3>
-	</caption>
+	<!--</caption>-->
 	<thead>		
 		<tr>
 			<th rowspan="2">No</th>

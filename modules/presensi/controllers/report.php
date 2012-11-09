@@ -214,7 +214,6 @@ class Report extends CI_Controller {
 		$year  = $this->session->userdata('month_year');
 		$data['position']	=	$this->usergroup->getPositionData($group);
 		$data['checks']		=	$this->authlog->getMonthRecords('','',$month,$year,$group);
-        //$data['days']	    =   $this->authlog->getDay($this->session->userdata('month_start'),$this->session->userdata('month_finish'));
 		$data['days']       =   days_in_month($this->session->userdata('month_month'));
         $data['month']      =   $this->session->userdata('month_month');
         $data['year']       =   $this->session->userdata('month_year');    
@@ -222,7 +221,25 @@ class Report extends CI_Controller {
         $this->load->theme('report/month',$data);
 	}
 	
-	function month_pdf()
+    function month_pdf(){
+        $this->load->helper('tcpdf');    
+        $data['title']		=	'DAFTAR HADIR PEGAWAI';
+        $group = $this->session->userdata('month_group');
+        $month = $this->session->userdata('month_month');
+		$year  = $this->session->userdata('month_year');
+		$data['position']	=	$this->usergroup->getPositionData($group);
+		$data['checks']		=	$this->authlog->getMonthRecords('','',$month,$year,$group);
+		$data['days']       =   days_in_month($this->session->userdata('month_month'));
+        $data['month']      =   $this->session->userdata('month_month');
+        $data['year']       =   $this->session->userdata('month_year');    
+        $this->load->vars($data);
+        $content=$this->load->theme('report/month',$data,TRUE);
+        $html2pdf = html2pdf('L','A4');
+        $html2pdf->WriteHTML($content);
+        $html2pdf->Output('exemple.pdf');
+    }
+    
+	function month2_pdf()
     {
 		/*$this->load->library('pdf');
         $data['title']		=	'DAFTAR HADIR PEGAWAI';
