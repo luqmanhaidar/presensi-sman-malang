@@ -819,19 +819,20 @@ class Report extends CI_Controller {
     {
 		$this->load->library('pdf');
 		if($this->session->userdata('week_type')=='M2'):
-			/*$data['title']		=	'REKAPITULASI PEMENUHAN JAM MENGAJAR GURU MAN 3 MALANG';
+			$data['title']		=	'REKAPITULASI PEMENUHAN JAM MENGAJAR GURU MAN 3 MALANG';
 			$data['periode']	=	'LAPORAN PERIODE '.$this->session->userdata('week_start').' s/d '.$this->session->userdata('week_finish');
-			$data['users']	    =	$this->userinfo->getAllRecords('','','','',$this->session->userdata('week_group'));
+			$data['start']      =   $this->session->userdata('week_start');
+            $data['end']        =   $this->session->userdata('week_finish'); 
+            $data['users']	    =	$this->userinfo->getAllRecords('','','','',$this->session->userdata('week_group'));
 			$data['var']	    =	$this->presensi->getVariabelDataByVar('DMK');
-			$file = $this->load->theme('report/week2',$data,TRUE);
-			$this->pdf->pdf_create($file,$data['title']);*/
-			$periode  = 'LAPORAN PERIODE '.$this->session->userdata('week_start').' s/d '.$this->session->userdata('week_finish');
+			$view = $this->load->theme('report/week2',$data,TRUE);
+			
 			$this->load->helper('tcpdf');
 			$pdf = html2pdf();
 			$pdf->AddPage();
-			$strContent = "<h1>Test</h1>";
+			$strContent = $view;
 			$pdf->WriteHTML($strContent);
-			$pdf->Output("sample.pdf","D");
+			$pdf->Output("Lap-Mingguan-2.pdf","D");
 			//$this->load->library('pdfcrowd');
 			//$this->load->helper('tcpdf')
 			//$client = cpdf();
