@@ -827,57 +827,11 @@ class Report extends CI_Controller {
 			$this->pdf->pdf_create($file,$data['title']);*/
 			$periode  = 'LAPORAN PERIODE '.$this->session->userdata('week_start').' s/d '.$this->session->userdata('week_finish');
 			$this->load->helper('tcpdf');
-			$pdf = tcpdf();
-			$pdf->setPageOrientation ('L','Letter',8); 
-			$pdf->setPrintHeader(false);
-			$pdf->setPrintFooter(false);
-        
-			$pdf->AddPage("L","A4");
-			/** initialization of x & y axis **/
-			$x = 7;
-			$y = 7;
-			$pdf->SetFont('helvetica', '', 12);
-			$pdf->SetFillColor(255, 255, 255);
-			$pdf->SetTextColor(0, 0, 0);
-			$pdf->SetDrawColor(0, 0, 0);
-			$pdf->SetLineWidth(0.1);
-			
-			/** Cel Title **/
-			$pdf->SetY($y);$pdf->SetX($x); 	
-			$pdf->Cell(275, 4,'REKAPITULASI PEMENUHAN JAM MENGAJAR GURU MAN 3 MALANG', 0, 0, 'L', 1); 
-			
-			$x2=$x+400;
-			$y=$y+8;
-			$x=$x+0;
-			$style = array('width' => 0.7, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0));
-			$pdf->Line($x,$y,$x2,$y,$style);
-			
-			$y=$y+2;
-			$x=$x+0;
-			$pdf->SetY($y);$pdf->SetX($x);
-			$pdf->Cell(350, 4,$periode, 0, 0, 'L', 1);
-			
-			$pdf->SetFont('helvetica', '', 8);
-			$pdf->SetFillColor(205, 201, 201);
-			$pdf->SetLineWidth(0.1);
-			$y=$y+7;
-			$x=$x+0;
-			$pdf->SetY($y);$pdf->SetX($x); 	
-			$pdf->Cell(10,15,'NO', 1, 1, 'C', 1, '', 0, false, 'T', 'C');
-        
-			$y=$y+0;
-			$x=$x+10;
-			$pdf->SetY($y);$pdf->SetX($x); 	
-			$pdf->Cell(45,15,'NAMA', 1, 1, 'C', 1, '', 0, false, 'T','C');
-			
-			$y=$y+0;
-			$x=$x+10;
-			$pdf->SetY($y);$pdf->SetX($x); 	
-			$pdf->Cell(45,15,'STATUS KEPEG',1,1,'C', 0, '', 0, false,'T','C');
-			
-			        
-			//$pdf->SetFillColor(255, 255, 255);
-			$pdf->Output("Laporan-Mingguan-2.pdf","I");
+			$pdf = html2pdf();
+			$pdf->AddPage();
+			$strContent = "google.com";
+			$pdf->WriteHTML($strContent);
+			$pdf->Output("sample.pdf","I");
 		else:
 			$data['title']		=	'DAFTAR CEK CLOCK';
 			$data['days']	    =   $this->authlog->getDay($this->session->userdata('week_start'),$this->session->userdata('week_finish'));
