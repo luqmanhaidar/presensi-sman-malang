@@ -873,7 +873,7 @@ class Report extends CI_Controller {
 			$y=$y+0;
 			$x=$x+45;
 			$pdf->SetY($y);$pdf->SetX($x); 	
-			$pdf->Cell(20,15,'STATUS'."/n"."KEPEG", 1, 1, 'C', 1, '', 0, false, 'T','C');
+			$pdf->Cell(20,15,"STATUS\nKEPEG", 1, 1, 'C', 1, '', 0, false, 'T','C');
 			
 			        
 			//$pdf->SetFillColor(255, 255, 255);
