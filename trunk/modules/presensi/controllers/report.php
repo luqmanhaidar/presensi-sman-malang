@@ -380,8 +380,8 @@ class Report extends CI_Controller {
             
             /*Paraf Dtg PK*/
             $x=64;
-            $x_image=76;
-			$y_image=$y;
+            //$x_image=76;
+			//$y_image=$y;
             for($j=1;$j<=$days;$j++):
                 $pdf->SetFillColor(205, 201, 201);
                 if(getSunday($year,$month,code($j)))
@@ -392,11 +392,11 @@ class Report extends CI_Controller {
     		    $pdf->SetX($x+($j*10)); 
                 $pdf->MultiCell(10,10,"\n"."", 1, 'C', $colour, 0, '', '', true);
 				//$pdf->SetXY($x_image,$y_image);
-				if(strlen($this->authlog->getUserTime(code($j).'-'.$month.'-'.$year,$rec['UserID'],1))>2):
+				//if(strlen($this->authlog->getUserTime(code($j).'-'.$month.'-'.$year,$rec['UserID'],1))>2):
 					//$pdf->Image('./assets/signature/'.$rec['UserID'].'.jpg','','',5, 5, '', '', 'T', false,75, '', false, false,0, false, false, false);
-					$pdf->Image('./assets/signature/'.$rec['UserID'].'.jpg', $x_image, $y_image, 75, 113, 'JPG', 'http://www.tcpdf.org', '', true, 150, '', false, false, 1, false, false, false);
-				endif;
-                $x_image=$x_image+10.1;
+					//$pdf->Image('./assets/signature/'.$rec['UserID'].'.jpg', $x_image, $y_image, 75, 113, 'JPG', 'http://www.tcpdf.org', '', true, 150, '', false, false, 1, false, false, false);
+				//endif;
+                //$x_image=$x_image+10.1;
             endfor;
             
             //$y = $y-1;
