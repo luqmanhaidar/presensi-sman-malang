@@ -826,12 +826,15 @@ class Report extends CI_Controller {
 			$file = $this->load->theme('report/week2',$data,TRUE);
 			$this->pdf->pdf_create($file,$data['title']);*/
 			$periode  = 'LAPORAN PERIODE '.$this->session->userdata('week_start').' s/d '.$this->session->userdata('week_finish');
-			$this->load->helper('tcpdf');
+			/**$this->load->helper('tcpdf');
 			$pdf = html2pdf();
 			$pdf->AddPage();
 			$strContent = "<h1>Test</h1>";
 			$pdf->WriteHTML($strContent);
-			$pdf->Output("sample.pdf","I");
+			$pdf->Output("sample.pdf","I");**/
+			$this->load->library('pdfcrowd');
+			$client = new Pdfcrowd("hendarsyahss", "34169c6492f42771ee112a7314c59fe6");
+			$pdf = $client->convertURI('http://bbc.co.uk/');
 		else:
 			$data['title']		=	'DAFTAR CEK CLOCK';
 			$data['days']	    =   $this->authlog->getDay($this->session->userdata('week_start'),$this->session->userdata('week_finish'));
