@@ -1101,7 +1101,25 @@ class Report extends CI_Controller {
         $this->load->theme('report/se',$data);
 	}
 	
-	function se_pdf()
+    function se_pdf(){
+        $this->load->helper('tcpdf');    
+        $data['title']		=	'DAFTAR HADIR PEGAWAI';
+        $group = $this->session->userdata('se_group');
+        $month = $this->session->userdata('se_month');
+		$year  = $this->session->userdata('se_year');
+		$data['position']	=	$this->usergroup->getPositionData($group);
+		$data['checks']		=	$this->authlog->getMonthRecords('','',$month,$year,$group);
+		$data['days']       =   days_in_month($this->session->userdata('se_month'));
+        $data['month']      =   $this->session->userdata('se_month');
+        $data['year']       =   $this->session->userdata('se_year');    
+        $this->load->vars($data);
+        $content=$this->load->theme('report/month',$data,TRUE);
+        $html2pdf = html2pdf('L','A3');
+        $html2pdf->WriteHTML($content);
+        $html2pdf->Output('Laporan-Pegawai-Khusus.pdf');
+    }
+    
+	function se_pdf2()
     {
 		/**$this->load->library('pdf');
         $data['title']		=	'DAFTAR HADIR PEGAWAI';
