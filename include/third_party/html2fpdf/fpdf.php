@@ -1830,7 +1830,12 @@ function _putfonts()
 		fclose($f);
 		$this->_out('endobj');
 	}
-	set_magic_quotes_runtime($mqr);
+	if(get_magic_quotes_runtime())
+{
+    // Deactivate
+    set_magic_quotes_runtime(false);
+}
+	//set_magic_quotes_runtime($mqr);
 	foreach($this->fonts as $k=>$font)
 	{
 		//Font objects
