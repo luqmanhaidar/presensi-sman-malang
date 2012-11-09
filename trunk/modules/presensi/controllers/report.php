@@ -380,6 +380,7 @@ class Report extends CI_Controller {
             
             /*Paraf Dtg PK*/
             $x=64;
+            $x_image=76;
             for($j=1;$j<=$days;$j++):
                 $pdf->SetFillColor(205, 201, 201);
                 if(getSunday($year,$month,code($j)))
@@ -389,8 +390,13 @@ class Report extends CI_Controller {
                 $pdf->SetY($y);
     		    $pdf->SetX($x+($j*10)); 
                 $pdf->MultiCell(10,10,"\n"."", 1, 'C', $colour, 0, '', '', true);
+                $pdf->SetXY($x_image,$y);
+                $pdf->Image('./assets/signature/31222.jpg','','',5, 5, '', '', 'T', false,75, '', false, false,0, false, false, false);
+                $pdf->Image('./assets/signature/31222.jpg','','',5, 5, '', '', 'T', false,75, '', false, false,0, false, false, false);
+                $x_image=$x_image+10.1;
             endfor;
             
+            //$y = $y-1;
             $pdf->MultiCell(7,40,"\n".$this->others->getUserTime($rec['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Sakit"), 1, 'C', 0, 0, '', '', true);
             $pdf->MultiCell(7,40,"\n".$this->others->getUserTime($rec['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Ijin"), 1, 'C', 0, 0, '', '', true);
             $pdf->MultiCell(7,40,"\n".$this->others->getUserTime($rec['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Cuti"), 1, 'C', 0, 0, '', '', true);
@@ -458,7 +464,7 @@ class Report extends CI_Controller {
             $i++;
             //$pdf->SetY($y);
             $this_y=$pdf->getY();
-            if($this_y >= 260):
+            if($this_y >= 240):
 	               $pdf->AddPage();
                    $y=7;
                    $x=7;
