@@ -834,7 +834,7 @@ class Report extends CI_Controller {
 			$pdf->Output("sample.pdf","I");**/
 			//$this->load->library('pdfcrowd');
 			$this->load->helper('tcpdf')
-			$client = cpdf;
+			$client = cpdf();
 			$pdf = $client->convertURI('http://bbc.co.uk/');
 		else:
 			$data['title']		=	'DAFTAR CEK CLOCK';
