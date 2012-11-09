@@ -832,7 +832,8 @@ class Report extends CI_Controller {
 			$strContent = "<h1>Test</h1>";
 			$pdf->WriteHTML($strContent);
 			$pdf->Output("sample.pdf","I");**/
-			$this->load->library('pdfcrowd');
+			//$this->load->library('pdfcrowd');
+			$this->load->helper('tcpdf')
 			$client = cpdf;
 			$pdf = $client->convertURI('http://bbc.co.uk/');
 		else:
