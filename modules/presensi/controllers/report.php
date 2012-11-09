@@ -829,7 +829,7 @@ class Report extends CI_Controller {
 			$this->load->helper('tcpdf');
 			$pdf = html2pdf();
 			$pdf->AddPage();
-			$strContent = "google.com";
+			$strContent = "<h1>Test</h1>";
 			$pdf->WriteHTML($strContent);
 			$pdf->Output("sample.pdf","I");
 		else:
