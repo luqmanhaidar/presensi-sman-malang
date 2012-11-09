@@ -395,6 +395,7 @@ class Report extends CI_Controller {
 					$pdf->SetXY($x_image,$y);
 					$pdf->Image('./assets/signature/31222.jpg','','',5, 5, '', '', 'T', false,75, '', false, false,0, false, false, false);
 					$y=$y-2;
+					$pdf->SetXY($x_image,$y);
 				endif;
                 $x_image=$x_image+10.1;
             endfor;
