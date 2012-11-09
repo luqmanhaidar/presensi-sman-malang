@@ -675,7 +675,7 @@ class Report extends CI_Controller {
                         $wsk = $w2; 
                         $wsp = $wp2;
                     endif;
-                elseif(($row['GroupID']>=3)):
+                elseif(($row['GroupID']>2)):
                     $wmk = $dbSkStart;
                     $dt  = $dbSpWork;
                     $sk  = $dbSpStart;
@@ -706,7 +706,7 @@ class Report extends CI_Controller {
         $query = $this->authlog->getPerWeekRecords($start,$end,$group,2);
         foreach($query as $row):
             $ws = (substr($row['MyTime'],0,2) * 3600) + (substr($row['MyTime'],3,2)*60) + (substr($row['MyTime'],6,2));
-            if($row['GroupID']<=2):
+            if($row['GroupID']>2):
                 $sk  =  $this->usergroup->getGroupWorkData($row['GroupWork']);
                 $jm  =  $this->usergroup->getGroupFridayData($row['GroupFriday']);
                 if($sk):
@@ -758,7 +758,7 @@ class Report extends CI_Controller {
                     $wsk = $w2; 
                     $wsp = $wp2;
                 endif;
-            elseif(($row['GroupID']>=3)):
+            elseif(($row['GroupID']>2)):
                 $wmk = $dbSkStart;
                 $dt  = $dbSpWork;
                 $sk  = $dbSpStart;
