@@ -609,7 +609,7 @@ class Report extends CI_Controller {
                     
         foreach($query as $row):   
             if(COUNT($this->authprocess->getAuthProcessData($row['UserID'],$row['TransactionTime']))== 0):
-                if($row['GroupID']<=2):
+                if($row['GroupID']>2):
                     $sk  =  $this->usergroup->getGroupWorkData($row['GroupWork']);
                     $jm  =  $this->usergroup->getGroupFridayData($row['GroupFriday']);
                     if($sk):
