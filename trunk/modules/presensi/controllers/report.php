@@ -826,7 +826,7 @@ class Report extends CI_Controller {
             $data['users']	    =	$this->userinfo->getAllRecords('','','','',$this->session->userdata('week_group'));
 			$data['var']	    =	$this->presensi->getVariabelDataByVar('DMK');
 			$file = $this->load->theme('report/week2',$data,TRUE);
-			$this->pdf->pdf_create($file,$data['title']);	
+			$this->pdf->pdf_create($file,$data['title'],$stream=TRUE,'A4',"Landscape");	
 			//$this->load->helper('tcpdf');
 			//$pdf = html2pdf();
 			//$pdf->AddPage();

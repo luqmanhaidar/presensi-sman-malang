@@ -1,11 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
  
 class Pdf {
-	function pdf_create($html, $filename, $stream=TRUE){
+	function pdf_create($html,$filename, $stream=TRUE,$paper='A4',$orientation="Portrait"){
 	    require_once(APPPATH."third_party/Dompdf/dompdf_config.inc.php");//Require Loader Class n Config
 	    //spl_autoload_register('DOMPDF_autoload');//Autoload Resource
 	    $dompdf = new DOMPDF();//Instansiasi
-	    $dompdf->set_paper("A4", "portrait");
+	    $dompdf->set_paper($paper,$orientation);
 		$dompdf->load_html($html);//Load HTML File untuk dirender
 	    $dompdf->render();//Proses Rendering File
 	    if ($stream) {
