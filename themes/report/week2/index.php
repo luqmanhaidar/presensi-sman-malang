@@ -11,6 +11,7 @@
     <h3><?=$periode?></h3>
     </caption>
 	<thead>
+		<tr>
 			<th rowspan="2">NO</th>
 			<th rowspan="2" width="20%">NAMA</th>
 			<th rowspan="2">STATUS <br/>KEPEG</th>
@@ -26,10 +27,6 @@
 			<th rowspan="1">MINGGU<br/>KE 4</th>
 			<th rowspan="1">MINGGU<br/>KE 5</th>
 		</tr>
-		<tr>
-		</tr>
-		
-		
 		
     </thead>
 	<tbody>
