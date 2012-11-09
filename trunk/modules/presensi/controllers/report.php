@@ -468,7 +468,7 @@ class Report extends CI_Controller {
                    //$pdf->SetY($y);$pdf->SetX($x); 	
                    //$pdf->Cell(10, 12,'No', 1, 1, 'C', 1, '', 0, false, 'T', 'C');
             endif;          
-        endforeach;
+        //endforeach;
         
         
         $pdf->Output("Laporan-Bulanan.pdf","I"); 
