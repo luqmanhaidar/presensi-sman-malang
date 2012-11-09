@@ -863,32 +863,21 @@ class Report extends CI_Controller {
 			$y=$y+7;
 			$x=$x+0;
 			$pdf->SetY($y);$pdf->SetX($x); 	
-			$pdf->Cell(10, 12,'NO', 1, 1, 'C', 1, '', 0, false, 'T', 'C');
+			$pdf->Cell(10,15,'NO', 1, 1, 'C', 1, '', 0, false, 'T', 'C');
         
 			$y=$y+0;
 			$x=$x+10;
 			$pdf->SetY($y);$pdf->SetX($x); 	
-			$pdf->Cell(45,12,'NAMA', 1, 1, 'C', 1, '', 0, false, 'T','C');
+			$pdf->Cell(45,15,'NAMA', 1, 1, 'C', 1, '', 0, false, 'T','C');
 			
 			$y=$y+0;
 			$x=$x+45;
 			$pdf->SetY($y);$pdf->SetX($x); 	
-			$pdf->Cell(12,12,'STATUS'."\n"."KEPEG", 1, 1, 'C', 1, '', 0, false, 'T','C');
+			$pdf->Cell(10,15,'STATUS'."\n"."KEPEG", 1, 1, 'C', 1, '', 0, false, 'T','C');
 			
-			$y=$y+0;
-			$x=$x+12;
-			$pdf->SetY($y);$pdf->SetX($x); 	
-			$pdf->Cell(10,6,'Tanggal', 1, 1, 'C', 1, '', 0, false, 'T','C');
-			 
-			$y=$y-6;
-			$x=$x+0;
-			$pdf->SetY($y);$pdf->SetX($x); 	
-			$pdf->Cell(4,6,'Keterangan', 1, 1, 'C', 1, '', 0, false, 'T','C');
-        
-        
-        //$pdf->SetFillColor(255, 255, 255);
-        
-        $pdf->Output("Laporan-Bulanan.pdf","I");
+			        
+			//$pdf->SetFillColor(255, 255, 255);
+			$pdf->Output("Laporan-Bulanan.pdf","I");
 		else:
 			$data['title']		=	'DAFTAR CEK CLOCK';
 			$data['days']	    =   $this->authlog->getDay($this->session->userdata('week_start'),$this->session->userdata('week_finish'));
