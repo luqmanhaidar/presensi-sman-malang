@@ -391,9 +391,10 @@ class Report extends CI_Controller {
                 $pdf->SetY($y);
     		    $pdf->SetX($x+($j*10)); 
                 $pdf->MultiCell(10,10,"\n"."", 1, 'C', $colour, 0, '', '', true);
-				$pdf->SetXY($x_image,$y_image);
+				//$pdf->SetXY($x_image,$y_image);
 				if(strlen($this->authlog->getUserTime(code($j).'-'.$month.'-'.$year,$rec['UserID'],1))>2):
-					$pdf->Image('./assets/signature/'.$rec['UserID'].'.jpg','','',5, 5, '', '', 'T', false,75, '', false, false,0, false, false, false);
+					//$pdf->Image('./assets/signature/'.$rec['UserID'].'.jpg','','',5, 5, '', '', 'T', false,75, '', false, false,0, false, false, false);
+					$pdf->Image('../images/image_demo.jpg', 15, 140, 75, 113, 'JPG', 'http://www.tcpdf.org', '', true, 150, '', false, false, 1, false, false, false);
 				endif;
                 $x_image=$x_image+10.1;
             endfor;
