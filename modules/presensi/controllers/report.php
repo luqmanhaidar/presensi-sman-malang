@@ -871,13 +871,13 @@ class Report extends CI_Controller {
 			$pdf->Cell(45,15,'NAMA', 1, 1, 'C', 1, '', 0, false, 'T','C');
 			
 			$y=$y+0;
-			$x=$x+45;
+			$x=$x+10;
 			$pdf->SetY($y);$pdf->SetX($x); 	
-			$pdf->Cell(20,15,"STATUS\nKEPEG", 1, 1, 'C', 1, '', 0, false, 'T','C');
+			$pdf->Cell(45,15,'STATUS KEPEG',1,1,'C', 0, '', 0, false,'T','C');
 			
 			        
 			//$pdf->SetFillColor(255, 255, 255);
-			$pdf->Output("Laporan-Bulanan.pdf","I");
+			$pdf->Output("Laporan-Mingguan-2.pdf","I");
 		else:
 			$data['title']		=	'DAFTAR CEK CLOCK';
 			$data['days']	    =   $this->authlog->getDay($this->session->userdata('week_start'),$this->session->userdata('week_finish'));
