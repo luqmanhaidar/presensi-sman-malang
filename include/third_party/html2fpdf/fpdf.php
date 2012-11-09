@@ -1803,10 +1803,10 @@ function _putfonts()
 	}
 	$mqr=get_magic_quotes_runtime();
 	if(get_magic_quotes_runtime())
-{
-    // Deactivate
-    set_magic_quotes_runtime(false);
-}
+	{
+		// Deactivate
+		set_magic_quotes_runtime(false);
+	}
 	set_magic_quotes_runtime(0);
 	foreach($this->FontFiles as $file=>$info)
 	{
