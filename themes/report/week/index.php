@@ -16,11 +16,10 @@
             //if(COUNT($records)>0):
         ?>  
 	    <div class="col<?=$x % 2;?>">
-	        <table class="center">
-                <caption>
-                <h3><?=$title?></h3>
-                <h5><?=$periode?></h5>
-                </caption>
+            <h3 class="center"><?=$title?></h3>
+            <h5 class="center"><?=$periode?></h5>
+                
+	        <table class="center">  
             	<thead>
             		<tr>
             			<th class="align-left mini" colspan="7"><?=$user['ID'].' '.$user['Name'];?></th>
@@ -139,9 +138,9 @@
         	</table>
             
             <table class="center">
-                <caption>
-                <h5>Total Jam Kehadiran Per Minggu</h5>
-                </caption>
+                
+                <h5 class="center">Total Jam Kehadiran Per Minggu</h5>
+                
                 <thead>
             		<tr>
             			<th class="mini">Minggu</th>
