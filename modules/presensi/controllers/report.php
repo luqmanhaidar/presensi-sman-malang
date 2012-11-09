@@ -354,6 +354,15 @@ class Report extends CI_Controller {
         
         $pdf->SetFillColor(255, 255, 255);
         
+		$i=1;
+		$x=7;
+        $y=$y+6;
+		foreach($records as $rec):
+			$pdf->SetY($y);$pdf->SetX($x); 	
+			$pdf->Cell(10, 12,$i, 1, 1, 'C', 1, '', 0, false, 'T', 'C');
+			$y=$y+10;
+			$i++;
+		endforeach;
 		/*
         $i=1;
         //$x=7;
