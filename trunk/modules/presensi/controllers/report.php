@@ -359,9 +359,15 @@ class Report extends CI_Controller {
         $y=$y+6;
 		foreach($records as $rec):
 			$pdf->SetY($y);$pdf->SetX($x); 	
-			$pdf->Cell(10, 12,$i, 1, 1, 'C', 1, '', 0, false, 'T', 'C');
+			$pdf->Cell(10,40,$i, 1, 1, 'C', 1, '', 0, false, 'T', 'C');
 			$y=$y+10;
 			$i++;
+			
+			$this_y = $pdf->getY();
+            if($this_y >= 240):
+	               $pdf->AddPage();
+            endif;
+			
 		endforeach;
 		/*
         $i=1;
@@ -466,17 +472,17 @@ class Report extends CI_Controller {
             $pdf->MultiCell(7,10,"\n".'1', 1, 'C', 0, 0, '', '', true);
             $pdf->MultiCell(7,10,"\n".'1', 1, 'C', 0, 0, '', '', true);*/
             
-            $y=$y+10;
-            $i++;
+            //$y=$y+10;
+            //$i++;
             //$pdf->SetY($y);
-            $this_y=$pdf->getY();
-            if($this_y >= 240):
-	               $pdf->AddPage();
-                   $y=7;
-                   $x=7;
+            //$this_y = $pdf->getY();
+            //if($this_y >= 240):
+	        //       $pdf->AddPage();
+                   //$y=7;
+                   //$x=7;
                    //$pdf->SetY($y);$pdf->SetX($x); 	
                    //$pdf->Cell(10, 12,'No', 1, 1, 'C', 1, '', 0, false, 'T', 'C');
-            endif;          
+            //endif;          
         //endforeach;
         
         
