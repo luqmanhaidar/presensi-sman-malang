@@ -27,8 +27,7 @@
 			<th rowspan="1">MINGGU<br/>KE 4</th>
 			<th rowspan="1">MINGGU<br/>KE 5</th>
 		</tr>
-		<tr>
-		</tr>
+		
     </thead>
 	<tbody>
 	<?php 
