@@ -642,7 +642,7 @@ class Report extends CI_Controller {
                             $dbSpEnd   = $wp3; 
                         endif;
                      endif;    
-                    endif;       
+                endif;       
                 
                 $wm = (substr($row['MyTime'],0,2) * 3600) + (substr($row['MyTime'],3,2)*60) + (substr($row['MyTime'],6,2));
                 
@@ -721,6 +721,7 @@ class Report extends CI_Controller {
         
         /** Query Update ke AuthProcess **/
         $query = $this->authlog->getPerWeekRecords($start,$end,$group,2);
+        //$query = $this->auhtprocess->getAllRecords();
         foreach($query as $row):
             $ws = (substr($row['MyTime'],0,2) * 3600) + (substr($row['MyTime'],3,2)*60) + (substr($row['MyTime'],6,2));
             if($row['GroupID']>2):
@@ -879,16 +880,17 @@ class Report extends CI_Controller {
 			$this->pdf->pdf_create($file,$data['title'],$stream=TRUE,'A4',"Landscape");
 		else:
             $this->load->helper('tcpdf');    
-           $data['title']		=	'DAFTAR CEK CLOCK';
+            $data['title']		=	'DAFTAR CEK CLOCK';
 			$data['days']	    =   $this->authlog->getDay($this->session->userdata('week_start'),$this->session->userdata('week_finish'));
 			$data['periode']	=	'Periode '.$this->session->userdata('week_start'). ' s/d '. $this->session->userdata('week_finish');
 			$data['users']	    =	$this->userinfo->getAllRecords('','','','',$this->session->userdata('week_group'));
 			$data['var']	    =	$this->presensi->getVariabelDataByVar('DMK');
 			$this->load->vars($data);
 			$content = $this->load->theme('report/week',$data,TRUE);
-            $html2pdf = html2pdf('P','A4');
+            /*$html2pdf = html2pdf('P','A4');
             $html2pdf->WriteHTML($content);
-            $html2pdf->Output('Lap-Mingguan.pdf');
+            $html2pdf->Output('Lap-Mingguan.pdf');*/
+            $this->pdf->pdf_create($content,$data['title'],$stream=TRUE,'A4',"Portrait");
 		endif;	
         
 	}

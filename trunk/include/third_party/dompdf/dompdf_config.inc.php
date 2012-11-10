@@ -190,7 +190,7 @@ def("DOMPDF_PDF_BACKEND", "CPDF");
  * the desired content might be different (e.g. screen or projection view of html file).
  * Therefore allow specification of content here.
  */
-def("DOMPDF_DEFAULT_MEDIA_TYPE", "screen");
+def("DOMPDF_DEFAULT_MEDIA_TYPE", "print");
 
 /**
  * The default paper size.
@@ -199,7 +199,7 @@ def("DOMPDF_DEFAULT_MEDIA_TYPE", "screen");
  *
  * @see CPDF_Adapter::PAPER_SIZES for valid sizes
  */
-def("DOMPDF_DEFAULT_PAPER_SIZE", "letter");
+def("DOMPDF_DEFAULT_PAPER_SIZE", "A4");
 
 /**
  * The default font family
@@ -266,7 +266,7 @@ def("DOMPDF_ENABLE_PHP", true);
  *
  * @var bool
  */
-def("DOMPDF_ENABLE_JAVASCRIPT", true);
+def("DOMPDF_ENABLE_JAVASCRIPT", false);
 
 /**
  * Enable remote file access
@@ -285,7 +285,7 @@ def("DOMPDF_ENABLE_JAVASCRIPT", true);
  *
  * @var bool
  */
-def("DOMPDF_ENABLE_REMOTE", true);
+def("DOMPDF_ENABLE_REMOTE", false);
 
 /**
  * The debug output log
@@ -304,14 +304,14 @@ def("DOMPDF_FONT_HEIGHT_RATIO", 1.1);
  * Allows people to disabled CSS float support
  * @var bool
  */
-def("DOMPDF_ENABLE_CSS_FLOAT", false);
+def("DOMPDF_ENABLE_CSS_FLOAT", true);
 
 /**
  * Prepend the DOMPDF autoload function the spl_autoload stack
  *
  * @var bool
  */
-def("DOMPDF_AUTOLOAD_PREPEND", true);
+def("DOMPDF_AUTOLOAD_PREPEND",true);
 
 /**
  * Use the more-than-experimental HTML5 Lib parser
