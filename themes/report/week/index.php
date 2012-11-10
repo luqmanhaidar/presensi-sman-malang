@@ -1,214 +1,67 @@
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title><?=$title?></title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Two Column CSS Layout</title>
 <link type="text/css" media="screen" rel="stylesheet" href="<?=base_url('themes/report/css/style.css');?>" />
+<style type="text/css">
+body{margin:0;font-family: Arial;font-size:10px;}
+div.my_wrapper{
+    width: 730px;
+    height:400px;
+}
+.clear{clear: both;}
+div.my1{
+    float: left;
+    padding: 5px;
+    width: 350px;
+    border: 1px solid gray;
+    margin-bottom:10px;
+}
+
+div.my0{
+    float: right;
+    padding: 5px;
+    width: 350px;
+    border: 1px solid gray;
+    margin-bottom:10px;
+}
+.row{width:100%;height:20px;}
+.col{float:left;width:45px;text-align:center;border:1px solid #222;padding: 1px;}
+
+table {margin:0 auto;width:100%;border-collapse:collapse;}
+th,td{border:1px solid #222;font-size:12px;margin:0;font-size:9px;}
+</style>
+
 </head>
+
 <body>
-<div class="mask">
-    <div class="header">
-	         <h3>Laporan Mingguan</h3>
-	</div> 
-    <div class="colleft">
-	<?php 
-        $x=1;
-        foreach($users as $user):?>    	
-        <?php //$records = $this->authprocess->getAllRecords('','',$user['ID']);
-            //if(COUNT($records)>0):
-        ?>  
-	    <div class="col<?=$x % 2;?>">
-            <h3 class="center"><?=$title?></h3>
-            <h5 class="center"><?=$periode?></h5>
-                
-	        <table class="center">  
-            	<thead>
-            		<tr>
-            			<th class="align-left mini" colspan="7"><?=$user['ID'].' '.$user['Name'];?></th>
-            		</tr>
-            		<tr>
-            			<th class="mini">M</th>
-            			<th class="mini">Tanggal</th>
-            			<th class="mini">Datang</th>
-            			<th class="mini">Pulang</th>
-                        <th class="mini">Durasi</th>
-                        <th class="mini">Datang Telat</th>
-                        <th class="mini">Pulang Awal</th>
-            		</tr>
-                </thead>
-                <tbody>
-                    
-                    <?php 
-                    //$m = COUNT($days);
-                    $w[1]=0;
-                    $l[1]=0;
-                    $e[1]=0;
-                    $w[2]=0;
-                    $l[2]=0;
-                    $e[2]=0;
-                    $w[3]=0;
-                    $l[3]=0;
-                    $e[3]=0;
-                    $w[4]=0;
-                    $l[4]=0;
-                    $e[4]=0;
-                    $w[5]=0;
-                    $l[5]=0;
-                    $e[5]=0;
-                    //echo count($days);
-                    foreach($days as $rec): 
-                        $row = $this->authprocess->getAllRecords('','',$user['ID'],'row',$rec['DAY']);
-                        if($row):
-                            
-                    ?>
-                    <tr>
-                        <td class="mini"><?=$row['W']?></td>
-                        <td class="mini"><?=$row['MyDate']?></td>
-                        <td class="mini"><?=$row['MyTimeStart']?></td>
-                        <td class="mini"><?=$row['MyTimeEnd']?></td>
-                        <td class="mini">
-                            <?php
-                                if(empty($row['MyTimeEnd']))
-                                    $end=0;
-                                else
-                                    $end   = (substr($row['MyTimeEnd'],0,2) * 3600) + (substr($row['MyTimeEnd'],3,2)*60) + (substr($row['MyTimeEnd'],6,2));
-                                
-                                if(empty($row['MyTimeStart']))
-                                    $start=0;
-                                else
-                                    $start = (substr($row['MyTimeStart'],0,2) * 3600) + (substr($row['MyTimeStart'],3,2)*60) + (substr($row['MyTimeStart'],6,2));
-                                        
-                                $range = $end - $start;
-                                
-                                if($range<=0)
-                                    $range = 0;
-                                else
-                                    $range=$range;    
-                                
-                                $hours = code(floor($range / 3600));
-                                $mins  = code(floor(($range - ($hours*3600)) / 60));
-                                $seconds = code($range % 60);
-                                  
-                                print $time  = $hours.':'.$mins.':'.$seconds; 
-                            ?>
-                        </td>
-                        <td class="mini"><?=$row['ProcessDateLate']?></td>
-                        <td class="mini"><?=$row['ProcessDateEarly']?></td>
-                    </tr>
-                    
-                    <?php
-                        $lt = (substr($row['ProcessDateLate'],0,2) * 3600) + (substr($row['ProcessDateLate'],3,2)*60) + (substr($row['ProcessDateLate'],6,2));
-                        $el = (substr($row['ProcessDateEarly'],0,2) * 3600) + (substr($row['ProcessDateEarly'],3,2)*60) + (substr($row['ProcessDateEarly'],6,2));
-                        if($row['W']==1):
-                                $w[1] = $w[1] + $range;
-                                $l[1] = $l[1]+ $lt;
-                                $e[1] = $e[1]+ $el;
-                        elseif($row['W']==2):
-                                $w[2] = $w[2] + $range;
-                                $l[2] = $l[2]+ $lt;
-                                $e[2] = $e[2]+ $el;        
-                        elseif($row['W']==3):
-                                $w[3] = $w[3] + $range;
-                                $l[3] = $l[3]+ $lt;
-                                $e[3] = $e[3]+ $el;
-                        elseif($row['W']==4):
-                                $w[4] = $w[4] + $range;
-                                $l[4] = $l[4]+ $lt;
-                                $e[4] = $e[4]+ $el;
-                        elseif($row['W']==5):
-                                $w[5] = $w[5] + $range;  
-                                $l[5] = $l[5]+ $lt; 
-                                $e[5] = $e[5]+ $el;
-                        endif;                                 
-                                
-                    ?>
-                    
-                    <?php else:?>
-                    <tr>
-                        <td class="mini">-</td>
-                        <td class="mini"></td>
-                        <td class="mini"></td>
-                        <td class="mini"></td>
-                        <td class="mini"></td>
-                        <td class="mini"></td>
-                        <td class="mini"></td>
-                    </tr>
-                    <?php
-                        endif;
-                    endforeach;?>
-               </tbody>
-        	</table>
-            
-            <table class="center">
-                
-                <h5 class="center">Total Jam Kehadiran Per Minggu</h5>
-                
-                <thead>
-            		<tr>
-            			<th class="mini">Minggu</th>
-            			<th class="mini">Work Time</th>
-            			<th class="mini">Keterangan</th>
-            			<th class="mini">Datang Telat</th>
-                        <th class="mini">Pulang Awal</th>
-            		</tr>
-                </thead>
-                <tbody>
-                    <?php 
-                        for($m=1;$m<=5;$m++):
-                            $whours = code(floor($w[$m] / 3600));
-                            $wmins  = code(floor(($w[$m] - ($whours*3600)) / 60));
-                            $wseconds = code($w[$m] % 60);
-                            
-                            $lhours = code(floor($l[$m] / 3600));
-                            $lmins  = code(floor(($l[$m] - ($lhours*3600)) / 60));
-                            $lseconds = code($l[$m] % 60);
-                            
-                            $ehours = code(floor($e[$m] / 3600));
-                            $emins  = code(floor(($e[$m] - ($ehours*3600)) / 60));
-                            $eseconds = code($e[$m] % 60);
-                            
-                            $week[$m] = $whours.':'.$wmins.':'.$wseconds; 
-                            $late[$m] = $lhours.':'.$lmins.':'.$lseconds;
-                            $early[$m]= $ehours.':'.$emins.':'.$eseconds;
-                         
-                    ?>
-                    <tr>
-                        <td class="mini"><?='Minggu ke-'.$m?></td>
-                        <td class="mini">
-							<?php if($week[$m])
-									echo $week[$m];
-								 else
-									echo '-';
-									 ?>
-						</td>
-                        <td class="mini">
-                        <?php 
-							if($week[$m]):
-								$v = (substr($var,0,2) * 3600) + (substr($var,3,2)*60) + (substr($var,6,2));
-								if($v<$week[$m])
-									print "Memenuhi";
-								else
-									print "Tidak Memenuhi"; 
-							endif;		
-                        ?>
-                        </td>
-                        <td class="mini"><?=$late[$m];?></td>
-                        <td class="mini"><?=$early[$m];?></td>
-                    </tr>
-                    <?php endfor;?>
-               </tbody>
-               <tfoot>
-                    <tr>
-                        <th class="mini" colspan="5"><?='DMK='.$var;?></th>
-                    </tr>
-               </tfoot>
-        	</table>
-	    </div>
-        <?php
-               $x++;
-                //endif; 
-            
-            endforeach;?>
+
+<div class="my_wrapper">
+    
+<?php 
+$x=1;
+foreach($users as $user):
+?>    	          
+    <div class="my<?=$x%2?>">
         
-	</div>   
- </div>
+        <table>
+            <tr>
+                <td>Test</td>
+            </tr>
+        </table>
+    
+    </div>
+    
+    <?php if($x%2==0): ?>
+    <div class="clear"></div>
+    <?php endif;?>
+
+<?php
+ $x++;
+ endforeach;
+ ?>
+</div>
+
 </body>
 </html>
