@@ -152,8 +152,10 @@
 
 			</table>
             
-
+            
+           
 			<form method="post" target="_blank" action="<?=site_url('presensi/report/week_preview')?>" class="table-footer button-height large-margin-bottom">
+                 <?php if($this->session->userdata('week_group')): ?>
                 <div class="float-right">
                     <div class="button-group">
                       <?php if(!empty($pagination))
@@ -161,11 +163,13 @@
                       ?>
                     </div>
 				</div>
+                <?php endif;?>
                  <?php // form_dropdown('show2',config_item('per_page'),$this->session->userdata('log_paging'),'id="show2" class="select blue-gradient glossy" onchange="changeUrl2();" ');?>
 				
                 <?=form_dropdown('export',config_item('print'),'','id="print" class="select blue-gradient glossy" ');?>
 				<button type="submit" class="button blue-gradient glossy">Go</button>
 			</form>
+            
             <?php endif;?>
 			
 		</div>

@@ -612,20 +612,37 @@ class Report extends CI_Controller {
                 if($row['GroupID']>2):
                     $sk  =  $this->usergroup->getGroupWorkData($row['GroupWork']);
                     $jm  =  $this->usergroup->getGroupFridayData($row['GroupFriday']);
-                    if($sk):
-                        $dbSkStart = $sk['GroupWorkStart'];
-                        $dbSpStart = (substr($sk['GroupWorkStart'],0,2) * 3600) + (substr($sk['GroupWorkStart'],3,2)*60) + (substr($sk['GroupWorkStart'],6,2));
-                        $dbSpWork  = (substr($sk['GroupWorkStart'],0,2) * 3600) + ((substr($sk['GroupWorkStart'],3,2)+15)*60) + (substr($sk['GroupWorkStart'],6,2));   
-                        $dbSkEnd   = $sk['GroupWorkEnd'];
-                        $dbSpEnd   = (substr($sk['GroupWorkEnd'],0,2) * 3600) + (substr($sk['GroupWorkEnd'],3,2)*60) + (substr($sk['GroupWorkEnd'],6,2));
+                    
+                    if($row['DayName']=='Friday'):
+                        if($jm):
+                            $dbSkStart = $jm['GroupFridayStart'];
+                            $dbSpStart = (substr($jm['GroupFridayStart'],0,2) * 3600) + (substr($jm['GroupFridayStart'],3,2)*60) + (substr($jm['GroupFridayStart'],6,2));
+                            $dbSpWork  = (substr($jm['GroupFridayStart'],0,2) * 3600) + ((substr($jm['GroupFridayStart'],3,2)+15)*60) + (substr($jm['GroupFridayStart'],6,2));   
+                            $dbSkEnd   = $jm['GroupFridayEnd'];
+                            $dbSpEnd   = (substr($jm['GroupFridayEnd'],0,2) * 3600) + (substr($jm['GroupFridayEnd'],3,2)*60) + (substr($jm['GroupFridayEnd'],6,2));
+                        else:
+                            $dbSkStart = $sd1;
+                            $dbSpStart = $sk1;
+                            $dbSpWork  = $dt1;
+                            $dbSkEnd   = $w3;
+                            $dbSpEnd   = $wp3; 
+                        endif;
                     else:
-                        $dbSkStart = $sd1;
-                        $dbSpStart = $sk1;
-                        $dbSpWork  = $dt1;
-                        $dbSkEnd   = $w3;
-                        $dbSpEnd   = $wp3; 
-                    endif;
-                endif;    
+                        if($sk):
+                            $dbSkStart = $sk['GroupWorkStart'];
+                            $dbSpStart = (substr($sk['GroupWorkStart'],0,2) * 3600) + (substr($sk['GroupWorkStart'],3,2)*60) + (substr($sk['GroupWorkStart'],6,2));
+                            $dbSpWork  = (substr($sk['GroupWorkStart'],0,2) * 3600) + ((substr($sk['GroupWorkStart'],3,2)+15)*60) + (substr($sk['GroupWorkStart'],6,2));   
+                            $dbSkEnd   = $sk['GroupWorkEnd'];
+                            $dbSpEnd   = (substr($sk['GroupWorkEnd'],0,2) * 3600) + (substr($sk['GroupWorkEnd'],3,2)*60) + (substr($sk['GroupWorkEnd'],6,2));
+                        else:
+                            $dbSkStart = $sd1;
+                            $dbSpStart = $sk1;
+                            $dbSpWork  = $dt1;
+                            $dbSkEnd   = $w3;
+                            $dbSpEnd   = $wp3; 
+                        endif;
+                     endif;    
+                    endif;       
                 
                 $wm = (substr($row['MyTime'],0,2) * 3600) + (substr($row['MyTime'],3,2)*60) + (substr($row['MyTime'],6,2));
                 
@@ -709,19 +726,35 @@ class Report extends CI_Controller {
             if($row['GroupID']>2):
                 $sk  =  $this->usergroup->getGroupWorkData($row['GroupWork']);
                 $jm  =  $this->usergroup->getGroupFridayData($row['GroupFriday']);
-                if($sk):
-                    $dbSkStart = $sk['GroupWorkStart'];
-                    $dbSpStart = (substr($sk['GroupWorkStart'],0,2) * 3600) + (substr($sk['GroupWorkStart'],3,2)*60) + (substr($sk['GroupWorkStart'],6,2));
-                    $dbSpWork  = (substr($sk['GroupWorkStart'],0,2) * 3600) + ((substr($sk['GroupWorkStart'],3,2)+15)*60) + (substr($sk['GroupWorkStart'],6,2));   
-                    $dbSkEnd   = $sk['GroupWorkEnd'];
-                    $dbSpEnd   = (substr($sk['GroupWorkEnd'],0,2) * 3600) + (substr($sk['GroupWorkEnd'],3,2)*60) + (substr($sk['GroupWorkEnd'],6,2));
+                if($row['DayName']=='Friday'):
+                    if($jm):
+                        $dbSkStart = $jm['GroupFridayStart'];
+                        $dbSpStart = (substr($jm['GroupFridayStart'],0,2) * 3600) + (substr($jm['GroupFridayStart'],3,2)*60) + (substr($jm['GroupFridayStart'],6,2));
+                        $dbSpWork  = (substr($jm['GroupFridayStart'],0,2) * 3600) + ((substr($jm['GroupFridayStart'],3,2)+15)*60) + (substr($jm['GroupFridayStart'],6,2));   
+                        $dbSkEnd   = $jm['GroupFridayEnd'];
+                        $dbSpEnd   = (substr($jm['GroupFridayEnd'],0,2) * 3600) + (substr($jm['GroupFridayEnd'],3,2)*60) + (substr($jm['GroupFridayEnd'],6,2));
+                    else:
+                        $dbSkStart = $sd1;
+                        $dbSpStart = $sk1;
+                        $dbSpWork  = $dt1;
+                        $dbSkEnd   = $w3;
+                        $dbSpEnd   = $wp3; 
+                    endif;
                 else:
-                    $dbSkStart = $sd1;
-                    $dbSpStart = $sk1;
-                    $dbSpWork  = $dt1;
-                    $dbSkEnd   = $w3;
-                    $dbSpEnd   = $wp3; 
-                endif;
+                    if($sk):
+                        $dbSkStart = $sk['GroupWorkStart'];
+                        $dbSpStart = (substr($sk['GroupWorkStart'],0,2) * 3600) + (substr($sk['GroupWorkStart'],3,2)*60) + (substr($sk['GroupWorkStart'],6,2));
+                        $dbSpWork  = (substr($sk['GroupWorkStart'],0,2) * 3600) + ((substr($sk['GroupWorkStart'],3,2)+15)*60) + (substr($sk['GroupWorkStart'],6,2));   
+                        $dbSkEnd   = $sk['GroupWorkEnd'];
+                        $dbSpEnd   = (substr($sk['GroupWorkEnd'],0,2) * 3600) + (substr($sk['GroupWorkEnd'],3,2)*60) + (substr($sk['GroupWorkEnd'],6,2));
+                    else:
+                        $dbSkStart = $sd1;
+                        $dbSpStart = $sk1;
+                        $dbSpWork  = $dt1;
+                        $dbSkEnd   = $w3;
+                        $dbSpEnd   = $wp3; 
+                    endif;
+                endif;    
             endif;  
                             
             if(($row['DayName']=='Saturday')):
@@ -747,7 +780,7 @@ class Report extends CI_Controller {
                     $wsk = $w4; // Wsk Jumat
                     $wsp = $wp4;
                 endif;       
-            elseif( ( ($row['GroupID']==1) || ($row['GroupID']==2) )):
+            elseif(( ($row['GroupID']==1) || ($row['GroupID']==2) )):
                 $wmk = $sd1;
                 $dt  = $dt1;
                 $sk  = $sk1;
