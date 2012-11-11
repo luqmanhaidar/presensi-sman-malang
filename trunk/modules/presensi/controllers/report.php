@@ -609,8 +609,9 @@ class Report extends CI_Controller {
 	
 	function week_pdf()
     {
-		$this->load->library('pdf');
+		
 		if($this->session->userdata('week_type')=='M2'):
+            $this->load->library('pdf');
 			$data['title']		=	'REKAPITULASI PEMENUHAN JAM MENGAJAR GURU MAN 3 MALANG';
 			$data['periode']	=	'LAPORAN PERIODE '.$this->session->userdata('week_start').' s/d '.$this->session->userdata('week_finish');
 			$data['start']      =   $this->session->userdata('week_start');
@@ -623,13 +624,13 @@ class Report extends CI_Controller {
             $title  = 'DAFTAR CEK CLOCK';
             $periode= 'Periode '.$this->session->userdata('week_start').' s/d '.$this->session->userdata('week_finish');
             $users  = $this->userinfo->getAllRecords('','','','',$this->session->userdata('week_group'));
+            $days   = $this->authlog->getDay($this->session->userdata('week_start'),$this->session->userdata('week_finish'));
+            $var	= $this->presensi->getVariabelDataByVar('DMK');
             $this->load->helper('tcpdf');  
             $pdf = tcpdf();
             $pdf->setPrintHeader(false);
             $pdf->setPrintFooter(false);
             $pdf->SetMargins(10,10,10);
-            $pdf->SetAutoPageBreak(TRUE,PDF_MARGIN_BOTTOM);
-            //$pdf->startPageGroup();
             $pdf->AddPage("P","A4");
             
             $pdf->SetFillColor(255, 255, 255);
@@ -641,9 +642,13 @@ class Report extends CI_Controller {
             $y = 5;
             $x = 15;
             $row=1;
+            $total = COUNT($users);
+            $ww[1]=0;$ww[2]=0;$ww[3]=0;$ww[4]=0;$ww[5]=0;
+            $wl[1]=0;$wl[2]=0;$wl[3]=0;$wl[4]=0;$wl[5]=0;
+            $we[1]=0;$we[2]=0;$we[3]=0;$we[4]=0;$we[5]=0;
+                   
             foreach($users as $user):
-            //for($row=1;$row<=4;$row++):
-                /** Cel Title **/
+            
                 $x=$x;$y=$y;
                 $pdf->SetY($y);$pdf->SetX($x); 	
                 $pdf->Cell(85,4,$title, 0, 0, 'C', 1); 
@@ -656,7 +661,7 @@ class Report extends CI_Controller {
                 $pdf->SetFillColor(205, 201, 201);
     
                 $x=$x;$y=$y+5;
-                $pdf->MultiCell(85,4,$row." 3110 Suhendar",1,'L', 1, 2, $x,$y,true,0,false,true,0);
+                $pdf->MultiCell(85,4,$row.$user['ID'].' '.$user['Name'],1,'L', 1, 2, $x,$y,true,0,false,true,0);
                 
                 $x=$x;$y=$y+4;
                 $pdf->MultiCell(6,4,"M",1,'C', 1, 2, $x,$y,true,0,false,true,0);
@@ -682,34 +687,102 @@ class Report extends CI_Controller {
                 $pdf->SetFillColor(255, 255, 255);
                 
                 $y=$y+4;
-                for($i=1;$i<=8;$i++):
+                $i=1;
+                foreach($days as $rec):
                     if($row%2==0)
                         $x=15;
                     else
                         $x=107;
+                    $val = $this->authprocess->getAllRecords('','',$user['ID'],'row',$rec['DAY']);
+                    if($val):
+                        $w = $val['W'];
+                        $d = $val['MyDate'];
+                        $s = $val['MyTimeStart'];
+                        $e = $val['MyTimeEnd'];
+                        $l = $val['ProcessDateLate'];
+                        $el= $val['ProcessDateEarly'];
+                        /** Call**/
+                        if(empty($e))
+                            $end=0;
+                        else
+                            $end   = (substr($e,0,2) * 3600) + (substr($e,3,2)*60) + (substr($e,6,2));
+                                
+                        if(empty($s))
+                            $start=0;
+                        else
+                            $start = (substr($s,0,2) * 3600) + (substr($s,3,2)*60) + (substr($s,6,2));
+                                        
+                        $range = $end - $start;
+                        if($range<=0)
+                            $range = 0;
+                        else
+                            $range=$range;    
+                                
+                        $hours = code(floor($range / 3600));
+                        $mins  = code(floor(($range - ($hours*3600)) / 60));
+                        $seconds = code($range % 60);
+                        if($range>0)
+                            $dr  = $hours.':'.$mins.':'.$seconds; 
+                        else
+                            $dr='';
+                        
+                    else:
+                        $w = '';
+                        $d = '';
+                        $s = '';
+                        $e = '';
+                        $dr= '';
+                        $l = '';
+                        $el= '';
+                    endif;
+                    
+                    $sl = (substr($l,0,2) * 3600) + (substr($l,3,2) *60) + (substr($l, 6,2));
+                    $sel= (substr($el,0,2)* 3600) + (substr($el,3,2)*60) + (substr($el,6,2));
+                    if($w==1):
+                        $ww[1] = $ww[1] + $range;
+                        $wl[1] = $wl[1] + $sl;
+                        $we[1] = $we[1] + $sel;
+                    elseif($w==2):
+                        $ww[2] = $ww[2] + $range;
+                        $wl[2] = $wl[2]+ $sl;
+                        $we[2] = $we[2]+ $sel;        
+                    elseif($w==3):
+                        $ww[3] = $ww[3] + $range;
+                        $wl[3] = $wl[3]+ $sl;
+                        $we[3] = $we[3]+ $sel;
+                    elseif($w==4):
+                        $ww[4] = $ww[4] + $range;
+                        $wl[4] = $wl[4]+ $sl;
+                        $we[4] = $we[4]+ $sel;
+                    elseif($w==5):
+                        $ww[5] = $ww[5] + $range;  
+                        $wl[5] = $wl[5]+ $sl; 
+                        $we[5] = $we[5]+ $sel;
+                    endif;           
                             
-                    $pdf->MultiCell(6,4,$i,1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                    $pdf->MultiCell(6,4,$w,1,'C', 1, 2, $x,$y,true,0,false,true,0);
                     
                     $x=$x+6;
-                    $pdf->MultiCell(15,4,'21-01-2012',1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                    $pdf->MultiCell(15,4,$d,1,'C', 1, 2, $x,$y,true,0,false,true,0);
                     
                     $x=$x+15;
-                    $pdf->MultiCell(12,4,'12:00:00',1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                    $pdf->MultiCell(12,4,$s,1,'C', 1, 2, $x,$y,true,0,false,true,0);
                     
                     $x=$x+12;
-                    $pdf->MultiCell(12,4,'12:00:00',1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                    $pdf->MultiCell(12,4,$e,1,'C', 1, 2, $x,$y,true,0,false,true,0);
                     
                     $x=$x+12;
-                    $pdf->MultiCell(12,4,'12:00:00',1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                    $pdf->MultiCell(12,4,$dr,1,'C', 1, 2, $x,$y,true,0,false,true,0);
                     
                     $x=$x+12;
-                    $pdf->MultiCell(14,4,'12:00:00',1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                    $pdf->MultiCell(14,4,$l,1,'C', 1, 2, $x,$y,true,0,false,true,0);
                     
                     $x=$x+14;
-                    $pdf->MultiCell(14,4,'12:00:00',1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                    $pdf->MultiCell(14,4,$el,1,'C', 1, 2, $x,$y,true,0,false,true,0);
                     
                     $y=$y+4;
-                endfor;
+                    $i++;
+                endforeach;
                 
                 if($row%2==0)
                     $x=15;
@@ -744,19 +817,43 @@ class Report extends CI_Controller {
                     else
                         $x=107;
                     
+                    $whours = code(floor($ww[$m] / 3600));
+                    $wmins  = code(floor(($ww[$m] - ($whours*3600)) / 60));
+                    $wseconds = code($ww[$m] % 60);
+                            
+                    $lhours = code(floor($wl[$m] / 3600));
+                    $lmins  = code(floor(($wl[$m] - ($lhours*3600)) / 60));
+                    $lseconds = code($wl[$m] % 60);
+                            
+                    $ehours = code(floor($we[$m] / 3600));
+                    $emins  = code(floor(($we[$m] - ($ehours*3600)) / 60));
+                    $eseconds = code($we[$m] % 60);
+                            
+                    $week[$m] = $whours.':'.$wmins.':'.$wseconds; 
+                    $late[$m] = $lhours.':'.$lmins.':'.$lseconds;
+                    $early[$m]= $ehours.':'.$emins.':'.$eseconds;
+                    
+                    if($week[$m]):
+				        $v = (substr($var,0,2) * 3600) + (substr($var,3,2)*60) + (substr($var,6,2));
+    				    if($ww[$m]>=$v)
+    				        $desc = "Memenuhi";
+    				    else
+    				        $desc = "Tidak Memenuhi"; 
+				    endif;	
+                            
                     $pdf->MultiCell(15,4,'Minggu '.$m,1,'C', 1, 0, $x,$y,true,0,false,true,0);
                     
                     $x=$x+15;
-                    $pdf->MultiCell(15,4,'12:00:00',1,'C', 1, 0, $x,$y,true,0,false,true,0);
+                    $pdf->MultiCell(15,4,$week[$m],1,'C', 1, 0, $x,$y,true,0,false,true,0);
                     
                     $x=$x+15;
-                    $pdf->MultiCell(25,4,'Tidak Memenuhi',1,'C', 1, 0, $x,$y,true,0,false,true,0);
+                    $pdf->MultiCell(25,4,$desc,1,'C', 1, 0, $x,$y,true,0,false,true,0);
                     
                     $x=$x+25;
-                    $pdf->MultiCell(15,4,'12:00:00',1,'C', 1, 0, $x,$y,true,0,false,true,0);
+                    $pdf->MultiCell(15,4,$late[$m],1,'C', 1, 0, $x,$y,true,0,false,true,0);
                     
                     $x=$x+15;
-                    $pdf->MultiCell(15,4,'15:00:00',1,'C', 1, 0,$x,$y,true,0,false,true,0);
+                    $pdf->MultiCell(15,4,$early[$m],1,'C', 1, 0,$x,$y,true,0,false,true,0);
                 
                     $y=$y+4;
                 endfor;
@@ -766,7 +863,7 @@ class Report extends CI_Controller {
                 else
                     $x=107;
                         
-                $pdf->MultiCell(85,4,'DMK=37:30:00',1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                $pdf->MultiCell(85,4,'DMK='.$var,1,'C', 1, 2, $x,$y,true,0,false,true,0);
             
                 if($row%2==0):
                     $y=$y+5;
@@ -774,12 +871,18 @@ class Report extends CI_Controller {
                     $x= $x;
                     $y=$y-(5+4+(0*7)+($i*4)+($m*4)+(1*7)+1);    
                 endif;
-            
+                
+                if(($row%2==0) && ($row!=$total)):
+                    $pdf->AddPage();
+                    $y = 5;
+                    if($row%2==0)
+                        $x=15;
+                    else
+                        $x=107;
+                endif;    
                 $row++;
+                
             endforeach;
-            $pdf->ln(); 
-            
-            
             $pdf->Output("Laporan-Mingguan-1.pdf","I"); 
             /*$data['title']		=	'DAFTAR CEK CLOCK';
 			$data['days']	    =   $this->authlog->getDay($this->session->userdata('week_start'),$this->session->userdata('week_finish'));

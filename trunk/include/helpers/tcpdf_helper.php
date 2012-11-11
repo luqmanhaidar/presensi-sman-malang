@@ -10,3 +10,18 @@
 		require_once(APPPATH.'third_party/html2pdf/html2pdf.class.php');
 		return new HTML2PDF($orientation,$paper,$language); 
 	}
+	
+	function mpdf(){
+		require_once(APPPATH.'third_party/mpdf/mpdf.php');
+        return new mPDF();
+	}
+	
+	function fpdf(){
+		require_once(APPPATH.'third_party/fpdf/fpdf.php');
+		return new FPDF($orientation='P',$unit='mm',$size='A4');
+	}
+	
+	function ezpdf(){
+		require_once(APPPATH.'third_party/ezpdf/class.ezpdf.php');
+		return new Cezpdf('LETTER');
+	}
