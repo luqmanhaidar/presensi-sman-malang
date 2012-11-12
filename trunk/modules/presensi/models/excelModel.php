@@ -1129,7 +1129,16 @@ class ExcelModel extends CI_Model
             $recs =$this->others->getAllRecords('','','','',$start,$end,$rec['ID']);
             $other='';
             foreach($recs as $value):
-                $other .= code($value['DAY']).'/'.code($value['MONTH']).' '.$value['OtherType'] .'('.$value['OtherDescription'].')'.' ';
+				if($value['W']==1)
+                    $other .= 'M1:'.code($value['DAY']).'/'.code($value['MONTH']).' '.$value['OtherType'] .'('.$value['OtherDescription'].')'.' ';
+                elseif($value['W']==2)
+                    $other .= 'M2:'.code($value['DAY']).'/'.code($value['MONTH']).' '.$value['OtherType'] .'('.$value['OtherDescription'].')'.' ';
+                elseif($value['W']==3)
+                    $other .= 'M3:'.code($value['DAY']).'/'.code($value['MONTH']).' '.$value['OtherType'] .'('.$value['OtherDescription'].')'.' ';
+				elseif($value['W']==4)
+                    $other .= 'M4:'.code($value['DAY']).'/'.code($value['MONTH']).' '.$value['OtherType'] .'('.$value['OtherDescription'].')'.' ';
+                elseif($value['W']==5)
+                    $other .= 'M5:'.code($value['DAY']).'/'.code($value['MONTH']).' '.$value['OtherType'] .'('.$value['OtherDescription'].')'.' ';
             endforeach;
             
 			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+10,$row,$other);
