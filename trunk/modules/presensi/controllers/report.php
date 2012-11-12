@@ -643,12 +643,15 @@ class Report extends CI_Controller {
             $x = 15;
             $row=1;
             $total = COUNT($users);
-            $ww[1]=0;$ww[2]=0;$ww[3]=0;$ww[4]=0;$ww[5]=0;
-            $wl[1]=0;$wl[2]=0;$wl[3]=0;$wl[4]=0;$wl[5]=0;
-            $we[1]=0;$we[2]=0;$we[3]=0;$we[4]=0;$we[5]=0;
                    
             foreach($users as $user):
-            
+                
+                if($row%2==1)
+                    $x=15;
+                 else
+                    $x=107;
+                    
+                $ID = $user['ID'];
                 $x=$x;$y=$y;
                 $pdf->SetY($y);$pdf->SetX($x); 	
                 $pdf->Cell(85,4,$title, 0, 0, 'C', 1); 
@@ -659,9 +662,11 @@ class Report extends CI_Controller {
                 $pdf->Cell(85, 4,$periode, 0, 0, 'C', 1); 
                 
                 $pdf->SetFillColor(205, 201, 201);
+                
+                 
     
                 $x=$x;$y=$y+5;
-                $pdf->MultiCell(85,4,$row.$user['ID'].' '.$user['Name'],1,'L', 1, 2, $x,$y,true,0,false,true,0);
+                $pdf->MultiCell(85,4,$ID.' '.$user['Name'],1,'L', 1, 2, $x,$y,true,0,false,true,0);
                 
                 $x=$x;$y=$y+4;
                 $pdf->MultiCell(6,4,"M",1,'C', 1, 2, $x,$y,true,0,false,true,0);
@@ -688,12 +693,13 @@ class Report extends CI_Controller {
                 
                 $y=$y+4;
                 $i=1;
+                $ww[1]=0;$ww[2]=0;$ww[3]=0;$ww[4]=0;$ww[5]=0;
+                $wl[1]=0;$wl[2]=0;$wl[3]=0;$wl[4]=0;$wl[5]=0;
+                $we[1]=0;$we[2]=0;$we[3]=0;$we[4]=0;$we[5]=0;
+                
                 foreach($days as $rec):
-                    if($row%2==0)
-                        $x=15;
-                    else
-                        $x=107;
                     $val = $this->authprocess->getAllRecords('','',$user['ID'],'row',$rec['DAY']);
+                    
                     if($val):
                         $w = $val['W'];
                         $d = $val['MyDate'];
@@ -727,14 +733,36 @@ class Report extends CI_Controller {
                             $dr='';
                         
                     else:
-                        $w = '';
-                        $d = '';
-                        $s = '';
-                        $e = '';
-                        $dr= '';
-                        $l = '';
-                        $el= '';
+                        $w = '-';
+                        $d = '-';
+                        $s = '-';
+                        $e = '-';
+                        $dr= '-';
+                        $l = '-';
+                        $el= '-';
+                        $range=0;
                     endif;
+                    
+                    
+                    if($row%2==1)
+                        $x=15;
+                    else
+                        $x=107;
+                        
+                    $pdf->MultiCell(6,4,$w,1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                    $x=$x+6;
+                    $pdf->MultiCell(15,4,$d,1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                    $x=$x+15;
+                    $pdf->MultiCell(12,4,$s,1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                    $x=$x+12;
+                    $pdf->MultiCell(12,4,$e,1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                    $x=$x+12;
+                    $pdf->MultiCell(12,4,$dr,1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                    $x=$x+12;
+                    $pdf->MultiCell(14,4,$l,1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                    $x=$x+14;
+                    $pdf->MultiCell(14,4,$el,1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                    
                     
                     $sl = (substr($l,0,2) * 3600) + (substr($l,3,2) *60) + (substr($l, 6,2));
                     $sel= (substr($el,0,2)* 3600) + (substr($el,3,2)*60) + (substr($el,6,2));
@@ -758,33 +786,13 @@ class Report extends CI_Controller {
                         $ww[5] = $ww[5] + $range;  
                         $wl[5] = $wl[5]+ $sl; 
                         $we[5] = $we[5]+ $sel;
-                    endif;           
+                    endif;                            
                             
-                    $pdf->MultiCell(6,4,$w,1,'C', 1, 2, $x,$y,true,0,false,true,0);
-                    
-                    $x=$x+6;
-                    $pdf->MultiCell(15,4,$d,1,'C', 1, 2, $x,$y,true,0,false,true,0);
-                    
-                    $x=$x+15;
-                    $pdf->MultiCell(12,4,$s,1,'C', 1, 2, $x,$y,true,0,false,true,0);
-                    
-                    $x=$x+12;
-                    $pdf->MultiCell(12,4,$e,1,'C', 1, 2, $x,$y,true,0,false,true,0);
-                    
-                    $x=$x+12;
-                    $pdf->MultiCell(12,4,$dr,1,'C', 1, 2, $x,$y,true,0,false,true,0);
-                    
-                    $x=$x+12;
-                    $pdf->MultiCell(14,4,$l,1,'C', 1, 2, $x,$y,true,0,false,true,0);
-                    
-                    $x=$x+14;
-                    $pdf->MultiCell(14,4,$el,1,'C', 1, 2, $x,$y,true,0,false,true,0);
-                    
                     $y=$y+4;
                     $i++;
                 endforeach;
                 
-                if($row%2==0)
+                if($row%2==1)
                     $x=15;
                 else
                     $x=107;
@@ -812,7 +820,7 @@ class Report extends CI_Controller {
                 $y=$y+4;
                 for($m=1;$m<=5;$m++):
                     
-                    if($row%2==0)
+                    if($row%2==1)
                         $x=15;
                     else
                         $x=107;
@@ -858,7 +866,7 @@ class Report extends CI_Controller {
                     $y=$y+4;
                 endfor;
                 
-                if($row%2==0)
+                if($row%2==1)
                     $x=15;
                 else
                     $x=107;
@@ -875,7 +883,7 @@ class Report extends CI_Controller {
                 if(($row%2==0) && ($row!=$total)):
                     $pdf->AddPage();
                     $y = 5;
-                    if($row%2==0)
+                    if($row%2==1)
                         $x=15;
                     else
                         $x=107;
