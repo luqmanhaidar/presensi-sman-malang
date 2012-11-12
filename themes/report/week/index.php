@@ -207,7 +207,7 @@ div.my_0{
                         <?php 
 							if($week[$m]):
 								$v = (substr($var,0,2) * 3600) + (substr($var,3,2)*60) + (substr($var,6,2));
-								if($ww[$m]>=$v)
+								if($w[$m]>=$v)
 									print "Memenuhi";
 								else
 									print "Tidak Memenuhi"; 
