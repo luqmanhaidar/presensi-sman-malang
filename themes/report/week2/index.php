@@ -97,7 +97,16 @@
                     <?php
                         $recs =$this->others->getAllRecords('','','','',$start,$end,$row['ID']);
                         foreach($recs as $rec):
-                            print code($rec['DAY']).'/'.code($rec['MONTH']).' '.$rec['OtherType'] .'('.$rec['OtherDescription'].')'.' ';
+                            if($rec['W']==1)
+                                print 'M1:'.code($rec['DAY']).'/'.code($rec['MONTH']).' '.$rec['OtherType'] .'('.$rec['OtherDescription'].')'.' ';
+                            elseif($rec['W']==2)
+                                print 'M2:'.code($rec['DAY']).'/'.code($rec['MONTH']).' '.$rec['OtherType'] .'('.$rec['OtherDescription'].')'.' ';
+                            elseif($rec['W']==3)
+                                print 'M3:'.code($rec['DAY']).'/'.code($rec['MONTH']).' '.$rec['OtherType'] .'('.$rec['OtherDescription'].')'.' ';    
+                            elseif($rec['W']==4)
+                                print 'M4:'.code($rec['DAY']).'/'.code($rec['MONTH']).' '.$rec['OtherType'] .'('.$rec['OtherDescription'].')'.' ';
+                            elseif($rec['W']==5)
+                                print 'M5:'.code($rec['DAY']).'/'.code($rec['MONTH']).' '.$rec['OtherType'] .'('.$rec['OtherDescription'].')'.' ';
                         endforeach;
                     ?>
                 </td>

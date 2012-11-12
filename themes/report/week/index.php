@@ -112,7 +112,7 @@ div.my_0{
                                 $hours = code(floor($range / 3600));
                                 $mins  = code(floor(($range - ($hours*3600)) / 60));
                                 $seconds = code($range % 60);
-                                  
+                                //print $range;  
                                 print $time  = $hours.':'.$mins.':'.$seconds; 
                             ?>
                         </td>
