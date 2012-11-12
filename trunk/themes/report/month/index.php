@@ -50,7 +50,11 @@
        ?>
 	   <th style="background:<?=$bg?>;">
             <?php if(strlen($this->authlog->getUserTime(code($i).'-'.$month.'-'.$year,$row['UserID'],1))>2): ?>
-            <img src="<?=base_url('assets/signature/'.$row['UserID'].'.jpg');?>" />
+                <?php if(file_exists('./assets/signature/'.$row['UserID'].'.jpg')): ?>
+                    <img src="<?=base_url('assets/signature/'.$row['UserID'].'.jpg');?>" />
+                <?php else:?>
+                    <?php // file_exists('./assets/signature/'.$row['UserID'].'.jpg')?>
+                <?php endif;?>
             <?php else: ?>               
             <?php endif;?>    
        </th>
@@ -90,7 +94,11 @@
         ?>
 	   <th style="background:<?=$bg?> ;">
             <?php if(strlen($this->authlog->getUserTime(code($i).'-'.$month.'-'.$year,$row['UserID'],2))>2): ?>
-            <img src="<?=base_url('assets/signature/'.$row['UserID'].'.jpg');?>" />
+                <?php if(file_exists('./assets/signature/'.$row['UserID'].'.jpg')): ?>
+                    <img src="<?=base_url('assets/signature/'.$row['UserID'].'.jpg');?>" />
+                <?php else:?>
+                    <?php // file_exists('./assets/signature/'.$row['UserID'].'.jpg')?>
+                <?php endif;?>
             <?php else: ?>               
             <?php endif;?>    
        </th>

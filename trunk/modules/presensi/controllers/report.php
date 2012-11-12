@@ -713,10 +713,10 @@ class Report extends CI_Controller {
                             $start = (substr($s,0,2) * 3600) + (substr($s,3,2)*60) + (substr($s,6,2));
                                         
                         $range = $end - $start;
-                        if($range<=0)
+                        if($range<0)
                             $range = 0;
                         else
-                            $range=$range;    
+                            $range = $range;    
                                 
                         $hours = code(floor($range / 3600));
                         $mins  = code(floor(($range - ($hours*3600)) / 60));
@@ -884,17 +884,6 @@ class Report extends CI_Controller {
                 
             endforeach;
             $pdf->Output("Laporan-Mingguan-1.pdf","I"); 
-            /*$data['title']		=	'DAFTAR CEK CLOCK';
-			$data['days']	    =   $this->authlog->getDay($this->session->userdata('week_start'),$this->session->userdata('week_finish'));
-			$data['periode']	=	'Periode '.$this->session->userdata('week_start'). ' s/d '. $this->session->userdata('week_finish');
-			$data['users']	    =	$this->userinfo->getAllRecords('','','','',$this->session->userdata('week_group'));
-			$data['var']	    =	$this->presensi->getVariabelDataByVar('DMK');*/
-			/*$this->load->vars($data);
-			$content = $this->load->theme('report/week',$data,TRUE);*/
-            /*$html2pdf = html2pdf('P','A4');
-            $html2pdf->WriteHTML($content);
-            $html2pdf->Output('Lap-Mingguan.pdf');*/
-            /*$this->pdf->pdf_create($content,$data['title'],$stream=TRUE,'A4',"Portrait");*/
 		endif;	
         
 	}
