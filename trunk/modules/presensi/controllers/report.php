@@ -556,7 +556,17 @@ class Report extends CI_Controller {
                 $early = $hours.':'.$mins.':'.$seconds;   
             endif;
             
-            $duration = $wsp-$sk;
+            if($ws>0)
+                $ws = $ws;
+            else
+                $ws = 0;
+             
+            if($wm>0)
+                $wm = $wm;
+            else
+                $wm = 0;            
+            //$duration = $wsp-$sk;
+            $duration = $ws - $wm;
             
             if($duration<0)
                 $duration = 0;

@@ -71,6 +71,7 @@ class Others extends CI_Model
         //if (!empty($date_finish))   
             //$this->db->where('CONVERT(VARCHAR(10),TransactionTime, 105)<=',$date_finish);          
         $this->db->select('DATEPART(DAY,OtherDateStart) AS DAY,DATEPART(MONTH,OtherDateStart) AS MONTH,*');
+        $this->db->select('DATEPART(WEEK,OtherDateStart)-DATEPART(WEEK,(OtherDateStart-DATEPART(DAY,OtherDateStart)+1)) as W');
         $this->db->order_by('OtherDateStart','ASC');
         $this->db->order_by('UserID','ASC');
         $this->db->where_not_in('UserID','');
