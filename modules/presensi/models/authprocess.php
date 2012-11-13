@@ -55,7 +55,7 @@ class Authprocess extends CI_Model
         $this->db->join('NGAC_USERINFO','NGAC_USERINFO.ID=NGAC_AUTHPROCESS.UserID');
         $this->db->join('NGAC_GROUP_WORK','NGAC_GROUP_WORK.GroupWorkID=NGAC_USERINFO.GroupWork','LEFT');
         $this->db->join('NGAC_GROUP_FRIDAY','NGAC_GROUP_FRIDAY.GroupFridayID=NGAC_USERINFO.GroupFriday','LEFT');
-        $this->db->where('DATEPART(WEEK,ProcessDateStart)- DATEPART(WEEK,(ProcessDateStart-DATEPART(day,ProcessDateStart)+1))>=1');
+        $this->db->where('DATEPART(WEEK,ProcessDateStart)- DATEPART(WEEK,(ProcessDateStart-DATEPART(day,ProcessDateStart)+1))>=0');
         $this->db->where('NGAC_USERINFO.privilege',2);
         $Q = $this->db->get('NGAC_AUTHPROCESS');
         if($type=='row')
