@@ -40,7 +40,7 @@ class Authlog extends CI_Model
 		$this->db->select('CONVERT(VARCHAR(10),TransactionTime, 105) as DAY');
 		$this->db->where("(TransactionTime >='".$date_start."') AND (TransactionTime <=DATEADD(day,1,'".$date_finish."'))");  
 		$this->db->group_by('CONVERT(VARCHAR(10),TransactionTime,105)');
-        $this->db->order_by('MAX(TransactionTime)','DESC');
+        //$this->db->order_by('MAX(TransactionTime)','DESC');
 		$this->db->order_by('CONVERT(VARCHAR(10),TransactionTime,105)','ASC');
 		$Q = $this->db->get('NGAC_AUTHLOG');
 		return $Q->result_array();
