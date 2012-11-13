@@ -38,9 +38,9 @@ class Authlog extends CI_Model
     
 	function getDay($date_start='',$date_finish=''){
 		$this->db->select('CONVERT(VARCHAR(10),TransactionTime, 105) as DAY');
-        //$this->db->select('DATEPART(WEEK,CONVERT(VARCHAR(10),TransactionTime,105))-DATEPART(WEEK,(TransactionTime-DATEPART(day,TransactionTime)+1)) as W');
 		$this->db->where("(TransactionTime >='".$date_start."') AND (TransactionTime <=DATEADD(day,1,'".$date_finish."'))");  
 		$this->db->group_by('CONVERT(VARCHAR(10),TransactionTime,105)');
+        $this->db->order_by('COUNT(TransactionTime)','DESC');
 		$this->db->order_by('CONVERT(VARCHAR(10),TransactionTime,105)','ASC');
 		$Q = $this->db->get('NGAC_AUTHLOG');
 		return $Q->result_array();
@@ -155,7 +155,7 @@ class Authlog extends CI_Model
         if (!empty($key))   
             $this->db->where("FunctionKey=".$key);
         $this->db->where_not_in('NGAC_USERINFO.Privilege',1);
-        $this->db->where('AuthResult','0');        	
+        //$this->db->where('AuthResult','0');        	
         $this->db->join('NGAC_USERINFO','NGAC_USERINFO.ID=NGAC_AUTHLOG.UserID');
         $this->db->order_by('UserID','ASC');
         $this->db->order_by('TransactionTime','ASC');
