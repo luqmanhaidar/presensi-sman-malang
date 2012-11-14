@@ -40,8 +40,8 @@
 					<tr>
 						<th scope="col" width="5%">No</th>
 						<th scope="col" width="10%" class="align-left hide-on-mobile">ID User</th>
+						<th scope="col" width="10%" class="align-left hide-on-mobile">Nama</th>
                         <th scope="col" width="10%">Tanggal</th>
-                        <!--<th scope="col" width="10%">Sampai</th>-->
                         <th scope="col" width="10%">Type</th>
                         <th scope="col">Keterangan</th>
                         <th scope="col" class="align-center hide-on-mobile" width="20%" class="align-right">Actions</th>
@@ -63,8 +63,8 @@
 					<tr>
 						<td><?=$i;?></td>
 						<td><?=$row['UserID'];?></td>
-                        <td><?=indonesian_shortDate($row['OtherDateStart']);?></td>
-                        <!--<td><?=indonesian_shortDate($row['OtherDateFinish']);?></td>-->
+                        <td><?=$row['Name'];?></td>
+						<td><?=indonesian_shortDate($row['OtherDateStart']);?></td>
                         <td><?=$row['OtherType'];?></td>
                         <td><?=$row['OtherDescription'];?></td>
 						<td class="low-padding align-center">

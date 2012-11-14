@@ -21,7 +21,8 @@
                     <?=form_dropdown('day2',config_item('day'),substr($this->session->userdata('transport_finish'),3,2),'class="select"')?>
                     <?=form_dropdown('month2',config_item('month'),substr($this->session->userdata('transport_finish'),0,2),'class="select"')?>
                     <?=form_dropdown('year2',config_item('year'),substr($this->session->userdata('transport_finish'),6,4),'class="select"')?>
-                    <input type="submit" class="button blue-gradient glossy" value="Go" />
+                    <?=form_input('holiday',$this->session->userdata('transport_holiday'),'id="holiday" class="input white-gradient glossy" ');?>
+					<input type="submit" class="button blue-gradient glossy" value="Go" />
                     </form>
                 </div>
                 
