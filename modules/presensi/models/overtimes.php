@@ -50,7 +50,7 @@ class Overtimes extends CI_Model
             
         if (!empty($date_start)) 
 			 $this->db->where("(OvertimeDate >='".$date_start."') AND (OvertimeDate <=DATEADD(day,1,'".$date_finish."'))");  
-        $this->db->select('OvertimeID,CONVERT(VARCHAR(10),OvertimeDate,105) as MyDate,OvertimeDate,UserID,OvertimeDescription');       
+        $this->db->select('OvertimeID,CONVERT(VARCHAR(10),OvertimeDate,105) as MyDate,OvertimeDate,UserID,Name,OvertimeDescription');       
         $this->db->order_by('OvertimeDate','DESC');
         $this->db->order_by('UserID','ASC');
         $this->db->where_not_in('UserID','');
