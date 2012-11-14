@@ -234,7 +234,7 @@ class Report extends CI_Controller {
         $data['year']       =   $this->session->userdata('month_year');    
         $this->load->vars($data);
         $content=$this->load->theme('report/month',$data,TRUE);
-        $html2pdf = html2pdf('L','A3');
+        $html2pdf = html2pdf('L','Letter');
         $html2pdf->WriteHTML($content);
         $html2pdf->Output('Laporan-Bulanan.pdf');
     }

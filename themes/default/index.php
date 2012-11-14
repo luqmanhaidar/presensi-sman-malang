@@ -174,6 +174,7 @@
 						<span><span class="list-count">3</span>Setting</span>
 						<ul class="big-menu">
 							<li><a href="<?=site_url('presensi/variabel/index')?>">Variabel Presensi</a></li>
+                            <li><a href="<?=site_url('presensi/holiday/index')?>">Libur & Cuti Bersama</a></li>
 							<li><a href="<?=site_url('employee/admin/index')?>">User Login</a></li>
 							<li><a href="<?=site_url('employee/history/index')?>">Log</a></li>
 						</ul>
