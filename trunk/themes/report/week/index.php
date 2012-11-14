@@ -176,6 +176,7 @@ div.my_0{
                 </thead>
                 <tbody>
                     <?php 
+                        $tm='';
                         for($m=1;$m<=5;$m++):
                             $whours = code(floor($w[$m] / 3600));
                             $wmins  = code(floor(($w[$m] - ($whours*3600)) / 60));
@@ -207,10 +208,12 @@ div.my_0{
                         <?php 
 							if($week[$m]):
 								$v = (substr($var,0,2) * 3600) + (substr($var,3,2)*60) + (substr($var,6,2));
-								if($w[$m]>=$v)
+								if($w[$m]>=$v):
 									print "Memenuhi";
-								else
-									print "Tidak Memenuhi"; 
+								else:
+									print "Tidak Memenuhi";
+                                    $tm = $tm.'M'.$m.': TM ';
+                                endif; 
 							endif;		
                         ?>
                         </td>
@@ -221,7 +224,7 @@ div.my_0{
                </tbody>
                <tfoot>
                     <tr>
-                        <th colspan="5"><?='DMK='.$var;?></th>
+                        <th colspan="5"><?=$tm;?></th>
                     </tr>
                </tfoot>
         	</table>
