@@ -22,7 +22,7 @@
                     <?=form_dropdown('month2',config_item('month'),substr($this->session->userdata('eat_finish'),0,2),'class="select"')?>
                     <?=form_dropdown('year2',config_item('year'),substr($this->session->userdata('eat_finish'),6,4),'class="select"')?>
                     
-                    <?=form_dropdown('holiday',config_item('holiday'),$this->session->userdata('eat_holiday'),'id="holiday" class="select white-gradient glossy" ');?>
+                    <?=form_input('holiday',$this->session->userdata('eat_holiday'),'id="holiday" class="input white-gradient glossy" ');?>
                     <input type="submit" class="button blue-gradient glossy" value="Go" />
                     </form>
                 </div>
