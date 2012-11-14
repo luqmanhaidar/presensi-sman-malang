@@ -51,11 +51,12 @@ class Authprocess extends CI_Model
                    
         $this->db->select('UserID,Name,datename(dw,ProcessDateStart) as DayName,NGAC_USERINFO.GroupID,GroupWork,GroupFriday,CONVERT(VARCHAR(10),ProcessDateStart, 105) as MyDate,CONVERT(VARCHAR(8),ProcessDateStart, 108) AS MyTimeStart,CONVERT(VARCHAR(8),ProcessDateEnd, 108) AS MyTimeEnd');
         $this->db->select('ProcessDateWorkStart,ProcessDateWorkEnd,ProcessDateLate,ProcessDateEarly');
-        $this->db->select('DATEPART(WEEK,ProcessDateStart)-DATEPART(WEEK,(ProcessDateStart-DATEPART(day,ProcessDateStart)+1)) as W');
+        //$this->db->select('DATEPART(WEEK,ProcessDateStart)-DATEPART(WEEK,(ProcessDateStart-DATEPART(day,ProcessDateStart)+1)) as W');
+        $this->db->select('DATEPART(DAY,ProcessDateStart - 1) / 7 + 1 as W');
         $this->db->join('NGAC_USERINFO','NGAC_USERINFO.ID=NGAC_AUTHPROCESS.UserID');
         $this->db->join('NGAC_GROUP_WORK','NGAC_GROUP_WORK.GroupWorkID=NGAC_USERINFO.GroupWork','LEFT');
         $this->db->join('NGAC_GROUP_FRIDAY','NGAC_GROUP_FRIDAY.GroupFridayID=NGAC_USERINFO.GroupFriday','LEFT');
-        $this->db->where('DATEPART(WEEK,ProcessDateStart)- DATEPART(WEEK,(ProcessDateStart-DATEPART(day,ProcessDateStart)+1))>=0');
+        //$this->db->where('DATEPART(WEEK,ProcessDateStart)- DATEPART(WEEK,(ProcessDateStart-DATEPART(day,ProcessDateStart)+1))>=0');
         $this->db->where('NGAC_USERINFO.privilege',2);
         $Q = $this->db->get('NGAC_AUTHPROCESS');
         if($type=='row')
