@@ -31,4 +31,6 @@
     $config['print']   =   array('0'=>'Print Preview','1'=>'Export Pdf','2'=>'Export Excel'); 
     $config['var']     =   array('Bilangan Bulat (Menit)'=>'Bilangan Bulat (Menit)','Waktu (hh:mm)'=>'Waktu (hh:mm)','Bilangan Bulat (Jam)'=>'Bilangan Bulat (Jam)',
                                  'Bilangan Bulat (Rupiah)'=>'Bilangan Bulat (Rupiah)');
-    $config['week_type']=   array('M1'=>'M1','M2'=>'M2');                             
+    $config['week_type']=   array('M1'=>'M1','M2'=>'M2');
+    $config['holiday_type']=array('Libur Nasional'=>'Libur Nasional','Cuti Bersama'=>'Cuti Bersama');   
+    $config['holiday_stype']=array(''=>'All','Libur Nasional'=>'Libur Nasional','Cuti Bersama'=>'Cuti Bersama');                             
