@@ -9,8 +9,8 @@ class User extends CI_Controller {
 		parent::__construct();
         $this->load->module_model('employee','log'); //load model usergroup form user 
         if(!$this->session->userdata('user')):
-            //is_message_loginErr();
-            //redirect('auth/user/index',301);
+            is_message_loginErr();
+            redirect('auth/user/index',301);
         endif;    
 	}
     

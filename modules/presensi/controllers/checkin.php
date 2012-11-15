@@ -7,6 +7,10 @@ class Checkin extends CI_Controller {
     function __construct()
     {
         parent::__construct();
+        if(!$this->session->userdata('user')):
+            is_message_loginErr();
+            redirect('auth/user/index',301);
+        endif;
         $this->load->module_model('employee','log'); //load model usergroup form user
         $this->load->model('authlog'); //load model authlog form presensi   
         $this->load->module_model('employee','userinfo'); //load model usergroup form user 

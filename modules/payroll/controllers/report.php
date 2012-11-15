@@ -7,6 +7,10 @@ class Report extends CI_Controller {
     public function __construct()
     {
 		parent::__construct();
+        if(!$this->session->userdata('user')):
+            is_message_loginErr();
+            redirect('auth/user/index',301);
+        endif;
         $this->load->module_model('employee','log'); //load model usergroup form user
         $this->load->module_model('presensi','authlog'); //load model authlog form presensi
         $this->load->module_model('presensi','presensi'); //load model presensi form presensi   
