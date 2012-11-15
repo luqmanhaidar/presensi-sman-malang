@@ -222,4 +222,10 @@ function getCountSundayInMonth($month,$year){
         endif;
     endfor;
     return $x;
+}
+
+function getRangeDate($dayStart,$monthStart,$yearStart,$dayEnd,$monthEnd,$yearEnd){
+   $d2=GregorianToJD($monthEnd,$dayEnd,$yearEnd);
+   $d1=GregorianToJD($monthStart,$dayStart,$yearStart);
+   return $d = $d2 - $d1;
 }             
