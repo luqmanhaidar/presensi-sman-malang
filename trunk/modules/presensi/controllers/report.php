@@ -11,6 +11,7 @@ class Report extends CI_Controller {
         $this->load->model('authlog'); //load model authlog form presensi
         $this->load->model('others'); //load model others form others
         $this->load->model('presensi'); //load model presensi form presensi   
+        $this->load->model('holidays'); //load model presensi form holiday
         $this->load->model('authprocess'); //load model authprocess form presensi
 		$this->load->model('overtimes'); //load model presensi form presensi  
 		$this->load->model('authovertime'); //load model authprocess form presensi  		
@@ -180,14 +181,9 @@ class Report extends CI_Controller {
     
     function month_search()
     {
-        /*    
-        $search = array ('month_group'  => $this->input->post('group'),
-						 'month_start'  => $this->input->post('month').'/'.$this->input->post('day').'/'.$this->input->post('year'), 
-                         'month_finish' => $this->input->post('month2').'/'.$this->input->post('day2').'/'.$this->input->post('year2'));    
-        */
         $search = array ('month_group'  => $this->input->post('group'),
                          'month_month'  => $this->input->post('month'),
-                         'month_year'  => $this->input->post('year')
+                         'month_year'   => $this->input->post('year')
                         );
         $this->session->set_userdata($search);
         redirect('presensi/report/monthly',301);
@@ -213,6 +209,7 @@ class Report extends CI_Controller {
         $month = $this->session->userdata('month_month');
 		$year  = $this->session->userdata('month_year');
 		$data['position']	=	$this->usergroup->getPositionData($group);
+        $data['holidays']   =   $this->holidays->getAllRecords('','','','','',$month,$year);
 		$data['checks']		=	$this->authlog->getMonthRecords('','',$month,$year,$group);
 		$data['days']       =   days_in_month($this->session->userdata('month_month'));
         $data['month']      =   $this->session->userdata('month_month');
@@ -227,6 +224,7 @@ class Report extends CI_Controller {
         $group = $this->session->userdata('month_group');
         $month = $this->session->userdata('month_month');
 		$year  = $this->session->userdata('month_year');
+        $data['holidays']   =   $this->holidays->getAllRecords('','','','','',$month,$year);
 		$data['position']	=	$this->usergroup->getPositionData($group);
 		$data['checks']		=	$this->authlog->getMonthRecords('','',$month,$year,$group);
 		$data['days']       =   days_in_month($this->session->userdata('month_month'));

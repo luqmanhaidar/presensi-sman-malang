@@ -24,7 +24,7 @@ ul{margin:0;}
 			<th rowspan="2" style="100px">Nama</th>
 			<th rowspan="2">Paraf</th>
 			<th class="center" colspan="<?=$days?>">Tanggal</th>
-			<th colspan="7">Keterangan</th>
+			<th colspan="7">Ket.(<?=$k=days_in_month($this->session->userdata('month_month'),$this->session->userdata('month_year')) - $this->holidays->getHolidayDate('',$this->session->userdata('month_month'),$this->session->userdata('month_year'))- getCountSundayInMonth($this->session->userdata('month_month'),$this->session->userdata('month_year'));?> Hari Kerja)</th>
 		</tr>
 		<tr>
 			<?php for($i=1;$i<=$days;$i++):?>
@@ -64,20 +64,20 @@ ul{margin:0;}
                     <?php $m=$m+1;?>
                     <img src="<?=base_url('assets/signature/'.$row['UserID'].'.jpg');?>" />
                 <?php else:?>
-                    <?php // file_exists('./assets/signature/'.$row['UserID'].'.jpg')?>
                 <?php endif;?>
-            <?php else: ?>               
+            <?php else: ?>
+                                
             <?php endif;?>    
        </th>
 	   <?php 
        endfor;?>
        <th class="white desx"><?=$m;?></th>
-	   <th class="white desx"><?=$this->others->getUserTime($row['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Sakit")?></th>
-	   <th class="white desx"><?=$this->others->getUserTime($row['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Ijin")?></th>
-	   <th class="white desx"><?=$this->others->getUserTime($row['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Cuti")?></th>
-       <th class="white desx"><?=$this->others->getUserTime($row['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Tugas")?></th>
-	   <th class="white desx"></th>
-       <th class="white desx"></th>
+	   <th class="white desx"><?=$s=$this->others->getUserTime($row['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Sakit")?></th>
+	   <th class="white desx"><?=$i=$this->others->getUserTime($row['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Ijin")?></th>
+	   <th class="white desx"><?=$c=$this->others->getUserTime($row['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Cuti")?></th>
+       <th class="white desx"><?=$dl=$this->others->getUserTime($row['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Tugas")?></th>
+       <th class="white desx"><?=$l=$this->holidays->getHolidayDate('',$this->session->userdata('month_month'),$this->session->userdata('month_year'))?></th>
+       <th class="white desx"><?=$k-($m+$s+$i+$c+$l+$dl)?></th>
     </tr>
 	<tr>
         <th class="white">Dtg.PK</th>
@@ -162,8 +162,11 @@ ul{margin:0;}
     <br />
     <h5>Hari Libur</h5>
     <ul>
-        <li>15 Des : Hari Raya</li>
+        <?php foreach($holidays as $rec):?>
+        <li><?=$rec['HolidayDate'].':'.$rec['HolidayDescription']?></li>
+        <?php endforeach;?>
     </ul>
+    
     
 </body>
 </html>
