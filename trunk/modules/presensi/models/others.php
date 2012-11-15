@@ -75,7 +75,7 @@ class Others extends CI_Model
         return $Q->result_array();
     }
     
-    function save()
+    function save($date)
     {
         /**$date = date_create('20-02-2012');
         date_add($date, date_interval_create_from_date_string('7 days'));
@@ -85,7 +85,7 @@ class Others extends CI_Model
   		$value = array(
                         'UserID'              =>  $this->input->post('user'),
                         'OtherType'           =>  $this->input->post('type'),
-                        'OtherDateStart'      =>  $this->input->post('year').'-'. $this->input->post('month').'-'. $this->input->post('day'),
+                        'OtherDateStart'      =>  $date,
                         'OtherDescription'    =>  $this->input->post('description'));
         $this->db->insert('NGAC_OTHER',$value);
     }

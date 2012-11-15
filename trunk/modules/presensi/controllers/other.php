@@ -67,14 +67,30 @@ class Other extends CI_Controller {
     
     public function save()
     {
-        /*$d2=GregorianToJD($this->input->post('month2'),$this->input->post('day2'),$this->input->post('year2'));
+        $day   = $this->input->post('day');
+        $month = $this->input->post('month');
+        $year  = $this->input->post('year');
+        if(!validateDate($day,$month)):
+            $this->session->set_flashdata('message',config_item('range_error'));
+            redirect('presensi/other/index/'.$this->session->userdata('other_offset'),301);
+        endif; 
+        
+        $day2   = $this->input->post('day2');
+        $month2 = $this->input->post('month2');
+        $year2  = $this->input->post('year2');
+        if(!validateDate($day2,$month2)):
+            $this->session->set_flashdata('message',config_item('range_error'));
+            redirect('presensi/other/index/'.$this->session->userdata('other_offset'),301);
+        endif;     
+        
+        $d2=GregorianToJD($this->input->post('month2'),$this->input->post('day2'),$this->input->post('year2'));
         $d1=GregorianToJD($this->input->post('month'),$this->input->post('day'),$this->input->post('year'));
         $d = $d2 - $d1;
         
         if($d < 0 ):
             $this->session->set_flashdata('message',config_item('date_error'));
             redirect('presensi/other/index/'.$this->session->userdata('other_offset'),301);
-		endif;*/
+		endif;
         
         $user = $this->input->post('user');
         $date = $this->input->post('day').'-'.$this->input->post('month').'-'.$this->input->post('year');
@@ -84,12 +100,12 @@ class Other extends CI_Controller {
             redirect('presensi/other/index/'.$this->session->userdata('other_offset'),301);
 		endif;
         
-        /**echo GregorianToJD($this->input->post('month'),$this->input->post('day'),$this->input->post('year'));
-        echo "<br/>";
-        echo GregorianToJD($this->input->post('month2'),$this->input->post('day2'),$this->input->post('year2'));     
-        $date = $this->input->post('year').'-'.$this->input->post('month').'-'.$this->input->post('day');
-        $d = $d + 1;**/
-        $this->others->save();
+        $total = getRangeDate($day,$month,$year,$day2,$month2,$year2);
+        for($i=0;$i<=$total;$i++):
+            $date  = $year.'-'.$month.'-'.$day;
+            $ndate = date("Y-m-d", strtotime("$date +$i day")); 
+            $this->others->save($ndate);
+        endfor;    
         $this->session->set_flashdata('message',config_item('save_success'));
         redirect('presensi/other/index/'.$this->session->userdata('other_offset'),301);
     }
