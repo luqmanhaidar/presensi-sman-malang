@@ -245,13 +245,15 @@ class Report extends CI_Controller {
     {
         $start = $this->session->userdata('transport_start'); 
         $end   = $this->session->userdata('transport_finish');
-        $group = $this->session->userdata('transport_group'); 
-        $holidays= COUNT($this->holidays->getAllRecords('','','',$this->session->userdata('transport_start'),$this->session->userdata('transport_finish'),'',''));  
-        $recs  = $this->authlog->getPerMonthRecords('','',$start,$end,$group);
-        $var   = $this->presensi->getVariabelDataByVar('UTR');   
-		$excel = $this->excelModel->transport_excel($recs,$var,$holidays);
+        $id    = $this->session->userdata('transport_group'); 
+        $holidays=   COUNT($this->holidays->getAllRecords('','','',$start,$end,'',''));  
+        $group =  $this->usergroup->getPositionData($id);
+        $recs  = $this->authlog->getPerMonthRecords('','',$start,$end,$id);
+        //$eat   =  $this->presensi->getVariabelDataByVar('UMK');
+        $trp   =  $this->presensi->getVariabelDataByVar('UTR');
+		$excel = $this->excelModel->transport_excel($recs,$trp,$group,$holidays);
         $data = file_get_contents("assets/Lap-Gaji-Format-2.xlsx"); // Read the file's contents
-        force_download("Lap-Gaji-Format-2",$data); 
+        force_download("Lap-Gaji-Format-1",$data);  
 	}
     
 }
