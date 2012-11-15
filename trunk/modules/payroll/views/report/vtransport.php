@@ -21,7 +21,6 @@
                     <?=form_dropdown('day2',config_item('day'),substr($this->session->userdata('transport_finish'),3,2),'class="select"')?>
                     <?=form_dropdown('month2',config_item('month'),substr($this->session->userdata('transport_finish'),0,2),'class="select"')?>
                     <?=form_dropdown('year2',config_item('year'),substr($this->session->userdata('transport_finish'),6,4),'class="select"')?>
-                    <?=form_input('holiday',$this->session->userdata('transport_holiday'),'id="holiday" class="input white-gradient glossy" ');?>
 					<input type="submit" class="button blue-gradient glossy" value="Go" />
                     </form>
                 </div>
@@ -38,6 +37,7 @@
                         <th scope="col" class="align-left hide-on-mobile">Nama</th>
 						<th scope="col" class="align-left hide-on-mobile">Jabatan</th>
                         <th scope="col" class="align-center hide-on-mobile">Hari</th>
+                        <th scope="col" class="align-center hide-on-mobile">Libur</th>
 						<th scope="col" class="align-center hide-on-mobile">Jumlah</th>
 						<th scope="col" width="5%" class="align-left hide-on-mobile">Paraf</th>
 					</tr>
@@ -54,7 +54,8 @@
                         <td><?=$row['Name'];?></td>
 						<td><?=$row['GroupName'];?></td>
                         <td class="align-right hide-on-mobile"><?=$row['Total'];?></td>
-						<td class="align-right hide-on-mobile"><?=number_format($total=$row['Total'] * $var,0);?></td>
+                        <td class="align-right hide-on-mobile"><?=$holidays;?></td>
+						<td class="align-right hide-on-mobile"><?=number_format($total=($row['Total'] - $holidays) * $var,0);?></td>
 						<td><img style="width:20px;height:auto;" src="<?=base_url('assets/signature/'.$row['UserID'].'.jpg')?>" /></td>
 					</tr>
                     <?php 
@@ -65,7 +66,7 @@
 				
 				<tfoot>
 					<tr>
-						<td colspan="7">
+						<td colspan="8">
 							<?=COUNT($checks).' Data ditemukan.'?>
 						</td>
 					</tr>

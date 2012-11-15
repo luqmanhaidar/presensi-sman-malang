@@ -13,6 +13,7 @@ class Report extends CI_Controller {
         $this->load->module_model('employee','userinfo'); //load model usergroup form user 
         $this->load->module_model('employee','usergroup'); //load model usergroup form user
         $this->load->model('excelModel'); //load model excelModel
+        $this->load->module_model('presensi','holidays'); //load model presensi form holiday
         $this->load->library('excel');
         $this->load->helper('download');
         $this->load->helper('date');    
@@ -34,7 +35,8 @@ class Report extends CI_Controller {
 			$group = '100';
 			$start = date('m/d/y');
 			$end   = date('m/d/y');
-        endif;                    
+        endif;                 
+        $data['holidays']=   COUNT($this->holidays->getAllRecords('','','',$start,$end,'',''));   
         $this->session->set_userdata('eat_offset',$offset);
         $data['checks']  = $this->authlog->getPerMonthRecords($offset,$paging,$start,$end,$group);
         $numrows = COUNT($this->authlog->getPerMonthRecords('','',$start,$end,$group)); 
@@ -97,6 +99,7 @@ class Report extends CI_Controller {
 	function eat_print()
     {
 		$data['title']  =  'DAFTAR OPERASIONAL KEHADIRAN DAN PENAMBAHAN GIZI';
+        $data['holidays']=   COUNT($this->holidays->getAllRecords('','','',$this->session->userdata('eat_start'),$this->session->userdata('eat_finish'),'',''));  
         $data['group']  =  $this->usergroup->getPositionData($this->session->userdata('eat_group')); 
 		$data['eat']	=  $this->presensi->getVariabelDataByVar('UMK');
         $data['trp']	=  $this->presensi->getVariabelDataByVar('UTR');
@@ -109,6 +112,7 @@ class Report extends CI_Controller {
     {
 		$this->load->library('pdf');
 		$data['title']  =  'DAFTAR OPERASIONAL KEHADIRAN DAN PENAMBAHAN GIZI ';
+        $data['holidays']=   COUNT($this->holidays->getAllRecords('','','',$this->session->userdata('eat_start'),$this->session->userdata('eat_finish'),'',''));  
         $data['group']  =  $this->usergroup->getPositionData($this->session->userdata('eat_group')); 
 		$data['eat']	=  $this->presensi->getVariabelDataByVar('UMK');
         $data['trp']	=  $this->presensi->getVariabelDataByVar('UTR');
@@ -123,11 +127,12 @@ class Report extends CI_Controller {
         $start = $this->session->userdata('eat_start'); 
         $end   = $this->session->userdata('eat_finish');
         $id    = $this->session->userdata('eat_group'); 
+        $holidays=   COUNT($this->holidays->getAllRecords('','','',$start,$end,'',''));  
         $group =  $this->usergroup->getPositionData($id);
         $recs  = $this->authlog->getPerMonthRecords('','',$start,$end,$id);
         $eat   =  $this->presensi->getVariabelDataByVar('UMK');
         $trp   =  $this->presensi->getVariabelDataByVar('UTR');
-		$excel = $this->excelModel->eat_excel($recs,$trp,$eat,$group);
+		$excel = $this->excelModel->eat_excel($recs,$trp,$eat,$group,$holidays);
         $data = file_get_contents("assets/Lap-Gaji-Format-1.xlsx"); // Read the file's contents
         force_download("Lap-Gaji-Format-1",$data); 
 	}
@@ -150,6 +155,7 @@ class Report extends CI_Controller {
 			$end   = date('m/d/y');
         endif;                    
         $this->session->set_userdata('transport_offset',$offset);
+        $data['holidays']=   COUNT($this->holidays->getAllRecords('','','',$start,$end,'',''));  
         $data['checks']  = $this->authlog->getPerMonthRecords($offset,$paging,$start,$end,$group);
         $numrows = COUNT($this->authlog->getPerMonthRecords('','',$start,$end,$group)); 
         if ($numrows > $paging):
@@ -210,8 +216,12 @@ class Report extends CI_Controller {
 	function transport_print()
     {
 		$data['title']  =  'Laporan Gaji Format 2';
-		$data['var']	=  $this->presensi->getVariabelDataByVar('UTR');
-		$data['checks'] =  $this->authlog->getPerMonthRecords('','',$this->session->userdata('transport_start'),$this->session->userdata('transport_finish'),$this->session->userdata('transport_group'));
+		$data['eat']	=  $this->presensi->getVariabelDataByVar('UMK');
+        $data['trp']	=  $this->presensi->getVariabelDataByVar('UTR');
+        //$data['var']	=  $this->presensi->getVariabelDataByVar('UTR');
+		$data['group']  =  $this->usergroup->getPositionData($this->session->userdata('transport_group')); 
+        $data['holidays']=   COUNT($this->holidays->getAllRecords('','','',$this->session->userdata('transport_start'),$this->session->userdata('transport_finish'),'',''));  
+        $data['checks'] =  $this->authlog->getPerMonthRecords('','',$this->session->userdata('transport_start'),$this->session->userdata('transport_finish'),$this->session->userdata('transport_group'));
         $this->load->vars($data);
         $this->load->theme('report/payroll-2',$data);
 	}
@@ -220,7 +230,11 @@ class Report extends CI_Controller {
     {
 		$this->load->library('pdf');
 		$data['title']  =  'Laporan Gaji Format 2';
-		$data['var']	=  $this->presensi->getVariabelDataByVar('UTR');
+		$data['eat']	=  $this->presensi->getVariabelDataByVar('UMK');
+        $data['trp']	=  $this->presensi->getVariabelDataByVar('UTR');
+        //$data['var']	=  $this->presensi->getVariabelDataByVar('UTR');
+        $data['group']  =  $this->usergroup->getPositionData($this->session->userdata('transport_group')); 
+        $data['holidays']=   COUNT($this->holidays->getAllRecords('','','',$this->session->userdata('transport_start'),$this->session->userdata('transport_finish'),'',''));  
 		$data['checks'] =  $this->authlog->getPerMonthRecords('','',$this->session->userdata('transport_start'),$this->session->userdata('transport_finish'),$this->session->userdata('transport_group'));
         $this->load->vars($data);
         $file=$this->load->theme('report/payroll-2',$data,TRUE);
@@ -232,9 +246,10 @@ class Report extends CI_Controller {
         $start = $this->session->userdata('transport_start'); 
         $end   = $this->session->userdata('transport_finish');
         $group = $this->session->userdata('transport_group'); 
+        $holidays= COUNT($this->holidays->getAllRecords('','','',$this->session->userdata('transport_start'),$this->session->userdata('transport_finish'),'',''));  
         $recs  = $this->authlog->getPerMonthRecords('','',$start,$end,$group);
         $var   = $this->presensi->getVariabelDataByVar('UTR');   
-		$excel = $this->excelModel->transport_excel($recs,$var);
+		$excel = $this->excelModel->transport_excel($recs,$var,$holidays);
         $data = file_get_contents("assets/Lap-Gaji-Format-2.xlsx"); // Read the file's contents
         force_download("Lap-Gaji-Format-2",$data); 
 	}

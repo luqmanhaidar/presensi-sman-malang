@@ -22,7 +22,7 @@
                     <?=form_dropdown('month2',config_item('month'),substr($this->session->userdata('eat_finish'),0,2),'class="select"')?>
                     <?=form_dropdown('year2',config_item('year'),substr($this->session->userdata('eat_finish'),6,4),'class="select"')?>
                     
-                    <?=form_input('holiday',$this->session->userdata('eat_holiday'),'id="holiday" class="input white-gradient glossy" ');?>
+                    <?php // form_input('holiday',$this->session->userdata('eat_holiday'),'id="holiday" class="input white-gradient glossy" ');?>
                     <input type="submit" class="button blue-gradient glossy" value="Go" />
                     </form>
                 </div>
@@ -56,8 +56,8 @@
                         <td><?=$row['Name'];?></td>
 						<td><?=$row['GroupName'];?></td>
                         <td class="align-right hide-on-mobile"><?=$row['Total'];?></td>
-                        <td class="align-right hide-on-mobile"><?=$this->session->userdata('eat_holiday');?></td>
-						<td class="align-right hide-on-mobile"><?=number_format($total=($row['Total']-$this->session->userdata('eat_holiday')) * $var,0);?></td>
+                        <td class="align-right hide-on-mobile"><?=$holidays;?></td>
+						<td class="align-right hide-on-mobile"><?=number_format($total=($row['Total']-$holidays) * $var,0);?></td>
 						<td><img style="width:20px;height:auto;" src="<?=base_url('assets/signature/'.$row['UserID'].'.jpg')?>" /></td>
 					</tr>
                     <?php 
