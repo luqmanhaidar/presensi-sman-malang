@@ -28,64 +28,66 @@ class Holidays extends CI_Model
     
     function getHolidayData($id)
     {
-        $this->db->select('*');   
-        $this->db->where("NGAC_Holiday.HolidayID",$id);
+        $this->db->select('IndexKey,CONVERT(VARCHAR(10),HolidayDate, 105) AS MyDate,HolidayType,HolidayDescription');   
+        $this->db->where("NGAC_Holiday.IndexKey",$id);
         $query    = $this->db->get('NGAC_Holiday',1);
         return $query->row_array();
     }
     
-    function getHolidayDataByVar($var)
+    function getHolidayDate($date)
     {
-        $this->db->select('HolidayValue');   
-        $this->db->where("NGAC_Holiday.HolidayName",$var);
-        $query    = $this->db->get('NGAC_Holiday',1);
-        $val=$query->row_array();
-        return $val['HolidayValue'];
+        $this->db->select('HolidayDate');   
+        $this->db->where("CONVERT(VARCHAR(10),HolidayDate, 105)='".$date."'");
+        $query    = $this->db->get('NGAC_HOLIDAY');
+        return $query->num_rows();
     }
     
-    function getAllRecords($offset='',$paging='',$name=''){
+    function getAllRecords($offset='',$paging='',$type='',$date_start='',$date_finish=''){
         if (!empty($offset))
             $this->db->offset($offset);
         
         if (!empty($paging))    
             $this->db->limit($paging);
         
-        if (!empty($name))   
-            $this->db->like('HolidayName',$name);
-    
-        $this->db->select('*'); 
-        $this->db->order_by('HolidayID','ASC');
-        $Q = $this->db->get('NGAC_Holiday');
+        if($type)
+            $this->db->where("NGAC_Holiday.HolidayType",$type);
+        
+        if($date_start)
+            $this->db->where("(HolidayDate >='".$date_start."') AND (HolidayDate <=DATEADD(day,0,'".$date_finish."'))");  
+        
+        $this->db->select('IndexKey,HolidayType,HolidayDescription,CONVERT(VARCHAR(10),HolidayDate, 105) AS HolidayDate'); 
+        $this->db->order_by('IndexKey','ASC');
+        $Q = $this->db->get('NGAC_HOLIDAY');
         return $Q->result_array();
     }
     
     function save()
     {
+        $date = $this->input->post('month').'/'.$this->input->post('day').'/'.$this->input->post('year');    
 		$value = array(
-                    'HolidayName'          =>  $this->input->post('name'),
-                    'HolidayDescription'   =>  $this->input->post('description'),
                     'HolidayType'          =>  $this->input->post('type'),
-                    'HolidayValue'         =>  $this->input->post('value'));
-        $this->db->insert('NGAC_Holiday',$value);
+                    'HolidayDescription'   =>  $this->input->post('description'),
+                    'HolidayDate'          =>  $date);
+        $this->db->insert('NGAC_HOLIDAY',$value);
     }
     
     function update()
     {
 		$id = $this->input->post('ID');
+        $date = $this->input->post('month').'/'.$this->input->post('day').'/'.$this->input->post('year');  
         $value = array(
-                    'HolidayName'          =>  $this->input->post('name'),
-                    'HolidayDescription'   =>  $this->input->post('description'),
                     'HolidayType'          =>  $this->input->post('type'),
-                    'HolidayValue'         =>  $this->input->post('value'));
-        $this->db->where('HolidayID',$id);
-        $this->db->update('NGAC_Holiday',$value);
+                    'HolidayDescription'   =>  $this->input->post('description'),
+                    'HolidayDate'          =>  $date);
+        $this->db->where('IndexKey',$id);
+        $this->db->update('NGAC_HOLIDAY',$value);
     }
     
     function remove($id)
     {
         $id = trim(strtolower($id));
-        $this->db->where('HolidayID',$id);
-        $this->db->delete('NGAC_Holiday');
+        $this->db->where('IndexKey',$id);
+        $this->db->delete('NGAC_HOLIDAY');
     }
 
 }
