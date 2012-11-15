@@ -122,7 +122,8 @@ class Authlog extends CI_Model
         $this->db->join('NGAC_USERINFO','NGAC_USERINFO.ID=NGAC_AUTHLOG.UserID');
 		$this->db->join('NGAC_GROUP','NGAC_GROUP.ID=NGAC_USERINFO.GroupID');
         $this->db->where_not_in('NGAC_USERINFO.Privilege',1);
-        $this->db->where_not_in('datename(dw,TransactionTime)','Sunday');
+        $this->db->where('NGAC_AUTHLOG.FunctionKey',1);
+        //$this->db->where_not_in('datename(dw,TransactionTime)','Sunday');
         $this->db->where('AuthResult','0');
         $this->db->group_by('NGAC_AUTHLOG.UserID,NGAC_USERINFO.UserOrder,NGAC_USERINFO.Name,NGAC_USERINFO.Description,NGAC_USERINFO.Department,NGAC_GROUP.Name');
 		$Q = $this->db->get('NGAC_AUTHLOG');

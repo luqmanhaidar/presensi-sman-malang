@@ -210,4 +210,16 @@ function getSunday($year,$month,$day){
         return true;
     else
         return false; 
-}              
+} 
+
+function getCountSundayInMonth($month,$year){
+        $x=0;
+    for($i=1;$i<=days_in_month($month,$year);$i++):
+        $date = $year.'-'.$month.'-'.code($i);
+        $name = date('l',strtotime($date));
+        if($name=='Sunday'):
+            $x=$x+1;
+        endif;
+    endfor;
+    return $x;
+}             

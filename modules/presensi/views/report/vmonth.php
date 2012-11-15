@@ -38,16 +38,20 @@
                         <th scope="col" width="5%" class="align-left hide-on-mobile">Paraf</th>
                         <th scope="col">Tgl Awal</th>
 						<th scope="col">Tgl.Akhir</th>
+                        <th scope="col">K</th>
+                        <th scope="col">M</th>
                         <th scope="col">S</th>
                         <th scope="col">I</th>
                         <th scope="col">C</th>
                         <th scope="col">DL</th>
+                        <th scope="col">L</th>
+                        <th scope="col">TK</th>
 					</tr>
 				</thead>
 
 				<tfoot>
 					<tr>
-						<td colspan="10">
+						<td colspan="14">
 							<?=COUNT($checks).' Data ditemukan.'?>
 						</td>
 					</tr>
@@ -64,10 +68,14 @@
                         <td><img style="width:20px;height:auto;" src="<?=base_url('assets/signature/'.$row['UserID'].'.jpg')?>" /></td>
                         <td><?=indonesian_shortDate($row['TransactionTime']).' '.substr($row['TransactionTime'],11,8);?></td>
 						<td><?=indonesian_shortDate($row['TransactionTimeMax']) .' '.substr($row['TransactionTimeMax'],11,8);?></td>
-					    <td><?=$this->others->getUserTime($row['UserID'],$this->session->userdata('month_start'),$this->session->userdata('month_finish'),"Sakit")?></td>
-                        <td><?=$this->others->getUserTime($row['UserID'],$this->session->userdata('month_start'),$this->session->userdata('month_finish'),"Ijin")?></td>
-                        <td><?=$this->others->getUserTime($row['UserID'],$this->session->userdata('month_start'),$this->session->userdata('month_finish'),"Cuti")?></td>
-                        <td><?=$this->others->getUserTime($row['UserID'],$this->session->userdata('month_start'),$this->session->userdata('month_finish'),"Tugas")?></td>
+	                    <td><?=$k=days_in_month($this->session->userdata('month_month'),$this->session->userdata('month_year')) - $this->holidays->getHolidayDate('',$this->session->userdata('month_month'),$this->session->userdata('month_year'))- getCountSundayInMonth($this->session->userdata('month_month'),$this->session->userdata('month_year')); ?></td>
+                        <td><?=$m=$row['Total']?></td>
+                        <td><?=$s=$this->others->getUserTime($row['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Sakit")?></td>
+                        <td><?=$i=$this->others->getUserTime($row['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Ijin")?></td>
+                        <td><?=$c=$this->others->getUserTime($row['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Cuti")?></td>
+                        <td><?=$dl=$this->others->getUserTime($row['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Tugas")?></td>
+                        <td><?=$l=$this->holidays->getHolidayDate('',$this->session->userdata('month_month'),$this->session->userdata('month_year'))?></td>
+                        <td><?=$k-($m+$s+$i+$c+$l+$dl)?></td>
                     </tr>
                     <?php 
                         $x=$x+1;

@@ -34,15 +34,20 @@ class Holidays extends CI_Model
         return $query->row_array();
     }
     
-    function getHolidayDate($date)
+    function getHolidayDate($date='',$month='',$year='')
     {
-        $this->db->select('HolidayDate');   
-        $this->db->where("CONVERT(VARCHAR(10),HolidayDate, 105)='".$date."'");
+        $this->db->select('HolidayDate');
+        if($date)   
+            $this->db->where("CONVERT(VARCHAR(10),HolidayDate, 105)='".$date."'");
+        if($month):
+            $this->db->where("DATEPART(MONTH,HolidayDate)='".$month."'");
+            $this->db->where("DATEPART(YEAR,HolidayDate)='".$year."'");
+        endif;    
         $query    = $this->db->get('NGAC_HOLIDAY');
         return $query->num_rows();
     }
     
-    function getAllRecords($offset='',$paging='',$type='',$date_start='',$date_finish=''){
+    function getAllRecords($offset='',$paging='',$type='',$date_start='',$date_finish='',$month='',$year=''){
         if (!empty($offset))
             $this->db->offset($offset);
         
@@ -54,6 +59,11 @@ class Holidays extends CI_Model
         
         if($date_start)
             $this->db->where("(HolidayDate >='".$date_start."') AND (HolidayDate <=DATEADD(day,0,'".$date_finish."'))");  
+        
+        if($month):
+            $this->db->where("DATEPART(MONTH,HolidayDate)='".$month."'");
+            $this->db->where("DATEPART(YEAR,HolidayDate)='".$year."'");
+        endif;
         
         $this->db->select('IndexKey,HolidayType,HolidayDescription,CONVERT(VARCHAR(10),HolidayDate, 105) AS HolidayDate'); 
         $this->db->order_by('IndexKey','ASC');
