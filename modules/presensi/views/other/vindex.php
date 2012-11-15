@@ -17,7 +17,7 @@
 			<div class="table-header button-height">
 				<div class="float-right">
                     <form method="post" action="<?=site_url('presensi/other/search')?>">
-					ID User&nbsp;<input type="text" placeholder="All User" name="table_search" style="width:10%;" id="table_search" value="<?=$this->session->userdata('overtime_search')?>" class="input mid-margin-left">
+					<input type="text" placeholder="All User" name="table_search" style="width:10%;" id="table_search" value="<?=$this->session->userdata('overtime_search')?>" class="input mid-margin-left">
                     <?=form_dropdown('day',config_item('day'),substr($this->session->userdata('other_start'),3,2),'class="select"')?>
                     <?=form_dropdown('month',config_item('month'),substr($this->session->userdata('other_start'),0,2),'class="select"')?>
                     <?=form_dropdown('year',config_item('year'),substr($this->session->userdata('other_start'),6,4),'class="select"')?>
@@ -31,7 +31,7 @@
                     </form>
                 </div>
                 
-				Show&nbsp;
+
                 <?=form_dropdown('show',config_item('per_page'),$this->session->userdata('other_paging'),'id="show" class="select blue-gradient glossy" onchange="changeUrl();" ');?>
 			</div>
 			<table class="table responsive-table" id="sorting-example1">
@@ -88,7 +88,7 @@
                       ?>
                     </div>
 				</div>
-                Show <?=form_dropdown('show2',config_item('per_page'),$this->session->userdata('other_paging'),'id="show2" class="select blue-gradient glossy" onchange="changeUrl2();" ');?>
+                <?=form_dropdown('show2',config_item('per_page'),$this->session->userdata('other_paging'),'id="show2" class="select blue-gradient glossy" onchange="changeUrl2();" ');?>
 			</form>
 			
 		</div>
