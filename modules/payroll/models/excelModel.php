@@ -7,7 +7,7 @@ class ExcelModel extends CI_Model
         parent::__construct(); // Call the Model constructor
     }
     
-    function eat_excel($recs,$trp,$eat,$group){         						
+    function eat_excel($recs,$trp,$eat,$group,$holidays){         						
 		$objPHPExcel = new PHPExcel();
         $objDrawing  = new Worksheet_Drawing();
 		$objPHPExcel->getProperties()->setTitle("title")
@@ -136,7 +136,7 @@ class ExcelModel extends CI_Model
             $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+2,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
 			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+2,$row)->applyFromArray($styleArray);
             
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+3,$row,$absen = $rec['Total']- $this->session->userdata('eat_holiday'));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+3,$row,$absen = $rec['Total']- $holidays);
              $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+3,$row)->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_CENTER);
 			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+3,$row)->applyFromArray($styleArray);
             

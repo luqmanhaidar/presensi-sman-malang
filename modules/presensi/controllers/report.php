@@ -1004,9 +1004,8 @@ class Report extends CI_Controller {
             if($duration>=$meal)
                 $meal = $this->presensi->getVariabelDataByVar('ULM');
              else
-                $meal = 0;       
-                
-            //$over = substr($duration/60,0,1);            
+                $meal = 0;           
+            $over = substr($over,0,1);            
             $this->authovertime->save($row['UserID'],$row['OvertimeDate'],$tm1,$tm2,$over,$meal); 
         endforeach;
         redirect('presensi/report/overtime',301);
