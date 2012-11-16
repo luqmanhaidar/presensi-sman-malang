@@ -33,8 +33,8 @@ class Holidays extends CI_Model
         $query    = $this->db->get('NGAC_Holiday',1);
         return $query->row_array();
     }
-    
-    function getHolidayDate($date='',$month='',$year='')
+   
+    function getHolidayDate($date='',$month='',$year='',$day='')
     {
         $this->db->select('HolidayDate');
         if($date)   
@@ -43,6 +43,9 @@ class Holidays extends CI_Model
             $this->db->where("DATEPART(MONTH,HolidayDate)='".$month."'");
             $this->db->where("DATEPART(YEAR,HolidayDate)='".$year."'");
         endif;    
+		if($day)
+			$this->db->where("DATEPART(DAY,HolidayDate)='".$day."'");
+			
         $query    = $this->db->get('NGAC_HOLIDAY');
         return $query->num_rows();
     }
