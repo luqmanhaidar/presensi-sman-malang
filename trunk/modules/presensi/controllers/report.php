@@ -238,7 +238,7 @@ class Report extends CI_Controller {
         $content=$this->load->theme('report/month',$data,TRUE);
         $html2pdf = html2pdf('L','Letter');
         $html2pdf->WriteHTML($content);
-        $html2pdf->Output('Laporan-Bulanan.pdf');
+        $html2pdf->Output('Laporan-Bulanan.pdf','D');
     }
     
     function month_excel()
