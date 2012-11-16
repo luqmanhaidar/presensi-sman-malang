@@ -839,6 +839,7 @@ class Report extends CI_Controller {
                 
                 $pdf->SetFillColor(255, 255, 255);
                 $y=$y+4;
+				$tm='';
                 for($m=1;$m<=5;$m++):
                     
                     if($row%3==1):
@@ -867,10 +868,13 @@ class Report extends CI_Controller {
                     
                     if($week[$m]):
 				        $v = (substr($var,0,2) * 3600) + (substr($var,3,2)*60) + (substr($var,6,2));
-    				    if($ww[$m]>=$v)
+    				    if($ww[$m]>=$v):
     				        $desc = "Memenuhi";
-    				    else
+							$tm = $tm . '';
+    				    else:
     				        $desc = "Tidak Memenuhi"; 
+							$tm = $tm.'M'.$m.': TM ';
+						endif;	
 				    endif;	
                             
                     $pdf->MultiCell(15,4,'Minggu '.$m,1,'C', 1, 0, $x,$y,true,0,false,true,0);
@@ -898,7 +902,7 @@ class Report extends CI_Controller {
 					$x=187;
 				endif;	
                         
-                $pdf->MultiCell(85,4,'DMK='.$var,1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                $pdf->MultiCell(85,4,$tm,1,'C', 1, 2, $x,$y,true,0,false,true,0);
             
                 if($row%3==0):
                     $y=$y+5;
