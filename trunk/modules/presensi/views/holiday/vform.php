@@ -15,7 +15,7 @@
                     <?php
                         if($value<>''):
                             $type = $value['HolidayType'];
-							$index = $value['IndexKey']
+							$index = $value['IndexKey'];
                         else:
                             $type = '';
 							$index='';
