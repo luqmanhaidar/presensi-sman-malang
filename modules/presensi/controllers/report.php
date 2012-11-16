@@ -642,8 +642,8 @@ class Report extends CI_Controller {
             $pdf = tcpdf();
             $pdf->setPrintHeader(false);
             $pdf->setPrintFooter(false);
-            $pdf->SetMargins(10,10,10);
-            $pdf->AddPage("P","A4");
+            $pdf->SetMargins(5,5,5);
+            $pdf->AddPage("L","Letter");
             
             $pdf->SetFillColor(255, 255, 255);
             $pdf->SetTextColor(0, 0, 0);
@@ -652,16 +652,19 @@ class Report extends CI_Controller {
             $pdf->SetFont('helvetica', '', 7);
             
             $y = 5;
-            $x = 15;
+            $x = 7;
             $row=1;
             $total = COUNT($users);
                    
             foreach($users as $user):
                 
-                if($row%2==1)
-                    $x=15;
-                 else
-                    $x=107;
+                if($row%3==1):
+                    $x=7;
+                elseif($row%3==2):
+                    $x=97;
+				elseif($row%3==0):
+					$x=187;
+				endif;	
                     
                 $ID = $user['ID'];
                 $x=$x;$y=$y;
@@ -678,7 +681,7 @@ class Report extends CI_Controller {
                  
     
                 $x=$x;$y=$y+5;
-                $pdf->MultiCell(85,4,$ID.' '.$user['Name'],1,'L', 1, 2, $x,$y,true,0,false,true,0);
+                $pdf->MultiCell(85,4,$row.'-'.$ID.' '.$user['Name'],1,'L', 1, 2, $x,$y,true,0,false,true,0);
                 
                 $x=$x;$y=$y+4;
                 $pdf->MultiCell(6,4,"M",1,'C', 1, 2, $x,$y,true,0,false,true,0);
@@ -756,10 +759,13 @@ class Report extends CI_Controller {
                     endif;
                     
                     
-                    if($row%2==1)
-                        $x=15;
-                    else
-                        $x=107;
+                    if($row%3==1):
+						$x=7;
+					elseif($row%3==2):
+						$x=97;
+					elseif($row%3==0):
+						$x=187;
+					endif;	
                         
                     $pdf->MultiCell(6,4,$w,1,'C', 1, 2, $x,$y,true,0,false,true,0);
                     $x=$x+6;
@@ -804,10 +810,13 @@ class Report extends CI_Controller {
                     $i++;
                 endforeach;
                 
-                if($row%2==1)
-                    $x=15;
-                else
-                    $x=107;
+                if($row%3==1):
+					$x=7;
+				elseif($row%3==2):
+					$x=97;
+				elseif($row%3==0):
+					$x=187;
+				endif;	
                         
                 $pdf->MultiCell(85,4,'Total Jam Kehadiran',1,'C', 1, 2, $x,$y,true,0,false,true,0);
                 
@@ -832,10 +841,13 @@ class Report extends CI_Controller {
                 $y=$y+4;
                 for($m=1;$m<=5;$m++):
                     
-                    if($row%2==1)
-                        $x=15;
-                    else
-                        $x=107;
+                    if($row%3==1):
+						$x=7;
+					elseif($row%3==2):
+						$x=97;
+					elseif($row%3==0):
+						$x=187;
+					endif;	
                     
                     $whours = code(floor($ww[$m] / 3600));
                     $wmins  = code(floor(($ww[$m] - ($whours*3600)) / 60));
@@ -878,27 +890,35 @@ class Report extends CI_Controller {
                     $y=$y+4;
                 endfor;
                 
-                if($row%2==1)
-                    $x=15;
-                else
-                    $x=107;
+                if($row%3==1):
+					$x=7;
+				elseif($row%3==2):
+					$x=97;
+				elseif($row%3==0):
+					$x=187;
+				endif;	
                         
                 $pdf->MultiCell(85,4,'DMK='.$var,1,'C', 1, 2, $x,$y,true,0,false,true,0);
             
-                if($row%2==0):
+                if($row%3==0):
                     $y=$y+5;
                 else:
                     $x= $x;
                     $y=$y-(5+4+(0*7)+($i*4)+($m*4)+(1*7)+1);    
                 endif;
                 
-                if(($row%2==0) && ($row!=$total)):
+                if(($row%3==0) && ($row!=$total)):
                     $pdf->AddPage();
                     $y = 5;
-                    if($row%2==1)
-                        $x=15;
-                    else
-                        $x=107;
+					
+                    if($row%3==1):
+						$x=7;
+					elseif($row%3==2):
+						$x=97;
+					elseif($row%3==0):
+						$x=187;
+					endif;	
+						
                 endif;    
                 $row++;
                 
