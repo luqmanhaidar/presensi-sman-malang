@@ -14,6 +14,7 @@ class Other extends CI_Controller {
         $this->load->module_model('employee','log'); //load model usergroup form user
         $this->load->model('others'); //load model other form presensi   
         $this->load->module_model('employee','userinfo'); //load model usergroup form user 
+		$this->load->module_model('presensi','holidays'); //load model holidays form presesi
     }
     
     function index($offset=0)
@@ -104,7 +105,10 @@ class Other extends CI_Controller {
         for($i=0;$i<=$total;$i++):
             $date  = $year.'-'.$month.'-'.$day;
             $ndate = date("Y-m-d", strtotime("$date +$i day")); 
-            $this->others->save($ndate);
+			if (!getSunday(substr($ndate,0,4),substr($ndate,5,2),substr($ndate,8,2))):
+				if (!$this->holidays->getHolidayDate('',substr($ndate,5,2),substr($ndate,0,4),substr($ndate,8,2)))
+					$this->others->save($ndate);
+			endif;
         endfor;    
         $this->session->set_flashdata('message',config_item('save_success'));
         redirect('presensi/other/index/'.$this->session->userdata('other_offset'),301);
