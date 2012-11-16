@@ -15,15 +15,17 @@
                     <?php
                         if($value<>''):
                             $type = $value['HolidayType'];
+							$index = $value['IndexKey']
                         else:
                             $type = '';
+							$index='';
                         endif; 
                     ?>
                     
                     <p class="inline-large-label button-height">
 						<label for="large-label-1" class="label">Type<small> ( Type )</small></label>
 						<?=form_dropdown('type',config_item('holiday_type'),$type,'class="select" id="holidaytype" ')?>
-                        <?=form_hidden('ID',$value['IndexKey'])?>
+                        <?=form_hidden('ID',$index)?>
                     </p>
                     
                     <?php
