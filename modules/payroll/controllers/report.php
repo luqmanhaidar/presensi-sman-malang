@@ -42,8 +42,8 @@ class Report extends CI_Controller {
         endif;                 
         $data['holidays']=   COUNT($this->holidays->getAllRecords('','','',$start,$end,'',''));   
         $this->session->set_userdata('eat_offset',$offset);
-        $data['checks']  = $this->authlog->getPerMonthRecords($offset,$paging,$start,$end,$group);
-        $numrows = COUNT($this->authlog->getPerMonthRecords('','',$start,$end,$group)); 
+        $data['checks']  = $this->authlog->getPerMonthRecords($offset,$paging,$start,$end,$group,1);
+        $numrows = COUNT($this->authlog->getPerMonthRecords('','',$start,$end,$group,1)); 
         if ($numrows > $paging):
             $config['base_url']   = site_url('payroll/report/eat/');
             $config['total_rows'] = $numrows;
@@ -107,7 +107,7 @@ class Report extends CI_Controller {
         $data['group']  =  $this->usergroup->getPositionData($this->session->userdata('eat_group')); 
 		$data['eat']	=  $this->presensi->getVariabelDataByVar('UMK');
         $data['trp']	=  $this->presensi->getVariabelDataByVar('UTR');
-		$data['checks'] =  $this->authlog->getPerMonthRecords('','',$this->session->userdata('eat_start'),$this->session->userdata('eat_finish'),$this->session->userdata('eat_group'));
+		$data['checks'] =  $this->authlog->getPerMonthRecords('','',$this->session->userdata('eat_start'),$this->session->userdata('eat_finish'),$this->session->userdata('eat_group'),1);
         $this->load->vars($data);
         $this->load->theme('report/payroll-1',$data);
 	}
@@ -120,7 +120,7 @@ class Report extends CI_Controller {
         $data['group']  =  $this->usergroup->getPositionData($this->session->userdata('eat_group')); 
 		$data['eat']	=  $this->presensi->getVariabelDataByVar('UMK');
         $data['trp']	=  $this->presensi->getVariabelDataByVar('UTR');
-		$data['checks'] =  $this->authlog->getPerMonthRecords('','',$this->session->userdata('eat_start'),$this->session->userdata('eat_finish'),$this->session->userdata('eat_group'));
+		$data['checks'] =  $this->authlog->getPerMonthRecords('','',$this->session->userdata('eat_start'),$this->session->userdata('eat_finish'),$this->session->userdata('eat_group'),1);
         $this->load->vars($data);
         $file=$this->load->theme('report/payroll-1',$data,TRUE);
 		$this->pdf->pdf_create($file,$data['title']);
@@ -133,7 +133,7 @@ class Report extends CI_Controller {
         $id    = $this->session->userdata('eat_group'); 
         $holidays=   COUNT($this->holidays->getAllRecords('','','',$start,$end,'',''));  
         $group =  $this->usergroup->getPositionData($id);
-        $recs  = $this->authlog->getPerMonthRecords('','',$start,$end,$id);
+        $recs  = $this->authlog->getPerMonthRecords('','',$start,$end,$id,1);
         $eat   =  $this->presensi->getVariabelDataByVar('UMK');
         $trp   =  $this->presensi->getVariabelDataByVar('UTR');
 		$excel = $this->excelModel->eat_excel($recs,$trp,$eat,$group,$holidays);

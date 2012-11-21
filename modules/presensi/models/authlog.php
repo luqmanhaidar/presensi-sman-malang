@@ -73,7 +73,7 @@ class Authlog extends CI_Model
         return $Q->result_array();
     }
     
-    function getPerMonthRecords($offset='',$paging='',$date_start='',$date_finish='',$group=''){
+    function getPerMonthRecords($offset='',$paging='',$date_start='',$date_finish='',$group='',$key=''){
         if (empty($paging))
 			$this->db->order_by('NGAC_USERINFO.UserOrder','ASC');	
 		
@@ -94,7 +94,9 @@ class Authlog extends CI_Model
         $this->db->where_not_in('NGAC_USERINFO.Privilege',1);
         $this->db->where_not_in('datename(dw,TransactionTime)','Sunday');
         $this->db->where('AuthResult','0');
-        $this->db->group_by('NGAC_AUTHLOG.UserID,NGAC_USERINFO.UserOrder,NGAC_USERINFO.Name,NGAC_USERINFO.Department,NGAC_GROUP.Name');
+        if($key)
+			$this->db->where('FunctionKey',$key);
+		$this->db->group_by('NGAC_AUTHLOG.UserID,NGAC_USERINFO.UserOrder,NGAC_USERINFO.Name,NGAC_USERINFO.Department,NGAC_GROUP.Name');
 		$Q = $this->db->get('NGAC_AUTHLOG');
         return $Q->result_array();
     }
