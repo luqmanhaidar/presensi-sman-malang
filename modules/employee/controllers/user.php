@@ -51,7 +51,7 @@ class User extends CI_Controller {
     function search()
     {
         $search = array (   'user_search' =>  $this->input->post('table_search'),
-                            'user_pos'  =>  $this->input->post('table_pos'),
+                            'user_pos'   =>  $this->input->post('table_pos'),
                             'user_group'  =>  $this->input->post('table_group'));    
         $this->session->set_userdata($search);
         redirect('employee/user/index');
