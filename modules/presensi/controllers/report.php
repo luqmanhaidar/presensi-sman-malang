@@ -217,7 +217,7 @@ class Report extends CI_Controller {
 		$data['days']       =   days_in_month($this->session->userdata('month_month'));
         $data['month']      =   $this->session->userdata('month_month');
         $data['year']       =   $this->session->userdata('month_year');  
-		$data['title']		=	'DAFTAR HADIR '.$data['position'];	
+		$data['title']		=	'DAFTAR HADIR '.$data['position']['Name'];
         $this->load->vars($data);
         $this->load->theme('report/month',$data);
 	}
@@ -233,7 +233,7 @@ class Report extends CI_Controller {
 		$data['days']       =   days_in_month($this->session->userdata('month_month'));
         $data['month']      =   $this->session->userdata('month_month');
         $data['year']       =   $this->session->userdata('month_year');  
-		$data['title']		=	'DAFTAR HADIR '.$data['position'];
+		$data['title']		=	'DAFTAR HADIR '.$data['position']['Name'];
         $this->load->vars($data);
         $content=$this->load->theme('report/month',$data,TRUE);
         $html2pdf = html2pdf('L','Letter');
