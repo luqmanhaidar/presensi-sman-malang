@@ -128,7 +128,7 @@
 			<th class="mini align-left white no-border center"></th>
 			<th class="mini align-left white no-border center"></th>
 			<th class="mini align-left white no-border center"></th>
-			<th class="mini white no-border center">Malang ,..... .............. .......</th>
+			<th class="mini align-left white no-border">Malang ,..... .............. .......</th>
 		</tr>
 		
 		<tr>
@@ -142,7 +142,7 @@
 			<th class="mini align-left white no-border center"></th>
 			<th class="mini align-left white no-border center"></th>
 			<th class="mini align-left white no-border center"></th>
-			<th class="mini white no-border center">Ka. Tata Usaha<br/><br/><br/><br/><br/></th>
+			<th class="mini align-left white no-border">Ka. Tata Usaha<br/><br/><br/><br/><br/></th>
 		</tr>
 		
 		
