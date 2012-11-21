@@ -6,7 +6,7 @@
 th,td,.desx{font-size:7px;min-width:2%;padding-right:2px;padding-left:2px;text-align: center;}
 img {width:10px;height:10px;padding:0;margin:0;}
 ul{margin:0;}
-.mini{font-size:12px}
+.mini{font-size:9px}
 </style>
 </head>
 <body style="font-size:8px;">
@@ -165,7 +165,7 @@ ul{margin:0;}
 		</tr>
 		<tr>
 			<th class="mini align-left white no-border" style="10px"></th>
-			<th class="mini align-left white no-border">Kepala Madrasah <br/><br/><br/></th>
+			<th class="mini align-left white no-border">Kepala Madrasah <br/><br/><br/><br/><br/></th>
 			<th class="mini align-left white no-border"></th>
 			<th class="mini align-left white no-border center" colspan="<?=$days?>"></th>
 			<th class="mini align-left white no-border center" colspan="6">Bendahara</th>
