@@ -70,11 +70,8 @@ class User extends CI_Controller {
 	
 	public function uploadImage(){
 		$path = "./assets/signature/".$id = $this->input->post('ID').'.jpg';
-		$result = unlink($path);
-		
-		if($result):
-		else:
-		endif;
+		if(file_exists($path))
+			$result = unlink($path);
 		
 		$config['upload_path'] = './assets/signature/';
 		$config['allowed_types'] = 'gif|jpg';
