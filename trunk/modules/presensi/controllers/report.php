@@ -208,7 +208,6 @@ class Report extends CI_Controller {
 	
 	function month_print()
     {
-		$data['title']		=	'DAFTAR HADIR PEGAWAI';
         $group = $this->session->userdata('month_group');
         $month = $this->session->userdata('month_month');
 		$year  = $this->session->userdata('month_year');
@@ -217,7 +216,8 @@ class Report extends CI_Controller {
 		$data['checks']		=	$this->authlog->getMonthRecords('','',$month,$year,$group);
 		$data['days']       =   days_in_month($this->session->userdata('month_month'));
         $data['month']      =   $this->session->userdata('month_month');
-        $data['year']       =   $this->session->userdata('month_year');    
+        $data['year']       =   $this->session->userdata('month_year');  
+		$data['title']		=	'DAFTAR HADIR '.$data['position'];	
         $this->load->vars($data);
         $this->load->theme('report/month',$data);
 	}
