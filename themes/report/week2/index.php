@@ -128,7 +128,7 @@
 			<th class="mini align-left white no-border center"></th>
 			<th class="mini align-left white no-border center"></th>
 			<th class="mini align-left white no-border center"></th>
-			<th class="mini align-left white no-border">Malang ,..... .............. .......</th>
+			<th class="mini align-left white no-border">Malang, ..... ...................... ..........</th>
 		</tr>
 		
 		<tr>
