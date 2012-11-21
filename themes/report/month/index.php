@@ -153,6 +153,45 @@ ul{margin:0;}
     endforeach;
  ?>   
     </tbody>
+	
+	<tfoot>
+		<tr>
+            <th class="mini align-right" colspan="4">Total</th>
+			<th class="mini align-right"><?=number_format($sub_eat,0);?></th>
+            <th class="mini align-right"><?=number_format($sub_trp,0);?></th>
+			<th class="mini"></th>
+		</tr>
+        <tr>
+            <th class="mini align-right white no-border"></th>
+            <th class="mini align-right white no-border"></th>
+            <th class="mini align-right white no-border"></th>
+            <th class="mini align-right white no-border"></th>
+			<th class="mini align-right white no-border"></th>
+            <th class="mini white no-border"></th>
+            <th class="mini align-left white no-border">Malang,...........</th>
+		</tr>
+        <tr>
+            <th style="padding-bottom:100px;"class="mini align-right white no-border"></th>
+            <th style="padding-bottom:100px;" class="mini align-left white no-border">Kepala Madrasah</th>
+            <th style="padding-bottom:100px;" class="mini align-right white no-border"></th>
+            <th style="padding-bottom:100px;" class="mini align-right white no-border"></th>
+			<th style="padding-bottom:100px;" class="mini align-right white no-border"></th>
+            <th style="padding-bottom:100px;" class="mini align-left white no-border"></th>
+			<th style="padding-bottom:100px;" class="mini align-left white no-border">Bendahara</th>
+		</tr>
+        
+        <tr>
+            <th class="mini align-right white no-border"></th>
+            <th class="mini align-left white no-border"><p style="border-bottom:1px solid #222;width:170px;">Drs.H.Ahmad Hidayatullah, M.Pd</p><p>NIP. 19680622 200012 1 002</p></th>
+            <th class="mini align-right white no-border"></th>
+            <th class="mini align-right white no-border"></th>
+			<th class="mini align-right white no-border"></th>
+            <th class="mini white no-border"></th>
+            <th class="mini align-left white no-border"><p style="border-bottom:1px solid #222;width:170px;">Drs. Suwito</p><p>NIP. 19601010 199503 1 001</p></th>
+		</tr>
+        
+    </tfoot>
+	
     </table>
     
     <br />
