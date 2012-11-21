@@ -84,7 +84,7 @@ class Authlog extends CI_Model
             $this->db->limit($paging);
 			
 		if (!empty($date_start))   
-            $this->db->where("(TransactionTime >='".$date_start."') AND (TransactionTime <=DATEADD(day,0,'".$date_finish."'))");    
+            $this->db->where("(TransactionTime >='".$date_start."') AND (TransactionTime <=DATEADD(day,1,'".$date_finish."'))");    
 			
 		if (!empty($group))   
             $this->db->where("NGAC_USERINFO.GroupID=".$group);
