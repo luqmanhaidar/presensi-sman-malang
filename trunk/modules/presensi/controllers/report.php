@@ -601,7 +601,7 @@ class Report extends CI_Controller {
     function week_print()
     {
 		if($this->session->userdata('week_type')=='M2'):
-			$data['position']	=	$this->usergroup->getPositionData(,$this->session->userdata('week_group'));
+			$data['position']	=	$this->usergroup->getPositionData($this->session->userdata('week_group'));
 			$data['title']		=	'REKAPITULASI PEMENUHAN JAM '.$data['position']['Name'].' MAN 3 MALANG';
 			$data['periode']	=	'LAPORAN PERIODE '.$this->session->userdata('week_start').' s/d '.$this->session->userdata('week_finish');
 			$data['start']      =   $this->session->userdata('week_start');
@@ -625,7 +625,7 @@ class Report extends CI_Controller {
 		
 		if($this->session->userdata('week_type')=='M2'):
             $this->load->library('pdf');
-			$data['position']	=	$this->usergroup->getPositionData(,$this->session->userdata('week_group'));
+			$data['position']	=	$this->usergroup->getPositionData($this->session->userdata('week_group'));
 			$data['title']		=	'REKAPITULASI PEMENUHAN JAM '.$data['position']['Name'].' MAN 3 MALANG';
 			$data['periode']	=	'LAPORAN PERIODE '.$this->session->userdata('week_start').' s/d '.$this->session->userdata('week_finish');
 			$data['start']      =   $this->session->userdata('week_start');
