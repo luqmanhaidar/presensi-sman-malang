@@ -30,10 +30,10 @@ ul{margin:0;}
 			<?php for($i=1;$i<=$days;$i++):?>
 			<th><?=code($i,2);?></th>
 			<?php endfor;?>
-            <th>M<span style="color:#FFF">_</span></th>
-			<th>S<span style="color:#FFF"</th>
-			<th>I<span style="color:#FFF"</th>
-            <th>C<span style="color:#FFF"</th>
+            <th>M<span style="color:#CCC">_</span></th>
+			<th>S<span style="color:#CCC">_</span></th>
+			<th>I<span style="color:#CCC">_</span></th>
+            <th>C<span style="color:#CCC">_</span></th>
 			<th>DL</th>
             <th>TK</th>
 		</tr>
