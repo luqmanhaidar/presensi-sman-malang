@@ -118,53 +118,49 @@
 	
 	<tfoot>
 		<tr>
-			<td></td>
-			<td></td>
-			<td></td>
-            <td></td>
-			<td class="center"></td>
-			<td class="center"></td>
-			<td class="center"></td>
-			<td class="center"></td>
-			<td class="center"></td>
-			<td></td>
-			<td class="center">Malang ,..... .............. .......</td>
+			<th class="mini align-left white no-border center"></td>
+			<th class="mini align-left white no-border center"></td>
+			<th class="mini align-left white no-border center"></td>
+            <th class="mini align-left white no-border center"></td>
+			<th class="mini align-left white no-border center"></th>
+			<th class="mini align-left white no-border center"></th>
+			<th class="mini align-left white no-border center"></th>
+			<th class="mini align-left white no-border center"></th>
+			<th class="mini align-left white no-border center"></th>
+			<th class="mini align-left white no-border center"></th>
+			<th class="mini white no-border center">Malang ,..... .............. .......</th>
+		</tr>
+		
+		<tr>
+			<th class="mini align-left white no-border center"></th>
+			<th class="mini align-left white no-border center">Kepala Madrasah<br/><br/><br/><br/><br/></th>
+			<th class="mini align-left white no-border center"></th>
+            <th class="mini align-left white no-border center"></th>
+			<th class="mini align-left white no-border center"></th>
+			<th class="mini align-left white no-border center"></th>
+			<th class="mini align-left white no-border center"></th>
+			<th class="mini align-left white no-border center"></th>
+			<th class="mini align-left white no-border center"></th>
+			<th class="mini align-left white no-border center"></th>
+			<th class="mini white no-border center">Ka. Tata Usaha<br/><br/><br/><br/><br/></th>
+		</tr>
+		
+		
+		<tr>
+			<th class="mini align-left white no-border center"></th>
+			<th class="mini align-left white no-border center"><p style="border-bottom:1px solid #222;margin:0;width:170px;">Drs.H.Ahmad Hidayatullah, M.Pd</p><p style="margin:0">NIP. 19680622 200012 1 002</p></th>
+			<th class="mini align-left white no-border center"></th>
+            <th class="mini align-left white no-border center"></th>
+			<th class="mini align-left white no-border center"></th>
+			<th class="mini align-left white no-border center"></th>
+			<th class="mini align-left white no-border center"></th>
+			<th class="mini align-left white no-border center"></th>
+			<th class="mini align-left white no-border center"></th>
+			<th class="mini align-left white no-border center"></th>
+			<th class="mini white no-border center"><p style="border-bottom:1px solid #222;margin:0;width:170px;">T.Agus Tjahjono</p><p style="margin:0">NIP. 19630816 198703 1 003</p></th>
 		</tr>
 			
-		<tr>
-            <th class="mini align-right" colspan="4">Total</th>
-			<th class="mini align-right"><?=number_format($sub_eat,0);?></th>
-            <th class="mini align-right"><?=number_format($sub_trp,0);?></th>
-			<th class="mini"></th>
-		</tr>
-        <tr>
-            <th class="mini align-right white no-border"></th>
-            <th class="mini align-right white no-border"></th>
-            <th class="mini align-right white no-border"></th>
-            <th class="mini align-right white no-border"></th>
-			<th class="mini align-right white no-border"></th>
-            <th class="mini white no-border"></th>
-            <th class="mini align-left white no-border">Malang ,..... .............. .......</th>
-		</tr>
-        <tr>
-            <th style="padding-bottom:100px;"class="mini align-right white no-border"></th>
-            <th style="padding-bottom:100px;" class="mini align-left white no-border">Kepala Madrasah</th>
-            <th style="padding-bottom:100px;" class="mini align-right white no-border"></th>
-            <th style="padding-bottom:100px;" class="mini align-right white no-border"></th>
-			<th style="padding-bottom:100px;" class="mini align-right white no-border"></th>
-            <th style="padding-bottom:100px;" class="mini align-left white no-border"></th>
-			<th style="padding-bottom:100px;" class="mini align-left white no-border">Bendahara</th>
-		</tr>
-        
-        <tr>
-            <th class="mini align-right white no-border"></th>
-            <th class="mini align-left white no-border"><p style="border-bottom:1px solid #222;width:170px;">Drs.H.Ahmad Hidayatullah, M.Pd</p><p>NIP. 19680622 200012 1 002</p></th>
-            <th class="mini align-right white no-border"></th>
-            <th class="mini align-right white no-border"></th>
-			<th class="mini align-right white no-border"></th>
-            <th class="mini white no-border"></th>
-            <th class="mini align-left white no-border"><p style="border-bottom:1px solid #222;width:170px;">Drs. Suwito</p><p>NIP. 19601010 199503 1 001</p></th>
-		</tr>
+		
         
     </tfoot>
 	
