@@ -4,7 +4,7 @@
 
 		<div class="with-padding">
             
-            <form method="post" action="<?=site_url('employee/user/update')?>" class="columns">
+            <form method="post" enctype="multipart/form-data" action="<?=site_url('employee/user/update')?>" class="columns">
 			<div class="columns">
 
 				<div class="twelve-columns twelve-columns-tablet">
@@ -42,6 +42,7 @@
                     <p class="inline-large-label button-height">
 						<label for="large-label-1" class="label">Tanda Tangan<small>(max 1000Kb)</small></label>
 						<img src="<?=base_url('assets/signature/'.$value['ID'].'.jpg')?>" />
+						<?=form_upload('image')?>
 					</p>
 					
 					<p class="button-height">

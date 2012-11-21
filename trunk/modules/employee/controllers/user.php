@@ -67,9 +67,38 @@ class User extends CI_Controller {
         $data['page']	= 'user/vform';
 		$this->load->theme('default',$data);
     }
+	
+	public function uploadImage(){
+		$path = "./assets/signature/".$id = $this->input->post('ID').'.jpg';
+		$result = unlink($path);
+		
+		if($result):
+		else:
+		endif;
+		
+		$config['upload_path'] = './assets/signature/';
+		$config['allowed_types'] = 'gif|jpg';
+		$config['max_size']	   = '0';
+		$config['max_width']   = '0';
+		$config['max_height']  = '0';
+		$config['file_name']   = $this->input->post('ID');
+		$this->load->library('upload', $config);
+		if (!$this->upload->do_upload('image')):
+			$data = '';
+		else:
+			$data = $this->upload->data();
+		endif;
+		
+		if(!empty($data))
+			$image = $data['file_name'];
+		else
+			$image = '';
+		return $image;
+	}
     
     public function update()
     {
+		$this->uploadImage();
         $this->userinfo->update();
         $this->session->set_flashdata('update_success',config_item('update_success'));
         redirect('employee/user/index/'.$this->session->userdata('user_offset'),301);
