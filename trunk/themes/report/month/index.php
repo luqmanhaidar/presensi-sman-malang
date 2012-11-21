@@ -158,7 +158,7 @@ ul{margin:0;}
 	<tfoot>		
 		<tr>
 			<th class="mini align-left white no-border" style="10px"></th>
-			<th class="mini align-left white no-border">Malang,...........</th>
+			<th class="mini align-left white no-border"></th>
 			<th class="mini align-left white no-border"></th>
 			<th class="mini align-left white no-border center" colspan="<?=$days?>"></th>
 			<th class="mini align-left white no-border center" colspan="6"></th>
@@ -167,8 +167,8 @@ ul{margin:0;}
 			<th class="mini align-left white no-border" style="10px"></th>
 			<th class="mini align-left white no-border">Kepala Madrasah <br/><br/><br/><br/><br/></th>
 			<th class="mini align-left white no-border"></th>
-			<th class="mini align-left white no-border center" colspan="<?=$days?>"></th>
-			<th class="mini align-left white no-border center" colspan="6">Bendahara<br/><br/><br/><br/><br/></th>
+			<th class="mini align-left white no-border center" colspan="<?=$days?>">Malang,... ......... ......</th>
+			<th class="mini align-left white no-border center" colspan="6">Ka. Tata Usaha<br/><br/><br/><br/><br/></th>
 		</tr>
 		
 		<tr>
