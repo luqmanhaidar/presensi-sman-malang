@@ -7,7 +7,7 @@
  <table>
     <caption style="margin:10px 0;text-align:left">
     <h3><?=$title?></h3>
-	<hr style="border:1px solid #333"/>
+	<hr style="border:1px solid #333;margin:0"/>
     <h3><?=$periode?></h3>
     </caption>
 	<thead>
@@ -115,6 +115,59 @@
          $i++;
          endforeach;?>
     </tbody>
+	
+	<tfoot>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+            <td></td>
+			<td class="center"></td>
+			<td class="center"></td>
+			<td class="center"></td>
+			<td class="center"></td>
+			<td class="center"></td>
+			<td></td>
+			<td class="center">Malang ,..... .............. .......</td>
+		</tr>
+			
+		<tr>
+            <th class="mini align-right" colspan="4">Total</th>
+			<th class="mini align-right"><?=number_format($sub_eat,0);?></th>
+            <th class="mini align-right"><?=number_format($sub_trp,0);?></th>
+			<th class="mini"></th>
+		</tr>
+        <tr>
+            <th class="mini align-right white no-border"></th>
+            <th class="mini align-right white no-border"></th>
+            <th class="mini align-right white no-border"></th>
+            <th class="mini align-right white no-border"></th>
+			<th class="mini align-right white no-border"></th>
+            <th class="mini white no-border"></th>
+            <th class="mini align-left white no-border">Malang ,..... .............. .......</th>
+		</tr>
+        <tr>
+            <th style="padding-bottom:100px;"class="mini align-right white no-border"></th>
+            <th style="padding-bottom:100px;" class="mini align-left white no-border">Kepala Madrasah</th>
+            <th style="padding-bottom:100px;" class="mini align-right white no-border"></th>
+            <th style="padding-bottom:100px;" class="mini align-right white no-border"></th>
+			<th style="padding-bottom:100px;" class="mini align-right white no-border"></th>
+            <th style="padding-bottom:100px;" class="mini align-left white no-border"></th>
+			<th style="padding-bottom:100px;" class="mini align-left white no-border">Bendahara</th>
+		</tr>
+        
+        <tr>
+            <th class="mini align-right white no-border"></th>
+            <th class="mini align-left white no-border"><p style="border-bottom:1px solid #222;width:170px;">Drs.H.Ahmad Hidayatullah, M.Pd</p><p>NIP. 19680622 200012 1 002</p></th>
+            <th class="mini align-right white no-border"></th>
+            <th class="mini align-right white no-border"></th>
+			<th class="mini align-right white no-border"></th>
+            <th class="mini white no-border"></th>
+            <th class="mini align-left white no-border"><p style="border-bottom:1px solid #222;width:170px;">Drs. Suwito</p><p>NIP. 19601010 199503 1 001</p></th>
+		</tr>
+        
+    </tfoot>
+	
  </table>
 
 </body>
