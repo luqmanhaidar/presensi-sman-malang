@@ -1,0 +1,101 @@
+202.6.236.27
+
+presensi
+malangse7en
+
+bus rental => jenis armada 
+orange , hijau , inquerry
+
+SQL server 2005
+SQL management express
+user: sa.
+pass: m3mmm
+
+user 66666
+Rio Arie is typing...
+Rio Arie: pass 54321
+
+
+1.Revisi Home (index.html): 
+Laporan Satpam => Laporan Pegawai Khusus
+dropdown
+- satpam
+- pelayan
+
+2.Laporan Group
+user_group = GRUP WAKTU = field id_durasi,namaKelompok,mulai_kerja,selesai_kerja
+
+3.Laporan User Group
+korelasi antara user(ngac_userinfo) dan group waktu
+ID,NAMA, JABATAN, GRUP WAKTU
+search by jabatan
+
+4.Manual Checkin
+UserIDIndex	TransactionTime	UserID	AuthResult	FunctionKey
+FK = 1 masuk
+     2 pulang
+     3 lembur
+     4 pulang lembur 
+
+Liver Search User_ID di add new man checkin
+
+insert ngac_authlog
+UserIDIndex => realsi ke ngac_userinfo:indexkey
+Transactiontime = input tgl
+UserID => realsi ke ngac_userinfo:ID
+Terminal ID = 1
+AuthResult = 0 (selain angka ini artinya gagal)
+FunctionKey =
+     FK = 	1 masuk
+     		2 pulang
+     		3 lembur
+     		4 pulang lembur
+
+Tanggal input Manual
+
+
+5.Daftar Lembur
+ngac_lembur = id_lembur,tgl_lembur,id_user
+Laporan lembur = ngac_authlog => ngac_lembur
+TANGGAL ngac_authlog = TANGGAL ngac_lembur (JOIN
+korelasi ke lap lembur
+
+6.Ijin Kerja
+ngac_ijin = id_user,variable,tgl_awal,tgl_akhir,keterangan
+
+7. Variabel Presensi
+Durasi Maksimum Terlambat = Bilangan Bulat (Menit) = DMT
+
+8.Laporan Individu
+Filter/Search BY IdUser, TGL Awal, TGL Akhir
+Tanggal,Jenis,Waktu
+
+9.Laporan Bulanan
+ngac_group ==> Grup Jabatan
+ngac_authlog
+GRUP WAKTU = field id_durasi,namaKelompok,mulai_kerja,selesai_kerja
+FILTER/SEARCH BY JABATAN
+lihat lampiran 2 SAKIT, Ijin, Tugas Kerja di print
+filter by Bulan Tahun dan Jabatan
+
+10.Laporan Mingguan
+TGL AWAL-TGL AKHIR SAKIT (dari Daftar Izin)
+TGL XXXXX s/d XXXXXX Ijin TUgas Kerja
+ Intinya di Keterangan itu munculnya, TGL XXXXX s/d XXXXXX Ijin SAKIT
+
+
+11. User Login
+    previlege = 
+    1 = admin
+    2 = user
+
+   tambah field password_web
+
+
+Variabel Presensi
+kalo hh:mm
+ya masukin nilai
+01:00
+
+   
+

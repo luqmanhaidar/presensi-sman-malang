@@ -44,7 +44,7 @@
                         <th scope="col">I</th>
                         <th scope="col">C</th>
                         <th scope="col">DL</th>
-                        <th scope="col">L</th>
+                        <!--<th scope="col">L</th>-->
                         <th scope="col">TK</th>
 					</tr>
 				</thead>
@@ -74,8 +74,8 @@
                         <td><?=$i=$this->others->getUserTime($row['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Ijin")?></td>
                         <td><?=$c=$this->others->getUserTime($row['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Cuti")?></td>
                         <td><?=$dl=$this->others->getUserTime($row['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Tugas")?></td>
-                        <td><?=$l=$this->holidays->getHolidayDate('',$this->session->userdata('month_month'),$this->session->userdata('month_year'))?></td>
-                        <td><?=$k-($m+$s+$i+$c+$l+$dl)?></td>
+                        <!--<td><?php //$l=$this->holidays->getHolidayDate('',$this->session->userdata('month_month'),$this->session->userdata('month_year'))?></td>-->
+                        <td><?=$k-($m+$s+$i+$c+$dl)?></td>
                     </tr>
                     <?php 
                         $x=$x+1;

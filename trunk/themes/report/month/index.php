@@ -24,18 +24,17 @@ ul{margin:0;}
 			<th rowspan="2" style="100px">Nama</th>
 			<th rowspan="2">Paraf</th>
 			<th class="center" colspan="<?=$days?>">Tanggal</th>
-			<th colspan="7">Ket.(<?=$k=days_in_month($this->session->userdata('month_month'),$this->session->userdata('month_year')) - $this->holidays->getHolidayDate('',$this->session->userdata('month_month'),$this->session->userdata('month_year'))- getCountSundayInMonth($this->session->userdata('month_month'),$this->session->userdata('month_year'));?> Hari Kerja)</th>
+			<th colspan="6">Ket.(<?=$k=days_in_month($this->session->userdata('month_month'),$this->session->userdata('month_year')) - $this->holidays->getHolidayDate('',$this->session->userdata('month_month'),$this->session->userdata('month_year'))- getCountSundayInMonth($this->session->userdata('month_month'),$this->session->userdata('month_year'));?> Hari Kerja)</th>
 		</tr>
 		<tr>
 			<?php for($i=1;$i<=$days;$i++):?>
 			<th><?=code($i,2);?></th>
 			<?php endfor;?>
-            <th>M_</th>
-			<th>S_</th>
-			<th>I_</th>
-            <th>C_</th>
+            <th>M<span style="color:#FFF">_</span></th>
+			<th>S<span style="color:#FFF"</th>
+			<th>I<span style="color:#FFF"</th>
+            <th>C<span style="color:#FFF"</th>
 			<th>DL</th>
-            <th>L_</th>
             <th>TK</th>
 		</tr>
     </thead>
@@ -76,8 +75,7 @@ ul{margin:0;}
 	   <th class="white desx"><?=$i=$this->others->getUserTime($row['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Ijin")?></th>
 	   <th class="white desx"><?=$c=$this->others->getUserTime($row['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Cuti")?></th>
        <th class="white desx"><?=$dl=$this->others->getUserTime($row['UserID'],$this->session->userdata('month_month'),$this->session->userdata('month_year'),"Tugas")?></th>
-       <th class="white desx"><?=$l=$this->holidays->getHolidayDate('',$this->session->userdata('month_month'),$this->session->userdata('month_year'))?></th>
-       <th class="white desx"><?=$k-($m+$s+$i+$c+$l+$dl)?></th>
+       <th class="white desx"><?=$k-($m+$s+$i+$c+$dl)?></th>
     </tr>
 	<tr>
         <th class="white">Dtg.PK</th>
@@ -97,8 +95,7 @@ ul{margin:0;}
 	    <th class="white">-</th>
 	    <th class="white">-</th>
         <th class="white">-</th>
-        <th class="white"></th>
-        <th class="white"></th>
+        <th class="white">-</th>
 	</tr>
     <tr>
 	   <th class="white">Paraf</th>
@@ -126,8 +123,7 @@ ul{margin:0;}
 	   <th class="white">-</th>
 	   <th class="white">-</th>
        <th class="white">-</th>
-       <th class="white"></th>
-       <th class="white"></th>
+       <th class="white">-</th>
 	</tr>
     
     <tr>
@@ -147,8 +143,8 @@ ul{margin:0;}
 	    <th class="white">-</th>
 	    <th class="white">-</th>
         <th class="white">-</th>
-        <th class="white"></th>
-        <th class="white"></th>
+        <th class="white">-</th>
+       
 	</tr>
     
  <?php 

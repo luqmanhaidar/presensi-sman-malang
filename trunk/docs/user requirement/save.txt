@@ -1,0 +1,78 @@
+Laporan Mingguan
+
+transaction time 28 6:18:51 F 1 ===> diolah untuk kolom C3
+transaction time 28 21:38:14 F 2 ====> diolah untuk kolom C4
+
+C5 
+IDGroup 1 & 2  Guru Tetap & Kontrak
+
+1. Masuk Kerja
+manual checkin = sebelum 06.00 ===> C3 = 06.30
+                         06.00 ===>  06.30
+cekin 06.00-06.30 
+artinya.. untuk orang yang cekin 06.00-06.30 dst.. itu di catat nilai asli
+jadi kategori telat untuk guru itu adalah lebih jam 07.00
+
+WPK = all group 
+
+jadi sbg contoh. kalo ternyata untuk hari itu WSK user adalah jam 15.30.. ternyata dia pulang jam 14.00
+dia akan dikenai laporan C7, pulang lbh awal
+C7 = 15.30 - 14.00
+C7 = hh:mm , 24:60
+
+
+DMT kan nilainya 15 menit ==> 00:15
+Durasi Maksimum Terlambat	DMT	15 Menit
+jadi kalao datang 07.10 tidak muncul laporan angka di C6
+
+
+kalau masuk 07.05 
+hendarsyahss: berarti dia tercatat dia authlog 07.00
+ngac_authlog = 07.05
+C3 = 07.30 C6= 00:30
+C3 = 07.05 C6 = [tanda minus]
+IF C3>07.15 THEN WRITE (C3-07.00) ELSE [tanda minus]
+
+IdUser, date, F1[hh.mm], F2[hh.mm], Durasi [hh:mm], Telat [hh:mm], plgawal[hh:mm]
+trus di cron 
+
+ jadi sepertinya nanti ada 1 pilihan lagi
+Rio Arie: 1 user milih di hari SENIN-KAMIS satunya hari JUMAT
+Rio Arie: tambah 1 kolom
+Rio Arie: di menu Group User
+
+
+ 06.30 - 12.30
+
+Sabtu Masuk Kerja , Sabtu Pulang Kerja
+
+hendarsyahss: 1 user = bisa milih SK1/SK2
+Rio Arie: 1 user == 1 SK == 1 JM
+hendarsyahss: jadi setiap user beda2 masuknya
+Rio Arie: iya 1 user milik SK1 / SK2
+Rio Arie: iya beda2.. tergantung pilihan dia
+hendarsyahss: 1 user SK1/SK2 bisa berubah tiap bulan / tahun
+Rio Arie: tidak.. berubahnya tiap tahun
+Rio Arie: kan tahun aktif 1 tahun
+Rio Arie is typing...
+Rio Arie: sekali milih.. seterusnya akan seperti itu
+
+
+Jadi C8 adalah jumlah dari durasi C5
+ C8 = SUM(C5)
+ iya C8 = SUM(C5) tapi untuk tiap minggu
+ Output C9 ==>  jika C8>DWK
+
+DWK = ganti hh:mm
+
+C8>DWK ,.. output C9 = memenuhi
+Rio Arie is typing...
+Rio Arie: kalo gak tidak
+
+C10 dan C11 itu SUM penjumlahan dari atasnya juga
+hendarsyahss: c8 = c10 = c11 sama sum daria tas
+
+
+
+
+
