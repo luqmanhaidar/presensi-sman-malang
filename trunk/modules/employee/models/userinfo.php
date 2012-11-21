@@ -58,8 +58,10 @@ class Userinfo extends CI_Model
             $this->db->limit($paging);
         
         if (!empty($name)):   
-            $this->db->like('U.Name',$name);
-			$this->db->or_like('U.ID',$name);
+			if ($name!=0): 
+				$this->db->like('U.Name',$name);
+				$this->db->or_like('U.ID',$name);
+			endif;	
         endif;    
         if ($group <> 0)   
             $this->db->where('U.GroupDurationID',$group);

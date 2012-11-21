@@ -19,6 +19,20 @@ class Usergroup extends CI_Model
 		return $data;
 	}
 	
+	function getSearchDataFromPosition($id=''){
+		$data    = array();
+        $data[0] = 'All';
+		if($id)
+		$this->db->where('ID>=',$id);
+		$query   = $this->db->get('NGAC_GROUP');
+		if ($query->num_rows() > 0):
+           foreach ($query->result_array() as $row):
+             $data[$row['ID']] = $row['Name'];
+           endforeach;  
+		endif;		
+		return $data;
+	}
+	
 	function getDataFromPosition($id=''){
 		$data    = array();
         //$data[0] = 'None';
