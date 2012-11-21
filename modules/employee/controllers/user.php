@@ -27,7 +27,7 @@ class User extends CI_Controller {
             $paging = config_item('paging');
         $this->session->set_userdata('user_offset',$offset);
         $data['groups']	= $this->usergroup->getDataFromGroup();
-        $data['pos']	= $this->usergroup->getDataFromPosition();
+        $data['pos']	= $this->usergroup->getSearchDataFromPosition();
         $data['users']  = $this->userinfo->getAllRecords($offset,$paging,$this->session->userdata('user_search'),$this->session->userdata('user_group'),$this->session->userdata('user_pos'));
         $numrows = COUNT($this->userinfo->getAllRecords('','',$this->session->userdata('user_search'),$this->session->userdata('user_group'),$this->session->userdata('user_pos'))); 
         if ($numrows > $paging):
