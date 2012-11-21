@@ -22,7 +22,7 @@ ul{margin:0;}
 	<thead>		
 		<tr>
 			<th rowspan="2" style="10px">No</th>
-			<th rowspan="2" style="100px">Nama</th>
+			<th rowspan="2" style="50px">Nama</th>
 			<th rowspan="2">Paraf</th>
 			<th class="center" colspan="<?=$days?>">Tanggal</th>
 			<th colspan="6">Ket.(<?=$k=days_in_month($this->session->userdata('month_month'),$this->session->userdata('month_year')) - $this->holidays->getHolidayDate('',$this->session->userdata('month_month'),$this->session->userdata('month_year'))- getCountSundayInMonth($this->session->userdata('month_month'),$this->session->userdata('month_year'));?> Hari Kerja)</th>
