@@ -133,7 +133,7 @@
 		
 		<tr>
 			<th class="mini align-left white no-border center"></th>
-			<th class="mini align-left white no-border center">Kepala Madrasah<br/><br/><br/><br/><br/></th>
+			<th class="mini align-left white no-border">Kepala Madrasah<br/><br/><br/><br/><br/></th>
 			<th class="mini align-left white no-border center"></th>
             <th class="mini align-left white no-border center"></th>
 			<th class="mini align-left white no-border center"></th>
@@ -148,7 +148,7 @@
 		
 		<tr>
 			<th class="mini align-left white no-border center"></th>
-			<th class="mini align-left white no-border center"><p style="border-bottom:1px solid #222;margin:0;width:170px;">Drs.H.Ahmad Hidayatullah, M.Pd</p><p style="margin:0">NIP. 19680622 200012 1 002</p></th>
+			<th class="mini align-left white no-border"><p style="border-bottom:1px solid #222;margin:0;width:170px;">Drs.H.Ahmad Hidayatullah, M.Pd</p><p style="margin:0">NIP. 19680622 200012 1 002</p></th>
 			<th class="mini align-left white no-border center"></th>
             <th class="mini align-left white no-border center"></th>
 			<th class="mini align-left white no-border center"></th>
@@ -157,7 +157,7 @@
 			<th class="mini align-left white no-border center"></th>
 			<th class="mini align-left white no-border center"></th>
 			<th class="mini align-left white no-border center"></th>
-			<th class="mini white no-border center"><p style="border-bottom:1px solid #222;margin:0;width:170px;">T.Agus Tjahjono</p><p style="margin:0">NIP. 19630816 198703 1 003</p></th>
+			<th class="mini align-left white no-border"><p style="border-bottom:1px solid #222;margin:0;width:170px;">T.Agus Tjahjono</p><p style="margin:0">NIP. 19630816 198703 1 003</p></th>
 		</tr>
 			
 		
