@@ -51,7 +51,12 @@
     </tbody>
     
     <tfoot>
-		
+		<tr>
+            <th class="mini align-right" colspan="4">Total</th>
+			<th class="mini align-right"><?=number_format($sub_eat,0);?></th>
+            <th class="mini align-right"><?=number_format($sub_trp,0);?></th>
+			<th class="mini"></th>
+		</tr>
         <tr>
             <th class="mini align-right white no-border"></th>
             <th class="mini align-right white no-border"></th>
