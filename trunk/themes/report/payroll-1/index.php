@@ -38,7 +38,7 @@
 				<td class="mini center"><?=$i;?></td>
                 <td class="mini"><?=$row['Name'];?></td>
 				<td class="mini center"><?=$row['GroupName'];?></td>
-                <td class="mini center hide-on-mobile"><?=$absen = $row['Total']-$holidays;?></td>
+                <td class="mini center hide-on-mobile"><?=$absen = $row['Total'];?></td>
 				<td class="mini align-right hide-on-mobile"><?=number_format($trp_total=$absen * $trp,0);?></td>
 				<td class="mini align-right hide-on-mobile"><?=number_format($eat_total=$absen * $eat,0);?></td>
                 <td style="width:17%;" class="mini <?=$align?>"><?=$i?></td>
