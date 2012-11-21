@@ -160,8 +160,8 @@ class Report extends CI_Controller {
         endif;                    
         $this->session->set_userdata('transport_offset',$offset);
         $data['holidays']=   COUNT($this->holidays->getAllRecords('','','',$start,$end,'',''));  
-        $data['checks']  = $this->authlog->getPerMonthRecords($offset,$paging,$start,$end,$group);
-        $numrows = COUNT($this->authlog->getPerMonthRecords('','',$start,$end,$group)); 
+        $data['checks']  = $this->authlog->getPerMonthRecords($offset,$paging,$start,$end,$group,1);
+        $numrows = COUNT($this->authlog->getPerMonthRecords('','',$start,$end,$group,1)); 
         if ($numrows > $paging):
             $config['base_url']   = site_url('payroll/report/transport/');
             $config['total_rows'] = $numrows;
@@ -225,7 +225,7 @@ class Report extends CI_Controller {
         //$data['var']	=  $this->presensi->getVariabelDataByVar('UTR');
 		$data['group']  =  $this->usergroup->getPositionData($this->session->userdata('transport_group')); 
         $data['holidays']=   COUNT($this->holidays->getAllRecords('','','',$this->session->userdata('transport_start'),$this->session->userdata('transport_finish'),'',''));  
-        $data['checks'] =  $this->authlog->getPerMonthRecords('','',$this->session->userdata('transport_start'),$this->session->userdata('transport_finish'),$this->session->userdata('transport_group'));
+        $data['checks'] =  $this->authlog->getPerMonthRecords('','',$this->session->userdata('transport_start'),$this->session->userdata('transport_finish'),$this->session->userdata('transport_group'),1);
         $this->load->vars($data);
         $this->load->theme('report/payroll-2',$data);
 	}
@@ -239,7 +239,7 @@ class Report extends CI_Controller {
         //$data['var']	=  $this->presensi->getVariabelDataByVar('UTR');
         $data['group']  =  $this->usergroup->getPositionData($this->session->userdata('transport_group')); 
         $data['holidays']=   COUNT($this->holidays->getAllRecords('','','',$this->session->userdata('transport_start'),$this->session->userdata('transport_finish'),'',''));  
-		$data['checks'] =  $this->authlog->getPerMonthRecords('','',$this->session->userdata('transport_start'),$this->session->userdata('transport_finish'),$this->session->userdata('transport_group'));
+		$data['checks'] =  $this->authlog->getPerMonthRecords('','',$this->session->userdata('transport_start'),$this->session->userdata('transport_finish'),$this->session->userdata('transport_group'),1);
         $this->load->vars($data);
         $file=$this->load->theme('report/payroll-2',$data,TRUE);
 		$this->pdf->pdf_create($file,$data['title']);
@@ -252,7 +252,7 @@ class Report extends CI_Controller {
         $id    = $this->session->userdata('transport_group'); 
         $holidays=   COUNT($this->holidays->getAllRecords('','','',$start,$end,'',''));  
         $group =  $this->usergroup->getPositionData($id);
-        $recs  = $this->authlog->getPerMonthRecords('','',$start,$end,$id);
+        $recs  = $this->authlog->getPerMonthRecords('','',$start,$end,$id,1);
         //$eat   =  $this->presensi->getVariabelDataByVar('UMK');
         $trp   =  $this->presensi->getVariabelDataByVar('UTR');
 		$excel = $this->excelModel->transport_excel($recs,$trp,$group,$holidays);
