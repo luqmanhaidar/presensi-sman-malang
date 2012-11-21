@@ -161,7 +161,7 @@ ul{margin:0;}
 			<th class="mini align-left white no-border"></th>
 			<th class="mini align-left white no-border"></th>
 			<th class="mini align-left white no-border center" colspan="<?=$days?>"></th>
-			<th class="mini align-left white no-border center" colspan="6">Malang,..... ...................... ..........</th>
+			<th class="mini align-left white no-border center" colspan="6">Malang, ..... ...................... ..........</th>
 		</tr>
 		<tr>
 			<th class="mini align-left white no-border" style="10px"></th>
