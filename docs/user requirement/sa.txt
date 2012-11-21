@@ -1,0 +1,14 @@
+Laporan Individual = print,excel,pdf
+Laporan Gaji 1     = print.excel,pdf
+Laporan Gaji 2     = print,excel,pdf 
+Laporan Lembur     = print,excel,pdf
+
+/** Error **/
+Laporan Bulanan    = print,excel,pdf
+Laporan PK         = print,excel,pdf
+Laporan Mingguan   = print,excel,pdf
+
+
+
+
+    
