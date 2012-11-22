@@ -77,7 +77,7 @@ class Others extends CI_Model
 	
 	function MinToMaxOtherData($week,$month,$year,$user){
 		$sql = "
-				SELECT DAY(MIN(OtherDateStart)) AS MinDate,DAY(MAX(OtherDateStart)) as MaxDate
+				SELECT MIN(OtherDateStart) AS MinDate,MAX(OtherDateStart) as MaxDate
 				FROM NGAC_OTHER
 				WHERE (DAY(OtherDateStart) + (DATEPART(dw, DATEADD (MONTH, DATEDIFF (MONTH, 0, OtherDateStart), 0)) -1)-1)/7 + 1 = '".$week."'
 				AND DATEPART(MONTH,OtherDateStart)='".$month."'
