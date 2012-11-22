@@ -100,19 +100,19 @@
 							//$min1=0;
 							//$max2=0;
                             //if($rec['W']==1):
-								 echo 'M1:'. $this->others->MinToMaxOtherData(1,$this->session->userdata('week_month'),$this->session->userdata('week_year'),$row['ID']);
+								 echo 'M1:'. $this->others->MinToMaxOtherData(1,$this->session->userdata('week_start'),$this->session->userdata('week_finish'),$row['ID']);
                                 //print 'M1:'.code($rec['DAY']).'/'.code($rec['MONTH']).' '.$rec['OtherType'] .'('.$rec['OtherDescription'].')'.' ';
                             //elseif($rec['W']==2):
-								 echo 'M2:'.$this->others->MinToMaxOtherData(2,$this->session->userdata('week_month'),$this->session->userdata('week_year'),$row['ID']);
+								 echo 'M2:'.$this->others->MinToMaxOtherData(2,$this->session->userdata('week_start'),$this->session->userdata('week_finish'),$row['ID']);
                                 //print 'M2:'.code($rec['DAY']).'/'.code($rec['MONTH']).' '.$rec['OtherType'] .'('.$rec['OtherDescription'].')'.' ';
                             //elseif($rec['W']==3):
-                                 echo 'M3:'.$this->others->MinToMaxOtherData(3,$this->session->userdata('week_month'),$this->session->userdata('week_year'),$row['ID']);
+                                 echo 'M3:'.$this->others->MinToMaxOtherData(3,$this->session->userdata('week_start'),$this->session->userdata('week_finish'),$row['ID']);
 								//print 'M3:'.code($rec['DAY']).'/'.code($rec['MONTH']).' '.$rec['OtherType'] .'('.$rec['OtherDescription'].')'.' ';    
                             //elseif($rec['W']==4):
-								 echo 'M4:'.$this->others->MinToMaxOtherData(1,$this->session->userdata('week_month'),$this->session->userdata('week_year'),$row['ID']);
+								 echo 'M4:'.$this->others->MinToMaxOtherData(1,$this->session->userdata('week_start'),$this->session->userdata('week_finish'),$row['ID']);
                                 //print 'M4:'.code($rec['DAY']).'/'.code($rec['MONTH']).' '.$rec['OtherType'] .'('.$rec['OtherDescription'].')'.' ';
                             //elseif($rec['W']==5):
-								 echo 'M5:'.$this->others->MinToMaxOtherData(1,$this->session->userdata('week_month'),$this->session->userdata('week_year'),$row['ID']);
+								 echo 'M5:'.$this->others->MinToMaxOtherData(1,$this->session->userdata('week_start'),$this->session->userdata('week_finish'),$row['ID']);
                                 //print 'M5:'.code($rec['DAY']).'/'.code($rec['MONTH']).' '.$rec['OtherType'] .'('.$rec['OtherDescription'].')'.' ';
 							//endif;	
                         //endforeach;

@@ -75,13 +75,12 @@ class Others extends CI_Model
         return $Q->result_array();
     }
 	
-	function MinToMaxOtherData($week,$month,$year,$user){
+	function MinToMaxOtherData($week,$date_start,$date_finish,$user){
 		$sql = "
 				SELECT MIN(OtherDateStart) AS MinDate,MAX(OtherDateStart) as MaxDate
 				FROM NGAC_OTHER
 				WHERE (DAY(OtherDateStart) + (DATEPART(dw, DATEADD (MONTH, DATEDIFF (MONTH, 0, OtherDateStart), 0)) -1)-1)/7 + 1 = '".$week."'
-				AND DATEPART(MONTH,OtherDateStart)='".$month."'
-				AND DATEPART(YEAR,OtherDateStart)='".$year."'
+				AND (OtherDateStart >='".$date_start."') AND (OtherDateStart <=DATEADD(day,1,'".$date_finish."'))
 				AND UserID = ".$user."
 				GROUP BY  (DAY(OtherDateStart) + (DATEPART(dw, DATEADD (MONTH, DATEDIFF (MONTH, 0, OtherDateStart), 0)) -1)-1)/7 + 1
 			   ";
