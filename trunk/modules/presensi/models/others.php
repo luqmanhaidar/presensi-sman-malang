@@ -65,7 +65,7 @@ class Others extends CI_Model
         if (!empty($date_start))   
             $this->db->where("(OtherDateStart >='".$date_start."') AND (OtherDateStart <=DATEADD(day,1,'".$date_finish."'))");  
              
-        $this->db->select('DATEPART(DAY,OtherDateStart) AS DAY,DATEPART(MONTH,OtherDateStart) AS MONTH,*');
+        $this->db->select('DATEPART(DAY,OtherDateStart) AS DAY,DATEPART(MONTH,OtherDateStart) AS MONTH,DATEPART(YEAR,OtherDateStart) AS YEAR,*');
         $this->db->select('DATEPART(WEEK,OtherDateStart)-DATEPART(WEEK,(OtherDateStart-DATEPART(DAY,OtherDateStart)+1)) as W');
 		$this->db->join('NGAC_USERINFO','NGAC_USERINFO.ID=NGAC_OTHER.UserID');
         $this->db->order_by('OtherDateStart','ASC');
@@ -74,6 +74,24 @@ class Others extends CI_Model
         $Q = $this->db->get('NGAC_OTHER');
         return $Q->result_array();
     }
+	
+	function MinToMaxOtherData($week,$month,$year,$user){
+		$sql = "
+				SELECT DAY(MIN(OtherDateStart)) AS MinDate,DAY(MAX(OtherDateStart)) as MaxDate
+				FROM NGAC_OTHER
+				WHERE (DAY(OtherDateStart) + (DATEPART(dw, DATEADD (MONTH, DATEDIFF (MONTH, 0, OtherDateStart), 0)) -1)-1)/7 + 1 = '".$week."'
+				AND DATEADD(MONTH,OtherDateStart)='".$month."'
+				AND DATEADD(YEAR,OtherDateStart)='".$year."'
+				AND UserID = ".$user."
+				GROUP BY  (DAY(OtherDateStart) + (DATEPART(dw, DATEADD (MONTH, DATEDIFF (MONTH, 0, OtherDateStart), 0)) -1)-1)/7 + 1
+			   ";
+		$Q = $this->db->query($sql);
+        $row = $Q->row_array();
+		if ($row)
+			return $row['MinDate'].'-'.$row['MaxDate'];		
+		else
+			return $data='';
+	}
     
     function save($date)
     {
