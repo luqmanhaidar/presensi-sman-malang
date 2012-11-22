@@ -80,8 +80,8 @@ class Others extends CI_Model
 				SELECT DAY(MIN(OtherDateStart)) AS MinDate,DAY(MAX(OtherDateStart)) as MaxDate
 				FROM NGAC_OTHER
 				WHERE (DAY(OtherDateStart) + (DATEPART(dw, DATEADD (MONTH, DATEDIFF (MONTH, 0, OtherDateStart), 0)) -1)-1)/7 + 1 = '".$week."'
-				AND DATEADD(MONTH,OtherDateStart)='".$month."'
-				AND DATEADD(YEAR,OtherDateStart)='".$year."'
+				AND DATEPART(MONTH,OtherDateStart)='".$month."'
+				AND DATEPART(YEAR,OtherDateStart)='".$year."'
 				AND UserID = ".$user."
 				GROUP BY  (DAY(OtherDateStart) + (DATEPART(dw, DATEADD (MONTH, DATEDIFF (MONTH, 0, OtherDateStart), 0)) -1)-1)/7 + 1
 			   ";
