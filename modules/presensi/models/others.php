@@ -77,19 +77,24 @@ class Others extends CI_Model
 	
 	function MinToMaxOtherData($week,$date_start,$date_finish,$user){
 		$sql = "
-				SELECT DAY(MIN(OtherDateStart)) AS MinDate,DAY(MAX(OtherDateStart)) as MaxDate
+				SELECT DAY(MIN(OtherDateStart)) AS MinDate,DAY(MAX(OtherDateStart)) as MaxDate,DATEPART(MONTH,OtherDateStart) AS MONTH
 				FROM NGAC_OTHER
 				WHERE (DAY(OtherDateStart) + (DATEPART(dw, DATEADD (MONTH, DATEDIFF (MONTH, 0, OtherDateStart), 0)) -1)-1)/7 + 1 = '".$week."'
 				AND (OtherDateStart >='".$date_start."') AND (OtherDateStart <=DATEADD(day,1,'".$date_finish."'))
 				AND UserID = ".$user."
-				GROUP BY  (DAY(OtherDateStart) + (DATEPART(dw, DATEADD (MONTH, DATEDIFF (MONTH, 0, OtherDateStart), 0)) -1)-1)/7 + 1
+				GROUP BY  (DAY(OtherDateStart) + (DATEPART(dw, DATEADD (MONTH, DATEDIFF (MONTH, 0, OtherDateStart), 0)) -1)-1)/7 + 1,DATEPART(MONTH,OtherDateStart)
 			   ";
 		$Q = $this->db->query($sql);
         $row = $Q->row_array();
-		if ($row)
-			return $row['MinDate'].'-'.$row['MaxDate'];		
-		else
-			return $data='';
+		if ($row):
+			if($row['MinDate']==$row['MaxDate'])
+				$data = $row['MinDate'].' '.$row['MONTH'];
+			else	
+				$data = $row['MinDate'].'-'.$row['MaxDate'].' '.$row['MONTH'];		
+		else:
+			$data='';
+		endif;	
+		return $data;	
 	}
     
     function save($date)
