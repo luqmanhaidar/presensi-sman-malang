@@ -114,7 +114,7 @@
 							if($week4)
 								 echo ' M4:'. $week4;
 							if($week5)
-								 echo ' M5:'. $week1;		
+								 echo ' M5:'. $week5;		
 							//if($rec['W']==1):
 								 //echo 'M1:'. $week1;
                                 //print 'M1:'.code($rec['DAY']).'/'.code($rec['MONTH']).' '.$rec['OtherType'] .'('.$rec['OtherDescription'].')'.' ';
