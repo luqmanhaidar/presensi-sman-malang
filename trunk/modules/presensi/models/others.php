@@ -88,9 +88,9 @@ class Others extends CI_Model
         $row = $Q->row_array();
 		if ($row):
 			if($row['MinDate']==$row['MaxDate'])
-				$data = $row['MinDate'].' '.$row['MONTH'];
+				$data = $row['MinDate'].'/'.$row['MONTH'];
 			else	
-				$data = $row['MinDate'].'-'.$row['MaxDate'].' '.$row['MONTH'];		
+				$data = $row['MinDate'].'-'.$row['MaxDate'].'/'.$row['MONTH'];		
 		else:
 			$data='';
 		endif;	
