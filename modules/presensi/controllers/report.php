@@ -371,8 +371,8 @@ class Report extends CI_Controller {
                         $a2 =  (substr($a_out,0,2) * 3600) + (substr($a_out,3,2) * 60);
                         $b1 =  (substr($b_in,0,2) * 3600) + (substr($b_in,3,2) * 60);
                         $b2 =  (substr(($b_out),0,2) * 3600) + (substr(($b_out),3,2) * 60);
-                        $c1 =  (substr($b_in,0,2) * 3600) + (substr($b_in,3,2) * 60);
-                        $c2 =  (substr(($b_out+24),0,2) * 3600) + (substr(($b_out+24),3,2) * 60);
+                        $c1 =  (substr($c_in,0,2) * 3600) + (substr($c_in,3,2) * 60);
+                        $c2 =  (substr(($c_out+24),0,2) * 3600) + (substr(($c_out+24),3,2) * 60);
                         
                         if(($wm>=$a1) && ($wm<=$b1) ):
                             $dbSkStart = $a_in;
@@ -586,7 +586,46 @@ class Report extends CI_Controller {
                 $sk  =  $this->usergroup->getGroupWorkData($row['GroupWork']);
                 $jm  =  $this->usergroup->getGroupFridayData($row['GroupFriday']);
                 
-                if((TRIM($row['GroupID'])==6) || (TRIM($row['GroupID'])==7) ):
+                if(TRIM($row['GroupID'])==8):
+                        $a_in = $this->presensi->getVariabelDataByVar('PA1');
+                        $a_out= $this->presensi->getVariabelDataByVar('PA2');
+                        $b_in = $this->presensi->getVariabelDataByVar('PB1');
+                        $b_out= $this->presensi->getVariabelDataByVar('PB2');
+                        $c_in = $this->presensi->getVariabelDataByVar('PC1');
+                        $c_out= $this->presensi->getVariabelDataByVar('PC2');
+                        
+                        $a1 =  (substr($a_in,0,2) * 3600) + (substr($a_in,3,2) * 60);
+                        $a2 =  (substr($a_out,0,2) * 3600) + (substr($a_out,3,2) * 60);
+                        $b1 =  (substr($b_in,0,2) * 3600) + (substr($b_in,3,2) * 60);
+                        $b2 =  (substr(($b_out),0,2) * 3600) + (substr(($b_out),3,2) * 60);
+                        $c1 =  (substr($c_in,0,2) * 3600) + (substr($c_in,3,2) * 60);
+                        $c2 =  (substr(($c_out+24),0,2) * 3600) + (substr(($c_out+24),3,2) * 60);
+                        
+                        if(($wm>=$a1) && ($wm<=$b1) ):
+                            $dbSkStart = $a_in;
+                            $dbSpStart = (substr($a_in,0,2) * 3600) + (substr($a_in,3,2)*60);
+                            $dbSpWork  = (substr($a_in,0,2) * 3600) + ((substr($a_in,3,2) + 15)*60);   
+                            $dbSkEnd   = $a_out;
+                            $dbSpEnd   = (substr($a_out,0,2) * 3600) + (substr($a_out,3,2)*60);
+                            $mytime    = $row['TransactionTime'];
+                        elseif(($wm>=$b1) && ($wm<=$c1)):
+                            $dbSkStart = $b_in;
+                            $dbSpStart = (substr($b_in,0,2) * 3600) + (substr($b_in,3,2)*60);
+                            $dbSpWork  = (substr($b_in,0,2) * 3600) + ((substr($b_in,3,2) + 15)*60);   
+                            $dbSkEnd   = $b_out;
+                            $dbSpEnd   = (substr($b_out,0,2) * 3600) + (substr($b_out,3,2)*60);
+                            $mytime    = $row['TransactionTime'];
+                        elseif(($wm>=$c1)):
+                            $dbSkStart = $c_in;
+                            $dbSpStart = (substr($c_in,0,2) * 3600) + (substr($c_in,3,2)*60);
+                            $dbSpWork  = (substr($c_in,0,2) * 3600) + ((substr($c_in,3,2) + 15)*60);   
+                            $dbSkEnd   = $c_out;
+                            $dbSpEnd   = (substr($c_out,0,2) * 3600) + (substr($c_out,3,2)*60);
+                            $mytime    = $row['TransactionTime'];    
+                        endif;    
+                        
+                        
+                elseif((TRIM($row['GroupID'])==6) || (TRIM($row['GroupID'])==7) ):
                         $a_in = $this->presensi->getVariabelDataByVar('SA1');
                         $a_out= $this->presensi->getVariabelDataByVar('SA2');
                         $b_in = $this->presensi->getVariabelDataByVar('SB1');
