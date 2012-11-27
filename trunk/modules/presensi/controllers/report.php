@@ -145,6 +145,49 @@ class Report extends CI_Controller {
         force_download("Laporan-Individu",$data); 
 	}
     
+    function present($offset=0){
+        $data['title']  = 'Laporan Ketidakhadiran';
+        $data['logs']   =   $this->log->userLog();
+        $data['groups']	= $this->usergroup->getDataFromPosition();
+        if($this->session->userdata('week_paging'))
+            $paging = $this->session->userdata('week_paging');
+        else
+            $paging = config_item('paging');
+		
+        if($this->session->userdata('week_group')):
+			$group = $this->session->userdata('week_group');
+            $start = $this->session->userdata('week_start');
+			$end   = $this->session->userdata('week_finish');
+        else:
+			$group = 100;
+            $start = '';
+			$end   = '';
+        endif; 
+        $data['var']	    =	$this->presensi->getVariabelDataByVar('DMK');
+        
+        if($this->session->userdata('week_type')=='M2'):
+            $record  = $this->authprocess->getAllWeekRecord($offset,$paging);
+            $num_rec = COUNT($this->authprocess->getAllWeekRecord());
+        else:
+            $record  = $this->authprocess->getAllRecords($offset,$paging);
+            $num_rec = COUNT($this->authprocess->getAllRecords());
+        endif;    
+		
+        $this->session->set_userdata('week_offset',$offset);
+        $data['checks']  = $record;
+        $numrows = $num_rec; 
+        if ($numrows > $paging):
+            $config['base_url']   = site_url('presensi/report/weekly/');
+            $config['total_rows'] = $numrows;
+            $config['per_page']   = $paging;
+            $config['uri_segment']= 4;
+            $this->pagination->initialize($config);	 
+            $data['pagination']   = $this->pagination->create_links();
+        endif;    
+        $data['page']	= 'report/vweek';
+		$this->load->theme('default',$data);
+    }
+    
     function monthly($offset=0){
         $data['title']  = 'Laporan Bulanan';
         $data['logs']   =   $this->log->userLog();
