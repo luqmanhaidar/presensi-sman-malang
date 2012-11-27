@@ -601,21 +601,21 @@ class Report extends CI_Controller {
                         $c1 =  (substr($c_in,0,2) * 3600) + (substr($c_in,3,2) * 60);
                         $c2 =  (substr(($c_out+24),0,2) * 3600) + (substr(($c_out+24),3,2) * 60);
                         
-                        if(($wm>=$a1) && ($wm<=$b1) ):
+                        if(($ws>=$a2) && ($ws<=$b2) ):
                             $dbSkStart = $a_in;
                             $dbSpStart = (substr($a_in,0,2) * 3600) + (substr($a_in,3,2)*60);
                             $dbSpWork  = (substr($a_in,0,2) * 3600) + ((substr($a_in,3,2) + 15)*60);   
                             $dbSkEnd   = $a_out;
                             $dbSpEnd   = (substr($a_out,0,2) * 3600) + (substr($a_out,3,2)*60);
                             $mytime    = $row['TransactionTime'];
-                        elseif(($wm>=$b1) && ($wm<=$c1)):
+                        elseif(($ws>=$b2) && ($wm<=$c2)):
                             $dbSkStart = $b_in;
                             $dbSpStart = (substr($b_in,0,2) * 3600) + (substr($b_in,3,2)*60);
                             $dbSpWork  = (substr($b_in,0,2) * 3600) + ((substr($b_in,3,2) + 15)*60);   
                             $dbSkEnd   = $b_out;
                             $dbSpEnd   = (substr($b_out,0,2) * 3600) + (substr($b_out,3,2)*60);
                             $mytime    = $row['TransactionTime'];
-                        elseif(($wm>=$c1)):
+                        elseif(($ws>=$c2)):
                             $dbSkStart = $c_in;
                             $dbSpStart = (substr($c_in,0,2) * 3600) + (substr($c_in,3,2)*60);
                             $dbSpWork  = (substr($c_in,0,2) * 3600) + ((substr($c_in,3,2) + 15)*60);   
