@@ -353,13 +353,14 @@ class Report extends CI_Controller {
                     
         foreach($query as $row):   
             if(COUNT($this->authprocess->getAuthProcessData($row['UserID'],$row['TransactionTime']))== 0):
+                $wm = (substr($row['MyTime'],0,2) * 3600) + (substr($row['MyTime'],3,2)*60) + (substr($row['MyTime'],6,2));
+                
                 if($row['GroupID']>2):
                     $sk  =  $this->usergroup->getGroupWorkData($row['GroupWork']);
                     $jm  =  $this->usergroup->getGroupFridayData($row['GroupFriday']);
                     
-                    $wm = (substr($row['MyTime'],0,2) * 3600) + (substr($row['MyTime'],3,2)*60) + (substr($row['MyTime'],6,2));
                     
-                    if((TRIM($row['GroupID'])==6) || (TRIM($row['GroupID'])==8) ):
+                    if((TRIM($row['GroupID'])==6) || (TRIM($row['GroupID'])==7) ):
                         $a_in = $this->presensi->getVariabelDataByVar('SA1');
                         $a_out= $this->presensi->getVariabelDataByVar('SA2');
                         $b_in = $this->presensi->getVariabelDataByVar('SB1');
@@ -368,24 +369,44 @@ class Report extends CI_Controller {
                         $a1 =  (substr($a_in,0,2) * 3600) + (substr($a_in,3,2) * 60);
                         $a2 =  (substr($a_out,0,2) * 3600) + (substr($a_out,3,2) * 60);
                         $b1 =  (substr($b_in,0,2) * 3600) + (substr($b_in,3,2) * 60);
-                        $b2 =  (substr($b_out,0,2) * 3600) + (substr($b_out,3,2) * 60);
+                        $b2 =  (substr(($b_out+24),0,2) * 3600) + (substr(($b_out+24),3,2) * 60);
                         
-                        if($wm<$b1):
+                        $a_max = (substr(12,0,2) * 3600) + (substr(0,3,2) * 60);
+                        
+                        if($wm>$a_max):
+                            $dbSkStart = $b_in;
+                            $dbSpStart = (substr($b_in,0,2) * 3600) + (substr($b_in,3,2)*60);
+                            $dbSpWork  = (substr($b_in,0,2) * 3600) + ((substr($b_in,3,2) + 15)*60);   
+                            $dbSkEnd   = $b_out;
+                            $dbSpEnd   = (substr($b_out,0,2) * 3600) + (substr($b_out,3,2)*60);
+                            $mytime    = $b_in.':00';
+                            $wm        = $b1; 
+                        elseif($wm<$b1):
                             $dbSkStart = $a_in;
                             $dbSpStart = (substr($a_in,0,2) * 3600) + (substr($a_in,3,2)*60);
                             $dbSpWork  = (substr($a_in,0,2) * 3600) + ((substr($a_in,3,2) + 15)*60);   
                             $dbSkEnd   = $a_out;
                             $dbSpEnd   = (substr($a_out,0,2) * 3600) + (substr($a_out,3,2)*60);
+                            $mytime    = $row['TransactionTime'];
                         else:
                             $dbSkStart = $b_in;
                             $dbSpStart = (substr($b_in,0,2) * 3600) + (substr($b_in,3,2)*60);
                             $dbSpWork  = (substr($b_in,0,2) * 3600) + ((substr($b_in,3,2) + 15)*60);   
                             $dbSkEnd   = $b_out;
                             $dbSpEnd   = (substr($b_out,0,2) * 3600) + (substr($b_out,3,2)*60);
+                            $mytime    = $row['TransactionTime'];
                         endif;
                         
                     else:
-                    
+                        
+                        if($sk1>=$wm):
+                            $wm   = $sk1;
+                            $mytime = $sd1;
+                        else:
+                            $wm   = $wm;
+                            $mytime = $row['TransactionTime'];     
+                        endif;
+                        
                         if($row['DayName']=='Friday'):
                             if($jm):
                                 $dbSkStart = $jm['GroupFridayStart'];
@@ -416,16 +437,24 @@ class Report extends CI_Controller {
                             endif;
                          endif;    
                        endif;   
-                           
+                    
+                    else:
+                        if($sk1>=$wm):
+                            $wm   = $sk1;
+                            $mytime = $sd1;
+                        else:
+                            $wm   = $wm;
+                            $mytime = $row['TransactionTime'];     
+                        endif;       
                     endif;
             
-                if(($row['DayName']=='Saturday')):
+                if(($row['DayName']=='Saturday') && ($row['GroupID']<=5)):
                     $wmk = $sd1;
                     $dt  = $dt1;
                     $sk  = $sk1;
                     $wsk = $w1; // Wsk Senin-Kamis
                     $wsp = $wp1;
-                elseif($row['DayName']=='Sunday'):
+                elseif(($row['DayName']=='Sunday') && ($row['GroupID']<=5)):
                     $wmk = '';
                     $dt  = 0;
                     $sk  = 0;
@@ -465,6 +494,12 @@ class Report extends CI_Controller {
                         $wsk = $w2; 
                         $wsp = $wp2;
                     endif;
+                elseif( ( ($row['GroupID']==6) || ($row['GroupID']==7) )):
+                    $wmk = $dbSkStart;
+                    $dt  = $dbSpWork;
+                    $sk  = $dbSpStart;
+                    $wsk = $dbSkEnd;
+                    $wsp = $dbSpEnd;    
                 elseif(($row['GroupID']>2)):
                     $wmk = $dbSkStart;
                     $dt  = $dbSpWork;
@@ -483,12 +518,19 @@ class Report extends CI_Controller {
                     $hours = code(floor($d / 3600));
                     $mins = code(floor(($d - ($hours*3600)) / 60));
                     $seconds = code($d % 60);
-                    $late = $hours.':'.$mins.':'.$seconds;     
+                    $late = $hours.':'.$mins.':'.$seconds;
+                elseif (($wm > $dt) && ($row['GroupID'] >=5 )):
+                    $d = $wm - $sk;
+                    $hours = code(floor($d / 3600));
+                    $mins = code(floor(($d - ($hours*3600)) / 60));
+                    $seconds = code($d % 60);
+                    $late = $hours.':'.$mins.':'.$seconds;             
                 else:
                     $d = "-";
                     $late = "-";
-                endif;          
-                $this->authprocess->save($row['UserID'],$row['TransactionTime'],$wmk,$late);
+                endif;
+                //mytime = $row['TransactionTime'];          
+                $this->authprocess->save($row['UserID'],$mytime,$wmk,$wsk,$late);
             endif;   
         endforeach;
         
@@ -500,44 +542,74 @@ class Report extends CI_Controller {
             if($row['GroupID']>2):
                 $sk  =  $this->usergroup->getGroupWorkData($row['GroupWork']);
                 $jm  =  $this->usergroup->getGroupFridayData($row['GroupFriday']);
-                if($row['DayName']=='Friday'):
-                    if($jm):
-                        $dbSkStart = $jm['GroupFridayStart'];
-                        $dbSpStart = (substr($jm['GroupFridayStart'],0,2) * 3600) + (substr($jm['GroupFridayStart'],3,2)*60) + (substr($jm['GroupFridayStart'],6,2));
-                        $dbSpWork  = (substr($jm['GroupFridayStart'],0,2) * 3600) + ((substr($jm['GroupFridayStart'],3,2)+15)*60) + (substr($jm['GroupFridayStart'],6,2));   
-                        $dbSkEnd   = $jm['GroupFridayEnd'];
-                        $dbSpEnd   = (substr($jm['GroupFridayEnd'],0,2) * 3600) + (substr($jm['GroupFridayEnd'],3,2)*60) + (substr($jm['GroupFridayEnd'],6,2));
-                    else:
-                        $dbSkStart = $sd1;
-                        $dbSpStart = $sk1;
-                        $dbSpWork  = $dt1;
-                        $dbSkEnd   = $w3;
-                        $dbSpEnd   = $wp3; 
-                    endif;
+                
+                if((TRIM($row['GroupID'])==6) || (TRIM($row['GroupID'])==7) ):
+                        $a_in = $this->presensi->getVariabelDataByVar('SA1');
+                        $a_out= $this->presensi->getVariabelDataByVar('SA2');
+                        $b_in = $this->presensi->getVariabelDataByVar('SB1');
+                        $b_out= $this->presensi->getVariabelDataByVar('SB2');
+                        
+                        $a1 =  (substr($a_in,0,2) * 3600) + (substr($a_in,3,2) * 60);
+                        $a2 =  (substr($a_out,0,2) * 3600) + (substr($a_out,3,2) * 60);
+                        $b1 =  (substr($b_in,0,2) * 3600) + (substr($b_in,3,2) * 60);
+                        $b2 =  (substr(($b_out+24),0,2) * 3600) + (substr(($b_out+24),3,2) * 60);
+                        
+                        if($ws>$b2):
+                            $dbSkStart = $a_in;
+                            $dbSpStart = (substr($a_in,0,2) * 3600) + (substr($a_in,3,2)*60);
+                            $dbSpWork  = (substr($a_in,0,2) * 3600) + ((substr($a_in,3,2) + 15)*60);   
+                            $dbSkEnd   = $a_out;
+                            $dbSpEnd   = (substr($a_out,0,2) * 3600) + (substr($a_out,3,2)*60);
+                        else:
+                            $dbSkStart = $b_in;
+                            $dbSpStart = (substr($b_in,0,2) * 3600) + (substr($b_in,3,2)*60);
+                            $dbSpWork  = (substr($b_in,0,2) * 3600) + ((substr($b_in,3,2) + 15)*60);   
+                            $dbSkEnd   = $b_out;
+                            $dbSpEnd   = (substr($b_out,0,2) * 3600) + (substr($b_out,3,2)*60);
+                        endif;
+         
                 else:
-                    if($sk):
-                        $dbSkStart = $sk['GroupWorkStart'];
-                        $dbSpStart = (substr($sk['GroupWorkStart'],0,2) * 3600) + (substr($sk['GroupWorkStart'],3,2)*60) + (substr($sk['GroupWorkStart'],6,2));
-                        $dbSpWork  = (substr($sk['GroupWorkStart'],0,2) * 3600) + ((substr($sk['GroupWorkStart'],3,2)+15)*60) + (substr($sk['GroupWorkStart'],6,2));   
-                        $dbSkEnd   = $sk['GroupWorkEnd'];
-                        $dbSpEnd   = (substr($sk['GroupWorkEnd'],0,2) * 3600) + (substr($sk['GroupWorkEnd'],3,2)*60) + (substr($sk['GroupWorkEnd'],6,2));
+                
+                    if($row['DayName']=='Friday'):
+                        if($jm):
+                            $dbSkStart = $jm['GroupFridayStart'];
+                            $dbSpStart = (substr($jm['GroupFridayStart'],0,2) * 3600) + (substr($jm['GroupFridayStart'],3,2)*60) + (substr($jm['GroupFridayStart'],6,2));
+                            $dbSpWork  = (substr($jm['GroupFridayStart'],0,2) * 3600) + ((substr($jm['GroupFridayStart'],3,2)+15)*60) + (substr($jm['GroupFridayStart'],6,2));   
+                            $dbSkEnd   = $jm['GroupFridayEnd'];
+                            $dbSpEnd   = (substr($jm['GroupFridayEnd'],0,2) * 3600) + (substr($jm['GroupFridayEnd'],3,2)*60) + (substr($jm['GroupFridayEnd'],6,2));
+                        else:
+                            $dbSkStart = $sd1;
+                            $dbSpStart = $sk1;
+                            $dbSpWork  = $dt1;
+                            $dbSkEnd   = $w3;
+                            $dbSpEnd   = $wp3; 
+                        endif;
                     else:
-                        $dbSkStart = $sd1;
-                        $dbSpStart = $sk1;
-                        $dbSpWork  = $dt1;
-                        $dbSkEnd   = $w3;
-                        $dbSpEnd   = $wp3; 
-                    endif;
-                endif;    
-            endif;  
+                        if($sk):
+                            $dbSkStart = $sk['GroupWorkStart'];
+                            $dbSpStart = (substr($sk['GroupWorkStart'],0,2) * 3600) + (substr($sk['GroupWorkStart'],3,2)*60) + (substr($sk['GroupWorkStart'],6,2));
+                            $dbSpWork  = (substr($sk['GroupWorkStart'],0,2) * 3600) + ((substr($sk['GroupWorkStart'],3,2)+15)*60) + (substr($sk['GroupWorkStart'],6,2));   
+                            $dbSkEnd   = $sk['GroupWorkEnd'];
+                            $dbSpEnd   = (substr($sk['GroupWorkEnd'],0,2) * 3600) + (substr($sk['GroupWorkEnd'],3,2)*60) + (substr($sk['GroupWorkEnd'],6,2));
+                        else:
+                            $dbSkStart = $sd1;
+                            $dbSpStart = $sk1;
+                            $dbSpWork  = $dt1;
+                            $dbSkEnd   = $w3;
+                            $dbSpEnd   = $wp3; 
+                        endif;
+                    endif;    
+                endif;
+                 
+            endif;     
                             
-            if(($row['DayName']=='Saturday')):
+            if(($row['DayName']=='Saturday') && ($row['GroupID']>=5)):
                 $wmk = $sd1;
                 $dt  = $dt1;
                 $sk  = $sk1;
                 $wsk = $w1; // Wsk Senin-Kamis
                 $wsp = $wp1;
-            elseif($row['DayName']=='Sunday'):
+            elseif(($row['DayName']=='Sunday') && ($row['GroupID']>=5)):
                 $wmk = '';
                 $dt  = 0;
                 $sk  = 0;
@@ -565,6 +637,12 @@ class Report extends CI_Controller {
                     $wsk = $w2; 
                     $wsp = $wp2;
                 endif;
+            elseif( ( ($row['GroupID']==6) || ($row['GroupID']==7) )):
+                $wmk = $dbSkStart;
+                $dt  = $dbSpWork;
+                $sk  = $dbSpStart;
+                $wsk = $dbSkEnd;
+                $wsp = $dbSpEnd;      
             elseif(($row['GroupID']>2)):
                 $wmk = $dbSkStart;
                 $dt  = $dbSpWork;
@@ -603,7 +681,7 @@ class Report extends CI_Controller {
             if($duration<0)
                 $duration = 0;
                        
-            $this->authprocess->update($row['UserID'],$row['MyDate'],$row['TransactionTime'],$wsk,$early,$duration);
+            $this->authprocess->update($row['UserID'],$row['MyDate'],$row['TransactionTime'],$early,$duration);
         endforeach;
         redirect('presensi/report/weekly',301);
         
