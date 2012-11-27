@@ -430,7 +430,7 @@ class Report extends CI_Controller {
                         $b1 =  (substr($b_in,0,2) * 3600) + (substr($b_in,3,2) * 60);
                         $b2 =  (substr(($b_out+24),0,2) * 3600) + (substr(($b_out+24),3,2) * 60);
                         
-                        $a_max = (substr(12,0,2) * 3600) + (substr(0,3,2) * 60);
+                        $a_max = (substr($a1+6,0,2) * 3600) + (substr(0,3,2) * 60);
                         
                         if($wm>$a_max):
                             $dbSkStart = $b_in;
