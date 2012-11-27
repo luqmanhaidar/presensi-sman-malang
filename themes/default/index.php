@@ -152,8 +152,9 @@
 					</li>
 					
 					<li class="with-right-arrow">
-						<span><span class="list-count">5</span>Laporan Presensi</span>
+						<span><span class="list-count">6</span>Laporan Presensi</span>
 						<ul class="big-menu">
+     	                    <li><a href="<?=site_url('presensi/report/present')?>">Laporan Ketidakhadiran</a></li>
 							<li><a href="<?=site_url('presensi/report/personal')?>">Laporan Individu</a></li>
 							<li><a href="<?=site_url('presensi/report/monthly')?>">Laporan Bulanan</a></li>
 							<li><a href="<?=site_url('presensi/report/weekly')?>">Laporan Mingguan</a></li>
