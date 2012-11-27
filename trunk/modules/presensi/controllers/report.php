@@ -184,7 +184,7 @@ class Report extends CI_Controller {
             $this->pagination->initialize($config);	 
             $data['pagination']   = $this->pagination->create_links();
         endif;    
-        $data['page']	= 'report/vweek';
+        $data['page']	= 'report/vpresent';
 		$this->load->theme('default',$data);
     }
     
