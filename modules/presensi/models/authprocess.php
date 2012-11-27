@@ -7,21 +7,21 @@ class Authprocess extends CI_Model
         parent::__construct(); // Call the Model constructor
     }
     
-    function save($user,$date,$wmk,$late)
+    function save($user,$date,$wmk,$wsk,$late)
     {
 		$value = array(
                     'UserID'              =>  $user,
-                    'ProcessDateWorkStart'=>  $wmk,  
+                    'ProcessDateWorkStart'=>  $wmk,
+                    'ProcessDateWorkEnd'  =>  $wsk,   
                     'ProcessDateStart'    =>  $date,
                     'ProcessDateLate'     =>  $late);
         $this->db->insert('NGAC_AUTHPROCESS',$value);
     }
     
-    function update($user,$dateStart,$dateEnd,$wsk,$early,$duration)
+    function update($user,$dateStart,$dateEnd,$early,$duration)
     {
         $value = array(
                     'UserID'              =>  $user,
-                    'ProcessDateWorkEnd'  =>  $wsk,  
                     'ProcessDateEnd'      =>  $dateEnd,
                     'ProcessDateEarly'    =>  $early,
                     'ProcessDuration'     =>  $duration);
