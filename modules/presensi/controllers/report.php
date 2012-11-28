@@ -838,6 +838,14 @@ class Report extends CI_Controller {
             
             if($duration<0)
 					$duration = 0;
+					
+			if(($ws>=$a2) && ($ws<=$b2) ):
+				$early = 'aa';				
+            elseif(($ws>=$b2) && ($ws<=$c2)):
+                $early = 'bb';            
+            elseif(($ws>=$c2)):
+            	$ealy = 'cc';
+            endif;		
                        
             $this->authprocess->update($row['UserID'],$row['MyDate'],$row['TransactionTime'],$early,$duration);
         endforeach;
