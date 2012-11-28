@@ -843,7 +843,7 @@ class Report extends CI_Controller {
 				else
 					$duration = 0;
                        
-            $this->authprocess->update($row['UserID'],$row['MyDate'],$row['TransactionTime'],$early,2000);
+            $this->authprocess->update($row['UserID'],$row['MyDate'],$row['TransactionTime'],$early,200);
         endforeach;
         redirect('presensi/report/weekly',301);
         
