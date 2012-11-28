@@ -52,23 +52,10 @@
                             <td><?=$row['Name'];?></td>
                             <td><?=$row['Week_'];?></td>
                             <td>
-                            <?php
-                                $d = $row['Total'];
-                                $hours = code(floor($d / 3600));
-                                $mins = code(floor(($d - ($hours*3600)) / 60));
-                                $seconds = code($d % 60);
-                                $tot_hour = $hours.":".$mins.":".$seconds;
-                                echo $tot_hour;
-                            ?>
+                           
                             </td>
                             <td>
-                            <?php 
-                                $dmk = (substr($var,0,2) * 3600) + (substr($var,3,2)*60) + (substr($var,6,2));
-                                if($d>=$dmk)
-                                    print "M";
-                                else
-                                    print "TM";    
-                            ?>
+                            
                             </td>
 					   </tr>
                      <?php 
