@@ -657,7 +657,7 @@ class Report extends CI_Controller {
                 $sk  =  $this->usergroup->getGroupWorkData($row['GroupWork']);
                 $jm  =  $this->usergroup->getGroupFridayData($row['GroupFriday']);
                 
-                if(TRIM($row['GroupID'])==8):
+                if(TRIM($row['GroupID'])== 8):
                         $a_in = $this->presensi->getVariabelDataByVar('PA1');
                         $a_out= $this->presensi->getVariabelDataByVar('PA2');
                         $b_in = $this->presensi->getVariabelDataByVar('PB1');
@@ -676,9 +676,9 @@ class Report extends CI_Controller {
                             $dbSkStart = $a_in;
                             $dbSpStart = (substr($a_in,0,2) * 3600) + (substr($a_in,3,2)*60);
                             $dbSpWork  = (substr($a_in,0,2) * 3600) + ((substr($a_in,3,2) + 15)*60);   
-                            $dbSkEnd   = $a_out;
+                            $dbSkEnd   =  $a_out;
                             $dbSpEnd   = (substr($a_out,0,2) * 3600) + (substr($a_out,3,2)* 60);
-                            $mytime    = $row['TransactionTime'];
+                            $mytime    =  $row['TransactionTime'];
                         elseif(($ws>=$b2) && ($ws<=$c2)):
                             $dbSkStart = $b_in;
                             $dbSpStart = (substr($b_in,0,2) * 3600) + (substr($b_in,3,2)*60);
@@ -801,8 +801,8 @@ class Report extends CI_Controller {
                 $dt  = $dbSpWork;
                 $sk  = $dbSpStart;
                 $wsk = $dbSkEnd;
-                $wsp = $dbSpEnd;           
-            elseif(($row['GroupID']>2)):
+                $wsp = $dbSpEnd.'xx';           
+            elseif(($row['GroupID'] > 2)):
                 $wmk = $dbSkStart;
                 $dt  = $dbSpWork;
                 $sk  = $dbSpStart;
