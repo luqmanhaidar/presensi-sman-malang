@@ -415,7 +415,7 @@ class Report extends CI_Controller {
                         $b1 =  (substr($b_in,0,2) * 3600) + (substr($b_in,3,2) * 60);
                         $b2 =  (substr(($b_out),0,2) * 3600) + (substr(($b_out),3,2) * 60);
                         $c1 =  (substr($c_in,0,2) * 3600) + (substr($c_in,3,2) * 60);
-                        $c2 =  (substr(($c_out),0,2) * 3600) + (24 * 3600);
+                        $c2 =  (substr(($c_out),0,2) * 3600);
                         
                         //10
                         $a_max = $a1 + (4 * 3600);
@@ -670,11 +670,7 @@ class Report extends CI_Controller {
                         $b1 =  (substr($b_in,0,2) * 3600) + (substr($b_in,3,2) * 60);
                         $b2 =  (substr(($b_out),0,2) * 3600) + (substr(($b_out),3,2) * 60);
                         $c1 =  (substr($c_in,0,2) * 3600) + (substr($c_in,3,2) * 60);
-                        $c2 =  (substr(($c_out + 24),0,2) * 3600) + (substr(($c_out),3,2) * 60);
-                        
-                        //10
-                        //18
-                        //26
+                        $c2 =  (substr(($c_out),0,2) * 3600) + (substr(($c_out),3,2) * 60);
                         
                         if(($ws>=$a2) && ($ws<=$b2) ):
                             $dbSkStart = $a_in;
@@ -696,8 +692,7 @@ class Report extends CI_Controller {
                             $dbSpWork  = (substr($c_in,0,2) * 3600) + ((substr($c_in,3,2) + 15)*60);   
                             $dbSkEnd   = $c_out;
                             $dbSpEnd   = (substr($c_out,0,2) * 3600) + (substr($c_out,3,2)*60);
-                            $mytime    = $row['TransactionTime'];
-							//$ws = $ws + (24 * 3600);	
+                            $mytime    = $row['TransactionTime'];	
                         endif;    
                         
                         
@@ -833,7 +828,7 @@ class Report extends CI_Controller {
             if($ws>0)
                 $ws = $ws;
             else
-                $ws = 0;
+			    $ws = 0;
              
             if($wm>0)
                 $wm = $wm;
@@ -843,7 +838,10 @@ class Report extends CI_Controller {
             $duration = $ws - $wm;
             
             if($duration<0)
-                $duration = 0;
+				if($row['GroupID']==8):
+					$duration = ($ws+(24*3600)) - $wm; 
+				else
+					$duration = 0;
                        
             $this->authprocess->update($row['UserID'],$row['MyDate'],$row['TransactionTime'],$early,$duration);
         endforeach;
