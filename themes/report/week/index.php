@@ -99,7 +99,7 @@ div.my_0{
                                 else
                                     $end   = (substr($row['MyTimeEnd'],0,2) * 3600) + (substr($row['MyTimeEnd'],3,2)*60) + (substr($row['MyTimeEnd'],6,2));
 									
-									if(($end < $ended) && (end <>''))
+									if(($end < $ended) && ($end <>''))
 										$end = $end + (24 * 3600);
 									
                                 if(empty($row['MyTimeStart']))
