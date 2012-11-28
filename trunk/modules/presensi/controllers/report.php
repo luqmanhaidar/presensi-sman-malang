@@ -676,8 +676,11 @@ class Report extends CI_Controller {
 						$x1 = $a2 + (3*3600);
 						$x2 = $b2 + (3*3600);
 						$x3 = $c2 + (3*3600);
-							
+						
+                        if($ws<(9*3600))
+                            $ws = $ws + (24*3600);	
 						// 14:26 >= 15:30 , 14:26 <= 22:00
+                        //15:35 < 18.30
                         if($ws<$x1):
 						//if(($ws>=$a2) && ($ws<=$b2) ):
                             $dbSkStart = $a_in;
@@ -704,7 +707,6 @@ class Report extends CI_Controller {
                             $dbSkEnd   =  $c_out;
                             $dbSpEnd   = (substr($c_out,0,2) * 3600) + (substr($c_out,3,2)*60) + (24*3600).'c';
                             $mytime    = $row['TransactionTime'];
-							$ws = $ws + (24 * 3600 );	
                         endif;    
                         
                 elseif((TRIM($row['GroupID'])==6) || (TRIM($row['GroupID'])==7) ):
