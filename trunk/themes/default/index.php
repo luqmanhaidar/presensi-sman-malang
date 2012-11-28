@@ -185,14 +185,14 @@
 			</section>
 
 			<ul class="unstyled-list">
-				<li class="title-menu">Tanggal Gajian</li>
+				<li class="title-menu">Tanggal</li>
 				<li>
 					<ul class="calendar-menu">
 						<li>
 							<a href="javascript:void(0);" title="See event">
-								<time datetime="2011-02-24"><b>31</b> Okt</time>
-								<small class="green">10:30</small>
-								 Gaji Per Oktober
+								<time datetime="2011-02-24"><b><?=date('d')?></b> <?=date('M')?></time>
+								<small class="green"><?=date('H:i:s')?></small>
+								 Hari Ini
 							</a>
 						</li>
 					</ul>
