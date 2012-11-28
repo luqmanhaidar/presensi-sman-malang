@@ -420,9 +420,9 @@ class Report extends CI_Controller {
                         //10
                         $a_max = (substr($a1+4,0,2) * 3600) + (substr(0,3,2) * 60);
                         //18
-                        $b_max = (substr($a2+4,0,2) * 3600) + (substr(0,3,2) * 60);
+                        $b_max = (substr($b1+4,0,2) * 3600) + (substr(0,3,2) * 60);
                         
-                        //if 12:00 > 10:00
+                        //if 12:00 > 18:00
                         if($wm>$b_max):
                             $dbSkStart = $c_in;
                             $dbSpStart = (substr($c_in,0,2) * 3600) + (substr($c_in,3,2)*60);
@@ -431,7 +431,8 @@ class Report extends CI_Controller {
                             $dbSpEnd   = (substr($c_out,0,2) * 3600) + (substr($c_out,3,2)*60);
                             $mytime    = $c_in.':00';
                             $wm        = $c1;   
-                        elseif($wm>$a_max):
+                        //if 12:00 > 10:00
+						elseif($wm>$a_max):
                             $dbSkStart = $b_in;
                             $dbSpStart = (substr($b_in,0,2) * 3600) + (substr($b_in,3,2)*60);
                             $dbSpWork  = (substr($b_in,0,2) * 3600) + ((substr($b_in,3,2) + 15)*60);   
