@@ -760,13 +760,13 @@ class Report extends CI_Controller {
                  
             endif;     
                             
-            if(($row['DayName']=='Saturday') && ($row['GroupID']>=5)):
+            if(($row['DayName']=='Saturday') && ($row['GroupID']<=5)):
                 $wmk = $sd1;
                 $dt  = $dt1;
                 $sk  = $sk1;
                 $wsk = $w1; // Wsk Senin-Kamis
                 $wsp = $wp1;
-            elseif(($row['DayName']=='Sunday') && ($row['GroupID']>=5)):
+            elseif(($row['DayName']=='Sunday') && ($row['GroupID']<=5)):
                 $wmk = '';
                 $dt  = 0;
                 $sk  = 0;
