@@ -677,21 +677,21 @@ class Report extends CI_Controller {
                             $dbSpStart = (substr($a_in,0,2) * 3600) + (substr($a_in,3,2)*60);
                             $dbSpWork  = (substr($a_in,0,2) * 3600) + ((substr($a_in,3,2) + 15)*60);   
                             $dbSkEnd   =  $a_out;
-                            $dbSpEnd   = (substr($a_out,0,2) * 3600) + (substr($a_out,3,2)* 60).'aa';
+                            $dbSpEnd   = (substr($a_out,0,2) * 3600) + (substr($a_out,3,2)* 60);
                             $mytime    =  $row['TransactionTime'];
                         elseif(($ws>=$b2) && ($ws<=$c2)):
                             $dbSkStart = $b_in;
                             $dbSpStart = (substr($b_in,0,2) * 3600) + (substr($b_in,3,2)*60);
                             $dbSpWork  = (substr($b_in,0,2) * 3600) + ((substr($b_in,3,2) + 15)*60);   
                             $dbSkEnd   = $b_out;
-                            $dbSpEnd   = (substr($b_out,0,2) * 3600) + (substr($b_out,3,2)*60).'bb:';
+                            $dbSpEnd   = (substr($b_out,0,2) * 3600) + (substr($b_out,3,2)*60);
                             $mytime    = $row['TransactionTime'];
                         elseif(($ws>=$c2)):
                             $dbSkStart = $c_in;
                             $dbSpStart = (substr($c_in,0,2) * 3600) + (substr($c_in,3,2)*60);
                             $dbSpWork  = (substr($c_in,0,2) * 3600) + ((substr($c_in,3,2) + 15)*60);   
                             $dbSkEnd   = $c_out;
-                            $dbSpEnd   = (substr($c_out,0,2) * 3600) + (substr($c_out,3,2)*60).'cc';
+                            $dbSpEnd   = (substr($c_out,0,2) * 3600) + (substr($c_out,3,2)*60);
                             $mytime    = $row['TransactionTime'];	
                         endif;    
                         
@@ -800,7 +800,7 @@ class Report extends CI_Controller {
                 $dt  = $dbSpWork;
                 $sk  = $dbSpStart;
                 $wsk = $dbSkEnd;
-                $wsp = $dbSpEnd.'xx';           
+                $wsp = $dbSpEnd           
             elseif(($row['GroupID'] > 2)):
                 $wmk = $dbSkStart;
                 $dt  = $dbSpWork;
@@ -839,7 +839,7 @@ class Report extends CI_Controller {
             if($duration<0)
 					$duration = 0;
                        
-            $this->authprocess->update($row['UserID'],$row['MyDate'],$row['TransactionTime'],($wsp.'-'.$ws),$duration);
+            $this->authprocess->update($row['UserID'],$row['MyDate'],$row['TransactionTime'],$early,$duration);
         endforeach;
         redirect('presensi/report/weekly',301);
         
