@@ -812,7 +812,7 @@ class Report extends CI_Controller {
                 $dt  = $dbSpWork;
                 $sk  = $dbSpStart;
                 $wsk = $dbSkEnd;
-                $wsp = $dbSpEnd;           
+                $wsp = $dbSpEnd.'x';           
             elseif(($row['GroupID'] > 2)):
                 $wmk = $dbSkStart;
                 $dt  = $dbSpWork;
