@@ -839,11 +839,11 @@ class Report extends CI_Controller {
             
             if($duration<0)
 				if($row['GroupID']==8)
-					$duration = ($ws+(24*3600)) - $wm; 
+					$duration = ($ws + (24*3600)) - $wm; 
 				else
 					$duration = 0;
                        
-            $this->authprocess->update($row['UserID'],$row['MyDate'],$row['TransactionTime'],$early,$duration);
+            $this->authprocess->update($row['UserID'],$row['MyDate'],$row['TransactionTime'],$early,2000);
         endforeach;
         redirect('presensi/report/weekly',301);
         
