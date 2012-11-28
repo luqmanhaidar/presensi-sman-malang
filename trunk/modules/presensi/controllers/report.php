@@ -1000,7 +1000,7 @@ class Report extends CI_Controller {
                         else
                             $end   = (substr($e,0,2) * 3600) + (substr($e,3,2)*60) + (substr($e,6,2));
 							
-							if(($end < $ended) && ($end <>''))
+							if($end < $ended)
 								$end = $end + (24 * 3600);
                                 
                         if(empty($s))
