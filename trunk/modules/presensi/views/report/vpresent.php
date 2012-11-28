@@ -29,7 +29,7 @@
                 <?=form_dropdown('show',config_item('per_page'),$this->session->userdata('week_paging'),'id="show" class="select blue-gradient glossy" onchange="changeUrl();" ');?>
 			</div>
             
-            <?php if($this->session->userdata('week_type')=='M2'):?>
+            
             <table class="table responsive-table" id="sorting-example1">
 
 				<thead>
@@ -37,9 +37,9 @@
 						<th scope="col" width="3%">No</th>
 						<th scope="col" width="5%" class="align-left hide-on-mobile">ID</th>
                         <th scope="col" class="align-left hide-on-mobile">Nama</th>
-                        <th scope="col" class="align-left hide-on-mobile">Minggu Ke</th>
-                        <th scope="col" class="align-left hide-on-mobile">Total</th>
-                        <th scope="col" class="align-left hide-on-mobile">Keterangan</th>
+                        <th scope="col" class="align-left hide-on-mobile">Group</th>
+                        <th scope="col" class="align-left hide-on-mobile">Tanggal</th>
+                        <th scope="col" class="align-left hide-on-mobile">Cek Klok</th>
 					</tr>
 				</thead>
                 <tbody>
@@ -95,83 +95,7 @@
                 <?=form_dropdown('export',config_item('print'),'','id="print" class="select blue-gradient glossy" ');?>
 				<button type="submit" class="button blue-gradient glossy">Go</button>
 			</form>
-            <?php else:?>
-			<table class="table responsive-table" id="sorting-example1">
-
-				<thead>
-					<tr>
-						<th scope="col" width="3%">No</th>
-						<th scope="col" width="5%" class="align-left hide-on-mobile">ID</th>
-                        <th scope="col" class="align-left hide-on-mobile">Nama</th>
-                        <th scope="col" class="align-left hide-on-mobile">M</th>
-                        <th scope="col" class="align-left hide-on-mobile">Hari</th>
-						<th scope="col" class="align-left hide-on-mobile">Tanggal</th>
-                        <th scope="col">WMK</th>
-                        <th scope="col">Masuk</th>
-                        <th scope="col">WSK</th>
-						<th scope="col">Pulang</th>
-                        <th scope="col">Telat</th>
-                        <th scope="col">PulCep</th>
-					</tr>
-				</thead>
-				
-				<?php if($this->session->userdata('week_group')): ?>
-				<tfoot>
-					<tr>
-						<td colspan="12">
-							<?=COUNT($checks).' Data ditemukan.'?>
-						</td>
-					</tr>
-				</tfoot>
-				
-				<tbody>
-					<?php 
-                        $x=1;
-                        foreach($checks as $row):?>
-					<tr <?php if($row['DayName']=='Sunday') print 'style="background:#FF0000;color:#222"'; ?>  >
-						<td><?=$x;?></td>
-						<td><?=$row['UserID'];?></td>
-                        <td><?=$row['Name'];?></td>
-                         <td><?=$row['W'];?></td>
-                        <td><?=indonesianDayName($row['DayName']);?></td>
-						<td><?=$row['MyDate'];?></td>
-                        <td><?=$row['ProcessDateWorkStart']?></td>
-                        <td><?=$row['MyTimeStart'];?><br /></td>
-                        <td><?=$row['ProcessDateWorkEnd']?></td>
-						<td><?=$row['MyTimeEnd'];?></td>
-                        <td><?=$row['ProcessDateLate']?></td>
-                        <td><?=$row['ProcessDateEarly']?></td>
-					</tr>
-                    <?php 
-                        $x=$x+1;
-                        endforeach;?>
-				
-				</tbody>
-				
-				<?php endif;?>
-
-			</table>
             
-            
-           
-			<form method="post" target="_blank" action="<?=site_url('presensi/report/week_preview')?>" class="table-footer button-height large-margin-bottom">
-                 <?php if($this->session->userdata('week_group')): ?>
-                <div class="float-right">
-                    <div class="button-group">
-                      <?php if(!empty($pagination))
-                                echo $pagination;
-                      ?>
-                    </div>
-				</div>
-                <?php endif;?>
-                 <?php // form_dropdown('show2',config_item('per_page'),$this->session->userdata('log_paging'),'id="show2" class="select blue-gradient glossy" onchange="changeUrl2();" ');?>
-				
-                <?=form_dropdown('export',config_item('print'),'','id="print" class="select blue-gradient glossy" ');?>
-				<button type="submit" class="button blue-gradient glossy">Go</button>
-			</form>
-            
-            <?php endif;?>
-			
 		</div>
         
      <script>
