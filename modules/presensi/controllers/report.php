@@ -418,9 +418,9 @@ class Report extends CI_Controller {
                         $c2 =  (substr(($c_out+24),0,2) * 3600) + (substr(($c_out+24),3,2) * 60);
                         
                         //10
-                        $a_max = (substr($a1+4,0,2) * 3600) + (substr(0,3,2) * 60);
+                        $a_max = $a1 + (4*3600);
                         //18
-                        $b_max = (substr($b1+4,0,2) * 3600) + (substr(0,3,2) * 60);
+                        $b_max = $b1 + (4*3600);
                         
                         //if 12:00 > 18:00
                         if($wm>$b_max):
@@ -474,7 +474,7 @@ class Report extends CI_Controller {
                         $b1 =  (substr($b_in,0,2) * 3600) + (substr($b_in,3,2) * 60);
                         $b2 =  (substr(($b_out+24),0,2) * 3600) + (substr(($b_out+24),3,2) * 60);
                         
-                        $a_max = (substr($a1+6,0,2) * 3600) + (substr(0,3,2) * 60);
+                        $a_max = (substr(12,0,2) * 3600) + (substr(0,3,2) * 60);
                         
                         if($wm>$a_max):
                             $dbSkStart = $b_in;
