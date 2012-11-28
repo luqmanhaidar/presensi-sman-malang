@@ -415,7 +415,7 @@ class Report extends CI_Controller {
                         $b1 =  (substr($b_in,0,2) * 3600) + (substr($b_in,3,2) * 60);
                         $b2 =  (substr(($b_out),0,2) * 3600) + (substr(($b_out),3,2) * 60);
                         $c1 =  (substr($c_in,0,2) * 3600) + (substr($c_in,3,2) * 60);
-                        $c2 =  (substr(($c_out),0,2) * 3600) + (substr(($c_out),3,2) * 60) + (24 * 3600);
+                        $c2 =  (substr(($c_out),0,2) * 3600) + (24 * 3600);
                         
                         //10
                         $a_max = $a1 + (4*3600);
@@ -461,7 +461,7 @@ class Report extends CI_Controller {
                             $dbSpStart = (substr($c_in,0,2) * 3600) + (substr($c_in,3,2)*60);
                             $dbSpWork  = (substr($c_in,0,2) * 3600) + ((substr($c_in,3,2) + 15)*60);   
                             $dbSkEnd   = $c_out;
-                            $dbSpEnd   = (substr($c_out,0,2) * 3600) + (substr($c_out,3,2)*60);
+                            $dbSpEnd   = (substr($c_out,0,2) * 3600) + (substr($c_out,3,2)*60) + (24 * 3600);
                             $mytime    = $row['TransactionTime'];    
                         endif;    
                         
