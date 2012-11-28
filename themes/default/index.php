@@ -10,7 +10,7 @@
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>Presensi Sistem - <?=$title?> </title>
+	<title>Aplikasi Pengolahan Presensi MAN 3 Malang - <?=$title?> </title>
 	<meta name="description" content="" />
 	<meta name="author" content="" />
 
@@ -79,7 +79,7 @@
 
 	<!-- Title bar -->
 	<header role="banner" id="title-bar">
-		<h2>Presensi Absensi</h2>
+		<h2>Aplikasi Pengolahan Presensi MAN 3 Malang</h2>
 	</header>
 
 	<!-- Button to open/hide menu -->
