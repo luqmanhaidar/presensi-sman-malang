@@ -668,9 +668,9 @@ class Report extends CI_Controller {
                         $a1 =  (substr($a_in,0,2) * 3600) + (substr($a_in,3,2) * 60);
                         $a2 =  (substr($a_out,0,2) * 3600) + (substr($a_out,3,2) * 60);
                         $b1 =  (substr($b_in,0,2) * 3600) + (substr($b_in,3,2) * 60);
-                        $b2 =  (substr(($b_out),0,2) * 3600) + (substr(($b_out),3,2) * 60);
+                        $b2 =  (substr($b_out,0,2) * 3600) + (substr($b_out,3,2) * 60);
                         $c1 =  (substr($c_in,0,2) * 3600) + (substr($c_in,3,2) * 60);
-                        $c2 =  (substr(($c_out),0,2) * 3600) + (substr(($c_out),3,2) * 60);
+                        $c2 =  (substr($c_out,0,2) * 3600) + (substr($c_out,3,2) * 60);
                         
                         if(($ws>=$a2) && ($ws<=$b2) ):
                             $dbSkStart = $a_in;
@@ -816,8 +816,6 @@ class Report extends CI_Controller {
             endif; 
             
             if ($ws >= $wsp):
-				echo $ws.'<br/>';
-				echo $wsp;
                 $early = "-";  
             else:
                 $e = $wsp - $ws;
@@ -842,7 +840,7 @@ class Report extends CI_Controller {
             if($duration<0)
 					$duration = 0;
                        
-            $this->authprocess->update($row['UserID'],$row['MyDate'],$row['TransactionTime'],$early,$duration);
+            $this->authprocess->update($row['UserID'],$row['MyDate'],$row['TransactionTime'],$ws-$wsp,$duration);
         endforeach;
         redirect('presensi/report/weekly',301);
         
