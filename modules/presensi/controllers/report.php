@@ -683,7 +683,7 @@ class Report extends CI_Controller {
                             $dbSkEnd   = $a_out;
                             $dbSpEnd   = (substr($a_out,0,2) * 3600) + (substr($a_out,3,2)*60);
                             $mytime    = $row['TransactionTime'];
-                        elseif(($ws>=$b2) && ($wm<=$c2)):
+                        elseif(($ws>=$b2) && ($ws<=$c2)):
                             $dbSkStart = $b_in;
                             $dbSpStart = (substr($b_in,0,2) * 3600) + (substr($b_in,3,2)*60);
                             $dbSpWork  = (substr($b_in,0,2) * 3600) + ((substr($b_in,3,2) + 15)*60);   
@@ -695,7 +695,8 @@ class Report extends CI_Controller {
                             $dbSpStart = (substr($c_in,0,2) * 3600) + (substr($c_in,3,2)*60);
                             $dbSpWork  = (substr($c_in,0,2) * 3600) + ((substr($c_in,3,2) + 15)*60);   
                             $dbSkEnd   = $c_out;
-                            $dbSpEnd   = (substr($c_out + 24 ,0,2) * 3600) + (substr($c_out,3,2)*60);
+                            $dbSpEnd   = (substr($c_out,0,2) * 3600) + (substr($c_out,3,2)*60) + (24*3600);
+							$ws        = $ws;
                             $mytime    = $row['TransactionTime'];    
                         endif;    
                         
