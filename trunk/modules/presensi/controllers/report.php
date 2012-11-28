@@ -838,7 +838,7 @@ class Report extends CI_Controller {
             $duration = $ws - $wm;
             
             if($duration<0)
-				if($row['GroupID']==8):
+				if($row['GroupID']==8)
 					$duration = ($ws+(24*3600)) - $wm; 
 				else
 					$duration = 0;
