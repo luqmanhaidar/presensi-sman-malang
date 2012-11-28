@@ -649,6 +649,7 @@ class Report extends CI_Controller {
         endforeach;
         
         /** Query Update ke AuthProcess **/
+		
         $query = $this->authlog->getPerWeekRecords($start,$end,$group,2);
         //$query = $this->auhtprocess->getAllRecords();
         foreach($query as $row):
@@ -671,22 +672,32 @@ class Report extends CI_Controller {
                         $b2 =  (substr($b_out,0,2) * 3600) + (substr($b_out,3,2) * 60);
                         $c1 =  (substr($c_in,0,2) * 3600) + (substr($c_in,3,2) * 60);
                         $c2 =  (substr($c_out,0,2) * 3600) + (substr($c_out,3,2) * 60) + (24*3600);
-                        
-                        if(($ws>=$a2) && ($ws<=$b2) ):
+            		    
+						$x1 = $a2 + (3*3600);
+						$x2 = $b2 + (3*3600);
+						$x3 = $c2 + (3*3600);
+							
+						// 14:26 >= 15:30 , 14:26 <= 22:00
+                        if($ws<$x1):
+						//if(($ws>=$a2) && ($ws<=$b2) ):
                             $dbSkStart = $a_in;
                             $dbSpStart = (substr($a_in,0,2) * 3600) + (substr($a_in,3,2)*60);
                             $dbSpWork  = (substr($a_in,0,2) * 3600) + ((substr($a_in,3,2) + 15)*60);   
                             $dbSkEnd   =  $a_out;
                             $dbSpEnd   = (substr($a_out,0,2) * 3600) + (substr($a_out,3,2)* 60);
                             $mytime    =  $row['TransactionTime'];
-                        elseif(($ws>=$b2) && ($ws<=$c2)):
+						// 14:26 >= 22:00 , 14:26 <= 30:00	
+                        //elseif(($ws>=$b2) && ($ws<=$c2)):
+						elseif($ws<$x2):
                             $dbSkStart = $b_in;
                             $dbSpStart = (substr($b_in,0,2) * 3600) + (substr($b_in,3,2)*60);
                             $dbSpWork  = (substr($b_in,0,2) * 3600) + ((substr($b_in,3,2) + 15)*60);   
                             $dbSkEnd   = $b_out;
                             $dbSpEnd   = (substr($b_out,0,2) * 3600) + (substr($b_out,3,2)*60);
                             $mytime    = $row['TransactionTime'];
-                        elseif(($ws>=$c2)):
+                        // 14:26 >= 30:00
+						elseif($ws<$x3):
+						//elseif(($ws>=$c2)):
                             $dbSkStart = $c_in;
                             $dbSpStart = (substr($c_in,0,2) * 3600) + (substr($c_in,3,2)*60);
                             $dbSpWork  = (substr($c_in,0,2) * 3600) + ((substr($c_in,3,2) + 15)*60);   
@@ -838,15 +849,7 @@ class Report extends CI_Controller {
             
             if($duration<0)
 					$duration = 0;
-					
-			if(($ws>=$a2) && ($ws<=$b2) ):
-				$early = 'aa';				
-            elseif(($ws>=$b2) && ($ws<=$c2)):
-                $early = 'bb';            
-            elseif(($ws>=$c2)):
-            	$ealy = 'cc';
-            endif;		
-                       
+			           
             $this->authprocess->update($row['UserID'],$row['MyDate'],$row['TransactionTime'],$early,$duration);
         endforeach;
         redirect('presensi/report/weekly',301);
