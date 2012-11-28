@@ -440,7 +440,7 @@ class Report extends CI_Controller {
                             $dbSpEnd   = (substr($b_out,0,2) * 3600) + (substr($b_out,3,2)*60);
                             $mytime    = $b_in.':00';
                             $wm        = $b1;     
-                        elseif(($wm>=$a1) && ($wm<=$b1) ):
+                        elseif(($wm>=$a1) && ($wm<=$b1) && ($wm<$a_max) && ($wm<$b_max) ):
                             $dbSkStart = $a_in;
                             $dbSpStart = (substr($a_in,0,2) * 3600) + (substr($a_in,3,2)*60);
                             $dbSpWork  = (substr($a_in,0,2) * 3600) + ((substr($a_in,3,2) + 15)*60);   
