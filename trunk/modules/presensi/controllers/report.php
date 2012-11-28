@@ -422,12 +422,12 @@ class Report extends CI_Controller {
                         //18
                         $b_max = (substr($a2+4,0,2) * 3600) + (substr(0,3,2) * 60);
                         
-                        
+                        //if 12:00 > 10:00
                         if($wm>$b_max):
                             $dbSkStart = $c_in;
                             $dbSpStart = (substr($c_in,0,2) * 3600) + (substr($c_in,3,2)*60);
                             $dbSpWork  = (substr($c_in,0,2) * 3600) + ((substr($c_in,3,2) + 15)*60);   
-                            $dbSkEnd   = $b_out;
+                            $dbSkEnd   = $c_out;
                             $dbSpEnd   = (substr($c_out,0,2) * 3600) + (substr($c_out,3,2)*60);
                             $mytime    = $c_in.':00';
                             $wm        = $c1;   
