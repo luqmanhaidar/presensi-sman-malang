@@ -684,7 +684,7 @@ class Report extends CI_Controller {
                             $dbSpStart = (substr($a_in,0,2) * 3600) + (substr($a_in,3,2)*60);
                             $dbSpWork  = (substr($a_in,0,2) * 3600) + ((substr($a_in,3,2) + 15)*60);   
                             $dbSkEnd   =  $a_out;
-                            $dbSpEnd   = (substr($a_out,0,2) * 3600) + (substr($a_out,3,2)* 60);
+                            $dbSpEnd   = (substr($a_out,0,2) * 3600) + (substr($a_out,3,2)* 60).'a';
                             $mytime    =  $row['TransactionTime'];
 						// 14:26 >= 22:00 , 14:26 <= 30:00	
                         //elseif(($ws>=$b2) && ($ws<=$c2)):
@@ -693,7 +693,7 @@ class Report extends CI_Controller {
                             $dbSpStart = (substr($b_in,0,2) * 3600) + (substr($b_in,3,2)*60);
                             $dbSpWork  = (substr($b_in,0,2) * 3600) + ((substr($b_in,3,2) + 15)*60);   
                             $dbSkEnd   = $b_out;
-                            $dbSpEnd   = (substr($b_out,0,2) * 3600) + (substr($b_out,3,2)*60);
+                            $dbSpEnd   = (substr($b_out,0,2) * 3600) + (substr($b_out,3,2)*60).'b';
                             $mytime    = $row['TransactionTime'];
                         // 14:26 >= 30:00
 						elseif($ws<$x3):
@@ -702,7 +702,7 @@ class Report extends CI_Controller {
                             $dbSpStart = (substr($c_in,0,2) * 3600) + (substr($c_in,3,2)*60);
                             $dbSpWork  = (substr($c_in,0,2) * 3600) + ((substr($c_in,3,2) + 15)*60);   
                             $dbSkEnd   =  $c_out;
-                            $dbSpEnd   = (substr($c_out,0,2) * 3600) + (substr($c_out,3,2)*60) + (24*3600);
+                            $dbSpEnd   = (substr($c_out,0,2) * 3600) + (substr($c_out,3,2)*60) + (24*3600).'c';
                             $mytime    = $row['TransactionTime'];
 							$ws = $ws + (24 * 3600 );	
                         endif;    
@@ -812,7 +812,7 @@ class Report extends CI_Controller {
                 $dt  = $dbSpWork;
                 $sk  = $dbSpStart;
                 $wsk = $dbSkEnd;
-                $wsp = $dbSpEnd.'x';           
+                $wsp = $dbSpEnd;           
             elseif(($row['GroupID'] > 2)):
                 $wmk = $dbSkStart;
                 $dt  = $dbSpWork;
