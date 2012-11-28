@@ -684,7 +684,7 @@ class Report extends CI_Controller {
                             $dbSpStart = (substr($b_in,0,2) * 3600) + (substr($b_in,3,2)*60);
                             $dbSpWork  = (substr($b_in,0,2) * 3600) + ((substr($b_in,3,2) + 15)*60);   
                             $dbSkEnd   = $b_out;
-                            $dbSpEnd   = (substr($b_out,0,2) * 3600) + (substr($b_out,3,2)*60);
+                            $dbSpEnd   = (substr($b_out,0,2) * 3600) + (substr($b_out,3,2)*60).'bb:';
                             $mytime    = $row['TransactionTime'];
                         elseif(($ws>=$c2)):
                             $dbSkStart = $c_in;
@@ -694,7 +694,6 @@ class Report extends CI_Controller {
                             $dbSpEnd   = (substr($c_out,0,2) * 3600) + (substr($c_out,3,2)*60);
                             $mytime    = $row['TransactionTime'];	
                         endif;    
-                        
                         
                 elseif((TRIM($row['GroupID'])==6) || (TRIM($row['GroupID'])==7) ):
                         $a_in = $this->presensi->getVariabelDataByVar('SA1');
