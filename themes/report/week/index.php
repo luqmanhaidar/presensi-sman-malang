@@ -92,11 +92,16 @@ div.my_0{
                         <td class="mini"><?=$row['MyTimeEnd']?></td>
                         <td class="mini">
                             <?php
+								$ended = (9 * 3600);
+								
                                 if(empty($row['MyTimeEnd']))
                                     $end=0;
                                 else
                                     $end   = (substr($row['MyTimeEnd'],0,2) * 3600) + (substr($row['MyTimeEnd'],3,2)*60) + (substr($row['MyTimeEnd'],6,2));
-                                
+									
+									if($end < $ended)
+										$end = $end + (24 * 3600);
+									
                                 if(empty($row['MyTimeStart']))
                                     $start=0;
                                 else
