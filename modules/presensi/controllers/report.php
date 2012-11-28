@@ -418,9 +418,9 @@ class Report extends CI_Controller {
                         $c2 =  (substr(($c_out),0,2) * 3600) + (24 * 3600);
                         
                         //10
-                        $a_max = $a1 + (4*3600);
+                        $a_max = $a1 + (4 * 3600);
                         //18
-                        $b_max = $b1 + (4*3600);
+                        $b_max = $b1 + (4 * 3600);
                         
                         //if 12:00 > 18:00
                         if($wm>$b_max):
@@ -696,7 +696,8 @@ class Report extends CI_Controller {
                             $dbSpWork  = (substr($c_in,0,2) * 3600) + ((substr($c_in,3,2) + 15)*60);   
                             $dbSkEnd   = $c_out;
                             $dbSpEnd   = (substr($c_out,0,2) * 3600) + (substr($c_out,3,2)*60);
-                            $mytime    = $row['TransactionTime'];    
+                            $mytime    = $row['TransactionTime'];
+							$ws = $ws + (24 * 3600);	
                         endif;    
                         
                         
