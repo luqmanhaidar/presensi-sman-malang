@@ -677,7 +677,7 @@ class Report extends CI_Controller {
                             $dbSpStart = (substr($a_in,0,2) * 3600) + (substr($a_in,3,2)*60);
                             $dbSpWork  = (substr($a_in,0,2) * 3600) + ((substr($a_in,3,2) + 15)*60);   
                             $dbSkEnd   = $a_out;
-                            $dbSpEnd   = (substr($a_out,0,2) * 3600) + (substr($a_out,3,2)*60);
+                            $dbSpEnd   = (substr($a_out,0,2) * 3600) + (substr($a_out,3,2)* 60);
                             $mytime    = $row['TransactionTime'];
                         elseif(($ws>=$b2) && ($ws<=$c2)):
                             $dbSkStart = $b_in;
@@ -816,13 +816,15 @@ class Report extends CI_Controller {
             endif; 
             
             if ($ws >= $wsp):
+				echo $ws.'<br/>';
+				echo $wsp;
                 $early = "-";  
             else:
                 $e = $wsp - $ws;
-                $hours = code(floor($e / 3600));
-                $mins = code(floor(($e - ($hours*3600)) / 60));
+                $hours   = code(floor($e / 3600));
+                $mins    = code(floor(($e - ($hours*3600)) / 60));
                 $seconds = code($e % 60);
-                $early = $hours.':'.$mins.':'.$seconds;   
+                $early   = $hours.':'.$mins.':'.$seconds;   
             endif;
             
             if($ws>0)
