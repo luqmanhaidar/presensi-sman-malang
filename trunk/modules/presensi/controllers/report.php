@@ -838,9 +838,6 @@ class Report extends CI_Controller {
             $duration = $ws - $wm;
             
             if($duration<0)
-				if($row['GroupID']==8)
-					$duration = ($ws + (24*3600)) - $wm; 
-				else
 					$duration = 0;
                        
             $this->authprocess->update($row['UserID'],$row['MyDate'],$row['TransactionTime'],$early,$duration);
@@ -995,10 +992,16 @@ class Report extends CI_Controller {
                         $l = $val['ProcessDateLate'];
                         $el= $val['ProcessDateEarly'];
                         /** Call**/
+						
+						$ended = (9 * 3600);
+						
                         if(empty($e))
                             $end=0;
                         else
                             $end   = (substr($e,0,2) * 3600) + (substr($e,3,2)*60) + (substr($e,6,2));
+							
+							if(($end < $ended) && ($end <>''))
+								$end = $end + (24 * 3600);
                                 
                         if(empty($s))
                             $start=0;
