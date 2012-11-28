@@ -403,12 +403,12 @@ class Report extends CI_Controller {
                     $jm  =  $this->usergroup->getGroupFridayData($row['GroupFriday']);
                     
                     if(TRIM($row['GroupID'])==8):
-                        $a_in = $this->presensi->getVariabelDataByVar('PA1');
-                        $a_out= $this->presensi->getVariabelDataByVar('PA2');
-                        $b_in = $this->presensi->getVariabelDataByVar('PB1');
-                        $b_out= $this->presensi->getVariabelDataByVar('PB2');
-                        $c_in = $this->presensi->getVariabelDataByVar('PC1');
-                        $c_out= $this->presensi->getVariabelDataByVar('PC2');
+                        $a_in = TRIM($this->presensi->getVariabelDataByVar('PA1'));
+                        $a_out= TRIM($this->presensi->getVariabelDataByVar('PA2'));
+                        $b_in = TRIM($this->presensi->getVariabelDataByVar('PB1'));
+                        $b_out= TRIM($this->presensi->getVariabelDataByVar('PB2'));
+                        $c_in = TRIM($this->presensi->getVariabelDataByVar('PC1'));
+                        $c_out= TRIM($this->presensi->getVariabelDataByVar('PC2'));
                         
                         $a1 =  (substr($a_in,0,2) * 3600) + (substr($a_in,3,2) * 60);
                         $a2 =  (substr($a_out,0,2) * 3600) + (substr($a_out,3,2) * 60);
@@ -440,9 +440,10 @@ class Report extends CI_Controller {
                             $dbSpEnd   = (substr($b_out,0,2) * 3600) + (substr($b_out,3,2)*60);
                             $mytime    = $b_in.':00';
                             $wm        = $b1;     
-                        elseif(($wm>=$a1) && ($wm<=$b1) && ($wm<$a_max) && ($wm<$b_max) ):
+                        elseif(($wm>=$a1) && ($wm<=$b1) && ($wm<$a_max) && ($wm<$b_max)):
                             $dbSkStart = $a_in.'x';
-                            $dbSpStart = (substr($a_in,0,2) * 3600) + (substr($a_in,3,2)*60);
+                            $dbSpStart = $wm.'<br/>'.$a_max;
+							//(substr($a_in,0,2) * 3600) + (substr($a_in,3,2)*60);
                             $dbSpWork  = (substr($a_in,0,2) * 3600) + ((substr($a_in,3,2) + 15)*60);   
                             $dbSkEnd   = $a_out;
                             $dbSpEnd   = (substr($a_out,0,2) * 3600) + (substr($a_out,3,2)*60);
