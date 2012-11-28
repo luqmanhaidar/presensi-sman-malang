@@ -670,7 +670,7 @@ class Report extends CI_Controller {
                         $b1 =  (substr($b_in,0,2) * 3600) + (substr($b_in,3,2) * 60);
                         $b2 =  (substr(($b_out),0,2) * 3600) + (substr(($b_out),3,2) * 60);
                         $c1 =  (substr($c_in,0,2) * 3600) + (substr($c_in,3,2) * 60);
-                        $c2 =  (substr(($c_out+24),0,2) * 3600) + (substr(($c_out),3,2) * 60);
+                        $c2 =  (substr(($c_out),0,2) * 3600) + (substr(($c_out),3,2) * 60);
                         
                         //10
                         //18
