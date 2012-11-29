@@ -262,7 +262,7 @@ class Report extends CI_Controller {
 		$data['title']		=	'LAPORAN KETIDAKHADIRAN';
         $data['checks']		=	$this->authlog->getAllPresentRecords();
         $this->load->vars($data);
-        $this->load->theme('report/present',$data);
+        $this->load->theme('report/presreport',$data);
 	}
 	
 	function present_pdf()
@@ -271,7 +271,7 @@ class Report extends CI_Controller {
 		$data['title']		=	'LAPORAN KETIDAKHADIRAN';
 		$data['checks']		=	$this->authlog->getAllPresentRecords();
         $this->load->vars($data);
-        $file = $this->load->theme('report/present',$data,TRUE);
+        $file = $this->load->theme('report/presreport',$data,TRUE);
 		//$this->pdf->pdf_create($file,'Laporan-Ketidakhadiran');
         $html2pdf = html2pdf('P','A4');
         $html2pdf->WriteHTML($file);
