@@ -184,6 +184,39 @@ class Authlog extends CI_Model
         $this->db->insert('NGAC_AUTHLOG',$value);
     }
     
+    function savePresent($user,$date,$key,$result){
+        $value = array(
+                    'UserID'         =>  $user, 
+                    'FunctionKey'    =>  $key,
+                    'AuthResult'     =>  $result,   
+                    'TransactionTime'=>  $date);
+        $this->db->insert('NGAC_PRESENT',$value);
+    }
+    
+    function removePresent(){
+        $this->db->where('IndexKey>0');
+        $this->db->delete('NGAC_PRESENT');
+    }
+    
+    function getAllPresentRecords($offset='',$paging=''){ 
+        if (empty($paging))
+			$this->db->order_by('NGAC_USERINFO.UserOrder','ASC');
+            
+        if (!empty($paging))
+			$this->db->limit($paging);
+		
+		if (!empty($offset))
+            $this->db->offset($offset);
+        
+        $this->db->select('NGAC_PRESENT.IndexKey,NGAC_USERINFO.UserOrder,NGAC_GROUP.Description as GroupName,CONVERT(VARCHAR(10),TransactionTime,105) as MyDate,NGAC_PRESENT.UserID,NGAC_USERINFO.Name,NGAC_PRESENT.FunctionKey');
+        $this->db->join('NGAC_USERINFO','NGAC_USERINFO.ID=NGAC_PRESENT.UserID','INNER');
+        $this->db->join('NGAC_GROUP','NGAC_GROUP.ID=NGAC_USERINFO.GroupID','INNER');
+        $this->db->group_by('NGAC_PRESENT.IndexKey,NGAC_USERINFO.UserOrder,NGAC_GROUP.Description,CONVERT(VARCHAR(10),TransactionTime,105),NGAC_PRESENT.UserID,NGAC_USERINFO.Name,NGAC_PRESENT.FunctionKey');
+        //$this->db->order_by('ABS(NGAC_USERINFO.UserOrder)','ASC');
+        $Q = $this->db->get('NGAC_PRESENT');
+        return $Q->result_array();
+    }
+    
     function update()
     {
         $this->db->select('IndexKey');   

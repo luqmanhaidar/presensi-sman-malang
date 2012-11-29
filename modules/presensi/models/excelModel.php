@@ -92,6 +92,102 @@ class ExcelModel extends CI_Model
         redirect(base_url('assets/'.$file),301);
     }
     
+    
+    function present_excel(){
+        //$this->user_logs->saveLog('Export Excell Admission Report');           						
+		$objPHPExcel = new PHPExcel();
+		$objPHPExcel->getProperties()->setTitle("title")
+					->setDescription("description");
+					 $objPHPExcel->setActiveSheetIndex(0);
+		$styleArray = array( 'borders' => array( 'allborders' => array(
+                             'style' => Style_Border::BORDER_THIN )));
+        $fill = array(
+                        'type'       => Style_Fill::FILL_SOLID,
+                        'rotation'   => 0,
+                        'startcolor' => array(
+                                'rgb' => 'CCCCCC'
+                        ),
+                        'endcolor'   => array(
+                                'argb' => 'CCCCCC'
+                        )
+                );       
+	  	
+		$fontArray = array(
+			'font' => array(
+			'bold' => true
+			)
+			);
+		
+        $row=1;
+        $col=0;
+        
+        //No
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,"LAPORAN KETIDAKHADIRAN");
+       
+		$row=$row+1;
+        $col=0;
+		
+		//No
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,'No');
+        $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col)->setWidth(5);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->applyFromArray($styleArray);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->getFill()->applyFromArray($fill);
+		
+		//Tanggal
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+1,$row,'Nama');
+        $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+1)->setWidth(15);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+1,$row)->applyFromArray($styleArray);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+1,$row)->getFill()->applyFromArray($fill);
+		
+		//Jenis
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+2,$row,'Group');
+        $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+2)->setWidth(20);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+2,$row)->applyFromArray($styleArray);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+2,$row)->getFill()->applyFromArray($fill);
+		
+		//Waktu
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+3,$row,'Tanggal');
+        $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+3)->setWidth(15);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+3,$row)->applyFromArray($styleArray);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+3,$row)->getFill()->applyFromArray($fill);
+        
+        //Waktu
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+4,$row,'CekKlok');
+        $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+4)->setWidth(15);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+4,$row)->applyFromArray($styleArray);
+        $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+4,$row)->getFill()->applyFromArray($fill);
+        
+        $row=$row + 1;
+        $data['checks']	= $this->authlog->getAllPresentRecords();
+		$i=1;
+		foreach($data['checks'] as $rec):
+			$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,$i);
+			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->applyFromArray($styleArray);
+			 
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+1,$row,$rec['Name']);
+			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+1,$row)->applyFromArray($styleArray);
+			 
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+2,$row,$rec['GroupName']);
+			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+2,$row)->applyFromArray($styleArray);
+			 
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+3,$row,$rec['MyDate']);
+			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+3,$row)->applyFromArray($styleArray);
+            
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+4,$row,$rec['FunctionKey'].' '.functionKey($rec['FunctionKey']));
+			$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+4,$row)->applyFromArray($styleArray);
+            
+            $i++;
+            $row++;
+        endforeach;    
+		
+        // Save it as an excel 2007 file
+        $objWriter = IOFactory::createWriter($objPHPExcel, "Excel2007");
+		//$objWriter = IOFactory::createWriter($objPHPexcel,'PDF'); 
+        $file="Ketidakhadiran.xlsx";
+        $objWriter->save('assets/'.$file);
+        redirect(base_url('assets/'.$file),301);
+    }
+    
     function month_excel($recs,$month,$year,$group,$days,$pos,$desc){      						
 		$objPHPExcel = new PHPExcel();
         $objDrawing = new Worksheet_Drawing();  // PHPExcel_Worksheet_MemoryDrawing
