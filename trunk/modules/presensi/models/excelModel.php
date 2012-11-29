@@ -135,7 +135,7 @@ class ExcelModel extends CI_Model
 		
 		//Tanggal
 		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+1,$row,'Nama');
-        $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+1)->setWidth(15);
+        $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+1)->setWidth(35);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+1,$row)->applyFromArray($styleArray);
         $objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+1,$row)->getFill()->applyFromArray($fill);
 		
