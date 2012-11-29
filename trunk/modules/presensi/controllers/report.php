@@ -689,6 +689,7 @@ class Report extends CI_Controller {
                             $dbSkEnd   =  $a_out;
                             $dbSpEnd   = (substr($a_out,0,2) * 3600) + (substr($a_out,3,2)* 60);
                             $mytime    =  $row['TransactionTime'];
+							$date	   =  $row['MyDate'];	
 						// 14:26 >= 22:00 , 14:26 <= 30:00	
                         //elseif(($ws>=$b2) && ($ws<=$c2)):
 						elseif($ws<$x2):
@@ -698,7 +699,8 @@ class Report extends CI_Controller {
                             $dbSkEnd   = $b_out;
                             $dbSpEnd   = (substr($b_out,0,2) * 3600) + (substr($b_out,3,2)*60);
                             $mytime    = $row['TransactionTime'];
-                        // 14:26 >= 30:00
+							$date	   =  $row['MyDate'];
+						// 14:26 >= 30:00
 						elseif($ws<$x3):
 						//elseif(($ws>=$c2)):
                             $dbSkStart = $c_in;
@@ -706,7 +708,11 @@ class Report extends CI_Controller {
                             $dbSpWork  = (substr($c_in,0,2) * 3600) + ((substr($c_in,3,2) + 15)*60);   
                             $dbSkEnd   =  $c_out;
                             $dbSpEnd   = (substr($c_out,0,2) * 3600) + (substr($c_out,3,2)*60) + (24*3600);
-                            $mytime    = $row['TransactionTime'];
+                            $mytime    =  $row['TransactionTime'];
+							$date	   =  $row['MyDate'];
+							$xdate     =  substr($date,6,4).'-'.substr($date,3,2).'-'.substr($date,0,2);
+							$ndate     =  date("d-m-Y", strtotime("$xdate -1 day"));
+							$date      =  $ndate;
                         endif;    
                         
                 elseif((TRIM($row['GroupID'])==6) || (TRIM($row['GroupID'])==7) ):
@@ -726,12 +732,17 @@ class Report extends CI_Controller {
                             $dbSpWork  = (substr($a_in,0,2) * 3600) + ((substr($a_in,3,2) + 15)*60);   
                             $dbSkEnd   = $a_out;
                             $dbSpEnd   = (substr($a_out,0,2) * 3600) + (substr($a_out,3,2)*60);
-                        else:
+							$date	   =  $row['MyDate'];
+						else:
                             $dbSkStart = $b_in;
                             $dbSpStart = (substr($b_in,0,2) * 3600) + (substr($b_in,3,2)*60);
                             $dbSpWork  = (substr($b_in,0,2) * 3600) + ((substr($b_in,3,2) + 15)*60);   
                             $dbSkEnd   = $b_out;
                             $dbSpEnd   = (substr($b_out,0,2) * 3600) + (substr($b_out,3,2)*60);
+							$date	   =  $row['MyDate'];
+							$xdate     =  substr($date,6,4).'-'.substr($date,3,2).'-'.substr($date,0,2);
+							$ndate     =  date("d-m-Y", strtotime("$xdate -1 day"));
+							$date      =  $ndate;
                         endif;
          
                 else:
@@ -743,12 +754,14 @@ class Report extends CI_Controller {
                             $dbSpWork  = (substr($jm['GroupFridayStart'],0,2) * 3600) + ((substr($jm['GroupFridayStart'],3,2)+15)*60) + (substr($jm['GroupFridayStart'],6,2));   
                             $dbSkEnd   = $jm['GroupFridayEnd'];
                             $dbSpEnd   = (substr($jm['GroupFridayEnd'],0,2) * 3600) + (substr($jm['GroupFridayEnd'],3,2)*60) + (substr($jm['GroupFridayEnd'],6,2));
-                        else:
+							$date	   =  $row['MyDate'];
+						else:
                             $dbSkStart = $sd1;
                             $dbSpStart = $sk1;
                             $dbSpWork  = $dt1;
                             $dbSkEnd   = $w3;
                             $dbSpEnd   = $wp3; 
+							$date	   =  $row['MyDate'];
                         endif;
                     else:
                         if($sk):
@@ -757,12 +770,14 @@ class Report extends CI_Controller {
                             $dbSpWork  = (substr($sk['GroupWorkStart'],0,2) * 3600) + ((substr($sk['GroupWorkStart'],3,2)+15)*60) + (substr($sk['GroupWorkStart'],6,2));   
                             $dbSkEnd   = $sk['GroupWorkEnd'];
                             $dbSpEnd   = (substr($sk['GroupWorkEnd'],0,2) * 3600) + (substr($sk['GroupWorkEnd'],3,2)*60) + (substr($sk['GroupWorkEnd'],6,2));
-                        else:
+							$date	   =  $row['MyDate'];
+						else:
                             $dbSkStart = $sd1;
                             $dbSpStart = $sk1;
                             $dbSpWork  = $dt1;
                             $dbSkEnd   = $w3;
                             $dbSpEnd   = $wp3; 
+							$date	   =  $row['MyDate'];
                         endif;
                     endif;    
                 endif;
@@ -852,8 +867,10 @@ class Report extends CI_Controller {
             
             if($duration<0)
 					$duration = 0;
+			
+				
 			//$early = $ws.'-'.$wsp;           
-            $this->authprocess->update($row['UserID'],$row['MyDate'],$row['TransactionTime'],$early,$duration);
+            $this->authprocess->update($row['UserID'],$date,$row['TransactionTime'],$early,$duration);
         endforeach;
         redirect('presensi/report/weekly',301);
         
