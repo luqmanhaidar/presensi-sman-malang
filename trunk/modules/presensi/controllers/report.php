@@ -148,36 +148,28 @@ class Report extends CI_Controller {
     function present($offset=0){
         $data['title']  = 'Laporan Ketidakhadiran';
         $data['logs']   =   $this->log->userLog();
-        $data['groups']	= $this->usergroup->getDataFromPosition();
-        if($this->session->userdata('week_paging'))
-            $paging = $this->session->userdata('week_paging');
+        $data['groups']	= $this->usergroup->getAllDataFromPosition();
+        if($this->session->userdata('present_paging'))
+            $paging = $this->session->userdata('present_paging');
         else
             $paging = config_item('paging');
 		
-        if($this->session->userdata('week_group')):
-			$group = $this->session->userdata('week_group');
-            $start = $this->session->userdata('week_start');
-			$end   = $this->session->userdata('week_finish');
+        if($this->session->userdata('present_group')):
+			$group = $this->session->userdata('present_group');
+            $start = $this->session->userdata('present_start');
+			$end   = $this->session->userdata('present_finish');
         else:
-			$group = 100;
-            $start = '';
-			$end   = '';
+			$group = 10;
+            $start = date('m/d/Y');
+			$end   = date('m/d/Y');
         endif; 
-        $data['var']	    =	$this->presensi->getVariabelDataByVar('DMK');
-        
-        if($this->session->userdata('week_type')=='M2'):
-            $record  = $this->authprocess->getAllWeekRecord($offset,$paging);
-            $num_rec = COUNT($this->authprocess->getAllWeekRecord());
-        else:
-            $record  = $this->authprocess->getAllRecords($offset,$paging);
-            $num_rec = COUNT($this->authprocess->getAllRecords());
-        endif;    
-		
-        $this->session->set_userdata('week_offset',$offset);
+        $record  = $this->authlog->getAllPresentRecords($offset,$paging);
+        $num_rec = COUNT($this->authlog->getAllPresentRecords());   
+        $this->session->set_userdata('present_offset',$offset);
         $data['checks']  = $record;
         $numrows = $num_rec; 
         if ($numrows > $paging):
-            $config['base_url']   = site_url('presensi/report/weekly/');
+            $config['base_url']   = site_url('presensi/report/present/');
             $config['total_rows'] = $numrows;
             $config['per_page']   = $paging;
             $config['uri_segment']= 4;
@@ -187,6 +179,111 @@ class Report extends CI_Controller {
         $data['page']	= 'report/vpresent';
 		$this->load->theme('default',$data);
     }
+    
+    function present_search()
+    {
+        $this->authlog->removePresent(); // remove old present
+        
+        $day    = $this->input->post('day');
+        $month  = $this->input->post('month');
+        $year   = $this->input->post('year');
+        
+        $day2   = $this->input->post('day2');
+        $month2 = $this->input->post('month2');
+        $year2  = $this->input->post('year2');
+        
+        $group  = $this->input->post('group');
+        
+        if(!validateDate($day,$month)):
+            $this->session->set_flashdata('message',config_item('range_error'));
+            redirect('presensi/report/present/'.$this->session->userdata('present_offset'),301);
+        endif; 
+        
+        if(!validateDate($day2,$month2)):
+            $this->session->set_flashdata('message',config_item('range_error'));
+            redirect('presensi/report/present/'.$this->session->userdata('present_offset'),301);
+        endif;     
+        
+        $total = getRangeDate($day,$month,$year,$day2,$month2,$year2);
+        for($i=0;$i<=$total;$i++):
+            $date  = $year.'-'.$month.'-'.$day;
+            $ndate = date("d-m-Y",strtotime("$date +$i day"));
+            $dx    = $ndate; 
+            $d     = date("Y-m-d",strtotime("$date +$i day"));
+			if (!getSunday(substr($ndate,0,4),substr($ndate,5,2),substr($ndate,8,2))):
+				if (!$this->holidays->getHolidayDate($day)):
+                        $users = $this->userinfo->getAllRecords('','','','',$group);
+                        foreach($users as $user):
+                            for($j=1;$j<=2;$j++):
+                                $cek = $this->authlog->getUserTime($dx,$user['ID'],$j);
+                                //echo $cek.' '.$dx.'-'.$user['ID'].'-'.$j.'<br/>';
+                                if($cek=='-')
+                                    $this->authlog->savePresent($user['ID'],$d,$j,0);
+                                    //echo $this->db->last_query();
+                            endfor;
+                        endforeach;
+                endif;    
+			endif;
+            //echo 'Total='.$day;
+        endfor;       
+        $search = array ('present_group'  => $this->input->post('group'),
+                         'present_start'  => $this->input->post('month').'/'.$this->input->post('day').'/'.$this->input->post('year'), 
+                         'present_finish' => $this->input->post('month2').'/'.$this->input->post('day2').'/'.$this->input->post('year2'));    
+        $this->session->set_userdata($search);
+        redirect('presensi/report/present/'.$this->session->userdata('present_offset'),301);
+    }
+    
+    function present_paging($per_page)
+    {
+        $this->session->set_userdata('present_paging',$per_page);
+        redirect('presensi/report/present',301);
+    }
+    
+    function present_preview(){    
+		$export = $this->input->post('export');
+        $row = $this->userinfo->getUserData($this->session->userdata('personal_search'));
+        if(COUNT($row)>0)
+            $this->session->set_userdata('personal_name',$row['Name']);
+        else
+            $this->session->set_userdata('personal_name','-');
+            
+		switch($export):
+			case 0 : $this->present_print();
+					 break;
+			case 1 : $this->present_pdf();
+			         break;
+			case 2 : $this->present_excel();
+			         break;
+		endswitch;
+	}
+	
+	function present_print()
+    {
+		$data['title']		=	'LAPORAN KETIDAKHADIRAN';
+        $data['checks']		=	$this->authlog->getAllPresentRecords();
+        $this->load->vars($data);
+        $this->load->theme('report/present',$data);
+	}
+	
+	function present_pdf()
+    {
+		$this->load->helper('tcpdf');
+		$data['title']		=	'LAPORAN KETIDAKHADIRAN';
+		$data['checks']		=	$this->authlog->getAllPresentRecords();
+        $this->load->vars($data);
+        $file = $this->load->theme('report/present',$data,TRUE);
+		//$this->pdf->pdf_create($file,'Laporan-Ketidakhadiran');
+        $html2pdf = html2pdf('P','A4');
+        $html2pdf->WriteHTML($file);
+        $html2pdf->Output('Laporan-Ketidakhadiran.pdf','I');
+	}
+    
+    function present_excel()
+    {
+		$excel = $this->excelModel->present_excel();
+        $data = file_get_contents("assets/Present.xlsx"); // Read the file's contents
+        force_download("Laporan-Ketidakhadiran",$data); 
+	}
     
     function monthly($offset=0){
         $data['title']  = 'Laporan Bulanan';
