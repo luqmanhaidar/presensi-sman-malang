@@ -26,7 +26,7 @@ class Authprocess extends CI_Model
                     'ProcessDateEarly'    =>  $early,
                     'ProcessDuration'     =>  $duration);
         $this->db->where('UserID',$user);
-        $this->db->where('CONVERT(VARCHAR(10),ProcessDateStart, 105)=',$dateStart);           
+        $this->db->where('CONVERT(VARCHAR(10),ProcessDateStart,105)=',$dateStart);           
         $this->db->update('NGAC_AUTHPROCESS',$value);
     }
     
