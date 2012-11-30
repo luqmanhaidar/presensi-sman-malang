@@ -224,6 +224,12 @@ class Authlog extends CI_Model
         $query    = $this->db->get('NGAC_PRESENT',1);
         return $query->row_array();
     }
+	
+	function removePresent($id){
+		$id = trim(strtolower($id));
+        $this->db->where('IndexKey',$id);
+        $this->db->delete('NGAC_PRESENT');
+	}
     
     function update()
     {
