@@ -216,6 +216,14 @@ class Authlog extends CI_Model
         $Q = $this->db->get('NGAC_PRESENT');
         return $Q->result_array();
     }
+	
+	function getPresentData($id)
+    {
+        $this->db->select('IndexKey,CONVERT(VARCHAR(10),TransactionTime, 105) AS MyDate,CONVERT(VARCHAR(8),TransactionTime, 108) AS MyTime,FunctionKey,UserID');   
+        $this->db->where("NGAC_PRESENT.IndexKey",$id);
+        $query    = $this->db->get('NGAC_PRESENT',1);
+        return $query->row_array();
+    }
     
     function update()
     {
