@@ -187,12 +187,22 @@ class Report extends CI_Controller {
         $day    = $this->input->post('day');
         $month  = $this->input->post('month');
         $year   = $this->input->post('year');
-        
         $day2   = $this->input->post('day2');
         $month2 = $this->input->post('month2');
         $year2  = $this->input->post('year2');
-        
         $group  = $this->input->post('group');
+		$key    = TRIM($this->input->post('fkey'));
+		
+		if($key==1):
+			$start = 1;
+			$end   = 1;
+		elseif($key==2):
+			$start = 2;
+			$end   = 2;
+		else:
+			$start = 1;
+			$end   = 2;
+		endif;	
         
         if(!validateDate($day,$month)):
             $this->session->set_flashdata('message',config_item('range_error'));
@@ -214,17 +224,15 @@ class Report extends CI_Controller {
 				if (!$this->holidays->getHolidayDate($day)):
                         $users = $this->userinfo->getAllRecords('','','','',$group);
                         foreach($users as $user):
-                            for($j=1;$j<=2;$j++):
+                            for($j=$start;$j<=$end;$j++):
                                 $cek = $this->authlog->getUserTime($dx,$user['ID'],$j);
-                                //echo $cek.' '.$dx.'-'.$user['ID'].'-'.$j.'<br/>';
                                 if($cek=='-')
                                     $this->authlog->savePresent($user['ID'],$d,$j,0);
-                                    //echo $this->db->last_query();
                             endfor;
                         endforeach;
                 endif;    
 			endif;
-            //echo 'Total='.$day;
+            
         endfor;       
         $search = array ('present_group'  => $this->input->post('group'),
                          'present_start'  => $this->input->post('month').'/'.$this->input->post('day').'/'.$this->input->post('year'), 

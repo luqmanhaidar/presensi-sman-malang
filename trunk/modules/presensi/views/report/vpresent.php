@@ -22,7 +22,9 @@
                     <?=form_dropdown('day2',config_item('day'),substr($this->session->userdata('present_finish'),3,2),'class="select"')?>
                     <?=form_dropdown('month2',config_item('month'),substr($this->session->userdata('present_finish'),0,2),'class="select"')?>
                     <?=form_dropdown('year2',config_item('year'),substr($this->session->userdata('present_finish'),6,4),'class="select"')?>
-
+					
+					<?=form_dropdown('fkey',config_item('fkey'),$this->session->userdata('log_key'),'class="select"')?>
+					
                     <input type="submit" class="button blue-gradient glossy" value="Go" />
                     </form>
                 </div>
@@ -41,6 +43,7 @@
                         <th scope="col" class="align-left hide-on-mobile">Group</th>
                         <th scope="col" class="align-left hide-on-mobile">Tanggal</th>
                         <th scope="col" class="align-left hide-on-mobile">Cek Klok</th>
+						<th scope="col" class="align-center hide-on-mobile" width="10%" class="align-right">Actions</th>
 					</tr>
 				</thead>
                 <tbody>
@@ -54,6 +57,9 @@
                             <td><?=$row['GroupName'];?></td>
                             <td><?=$row['MyDate'];?></td>
                             <td><?=functionKey($row['FunctionKey']);?></td>
+							<td class="low-padding align-center">
+								<a href="<?=site_url('presensi/checkin/add/'.$row['IndexKey'])?>" class="button white-gradient glossy">Checkin</a>
+							</td>
 					   </tr>
                      <?php 
                         $x=$x+1;

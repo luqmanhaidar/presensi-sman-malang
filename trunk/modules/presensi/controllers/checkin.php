@@ -55,11 +55,14 @@ class Checkin extends CI_Controller {
         redirect('presensi/checkin/index',301);
     }
     
-    function add(){
+    function add($index=''){
         $data['title']  = 'Manual Checkin';
         $data['action'] = 'presensi/checkin/save';
-        $data['value']  = '';
-        $data['logs']   =   $this->log->userLog();
+		if(empty($index))
+			$data['value']  = '';
+		else	
+			$data['value']  = $this->authlog->getPresentData($id);
+		$data['logs']   =   $this->log->userLog();
         $data['users']	= $this->userinfo->getDataFromUser();
         $data['page']	= 'checkin/vform';
 		$this->load->theme('default',$data);
