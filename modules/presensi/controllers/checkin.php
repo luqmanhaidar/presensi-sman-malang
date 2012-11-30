@@ -58,10 +58,13 @@ class Checkin extends CI_Controller {
     function add($index=''){
         $data['title']  = 'Manual Checkin';
         $data['action'] = 'presensi/checkin/save';
-		if(empty($index))
+		if(empty($index)):
 			$data['value']  = '';
-		else	
+			$this->session->set_userdata('no_checkin','');
+		else:	
 			$data['value']  = $this->authlog->getPresentData($index);
+			$this->session->set_userdata('no_checkin',$index);
+		endif;	
 		$data['logs']   =   $this->log->userLog();
         $data['users']	= $this->userinfo->getDataFromUser();
         $data['page']	= 'checkin/vform';
@@ -80,7 +83,14 @@ class Checkin extends CI_Controller {
             
         $this->authlog->save();
         $this->session->set_flashdata('message',config_item('save_success'));
-        redirect('presensi/checkin/index/'.$this->session->userdata('log_offset'),301);
+		if(!empty($this->session->userdata('no_checkin'))):
+			$this->authlog->removePresent($this->session->userdata('no_checkin'));
+			redirect('presensi/report/present/'.$this->session->userdata('present_offset'),301);
+		else
+			redirect('presensi/checkin/index/'.$this->session->userdata('log_offset'),301);
+		endif;	
+			
+        
     }
     
     function edit($id){
