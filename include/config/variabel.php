@@ -2,7 +2,7 @@
     $config['holiday']  =  array(0=>'Libur','1'=>'1','2'=>'2','3'=>'3','4'=>'4','5'=>'5');  
     $config['paging']   =   15;
     $config['key']      =   array(''=>'All','1'=>'1','2'=>'2','3'=>'3','4'=>'4');
-	$config['fkey']     =   array(''=>'All','1'=>'1','2'=>'2');
+	$config['skey']     =   array(''=>'All','1'=>'1','2'=>'2');
     $config['type']     =   array('Sakit'=>'Sakit','Ijin'=>'Ijin','Cuti'=>'Cuti','Tugas'=>'Tugas');
     $config['ftype']    =   array(''=>'All','Sakit'=>'Sakit','Ijin'=>'Ijin','Tugas'=>'Tugas');
     $config['fkey']     =   array('1'=>'1 (Jam Masuk)','2'=>'2 (Jam Pulang)','3'=>'3 (Masuk Lembur)','4'=>'4 (Selesai Lembur)');       
