@@ -86,7 +86,7 @@ class Checkin extends CI_Controller {
 		if($this->session->userdata('no_checkin')<>''):
 			$this->authlog->removePresentByID($this->session->userdata('no_checkin'));
 			redirect('presensi/report/present/'.$this->session->userdata('present_offset'),301);
-		else
+		else:
 			redirect('presensi/checkin/index/'.$this->session->userdata('log_offset'),301);
 		endif;	
 			
