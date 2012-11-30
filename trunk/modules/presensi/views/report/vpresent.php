@@ -23,7 +23,7 @@
                     <?=form_dropdown('month2',config_item('month'),substr($this->session->userdata('present_finish'),0,2),'class="select"')?>
                     <?=form_dropdown('year2',config_item('year'),substr($this->session->userdata('present_finish'),6,4),'class="select"')?>
 					
-					<?=form_dropdown('fkey',config_item('fkey'),$this->session->userdata('log_key'),'class="select"')?>
+					<?=form_dropdown('fkey',config_item('skey'),$this->session->userdata('present_key'),'class="select"')?>
 					
                     <input type="submit" class="button blue-gradient glossy" value="Go" />
                     </form>
