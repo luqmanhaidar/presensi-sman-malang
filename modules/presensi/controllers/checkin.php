@@ -61,7 +61,7 @@ class Checkin extends CI_Controller {
 		if(empty($index))
 			$data['value']  = '';
 		else	
-			$data['value']  = $this->authlog->getPresentData($id);
+			$data['value']  = $this->authlog->getPresentData($index);
 		$data['logs']   =   $this->log->userLog();
         $data['users']	= $this->userinfo->getDataFromUser();
         $data['page']	= 'checkin/vform';
