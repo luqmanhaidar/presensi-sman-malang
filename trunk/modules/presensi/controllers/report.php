@@ -235,7 +235,7 @@ class Report extends CI_Controller {
         endfor;   
 		
         $search = array ('present_group'  => $this->input->post('group'),
-						 'present_key'    => $this->input->post('key'),	
+						 'present_key'    => $this->input->post('fkey'),	
                          'present_start'  => $this->input->post('month').'/'.$this->input->post('day').'/'.$this->input->post('year'), 
                          'present_finish' => $this->input->post('month2').'/'.$this->input->post('day2').'/'.$this->input->post('year2'));    
         $this->session->set_userdata($search);
