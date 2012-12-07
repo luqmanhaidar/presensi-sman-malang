@@ -975,6 +975,8 @@ class Report extends CI_Controller {
             if($duration<0)
 					$duration = 0;
 			
+			if($row['TransactionTime']=='')
+				$duration =0;
 				
 			//$early = $ws.'-'.$wsp;           
             $this->authprocess->update($row['UserID'],$date,$row['TransactionTime'],$early,$duration);
@@ -1055,7 +1057,7 @@ class Report extends CI_Controller {
             $pdf->SetTextColor(0, 0, 0);
             $pdf->SetDrawColor(0, 0, 0);
             $pdf->SetLineWidth(0.1);
-            $pdf->SetFont('helvetica', '', 7);
+            
             
             $y = 5;
             $x = 7;
@@ -1067,48 +1069,51 @@ class Report extends CI_Controller {
                 if($row%3==1):
                     $x=7;
                 elseif($row%3==2):
-                    $x=124;
+                    $x=115;
 				elseif($row%3==0):
-					$x=238;
+					$x=222;
 				endif;	
-                    
+                
+				$pdf->SetFont('helvetica', '', 10);
+				
                 $ID = $user['ID'];
                 $x=$x;$y=$y;
                 $pdf->SetY($y);$pdf->SetX($x); 	
-                $pdf->Cell(85,4,$title, 0, 0, 'C', 1); 
+                $pdf->Cell(100,4,$title, 0, 0, 'C', 1); 
                 
 
                 $x=$x;$y=$y+4;
                 $pdf->SetY($y);$pdf->SetX($x); 	
-                $pdf->Cell(85, 4,$periode, 0, 0, 'C', 1); 
+                $pdf->Cell(100, 4,$periode, 0, 0, 'C', 1); 
                 
                 $pdf->SetFillColor(205, 201, 201);
                 
                  
-    
+				$pdf->SetFont('helvetica', '', 9);
                 $x=$x;$y=$y+5;
-                $pdf->MultiCell(85,4,$row.'-'.$ID.' '.$user['Name'],1,'L', 1, 2, $x,$y,true,0,false,true,0);
+                $pdf->MultiCell(100,4,$row.'-'.$ID.' '.$user['Name'],1,'L', 1, 2, $x,$y,true,0,false,true,0);
                 
+				$pdf->SetFont('helvetica', '', 8);
                 $x=$x;$y=$y+4;
-                $pdf->MultiCell(6,4,"M",1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                $pdf->MultiCell(10,4,"M",1,'C', 1, 2, $x,$y,true,0,false,true,0);
                 
-                $x=$x+6;$y=$y;
-                $pdf->MultiCell(15,4,"Tanggal",1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                $x=$x+10;$y=$y;
+                $pdf->MultiCell(17,4,"Tanggal",1,'C', 1, 2, $x,$y,true,0,false,true,0);
                 
-                $x=$x+15;$y=$y;
-                $pdf->MultiCell(12,4,"Datang",1,'C', 1, 2, $x,$y,true,0,false,true,0);
-                
-                $x=$x+12;$y=$y;
-                $pdf->MultiCell(12,4,"Pulang",1,'C', 1, 2, $x,$y,true,0,false,true,0);
-                
-                $x=$x+12;$y=$y;
-                $pdf->MultiCell(12,4,"Durasi",1,'C', 1, 2, $x,$y,true,0,false,true,0);
-                
-                $x=$x+12;$y=$y;
-                $pdf->MultiCell(14,4,"Dtg.Telat",1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                $x=$x+17;$y=$y;
+                $pdf->MultiCell(14,4,"Datang",1,'C', 1, 2, $x,$y,true,0,false,true,0);
                 
                 $x=$x+14;$y=$y;
-                $pdf->MultiCell(14,4,"Plg.Cepat",1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                $pdf->MultiCell(14,4,"Pulang",1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                
+                $x=$x+14;$y=$y;
+                $pdf->MultiCell(15,4,"Durasi",1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                
+                $x=$x+15;$y=$y;
+                $pdf->MultiCell(15,4,"Dtg.Telat",1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                
+                $x=$x+15;$y=$y;
+                $pdf->MultiCell(15,4,"Plg.Cepat",1,'C', 1, 2, $x,$y,true,0,false,true,0);
                 
                 $pdf->SetFillColor(255, 255, 255);
                 
@@ -1130,15 +1135,18 @@ class Report extends CI_Controller {
                         $el= $val['ProcessDateEarly'];
                         /** Call**/
 						
-						$ended = (9 * 3600);
+						
 						
                         if(empty($e))
                             $end=0;
                         else
                             $end   = (substr($e,0,2) * 3600) + (substr($e,3,2)*60) + (substr($e,6,2));
 							
-							if($end < $ended)
-								$end = $end + (24 * 3600);
+							if(!empty($val['MyTimeEnd'])):
+								$ended = (9 * 3600);
+								if($end < $ended)
+									$end = $end + (24 * 3600);
+							endif;	
                                 
                         if(empty($s))
                             $start=0;
@@ -1174,24 +1182,24 @@ class Report extends CI_Controller {
                     if($row%3==1):
                     $x=7;
 					elseif($row%3==2):
-						$x=124;
+						$x=115;
 					elseif($row%3==0):
-						$x=238;
-					endif;	
+						$x=222;
+					endif;		
                         
-                    $pdf->MultiCell(6,4,$w,1,'C', 1, 2, $x,$y,true,0,false,true,0);
-                    $x=$x+6;
-                    $pdf->MultiCell(15,4,$d,1,'C', 1, 2, $x,$y,true,0,false,true,0);
-                    $x=$x+15;
-                    $pdf->MultiCell(12,4,$s,1,'C', 1, 2, $x,$y,true,0,false,true,0);
-                    $x=$x+12;
-                    $pdf->MultiCell(12,4,$e,1,'C', 1, 2, $x,$y,true,0,false,true,0);
-                    $x=$x+12;
-                    $pdf->MultiCell(12,4,$dr,1,'C', 1, 2, $x,$y,true,0,false,true,0);
-                    $x=$x+12;
-                    $pdf->MultiCell(14,4,$l,1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                    $pdf->MultiCell(10,4,$w,1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                    $x=$x+10;
+                    $pdf->MultiCell(17,4,$d,1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                    $x=$x+17;
+                    $pdf->MultiCell(14,4,$s,1,'C', 1, 2, $x,$y,true,0,false,true,0);
                     $x=$x+14;
-                    $pdf->MultiCell(14,4,$el,1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                    $pdf->MultiCell(14,4,$e,1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                    $x=$x+14;
+                    $pdf->MultiCell(15,4,$dr,1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                    $x=$x+15;
+                    $pdf->MultiCell(15,4,$l,1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                    $x=$x+15;
+                    $pdf->MultiCell(15,4,$el,1,'C', 1, 2, $x,$y,true,0,false,true,0);
                     
                     
                     $sl = (substr($l,0,2) * 3600) + (substr($l,3,2) *60) + (substr($l, 6,2));
@@ -1225,29 +1233,29 @@ class Report extends CI_Controller {
                 if($row%3==1):
                     $x=7;
                 elseif($row%3==2):
-                    $x=124;
+                    $x=115;
 				elseif($row%3==0):
-					$x=238;
-				endif;		
+					$x=222;
+				endif;			
                         
-                $pdf->MultiCell(85,4,'Total Jam Kehadiran',1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                $pdf->MultiCell(100,4,'Total Jam Kehadiran',1,'C', 1, 2, $x,$y,true,0,false,true,0);
                 
                 $pdf->SetFillColor(205, 201, 201);
                 
                 $y=$y+4; 
-                $pdf->MultiCell(15,4,'Minggu Ke',1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                $pdf->MultiCell(20,4,'Minggu Ke',1,'C', 1, 2, $x,$y,true,0,false,true,0);
                 
-                $x=$x+15;
-                $pdf->MultiCell(15,4,'Work Time',1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                $x=$x+20;
+                $pdf->MultiCell(17,4,'Work Time',1,'C', 1, 2, $x,$y,true,0,false,true,0);
                 
-                $x=$x+15;
-                $pdf->MultiCell(25,4,'Keterangan',1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                $x=$x+17;
+                $pdf->MultiCell(30,4,'Keterangan',1,'C', 1, 2, $x,$y,true,0,false,true,0);
                 
-                $x=$x+25;
-                $pdf->MultiCell(15,4,'Dtg.Telat',1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                $x=$x+30;
+                $pdf->MultiCell(17,4,'Dtg.Telat',1,'C', 1, 2, $x,$y,true,0,false,true,0);
                 
-                $x=$x+15;
-                $pdf->MultiCell(15,4,'Plg.Cepat',1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                $x=$x+17;
+                $pdf->MultiCell(17,4,'Plg.Cepat',1,'C', 1, 2, $x,$y,true,0,false,true,0);
                 
                 $pdf->SetFillColor(255, 255, 255);
                 $y=$y+4;
@@ -1257,9 +1265,9 @@ class Report extends CI_Controller {
                     if($row%3==1):
                     $x=7;
 					elseif($row%3==2):
-						$x=124;
+						$x=115;
 					elseif($row%3==0):
-						$x=238;
+						$x=222;
 					endif;	
                     
                     $whours = code(floor($ww[$m] / 3600));
@@ -1289,19 +1297,19 @@ class Report extends CI_Controller {
 						endif;	
 				    endif;	
                             
-                    $pdf->MultiCell(15,4,'Minggu '.$m,1,'C', 1, 0, $x,$y,true,0,false,true,0);
+                    $pdf->MultiCell(20,4,'Minggu '.$m,1,'C', 1, 0, $x,$y,true,0,false,true,0);
                     
-                    $x=$x+15;
-                    $pdf->MultiCell(15,4,$week[$m],1,'C', 1, 0, $x,$y,true,0,false,true,0);
+                    $x=$x+20;
+                    $pdf->MultiCell(17,4,$week[$m],1,'C', 1, 0, $x,$y,true,0,false,true,0);
                     
-                    $x=$x+15;
-                    $pdf->MultiCell(25,4,$desc,1,'C', 1, 0, $x,$y,true,0,false,true,0);
+                    $x=$x+17;
+                    $pdf->MultiCell(30,4,$desc,1,'C', 1, 0, $x,$y,true,0,false,true,0);
                     
-                    $x=$x+25;
-                    $pdf->MultiCell(15,4,$late[$m],1,'C', 1, 0, $x,$y,true,0,false,true,0);
+                    $x=$x+30;
+                    $pdf->MultiCell(17,4,$late[$m],1,'C', 1, 0, $x,$y,true,0,false,true,0);
                     
-                    $x=$x+15;
-                    $pdf->MultiCell(15,4,$early[$m],1,'C', 1, 0,$x,$y,true,0,false,true,0);
+                    $x=$x+17;
+                    $pdf->MultiCell(16,4,$early[$m],1,'C', 1, 0,$x,$y,true,0,false,true,0);
                 
                     $y=$y+4;
                 endfor;
@@ -1309,12 +1317,12 @@ class Report extends CI_Controller {
                 if($row%3==1):
                     $x=7;
                 elseif($row%3==2):
-                    $x=124;
+                    $x=115;
 				elseif($row%3==0):
-					$x=238;
+					$x=222;
 				endif;	
                         
-                $pdf->MultiCell(85,4,$tm,1,'C', 1, 2, $x,$y,true,0,false,true,0);
+                $pdf->MultiCell(100,4,$tm,1,'C', 1, 2, $x,$y,true,0,false,true,0);
             
                 if($row%3==0):
                     $y=$y+5;
@@ -1330,9 +1338,9 @@ class Report extends CI_Controller {
                     if($row%3==1):
                     $x=7;
 					elseif($row%3==2):
-						$x=124;
+						$x=115;
 					elseif($row%3==0):
-						$x=238;
+						$x=222;
 					endif;		
 						
                 endif;    
