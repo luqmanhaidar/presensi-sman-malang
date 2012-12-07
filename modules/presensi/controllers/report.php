@@ -281,8 +281,7 @@ class Report extends CI_Controller {
 		$data['checks']		=	$this->authlog->getAllPresentRecords();
         $this->load->vars($data);
         $file = $this->load->theme('report/presreport',$data,TRUE);
-		//$this->pdf->pdf_create($file,'Laporan-Ketidakhadiran');
-        $html2pdf = html2pdf('P','A4');
+        $html2pdf = html2pdf('P','FOLIO');
         $html2pdf->WriteHTML($file);
         $html2pdf->Output('Laporan-Ketidakhadiran.pdf','I');
 	}
