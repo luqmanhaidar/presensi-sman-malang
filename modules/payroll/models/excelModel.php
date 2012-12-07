@@ -2,6 +2,9 @@
 
 class ExcelModel extends CI_Model
 {
+	private $font = 'Calibri';
+	private $size = 13;
+	
     function __construct()
     {
         parent::__construct(); // Call the Model constructor
@@ -13,6 +16,8 @@ class ExcelModel extends CI_Model
 		$objPHPExcel->getProperties()->setTitle("title")
 					->setDescription("description");
 					 $objPHPExcel->setActiveSheetIndex(0);
+		$objPHPExcel->getDefaultStyle()->getFont()->setName($this->font);
+		$objPHPExcel->getDefaultStyle()->getFont()->setSize($this->size);			 
 		$styleArray = array( 'borders' => array( 'allborders' => array(
                              'style' => Style_Border::BORDER_THIN )));
         $fill = array(
@@ -222,6 +227,8 @@ class ExcelModel extends CI_Model
 		$objPHPExcel->getProperties()->setTitle("title")
 					->setDescription("description");
 					 $objPHPExcel->setActiveSheetIndex(0);
+		$objPHPExcel->getDefaultStyle()->getFont()->setName($this->font);
+		$objPHPExcel->getDefaultStyle()->getFont()->setSize($this->size);			 
 		$styleArray = array( 'borders' => array( 'allborders' => array(
                              'style' => Style_Border::BORDER_THIN )));
         $fill = array(
