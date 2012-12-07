@@ -384,7 +384,7 @@ class Report extends CI_Controller {
 		$data['title']		=	'DAFTAR HADIR '.$data['position']['Name'];
         $this->load->vars($data);
         $content=$this->load->theme('report/month',$data,TRUE);
-        $html2pdf = html2pdf('L','Letter');
+        $html2pdf = html2pdf('L','FOLIO');
         $html2pdf->WriteHTML($content);
         $html2pdf->Output('Laporan-Bulanan.pdf','D');
         
@@ -756,9 +756,11 @@ class Report extends CI_Controller {
         /** Query Update ke AuthProcess **/
 		
         $query = $this->authlog->getPerWeekRecords($start,$end,$group,2);
-        //$query = $this->auhtprocess->getAllRecords();
+     
         foreach($query as $row):
             $ws = (substr($row['MyTime'],0,2) * 3600) + (substr($row['MyTime'],3,2)*60) + (substr($row['MyTime'],6,2));
+			$date	   =  $row['MyDate'];
+			
             if($row['GroupID']>2):
                 $sk  =  $this->usergroup->getGroupWorkData($row['GroupWork']);
                 $jm  =  $this->usergroup->getGroupFridayData($row['GroupFriday']);
@@ -1047,7 +1049,7 @@ class Report extends CI_Controller {
             $pdf->setPrintHeader(false);
             $pdf->setPrintFooter(false);
             $pdf->SetMargins(5,5,5);
-            $pdf->AddPage("L","Letter");
+            $pdf->AddPage("L","FOLIO");
             
             $pdf->SetFillColor(255, 255, 255);
             $pdf->SetTextColor(0, 0, 0);
@@ -1065,9 +1067,9 @@ class Report extends CI_Controller {
                 if($row%3==1):
                     $x=7;
                 elseif($row%3==2):
-                    $x=97;
+                    $x=124;
 				elseif($row%3==0):
-					$x=187;
+					$x=238;
 				endif;	
                     
                 $ID = $user['ID'];
@@ -1170,11 +1172,11 @@ class Report extends CI_Controller {
                     
                     
                     if($row%3==1):
-						$x=7;
+                    $x=7;
 					elseif($row%3==2):
-						$x=97;
+						$x=124;
 					elseif($row%3==0):
-						$x=187;
+						$x=238;
 					endif;	
                         
                     $pdf->MultiCell(6,4,$w,1,'C', 1, 2, $x,$y,true,0,false,true,0);
@@ -1221,12 +1223,12 @@ class Report extends CI_Controller {
                 endforeach;
                 
                 if($row%3==1):
-					$x=7;
-				elseif($row%3==2):
-					$x=97;
+                    $x=7;
+                elseif($row%3==2):
+                    $x=124;
 				elseif($row%3==0):
-					$x=187;
-				endif;	
+					$x=238;
+				endif;		
                         
                 $pdf->MultiCell(85,4,'Total Jam Kehadiran',1,'C', 1, 2, $x,$y,true,0,false,true,0);
                 
@@ -1253,11 +1255,11 @@ class Report extends CI_Controller {
                 for($m=1;$m<=5;$m++):
                     
                     if($row%3==1):
-						$x=7;
+                    $x=7;
 					elseif($row%3==2):
-						$x=97;
+						$x=124;
 					elseif($row%3==0):
-						$x=187;
+						$x=238;
 					endif;	
                     
                     $whours = code(floor($ww[$m] / 3600));
@@ -1305,11 +1307,11 @@ class Report extends CI_Controller {
                 endfor;
                 
                 if($row%3==1):
-					$x=7;
-				elseif($row%3==2):
-					$x=97;
+                    $x=7;
+                elseif($row%3==2):
+                    $x=124;
 				elseif($row%3==0):
-					$x=187;
+					$x=238;
 				endif;	
                         
                 $pdf->MultiCell(85,4,$tm,1,'C', 1, 2, $x,$y,true,0,false,true,0);
@@ -1326,12 +1328,12 @@ class Report extends CI_Controller {
                     $y = 5;
 					
                     if($row%3==1):
-						$x=7;
+                    $x=7;
 					elseif($row%3==2):
-						$x=97;
+						$x=124;
 					elseif($row%3==0):
-						$x=187;
-					endif;	
+						$x=238;
+					endif;		
 						
                 endif;    
                 $row++;
@@ -1602,20 +1604,7 @@ class Report extends CI_Controller {
     
 	function se_pdf2()
     {
-		/**$this->load->library('pdf');
-        $data['title']		=	'DAFTAR HADIR PEGAWAI';
-        $group = $this->session->userdata('se_group');
-        $month = $this->session->userdata('se_month');
-		$year  = $this->session->userdata('se_year');
-		$data['position']	=	$this->usergroup->getPositionData($group);
-		$data['checks']		=	$this->authlog->getMonthRecords('','',$month,$year,$group);
-        //$data['days']	    =   $this->authlog->getDay($this->session->userdata('month_start'),$this->session->userdata('month_finish'));
-		$data['days']       =   days_in_month($this->session->userdata('month_month'));
-        $data['month']      =   $this->session->userdata('se_month');
-        $data['year']       =   $this->session->userdata('se_year');    
-        $this->load->vars($data);
-        $file = $this->load->theme('report/month',$data,TRUE);
-        $this->pdf->pdf_create($file,$data['title']);**/
+		
         $group = $this->session->userdata('se_group');
         $month =   $this->session->userdata('se_month');
         $year  =   $this->session->userdata('se_year'); 

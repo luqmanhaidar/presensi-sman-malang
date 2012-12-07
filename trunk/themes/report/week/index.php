@@ -9,7 +9,7 @@ body{margin:0;font-family: Arial;font-size:10px;}
 h3{margin:0;text-align: center;font-size:12px;}
 h5{margin:0;text-align: center;font-size:10px;}
 table {margin:0 auto;width:100%;border-collapse:collapse;}
-th,td{border:1px solid #222;font-size:12px;margin:0;font-size:9px;text-align: center;}
+th,td{border:1px solid #222;font-size:12px;margin:0;font-size:11px;text-align: center;}
 th{background:#CCC;}
 div.my_wrapper{
     width: 750px;
