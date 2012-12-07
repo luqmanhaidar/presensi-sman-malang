@@ -2,6 +2,8 @@
 
 class ExcelModel extends CI_Model
 {
+	private $font = 'Calibri';
+	private $size = 13;
     function __construct()
     {
         parent::__construct(); // Call the Model constructor
@@ -35,6 +37,9 @@ class ExcelModel extends CI_Model
         $row=1;
         $col=0;
         
+		$objPHPExcel->getDefaultStyle()->getFont()->setName($this->font);
+		$objPHPExcel->getDefaultStyle()->getFont()->setSize($this->size);
+		
         //No
 		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,$user.'-'.$name);
        
@@ -117,6 +122,9 @@ class ExcelModel extends CI_Model
 			'bold' => true
 			)
 			);
+			
+		$objPHPExcel->getDefaultStyle()->getFont()->setName($this->font);
+		$objPHPExcel->getDefaultStyle()->getFont()->setSize($this->size);	
 		
         $row=1;
         $col=0;
@@ -212,6 +220,9 @@ class ExcelModel extends CI_Model
 			'bold' => true
 			)
 			);
+		
+		$objPHPExcel->getDefaultStyle()->getFont()->setName($this->font);
+		$objPHPExcel->getDefaultStyle()->getFont()->setSize($this->size);
 		
         $row=1;
         $col=0;
@@ -651,6 +662,8 @@ class ExcelModel extends CI_Model
         $objPHPExcel->getActiveSheet()->getPageMargins()->setLeft(0.50);
         $objPHPExcel->getActiveSheet()->getPageMargins()->setBottom(0.25);
         $objPHPExcel->getActiveSheet()->getPageSetup()->setScale(95);
+		$objPHPExcel->getDefaultStyle()->getFont()->setName($this->font);
+		$objPHPExcel->getDefaultStyle()->getFont()->setSize($this->size);
         /** Setup Page **/  
         
         $row=1;
@@ -1034,6 +1047,8 @@ class ExcelModel extends CI_Model
 		
         $row=1;
         $col=0;
+		$objPHPExcel->getDefaultStyle()->getFont()->setName($this->font);
+		$objPHPExcel->getDefaultStyle()->getFont()->setSize($this->size);
         
         //No
 		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,"REKAPITULASI PEMENUHAN JAM MENGAJAR GURU MAN 3 MALANG");       
@@ -1749,7 +1764,8 @@ class ExcelModel extends CI_Model
 		
         $row=1;
         $col=0;
-        
+        $objPHPExcel->getDefaultStyle()->getFont()->setName($this->font);
+		$objPHPExcel->getDefaultStyle()->getFont()->setSize($this->size);
         //Judul
 		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,"Laporan Lembur");
        
