@@ -2,6 +2,9 @@
 <head>
 <title><?=$title?></title>
 <link type="text/css" rel="stylesheet" href="<?=base_url('themes/report/css/style.css');?>" />
+<style>
+	.mini{font-size:13px;}
+</style>
 </head>
 <body>
  <table style="margin:0 auto;width:80%;border-collapse:collapse;background:#ecf3eb">
