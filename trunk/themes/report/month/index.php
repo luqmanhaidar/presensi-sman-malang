@@ -4,12 +4,14 @@
 <link type="text/css" rel="stylesheet" href="<?=base_url('themes/report/css/style.css');?>" />
 <style>
 
-body{width:1400px}
+body{width:1400px;font-size:9px;}
 .smallfont{font-size:7px;}
-th,td,.desx{font-size:9px;width:2.35%;padding-right:2px;padding-left:2px;text-align:center}
+/*th,td,.desx{font-size:9px;width:2.35%;padding-right:2px;padding-left:2px;text-align:center}*/
+.desx{font-size:9px;width:2.2%;padding-right:2px;padding-left:2px;text-align:center}
 img {width:9px;height:9px;padding:0;margin:0;}
 ul{margin:0;}
 .mini{font-size:9px}
+
 </style>
 </head>
 <body style="font-size:8px;">
@@ -26,14 +28,14 @@ ul{margin:0;}
 	<!--<thead>	-->	
 		<tr>
 			<th rowspan="2" style="9px">No</th>
-			<th rowspan="2" style="70px">Nama</th>
+			<th rowspan="2">Nama</th>
 			<th rowspan="2" style="5px">Paraf</th>
 			<th class="center" colspan="<?=$days?>">Tanggal</th>
 			<th colspan="6"><br/>Ket.(<?=$k=days_in_month($this->session->userdata('month_month'),$this->session->userdata('month_year')) - $this->holidays->getHolidayDate('',$this->session->userdata('month_month'),$this->session->userdata('month_year'))- getCountSundayInMonth($this->session->userdata('month_month'),$this->session->userdata('month_year'));?> Hari Kerja)</th>
 		</tr>
 		<tr>
 			<?php for($i=1;$i<=$days;$i++):?>
-			<th><?=code($i,2);?></th>
+			<th class="desx"><?=code($i,2);?></th>
 			<?php endfor;?>
             <th>M<span style="color:#CCC">_</span></th>
 			<th>S<span style="color:#CCC">_</span></th>
@@ -50,8 +52,8 @@ ul{margin:0;}
  ?>
     <tr>
        <th rowspan="4" class="white"><?=$x?></th>
-	   <th rowspan="4" class="white align-left"><?=$row['Name'].'<br/>'.$row['Description'].'<br/>'.$row['Department']?></th>
-	   <th style="width:9px" class="white">Paraf</th>
+	   <th rowspan="4" class="white align-left" style="padding-left:10px"><?=$row['Name'].'<br/>'.$row['Description'].'<br/>'.$row['Department']?></th>
+	   <th class="white" style="margin-right:50px">Paraf</th>
 	   <?php
        $m=0; 
        for($i=1;$i<=$days;$i++):
@@ -62,7 +64,7 @@ ul{margin:0;}
             else
                 $bg = "#FFF";    
        ?>
-	   <th style="background:<?=$bg?>;">
+	   <th class="white desx" style="background:<?=$bg?>;">
             <?php if(strlen($this->authlog->getUserTime(code($i).'-'.$month.'-'.$year,$row['UserID'],1))>2): ?>
                 <?php if(file_exists('./assets/signature/'.$row['UserID'].'.jpg')): ?>
                     <?php $m=$m+1;?>
@@ -83,7 +85,7 @@ ul{margin:0;}
        <th class="white desx"><?=$k-($m+$s+$i+$c+$dl)?></th>
     </tr>
 	<tr>
-        <th class="white">Dtg.PK</th>
+        <th class="white desx">Dtg.PK</th>
 	     <?php for($i=1;$i<=$days;$i++):
             $date = $year."/".$month."/".code($i);
             $datename = date('l', strtotime($date));
@@ -93,7 +95,7 @@ ul{margin:0;}
                 $bg = "#FFF";
          ?>
          
-	    <th style="font-size:9px;background:<?=$bg?>;text-align:center"><?=substr($this->authlog->getUserTime(code($i).'-'.$month.'-'.$year,$row['UserID'],1),0,5);?></th>
+	    <th class="white desx" style="font-size:8px;background:<?=$bg?>;text-align:center"><?=substr($this->authlog->getUserTime(code($i).'-'.$month.'-'.$year,$row['UserID'],1),0,5);?></th>
 	    <?php endfor;?>	
         <th class="white">-</th>
         <th class="white">-</th>
@@ -112,7 +114,7 @@ ul{margin:0;}
             else
                 $bg = "#FFF";
         ?>
-	   <th style="background:<?=$bg?> ;">
+	   <th class="desx" style="background:<?=$bg?> ;">
             <?php if(strlen($this->authlog->getUserTime(code($i).'-'.$month.'-'.$year,$row['UserID'],2))>2): ?>
                 <?php if(file_exists('./assets/signature/'.$row['UserID'].'.jpg')): ?>
                     <img src="<?=base_url('assets/signature/'.$row['UserID'].'.jpg');?>" />
@@ -124,7 +126,7 @@ ul{margin:0;}
        </th>
 	   <?php endfor;?>
        <th class="white">-</th>
-        <th class="white">-</th>
+       <th class="white">-</th>
 	   <th class="white">-</th>
 	   <th class="white">-</th>
        <th class="white">-</th>
@@ -132,7 +134,7 @@ ul{margin:0;}
 	</tr>
     
     <tr>
-        <th class="white">Plg.PK</th>
+        <th class="white desx">Plg.PK</th>
 	     <?php for($i=1;$i<=$days;$i++):
             $date = $year."/".$month."/".code($i);
             $datename = date('l', strtotime($date));
@@ -141,7 +143,7 @@ ul{margin:0;}
             else
                 $bg = "#FFF";
          ?>
-	    <th style="font-size:9px;background:<?=$bg?>;"><?=substr($this->authlog->getUserTime(code($i).'-'.$month.'-'.$year,$row['UserID'],2),0,5);?></th>
+	    <th class="white desx" style="font-size:8px;background:<?=$bg?>;"><?=substr($this->authlog->getUserTime(code($i).'-'.$month.'-'.$year,$row['UserID'],2),0,5);?></th>
 	    <?php endfor;?>	
         <th class="white">-</th>
          <th class="white">-</th>
@@ -159,21 +161,21 @@ ul{margin:0;}
  ?>   
   
        <tr>
-			<th class="mini align-left white no-border" style="9px"></th>
+			<th class="mini align-left white no-border"></th>
 			<th class="mini align-left white no-border"></th>
 			<th class="mini align-left white no-border"></th>
 			<th class="mini align-left white no-border center" colspan="<?=$days?>"></th>
 			<th class="mini align-left white no-border center" colspan="6"></th>
 		</tr>
 		<tr>
-			<th class="mini align-left white no-border" style="9px"></th>
+			<th class="mini align-left white no-border"></th>
 			<th colspan="2" class="mini align-left white no-border"><br/><br/></th>
 			<th class="mini align-left white no-border center" colspan="<?=$days?>"></th>
 			<th class="mini align-left white no-border center" colspan="6"><br/><br/></th>
 		</tr>
 		
 		<tr>
-			<th class="mini align-left white no-border" style="9px"></th>
+			<th class="mini align-left white no-border"></th>
 			<th colspan="2" class="mini align-left white no-border"></th>
 			<th class="mini align-left white no-border center" colspan="<?=$days?>"></th>
 			<th class="mini align-left white no-border center" colspan="6"></th>
@@ -181,23 +183,25 @@ ul{margin:0;}
         
 	<!--<tfoot>-->
 		<tr>
-			<th class="mini align-left white no-border" style="9px"></th>
+			<th class="mini align-left white no-border"></th>
 			<th class="mini align-left white no-border"></th>
 			<th class="mini align-left white no-border"></th>
 			<th class="mini align-left white no-border center" colspan="<?=$days?>"></th>
 			<th class="mini align-left white no-border center" colspan="6">Malang, ..... ...................... ..........</th>
 		</tr>
 		<tr>
-			<th class="mini align-left white no-border" style="9px"></th>
-			<th colspan="2" class="mini align-left white no-border">Kepala Madrasah <br/><br/><br/><br/><br/></th>
+			<th class="mini align-left white no-border"></th>
+			<th class="mini align-left white no-border">Kepala Madrasah <br/><br/><br/><br/><br/></th>
+			<th class="mini align-left white no-border"></th>
 			<!--<th class="mini align-left white no-border"></th>-->
 			<th class="mini align-left white no-border center" colspan="<?=$days?>"></th>
 			<th class="mini align-left white no-border center" colspan="6">Ka. Tata Usaha<br/><br/><br/><br/><br/></th>
 		</tr>
 		
 		<tr>
-			<th class="mini align-left white no-border" style="9px"></th>
-			<th colspan="2" class="mini align-left white no-border"><p style="border-bottom:1px solid #222;margin:0;width:170px;">Drs.H.Ahmad Hidayatullah, M.Pd</p><p style="margin:0">NIP. 19680622 200012 1 002</p></th>
+			<th class="mini align-left white no-border"></th>
+			<th class="mini align-left white no-border"><p style="border-bottom:1px solid #222;margin:0;width:170px;">Drs.H.Ahmad Hidayatullah, M.Pd</p><p style="margin:0">NIP. 19680622 200012 1 002</p></th>
+			<th class="mini align-left white no-border"></th>
 			<!--<th class="mini align-left white no-border"></th>-->
 			<th class="mini align-left white no-border center" colspan="<?=$days?>"></th>
 			<th class="mini align-left white no-border center" colspan="6"><p style="border-bottom:1px solid #222;margin:0;width:170px;">T.Agus Tjahjono</p><p style="margin:0">NIP. 19630816 198703 1 003</p></th>
