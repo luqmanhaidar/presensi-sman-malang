@@ -228,4 +228,5 @@ function getRangeDate($dayStart,$monthStart,$yearStart,$dayEnd,$monthEnd,$yearEn
    $d2=GregorianToJD($monthEnd,$dayEnd,$yearEnd);
    $d1=GregorianToJD($monthStart,$dayStart,$yearStart);
    return $d = $d2 - $d1;
-}             
+}
+

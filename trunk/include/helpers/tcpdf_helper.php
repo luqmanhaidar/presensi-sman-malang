@@ -11,6 +11,11 @@
 		return new HTML2PDF($orientation,$paper,$language,true,'ISO-8859-15',array(17,10,20,10)); 
 	}
 	
+	function Monthpdf($orientation='P',$paper='A4',$language='en'){
+		require_once(APPPATH.'third_party/html2pdf/html2pdf.class.php');
+		return new HTML2PDF($orientation,$paper,$language,true,'ISO-8859-15',array(12,10,10,10)); 
+	}
+	
 	function mpdf(){
 		require_once(APPPATH.'third_party/mpdf/mpdf.php');
         return new mPDF();
