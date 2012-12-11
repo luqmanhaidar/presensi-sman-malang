@@ -384,7 +384,7 @@ class Report extends CI_Controller {
 		$data['title']		=	'DAFTAR HADIR '.$data['position']['Name'];
         $this->load->vars($data);
         $content=$this->load->theme('report/month',$data,TRUE);
-        $html2pdf = html2pdf('L','FOLIO');
+        $html2pdf = Monthpdf('L','FOLIO');
         $html2pdf->WriteHTML($content);
         $html2pdf->Output('Laporan-Bulanan.pdf','D');
         
