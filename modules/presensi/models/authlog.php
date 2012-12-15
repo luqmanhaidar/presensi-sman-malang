@@ -54,8 +54,9 @@ class Authlog extends CI_Model
         if (!empty($paging))    
             $this->db->limit($paging);
         
-        if (!empty($name))   
-            $this->db->like('NGAC_AUTHLOG.UserID',$name ."");
+        if ((!empty($name)))
+			if($name<>0)
+				$this->db->like('NGAC_AUTHLOG.UserID',$name ."");
             
             
         if (!empty($key))   
