@@ -42,7 +42,7 @@ class Report extends CI_Controller {
     function personal($offset=0){
         $data['title']  = 'Laporan Individual';
         $data['logs']   =   $this->log->userLog();
-        $data['users']	= $this->userinfo->getDataFromUser();
+        $data['users']	= $this->userinfo->getAllDataFromUser();
         if($this->session->userdata('personal_paging'))
             $paging = $this->session->userdata('personal_paging');
         else
@@ -117,7 +117,7 @@ class Report extends CI_Controller {
 	function personal_print()
     {
 		$data['title']		=	'Laporan Individu';
-        $data['name']       =   $this->session->userdata('personal_name');
+        $data['users']      =   $this->userinfo->getIDRecord($this->session->userdata('personal_search'));
         $data['checks']		=	$this->authlog->getAllRecords('','',$this->session->userdata('personal_search'),$this->session->userdata('personal_key'),$this->session->userdata('personal_start'),$this->session->userdata('personal_finish'));
 		$data['user']		=	$this->session->userdata('personal_search');
         $this->load->vars($data);
@@ -128,7 +128,7 @@ class Report extends CI_Controller {
     {
 		$this->load->library('pdf');
 		$data['title']		=	'laporan Individu';
-        $data['name']       =   $this->session->userdata('personal_name');
+        $data['users']      =  $this->userinfo->getIDRecord($this->session->userdata('personal_search'));
 		$data['checks']		=	$this->authlog->getAllRecords('','',$this->session->userdata('personal_search'),$this->session->userdata('personal_key'),$this->session->userdata('personal_start'),$this->session->userdata('personal_finish'));
 		$data['user']		=	$this->session->userdata('personal_search');
         $this->load->vars($data);
@@ -139,8 +139,8 @@ class Report extends CI_Controller {
     function personal_excel()
     {
         $user = $this->session->userdata('personal_search'); 
-        $name = $this->session->userdata('personal_name');    
-		$excel = $this->excelModel->personal_excel($user,$name);
+        $data['users'] =  $this->userinfo->getIDRecord($this->session->userdata('personal_search'));
+		$excel = $this->excelModel->personal_excel($data['users']);
         $data = file_get_contents("assets/Personal.xlsx"); // Read the file's contents
         force_download("Laporan-Individu",$data); 
 	}

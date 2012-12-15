@@ -27,6 +27,18 @@ class Userinfo extends CI_Model
 		endif;		
 		return $data;
 	}
+	
+	function getAllDataFromUser(){
+		$data = array();
+		$data[] = 'All Users';
+		$query    = $this->db->get('NGAC_USERINFO');
+		if ($query->num_rows() > 0):
+           foreach ($query->result_array() as $row):
+             $data[$row['ID']] = $row['ID'].'-'.$row['Name'];
+           endforeach;  
+		endif;		
+		return $data;
+	}
     
     function getSingleDataFromUser(){
 		$data = array();
@@ -49,6 +61,15 @@ class Userinfo extends CI_Model
         $query    = $this->db->get('NGAC_USERINFO');
         return $query->row_array();
     }
+	
+	function getIDRecord($ID){
+		$this->db->select('U.ID,U.UserOrder,U.Name,U.Description,U.Department');
+		if($ID<>0)
+			$this->db->where('U.ID',$ID);
+		$this->db->where('U.Privilege',2);   	
+		$Q = $this->db->get('NGAC_USERINFO U');
+        return $Q->result_array();		
+	}
     
     function getAllRecords($offset='',$paging='',$name='',$group='',$pos=''){
         if (!empty($offset))

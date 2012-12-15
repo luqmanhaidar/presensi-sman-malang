@@ -11,9 +11,6 @@
     </caption>
 	<thead>
 		<tr>
-			<th class="align-left darkgrey" colspan="4"><?=$user.'-'.$name?></th>
-		</tr>
-		<tr>
 			<th>No</th>
 			<th width="20%">Tanggal</th>
 			<th>Jenis</th>
@@ -21,9 +18,14 @@
 		</tr>
     </thead>
 	<tbody>
+	<?php foreach($users as $user): ?>
+	<tr>
+			<th class="align-left darkgrey" colspan="4"><?=$user['Name'];?></th>
+	</tr>	
 	<?php 
         $i=1;
-        foreach($checks as $row):?>
+		$reports = $this->authlog->getAllRecords('','',$user['ID'],$this->session->userdata('personal_key'),$this->session->userdata('personal_start'),$this->session->userdata('personal_finish'));
+        foreach($reports as $row):?>
 			<tr>
 				<td><?=$i;?></td>
 				<td><?=indonesian_shortDate($row['TransactionTime']);?></td>
@@ -31,8 +33,10 @@
                 <td><?=substr($row['TransactionTime'],11,8);?></td>
 			</tr>
      <?php 
-         $i++;
-         endforeach;?>
+           $i++;
+           endforeach;
+		endforeach;	
+	?>
     </tbody>
  </table>
 
