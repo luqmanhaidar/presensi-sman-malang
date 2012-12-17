@@ -1373,7 +1373,9 @@ class Report extends CI_Controller {
 			$recs  = $this->userinfo->getAllRecords('','','','',$group);
 			$days  = $this->authlog->getDay($start,$end);  
 			$var   = $this->presensi->getVariabelDataByVar('DMK');
-			$excel = $this->excelModel->week_excel($recs,$start,$end,$group,$days,$pos,$var);
+			$recs  = $this->authprocess->getAllRecords();
+			//$excel = $this->excelModel->week_excel($recs,$start,$end,$group,$days,$pos,$var);
+			$excel = $this->excelModel->week_excel($recs);
 			$data = file_get_contents("assets/Lap-Mingguan.xlsx"); // Read the file's contents
 			force_download("Lap-Mingguan",$data); 
 		endif;	
