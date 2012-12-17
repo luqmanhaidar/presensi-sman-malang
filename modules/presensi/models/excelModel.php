@@ -634,8 +634,172 @@ class ExcelModel extends CI_Model
         $objWriter->save('assets/'.$file);
         redirect(base_url('assets/'.$file),301);
     }
+	
+	function week_excel($recs){
+        //$this->user_logs->saveLog('Export Excell Admission Report');           						
+		$objPHPExcel = new PHPExcel();
+		$objPHPExcel->getProperties()->setTitle("title")
+					->setDescription("description");
+					 $objPHPExcel->setActiveSheetIndex(0);
+		$styleArray = array( 'borders' => array( 'allborders' => array(
+                             'style' => Style_Border::BORDER_THIN )));
+        $fill = array(
+                        'type'       => Style_Fill::FILL_SOLID,
+                        'rotation'   => 0,
+                        'startcolor' => array(
+                                'rgb' => 'CCCCCC'
+                        ),
+                        'endcolor'   => array(
+                                'argb' => 'CCCCCC'
+                        )
+                );       
+	  	
+		$fontArray = array(
+			'font' => array(
+			'bold' => true
+			)
+			);
+		
+        $row=1;
+        $col=0;
+        
+		$objPHPExcel->getDefaultStyle()->getFont()->setName($this->font);
+		$objPHPExcel->getDefaultStyle()->getFont()->setSize($this->size);
+	
+		//No
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,'No');
+		$objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col)->setWidth(4);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->applyFromArray($styleArray);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->getFill()->applyFromArray($fill);
+			
+		//Name
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+1,$row,'ID');
+		$objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+1)->setWidth(6);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+1,$row)->applyFromArray($styleArray);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+1,$row)->getFill()->applyFromArray($fill);
+		
+		//Name
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+2,$row,'Nama');
+		$objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+2)->setWidth(25);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+2,$row)->applyFromArray($styleArray);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+2,$row)->getFill()->applyFromArray($fill);
+		
+		//Group
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+3,$row,'Jabatan');
+		$objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+3)->setWidth(12);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+3,$row)->applyFromArray($styleArray);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+3,$row)->getFill()->applyFromArray($fill);
+			
+		//Minggu Ke
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+4,$row,'M');
+		$objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+4)->setWidth(2);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+4,$row)->applyFromArray($styleArray);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+4,$row)->getFill()->applyFromArray($fill);
+			
+		//Hari
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+5,$row,'Hari');
+		$objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+5)->setWidth(6);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+5,$row)->applyFromArray($styleArray);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+5,$row)->getFill()->applyFromArray($fill);
+		
+		//Hari
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+6,$row,'Tanggal');
+		$objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+6)->setWidth(10);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+6,$row)->applyFromArray($styleArray);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+6,$row)->getFill()->applyFromArray($fill);
+		
+		//Hari
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+7,$row,'WMK');
+		$objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+7)->setWidth(10);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+7,$row)->applyFromArray($styleArray);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+7,$row)->getFill()->applyFromArray($fill);
+		
+		//Hari
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+8,$row,'Masuk');
+		$objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+8)->setWidth(10);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+8,$row)->applyFromArray($styleArray);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+8,$row)->getFill()->applyFromArray($fill);
+		
+		//Hari
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+9,$row,'WSK');
+		$objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+9)->setWidth(10);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+9,$row)->applyFromArray($styleArray);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+9,$row)->getFill()->applyFromArray($fill);
+		
+		//Hari
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+10,$row,'Pulang');
+		$objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+10)->setWidth(10);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+10,$row)->applyFromArray($styleArray);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+10,$row)->getFill()->applyFromArray($fill);
+		
+		//Hari
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+11,$row,'Telat');
+		$objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+11)->setWidth(10);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+11,$row)->applyFromArray($styleArray);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+11,$row)->getFill()->applyFromArray($fill);
+		
+		//Hari
+		$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+12,$row,'Pulang Cepat');
+		$objPHPExcel->getActiveSheet()->getColumnDimensionByColumn($col+12)->setWidth(10);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+12,$row)->applyFromArray($styleArray);
+		$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+12,$row)->getFill()->applyFromArray($fill);
+			
+			
+		$row=$row + 1;
+			
+		$i=1;
+		foreach($recs as $rec):
+				$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,$i);
+				$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col,$row)->applyFromArray($styleArray);
+				 
+				$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+1,$row,$rec['UserID']);
+				$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+1,$row)->applyFromArray($styleArray);
+				 
+				$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+2,$row,$rec['Name']);
+				$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+2,$row)->applyFromArray($styleArray);
+				
+				$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+3,$row,$rec['GroupName']);
+				$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+3,$row)->applyFromArray($styleArray);
+				 
+				$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+4,$row,$rec['W']);
+				$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+4,$row)->applyFromArray($styleArray);
+				
+				$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+5,$row,indonesianDayName($rec['DayName']));
+				$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+5,$row)->applyFromArray($styleArray);
+				
+				$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+6,$row,$rec['MyDate']);
+				$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+6,$row)->applyFromArray($styleArray);
+				
+				$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+7,$row,$rec['ProcessDateWorkStart']);
+				$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+7,$row)->applyFromArray($styleArray);
+				
+				$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+8,$row,$rec['MyTimeStart']);
+				$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+8,$row)->applyFromArray($styleArray);
+				
+				$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+9,$row,$rec['ProcessDateWorkEnd']);
+				$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+9,$row)->applyFromArray($styleArray);
+				
+				$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+10,$row,$rec['MyTimeEnd']);
+				$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+10,$row)->applyFromArray($styleArray);
+				
+				$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+11,$row,$rec['ProcessDateLate']);
+				$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+11,$row)->applyFromArray($styleArray);
+				
+				$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col+12,$row,$rec['ProcessDateEarly']);
+				$objPHPExcel->getActiveSheet()->getStyleByColumnAndRow($col+12,$row)->applyFromArray($styleArray);
+				
+				$i++;
+				$row++;
+		endforeach;  
+        // Save it as an excel 2007 file
+        $objWriter = IOFactory::createWriter($objPHPExcel, "Excel2007");
+		//$objWriter = IOFactory::createWriter($objPHPexcel,'PDF'); 
+        $file="Lap-Mingguan.xlsx";
+        $objWriter->save('assets/'.$file);
+        redirect(base_url('assets/'.$file),301);
+    }
     
-    function week_excel($recs,$start,$end,$group,$days,$pos,$var){      						
+    function week_old_excel($recs,$start,$end,$group,$days,$pos,$var){      						
 		$objPHPExcel = new PHPExcel();
         $objDrawing = new Worksheet_Drawing();  // PHPExcel_Worksheet_MemoryDrawing
 		$objPHPExcel->getProperties()->setTitle("title")
