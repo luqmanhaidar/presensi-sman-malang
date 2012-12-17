@@ -69,7 +69,7 @@ th{font-size:10px}
 	   <th class="white desx" style="background:<?=$bg?>;">
             <?php if(strlen($this->authlog->getUserTime(code($i).'-'.$month.'-'.$year,$row['UserID'],1))>2): ?>
                 <?php if(file_exists('./assets/signature/'.$row['UserID'].'.jpg')): ?>
-                    <?php $m=$m+1;?>
+                    <?php //$m=$m+1;?>
                     <img src="<?=base_url('assets/signature/'.$row['UserID'].'.jpg');?>" />
                 <?php else:?>
                 <?php endif;?>
@@ -96,7 +96,10 @@ th{font-size:10px}
             else
                 $bg = "#FFF";
          ?>
-         
+        <?php
+			if($this->authlog->getUserTime(code($i).'-'.$month.'-'.$year,$row['UserID'],1))
+				$m = $m + 1;
+		?>	
 	    <th class="white desx" style="font-size:8px;background:<?=$bg?>;text-align:center"><?=substr($this->authlog->getUserTime(code($i).'-'.$month.'-'.$year,$row['UserID'],1),0,5);?></th>
 	    <?php endfor;?>	
         <th class="white">-</th>
