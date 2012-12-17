@@ -65,6 +65,18 @@ class Authprocess extends CI_Model
         else
             return $Q->result_array();
     }
+	
+	function getAllReportRecords(){           
+        $this->db->select('UserID,NGAC_USERINFO.Name,datename(dw,ProcessDateStart) as DayName,NGAC_USERINFO.GroupID,NGAC_GROUP.Name as GroupName,GroupWork,GroupFriday,CONVERT(VARCHAR(10),ProcessDateStart, 105) as MyDate,CONVERT(VARCHAR(8),ProcessDateStart, 108) AS MyTimeStart,CONVERT(VARCHAR(8),ProcessDateEnd, 108) AS MyTimeEnd');
+        $this->db->select('ProcessDateWorkStart,ProcessDateWorkEnd,ProcessDateLate,ProcessDateEarly');
+        $this->db->select('(DAY(ProcessDateStart) + (DATEPART(dw, DATEADD (MONTH, DATEDIFF (MONTH, 0, ProcessDateStart), 0)) -1)-1)/7 + 1  as W');
+        $this->db->join('NGAC_USERINFO','NGAC_USERINFO.ID=NGAC_AUTHPROCESS.UserID','INNER');
+		$this->db->join('NGAC_GROUP','NGAC_GROUP.ID=NGAC_USERINFO.GroupID');
+        $this->db->where('NGAC_USERINFO.privilege',2);
+		$this->db->order_by('ABS(NGAC_USERINFO.UserOrder)','ASC');
+        $Q = $this->db->get('NGAC_AUTHPROCESS');
+        return $Q->result_array();
+    }
     
     function getAllWeekRecord($offset='',$paging=''){
         if (!empty($offset))
