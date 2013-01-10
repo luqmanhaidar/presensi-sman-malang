@@ -133,11 +133,14 @@ class Authlog extends CI_Model
         return $Q->result_array();
     }
 	
-	function getUserTime($day,$user,$key){
+	function getUserTime($day,$user,$key,$key2=''){
 		$this->db->select('CONVERT(VARCHAR(8),TransactionTime, 108) AS MyTime');
 		$this->db->where("CONVERT(VARCHAR(10),TransactionTime,105)='".$day."'");
-		$this->db->where('NGAC_AUTHLOG.FunctionKey',$key);
-        $this->db->where('AuthResult','0');
+		if(!$key2)
+			$this->db->where('NGAC_AUTHLOG.FunctionKey',$key);
+        else
+			$this->db->where("(NGAC_AUTHLOG.FunctionKey=".$key." OR NGAC_AUTHLOG.FunctionKey=".$key2.")");
+		$this->db->where('AuthResult','0');
 		$this->db->where('NGAC_AUTHLOG.UserID',$user);
 		$this->db->order_by('CONVERT(VARCHAR(10),TransactionTime,105)','ASC');
 		$Q = $this->db->get('NGAC_AUTHLOG');
