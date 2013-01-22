@@ -40,7 +40,7 @@ th{font-size:10px}
 			<th class="desx"><?=code($i,2);?></th>
 			<?php endfor;?>
             <th>M&nbsp;&nbsp;</th>
-			<th>S&nbsp;&nbsp;</span></th>
+			<th>S&nbsp;&nbsp;</th>
 			<th>I&nbsp;&nbsp;</th>
             <th>C&nbsp;&nbsp;</th>
 			<th>DL&nbsp;&nbsp;</th>
