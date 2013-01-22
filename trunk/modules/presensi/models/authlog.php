@@ -140,7 +140,7 @@ class Authlog extends CI_Model
 			//$this->db->where('NGAC_AUTHLOG.FunctionKey',$key);
         //else
 		if(!$key2)
-			$key2=0;
+			$key2=2;
 			
 			$this->db->where("(NGAC_AUTHLOG.FunctionKey=".$key." OR NGAC_AUTHLOG.FunctionKey=".$key2.")");
 		$this->db->where('AuthResult','0');
