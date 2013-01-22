@@ -39,12 +39,12 @@ th{font-size:10px}
 			<?php for($i=1;$i<=$days;$i++):?>
 			<th class="desx"><?=code($i,2);?></th>
 			<?php endfor;?>
-            <th>M<span style="color:#CCC">&nbsp;</span></th>
-			<th>S<span style="color:#CCC">&nbsp;</span></th>
-			<th>I<span style="color:#CCC">&nbsp;</span></th>
-            <th>C<span style="color:#CCC">&nbsp;</span></th>
-			<th>DL</th>
-            <th>TK</th>
+            <th>M&nbsp;&nbsp;</th>
+			<th>S&nbsp;&nbsp;</span></th>
+			<th>I&nbsp;&nbsp;</th>
+            <th>C&nbsp;&nbsp;</th>
+			<th>DL&nbsp;&nbsp;</th>
+            <th>TK&nbsp;&nbsp;</th>
 		</tr>
     <!--</thead>-->
 	
